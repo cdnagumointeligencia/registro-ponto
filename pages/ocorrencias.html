@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ════════════════════════════════════════════════════════
 // DADOS
 // ════════════════════════════════════════════════════════
-async function await getOcorrencias() { return await LS.get(OC_KEY, []); }
+async function getOcorrencias() { return await LS.get(OC_KEY, []); }
 async function saveOcorrencias(list) { await LS.set(OC_KEY, list); }
 
 // ════════════════════════════════════════════════════════
@@ -534,7 +534,7 @@ async function openFormModal(oc) {
 }
 
 async function editarOcorrencia(id) {
-  const oc = await getOcorrencias().find(o=>o.id===id);
+  const oc = (await getOcorrencias()).find(o=>o.id===id);
   if (!oc) return;
   openFormModal(oc);
 }
@@ -554,7 +554,7 @@ async function salvarOcorrencia() {
   const store = await getStore();
   const emps  = store.employees||[];
   const emp   = editId
-    ? { id: await getOcorrencias().find(o=>o.id===editId)?.empId, name:'', dept:'' }
+    ? { id: (await getOcorrencias()).find(o=>o.id===editId)?.empId, name:'', dept:'' }
     : emps.find(e=>String(e.id)===String(empId));
 
   const list = await getOcorrencias();
@@ -593,7 +593,7 @@ async function salvarOcorrencia() {
 // MODAL DETALHE
 // ════════════════════════════════════════════════════════
 async function verDetalhe(id) {
-  const o = await getOcorrencias().find(x=>x.id===id);
+  const o = (await getOcorrencias()).find(x=>x.id===id);
   if (!o) return;
   const sm = STATUS_META[o.status]||STATUS_META.pendente;
   const tm = TIPO_META[o.tipo]||{ emoji:'📝', label:o.tipo };
@@ -653,9 +653,9 @@ async function mudarStatus(id, novoStatus) {
 }
 
 async function excluirOcorrencia(id) {
-  const o = await getOcorrencias().find(x=>x.id===id);
+  const o = (await getOcorrencias()).find(x=>x.id===id);
   if (!confirm('Excluir esta ocorrência? Esta ação não pode ser desfeita.')) return;
-  saveOcorrencias(await getOcorrencias().filter(x=>x.id!==id));
+  saveOcorrencias((await getOcorrencias()).filter(x=>x.id!==id));
   renderTabela();
   await registrarLog('excluiu', 'Ocorrências', `Excluiu ocorrência <strong>${o?.tipo||'—'}</strong> de <strong>${o?.empName||'—'}</strong>`);
   showToast('✅ Ocorrência excluída.');

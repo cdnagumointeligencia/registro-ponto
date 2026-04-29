@@ -775,7 +775,7 @@ async function startEdit(tipo, id, oldNome) {
   const inp = document.createElement('input');
   inp.className = 'inline-edit';
   inp.value = oldNome;
-  inp.addEventListener('keydown', ev => {
+  inp.addEventListener('keydown', async ev => {
     if (ev.key === 'Enter') {
       ev.preventDefault();
       const nw = inp.value.trim();
@@ -1063,7 +1063,7 @@ async function importarJSON(input) {
   status.textContent = '⏳ Lendo arquivo...';
 
   const reader = new FileReader();
-  reader.onload = (e) => {
+  reader.onload = async (e) => {
     try {
       const data = JSON.parse(e.target.result);
 
