@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funcionários · RH Nagumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sidebar.css">
+<link rel="stylesheet" href="../responsive.css">
+<link rel="stylesheet" href="../light-theme.css">
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../firebase.js"></script>
+<script src="../permissions.js"></script>
+<script src="../shared.js"></script>
+<style>
+/* ════════════════════════════════════════════
+   VARIÁVEIS
+════════════════════════════════════════════ */
+:root {
+  --bg:#0b0d14; --surface:#12151f; --surface2:#1a1e2e; --surface3:#222638;
+  --border:#2a2f45; --accent:#4f8ef7; --accent2:#a78bfa;
+  --green:#34d399; --yellow:#fbbf24; --red:#f87171; --orange:#fb923c;
+  --cyan:#22d3ee; --pink:#f472b6; --text:#ffffff; --muted:#94a3b8;
+  --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --sidebar-w:220px;
+}
+/* [light-theme.css] body.light-theme {
+  --bg:#EEF2F8; --surface:#fff; --surface2:#F4F7FB; --surface3:#E8EDF5;
+  --border:#D6DDE8; --accent:#2563eb; --accent2:#7c3aed; --green:#059669;
+  --yellow:#d97706; --red:#dc2626; --orange:#ea580c; --cyan:#0891b2;
+  --pink:#db2777; --text:#0f172a; --muted:#64748b;
+} */
+/* [light-theme.css] body.light-theme 
+
+body.light-theme .main             { background:#EEF2F8; } */
+/* [light-theme.css] body.light-theme .page-title       { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .search-input     { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .search-input::placeholder { color:#94a3b8; } */
+/* [light-theme.css] body.light-theme .dept-select      { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .filter-chip      { background:#fff; border-color:#CBD5E1; color:#64748b; } */
+/* [light-theme.css] body.light-theme .filter-chip.active { background:rgba(37,99,235,.1); border-color:#2563eb; color:#2563eb; } */
+/* [light-theme.css] body.light-theme .emp-card         { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .emp-card:hover   { border-color:#2563eb; box-shadow:0 4px 20px rgba(37,99,235,.12); } */
+/* [light-theme.css] body.light-theme .emp-name         { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .emp-role         { color:#64748b; } */
+/* [light-theme.css] body.light-theme .emp-metric-label { color:#94a3b8; } */
+/* [light-theme.css] body.light-theme .emp-matricula    { border-top-color:#E2E8F0; color:#64748b; } */
+/* [light-theme.css] body.light-theme .emp-matricula strong { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .score-bar-bg     { background:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .sparkline-bar    { opacity:.8; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-track { background:#F1F5F9; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-thumb { background:#CBD5E1; } */
+
+/* ── Modal tema claro ── */
+/* [light-theme.css] body.light-theme .modal            { background:#fff; border-color:#E2E8F0; box-shadow:0 24px 64px rgba(15,23,42,.15); } */
+/* [light-theme.css] body.light-theme .modal input,
+body.light-theme .modal select     { background:#F4F7FB; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .modal label      { color:#475569; } */
+/* [light-theme.css] body.light-theme .overlay          { background:rgba(15,23,42,.45); } */
+
+/* ════════════════════════════════════════════
+   BASE
+════════════════════════════════════════════ */
+* { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:14px; }
+body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
+
+/* ════════════════════════════════════════════
+   SIDEBAR
+════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════
+   MAIN
+════════════════════════════════════════════ */
+.main { margin-left:var(--sidebar-w); padding:24px 28px; min-height:100vh; }
+.topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; flex-wrap:wrap; gap:12px; }
+.page-title { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; color:var(--text); }
+
+/* ════════════════════════════════════════════
+   FILTROS
+════════════════════════════════════════════ */
+.filter-bar {
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:20px; flex-wrap:wrap;
+}
+.search-wrap { position:relative; }
+.search-icon { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:14px; pointer-events:none; }
+.search-input {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:9px; color:var(--text); font-family:var(--font-body);
+  font-size:13px; padding:8px 12px 8px 34px; outline:none;
+  transition:border-color .2s; width:200px;
+}
+.search-input:focus { border-color:var(--accent); }
+.search-input::placeholder { color:var(--muted); }
+
+.dept-select {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:9px; color:var(--text); font-family:var(--font-body);
+  font-size:13px; padding:8px 12px; outline:none;
+  transition:border-color .2s; cursor:pointer;
+}
+.dept-select:focus { border-color:var(--accent); }
+.dept-select option { background:var(--surface2); }
+
+.filter-chip {
+  padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600;
+  cursor:pointer; border:1px solid var(--border);
+  background:var(--surface); color:var(--muted); transition:all .15s;
+  user-select:none;
+}
+.filter-chip:hover { border-color:var(--accent); color:var(--text); }
+.filter-chip.active { background:rgba(79,142,247,.15); border-color:var(--accent); color:var(--accent); }
+.filter-chip.promo.active  { background:rgba(52,211,153,.15);  border-color:var(--green);  color:var(--green);  }
+.filter-chip.watch.active  { background:rgba(251,191,36,.15);  border-color:var(--yellow); color:var(--yellow); }
+.filter-chip.risk.active   { background:rgba(248,113,113,.15); border-color:var(--red);    color:var(--red);    }
+.filter-chip.ok.active     { background:rgba(79,142,247,.15);  border-color:var(--accent); color:var(--accent); }
+
+/* ════════════════════════════════════════════
+   BOTÃO
+════════════════════════════════════════════ */
+.btn {
+  display:inline-flex; align-items:center; gap:7px; padding:9px 16px;
+  border-radius:8px; border:none; font-family:var(--font-body);
+  font-size:12px; font-weight:600; cursor:pointer; transition:all .2s;
+}
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:#3a7ae0; transform:translateY(-1px); box-shadow:0 4px 16px rgba(79,142,247,.4); }
+.btn-ghost { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
+.btn-ghost:hover { background:var(--surface3); }
+.btn-danger { background:rgba(248,113,113,.15); color:var(--red); border:1px solid rgba(248,113,113,.3); }
+.btn-danger:hover { background:rgba(248,113,113,.25); }
+.btn-sm { padding:5px 11px; font-size:11px; }
+
+/* ════════════════════════════════════════════
+   EMPLOYEE CARDS GRID
+════════════════════════════════════════════ */
+.emp-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+  gap:16px;
+}
+
+.emp-card {
+  background:var(--surface); border:1.5px solid var(--border);
+  border-radius:14px; padding:18px;
+  position:relative; transition:border-color .2s, transform .2s, box-shadow .2s;
+  overflow:hidden;
+}
+.emp-card:hover { border-color:var(--accent); transform:translateY(-2px); box-shadow:0 6px 24px rgba(0,0,0,.2); }
+
+/* banner afastado/férias */
+.emp-banner {
+  position:absolute; top:0; left:0; right:0;
+  padding:4px 14px; font-size:10px; font-weight:700;
+  text-align:center; letter-spacing:.5px; border-radius:12px 12px 0 0;
+}
+.emp-banner.afastado { background:rgba(239,68,68,.18); color:#ef4444; border-bottom:1px solid rgba(239,68,68,.3); }
+.emp-banner.ferias   { background:rgba(34,211,238,.14); color:#22d3ee; border-bottom:1px solid rgba(34,211,238,.3); }
+
+/* cabeçalho do card */
+.emp-card-header { display:flex; align-items:flex-start; gap:12px; margin-bottom:12px; }
+.emp-avatar {
+  width:42px; height:42px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:14px; font-weight:800; color:#fff;
+}
+.emp-info { flex:1; min-width:0; }
+.emp-name { font-family:var(--font-head); font-size:15px; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.emp-role { font-size:11px; color:var(--muted); margin-top:2px; }
+
+/* ações (lápis + x) */
+.emp-actions { display:flex; gap:4px; flex-shrink:0; }
+.emp-btn {
+  width:26px; height:26px; border-radius:6px; border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; font-size:13px;
+  background:transparent; transition:background .15s, color .15s;
+}
+.emp-btn.edit  { color:var(--muted); }
+.emp-btn.edit:hover  { background:rgba(79,142,247,.15); color:var(--accent); }
+.emp-btn.del   { color:var(--muted); }
+.emp-btn.del:hover   { background:rgba(248,113,113,.15); color:var(--red); }
+.emp-btn.transfer { color:var(--muted); }
+.emp-btn.transfer:hover { background:rgba(251,191,36,.15); color:var(--yellow); }
+.emp-btn.ocorr { color:var(--muted); }
+.emp-btn.ocorr:hover { background:rgba(167,139,250,.15); color:var(--accent2); }
+
+/* alert alta apt / baixa assid */
+.emp-alert {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:4px 10px; border-radius:20px; font-size:10px; font-weight:600;
+  background:rgba(251,146,60,.12); color:var(--orange);
+  border:1px solid rgba(251,146,60,.3); margin-bottom:10px;
+}
+
+/* métricas */
+.emp-metrics { display:flex; gap:14px; margin-bottom:10px; flex-wrap:wrap; }
+.emp-metric { display:flex; flex-direction:column; gap:1px; }
+.emp-metric-val {
+  font-family:var(--font-head); font-size:15px; font-weight:800; letter-spacing:-.5px;
+}
+.emp-metric-val.perf   { color:var(--accent2); }
+.emp-metric-val.apt    { color:var(--cyan); }
+.emp-metric-val.assid  { color:var(--green); }
+.emp-metric-val.assid.low { color:var(--red); }
+.emp-metric-val.faltas { color:var(--red); }
+.emp-metric-label { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
+
+/* barra de score */
+.score-bar-wrap { margin:6px 0 4px; }
+.score-bar-bg { height:5px; background:var(--surface3); border-radius:3px; overflow:hidden; }
+.score-bar-fill { height:100%; border-radius:3px; transition:width .6s ease; }
+
+/* sparkline faltas */
+.sparkline { display:flex; align-items:flex-end; gap:2px; height:24px; margin-bottom:2px; }
+.sparkline-bar { flex:1; border-radius:2px 2px 0 0; min-height:2px; transition:height .3s; }
+.sparkline-label { font-size:10px; color:var(--muted); text-align:right; }
+
+/* score + tag */
+.emp-card-footer { display:flex; align-items:center; justify-content:space-between; margin-top:8px; }
+.emp-score { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; color:var(--accent2); }
+
+.tag { display:inline-block; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:700; }
+.tag-promo { background:rgba(52,211,153,.15);  color:var(--green);  border:1px solid rgba(52,211,153,.3); }
+.tag-ok    { background:rgba(79,142,247,.15);  color:var(--accent); border:1px solid rgba(79,142,247,.3); }
+.tag-watch { background:rgba(251,191,36,.15);  color:var(--yellow); border:1px solid rgba(251,191,36,.3); }
+.tag-risk  { background:rgba(248,113,113,.15); color:var(--red);    border:1px solid rgba(248,113,113,.3); }
+
+/* matrícula */
+.emp-matricula {
+  display:flex; align-items:center; gap:6px;
+  margin-top:10px; padding-top:10px; border-top:1px solid var(--border);
+  font-size:11px; color:var(--muted);
+}
+.emp-matricula strong { font-family:var(--font-head); font-size:12px; color:var(--text); font-weight:700; letter-spacing:.5px; }
+
+/* tags filial/turno */
+.emp-tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:8px; }
+.emp-tag {
+  padding:2px 8px; border-radius:20px; font-size:10px; font-weight:600;
+}
+.emp-tag.filial  { background:rgba(79,142,247,.12); color:var(--accent); border:1px solid rgba(79,142,247,.2); }
+.emp-tag.turno   { background:rgba(167,139,250,.12); color:var(--accent2); border:1px solid rgba(167,139,250,.2); }
+
+/* empty state */
+.empty-state { text-align:center; padding:60px 20px; color:var(--muted); grid-column:1/-1; }
+.empty-icon  { font-size:52px; margin-bottom:14px; }
+
+/* ════════════════════════════════════════════
+   MODAL
+════════════════════════════════════════════ */
+.overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.75);
+  backdrop-filter:blur(4px); z-index:200;
+  display:none; align-items:center; justify-content:center;
+}
+.overlay.open { display:flex; }
+.modal {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:28px; width:580px;
+  max-width:95vw; max-height:90vh; overflow-y:auto;
+  animation:fadeUp .25s ease;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.modal-title { font-family:var(--font-head); font-size:18px; font-weight:800; margin-bottom:22px; color:var(--text); }
+.modal-footer { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
+
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.form-group { display:flex; flex-direction:column; gap:6px; }
+.form-group.full { grid-column:1/-1; }
+.form-label { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+.form-input {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; color:var(--text); font-family:var(--font-body);
+  font-size:13px; padding:9px 11px; outline:none; transition:border-color .2s;
+}
+.form-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(79,142,247,.1); }
+.form-input option { background:var(--surface2); }
+
+.section-label {
+  font-size:10px; font-weight:700; color:var(--muted);
+  text-transform:uppercase; letter-spacing:1px;
+  margin:16px 0 10px; padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+}
+.month-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; }
+.month-wrap { display:flex; flex-direction:column; gap:4px; align-items:center; }
+.month-wrap .form-label { font-size:9px; }
+.month-wrap .form-input { width:100%; text-align:center; padding:7px 4px; }
+
+.apt-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+
+/* ── checkbox afastado/férias ── */
+.check-row { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); cursor:pointer; }
+.check-row input[type=checkbox] { width:16px; height:16px; cursor:pointer; }
+.check-row-label { font-size:13px; font-weight:500; color:var(--text); }
+.check-row-sub { font-size:11px; color:var(--muted); margin-top:1px; }
+.date-wrap { padding:10px 12px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); }
+
+/* ════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════ */
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+.toast { padding:10px 18px; border-radius:10px; font-size:12px; font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4); animation:fadeUp .25s ease; max-width:320px; pointer-events:auto; }
+.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
+.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
+.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+@media(max-width:1024px) {
+  :root { --sidebar-w:56px; }
+  
+  
+  
+  
+
+  .form-grid { grid-template-columns:1fr; }
+}
+@media(max-width:768px) {
+  :root { --sidebar-w:0px; }
+  
+  .main { margin-left:0; padding:16px; }
+  .emp-grid { grid-template-columns:1fr; }
+  .form-grid { grid-template-columns:1fr; }
+  .month-grid { grid-template-columns:repeat(4,1fr); }
+  .apt-grid { grid-template-columns:repeat(2,1fr); }
+}
+
+}
+
+
+/* ── Foto do funcionário ── */
+.foto-upload-wrap {
+  display:flex; align-items:center; gap:14px; margin-bottom:4px;
+}
+.foto-preview {
+  width:64px; height:64px; border-radius:50%; object-fit:cover;
+  border:2px solid var(--border); flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:20px; font-weight:800; color:#fff;
+  overflow:hidden;
+}
+.foto-preview img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.foto-btns { display:flex; flex-direction:column; gap:6px; }
+.btn-foto {
+  padding:6px 14px; border-radius:8px; border:1px solid var(--border);
+  background:transparent; color:var(--muted); font-family:var(--font-body);
+  font-size:11px; font-weight:600; cursor:pointer; transition:all .15s;
+}
+.btn-foto:hover { border-color:var(--accent); color:var(--accent); }
+.btn-foto.remove:hover { border-color:var(--red); color:var(--red); }
+
+
+/* ── Aviso nome duplicado ── */
+#nome-duplicado-aviso strong { color:#fef3c7; }
+#nome-duplicado-aviso .dup-item { margin-top:4px; padding:6px 10px; background:rgba(0,0,0,.2); border-radius:6px; }
+
+
+/* ── Ações no rodapé do card ── */
+.emp-actions-bottom {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 8px 6px 2px;
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+<nav id="app-sidebar"></nav>
+
+<main class="main">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="page-title">Funcionários</div>
+    <button class="btn btn-primary" id="btn-novo" onclick="openModal()">＋ Novo Funcionário</button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filter-bar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" id="search-input"
+        placeholder="Buscar nome..." oninput="renderCards()">
+    </div>
+    <select class="dept-select" id="filial-select" onchange="renderCards()">
+      <option value="">Todas as filiais</option>
+    </select>
+    <select class="dept-select" id="dept-select" onchange="renderCards()">
+      <option value="">Todos os departamentos</option>
+    </select>
+    <div class="filter-chip active" data-filter="" onclick="setFilter(this,'')">Todos</div>
+    <div class="filter-chip promo"  data-filter="promo"  onclick="setFilter(this,'promo')">🏆 Promoção</div>
+    <div class="filter-chip ok"     data-filter="ok"     onclick="setFilter(this,'ok')">✅ Regular</div>
+    <div class="filter-chip watch"  data-filter="watch"  onclick="setFilter(this,'watch')">⚠️ Atenção</div>
+    <div class="filter-chip risk"   data-filter="risk"   onclick="setFilter(this,'risk')">🔴 Risco</div>
+  </div>
+
+  <!-- Grid de cards -->
+  <div class="emp-grid" id="emp-grid"></div>
+
+</main>
+
+<!-- ══ MODAL ══ -->
+<div class="overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Novo Funcionário</div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="form-label">📷 Foto do Funcionário</label>
+        <div class="foto-upload-wrap">
+          <div class="foto-preview" id="foto-preview-modal">
+            <span id="foto-ini-modal">?</span>
+          </div>
+          <div class="foto-btns">
+            <input type="file" id="foto-input" accept="image/*" style="display:none" onchange="processarFoto(this)">
+            <button type="button" class="btn-foto" onclick="document.getElementById('foto-input').click()">📷 Selecionar Foto</button>
+            <button type="button" class="btn-foto remove" onclick="removerFoto()">✕ Remover</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">👤 Nome Completo</label>
+        <input class="form-input" type="text" id="f-name" placeholder="Ex: João da Silva"
+          oninput="this.value=toTitleCase(this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g,''))" onblur="verificarNomeDuplicado()">
+        <div id="nome-duplicado-aviso" style="display:none;margin-top:8px;padding:10px 14px;border-radius:8px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.4);font-size:12px;color:#fbbf24;line-height:1.6"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">🏢 Departamento</label>
+        <select class="form-input" id="f-dept"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">💼 Função / Cargo</label>
+        <select class="form-input" id="f-role"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">🏭 Filial</label>
+        <select class="form-input" id="f-filial"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">🕐 Turno</label>
+        <select class="form-input" id="f-turno"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">🪪 Matrícula</label>
+        <input class="form-input" type="text" id="f-matricula" placeholder="Ex: 00123">
+      </div>
+      <div class="form-group">
+        <label class="form-label">🎯 Desempenho (0–100)</label>
+        <input class="form-input" type="number" id="f-perf" min="0" max="100" placeholder="70">
+      </div>
+    </div>
+
+    <!-- Afastado -->
+    <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+      <label class="check-row" id="check-afastado-row">
+        <input type="checkbox" id="f-afastado" onchange="toggleAfastado()"
+          style="accent-color:#ef4444">
+        <div>
+          <div class="check-row-label">🚫 Funcionário <strong style="color:#ef4444">Afastado</strong></div>
+          <div class="check-row-sub">Dias marcados automaticamente a partir da data abaixo</div>
+        </div>
+      </label>
+      <div id="afastado-date-wrap" class="date-wrap" style="display:none">
+        <label class="form-label" style="margin-bottom:6px">📅 Início do Afastamento</label>
+        <input class="form-input" type="date" id="f-data-afastamento" style="border-color:#ef4444;width:220px">
+      </div>
+
+      <label class="check-row">
+        <input type="checkbox" id="f-ferias" onchange="toggleFerias()"
+          style="accent-color:#22d3ee">
+        <div>
+          <div class="check-row-label">🏖️ Funcionário em <strong style="color:#22d3ee">Férias</strong></div>
+          <div class="check-row-sub">Dias marcados automaticamente no ponto</div>
+        </div>
+      </label>
+      <div id="ferias-date-wrap" class="date-wrap" style="display:none">
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <div>
+            <label class="form-label" style="margin-bottom:6px">📅 Início das Férias</label>
+            <input class="form-input" type="date" id="f-ferias-inicio" style="border-color:#22d3ee;width:200px">
+          </div>
+          <div>
+            <label class="form-label" style="margin-bottom:6px">📅 Fim das Férias</label>
+            <input class="form-input" type="date" id="f-ferias-fim" style="border-color:#22d3ee;width:200px">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Faltas por mês -->
+    <div class="section-label">📅 Faltas por Mês (dias)</div>
+    <div class="month-grid">
+      <div class="month-wrap"><label class="form-label">Jan</label><input class="form-input" type="number" id="abs-0" min="0" max="31" placeholder="0"></div>
+      <div class="month-wrap"><label class="form-label">Fev</label><input class="form-input" type="number" id="abs-1" min="0" max="28" placeholder="0"></div>
+      <div class="month-wrap"><label class="form-label">Mar</label><input class="form-input" type="number" id="abs-2" min="0" max="31" placeholder="0"></div>
+      <div class="month-wrap"><label class="form-label">Abr</label><input class="form-input" type="number" id="abs-3" min="0" max="30" placeholder="0"></div>
+      <div class="month-wrap"><label class="form-label">Mai</label><input class="form-input" type="number" id="abs-4" min="0" max="31" placeholder="0"></div>
+      <div class="month-wrap"><label class="form-label">Jun</label><input class="form-input" type="number" id="abs-5" min="0" max="30" placeholder="0"></div>
+      <div class="month-wrap"><label class="form-label">Jul</label><input class="form-input" type="number" id="abs-6" min="0" max="31" placeholder="0"></div>
+      <div class="month-wrap"><label class="form-label">Ago</label><input class="form-input" type="number" id="abs-7" min="0" max="31" placeholder="0"></div>
+      <div class="month-wrap"><label class="form-label">Set</label><input class="form-input" type="number" id="abs-8" min="0" max="30" placeholder="0"></div>
+      <div class="month-wrap"><label class="form-label">Out</label><input class="form-input" type="number" id="abs-9" min="0" max="31" placeholder="0"></div>
+      <div class="month-wrap"><label class="form-label">Nov</label><input class="form-input" type="number" id="abs-10" min="0" max="30" placeholder="0"></div>
+      <div class="month-wrap"><label class="form-label">Dez</label><input class="form-input" type="number" id="abs-11" min="0" max="31" placeholder="0"></div>
+    </div>
+
+    <!-- Competências -->
+    <div class="section-label">⭐ Competências (0–10) — padrão 5</div>
+    <div class="apt-grid">
+      <div class="form-group"><label class="form-label">✨ Qualidade</label>   <input class="form-input" type="number" id="c-qual"  min="0" max="10" placeholder="5"></div>
+      <div class="form-group"><label class="form-label">⚡ Proatividade</label> <input class="form-input" type="number" id="c-prio"  min="0" max="10" placeholder="5"></div>
+      <div class="form-group"><label class="form-label">📚 Conhecimento</label> <input class="form-input" type="number" id="c-know"  min="0" max="10" placeholder="5"></div>
+      <div class="form-group"><label class="form-label">💬 Comunicação</label>  <input class="form-input" type="number" id="c-comm"  min="0" max="10" placeholder="5"></div>
+      <div class="form-group"><label class="form-label">📈 Produtividade</label><input class="form-input" type="number" id="c-prod"  min="0" max="10" placeholder="5"></div>
+      <div class="form-group"><label class="form-label">📅 Assiduidade</label>  <input class="form-input" type="number" id="c-assid" min="0" max="10" placeholder="5"></div>
+      <div class="form-group"><label class="form-label">🗂️ Organização</label>  <input class="form-input" type="number" id="c-org"   min="0" max="10" placeholder="5"></div>
+      <div class="form-group"><label class="form-label">🤝 Equipe</label>       <input class="form-input" type="number" id="c-equip" min="0" max="10" placeholder="5"></div>
+      <div class="form-group"><label class="form-label">💡 Criatividade</label> <input class="form-input" type="number" id="c-cria"  min="0" max="10" placeholder="5"></div>
+      <div class="form-group"><label class="form-label">🔥 Motivação</label>    <input class="form-input" type="number" id="c-motv"  min="0" max="10" placeholder="5"></div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveEmployee()">💾 Salvar Funcionário</button>
+    </div>
+    <input type="hidden" id="f-edit-id" value="">
+    <input type="hidden" id="f-foto" value="">
+  </div>
+</div>
+
+<!-- MODAL TRANSFERIR FUNCIONÁRIO -->
+<div class="overlay" id="modal-transfer">
+  <div class="modal" style="width:480px">
+    <div class="modal-title">🔀 Transferir Funcionário</div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:18px;font-size:13px;color:var(--text)">
+      👤 <strong id="tr-emp-name"></strong>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Selecione apenas os campos que deseja alterar. Campos em branco mantêm o valor atual.</p>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">🏢 Departamento</label><select class="form-input" id="tr-dept"></select></div>
+      <div class="form-group"><label class="form-label">💼 Função / Cargo</label><select class="form-input" id="tr-role"></select></div>
+      <div class="form-group"><label class="form-label">🏭 Filial</label><select class="form-input" id="tr-filial"></select></div>
+      <div class="form-group"><label class="form-label">🕐 Turno</label><select class="form-input" id="tr-turno"></select></div>
+      <div class="form-group full"><label class="form-label">👤 Transferir para o Líder</label><select class="form-input" id="tr-lider"></select></div>
+    </div>
+    <input type="hidden" id="tr-edit-id">
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeTransferModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveTransfer()">🔀 Confirmar Transferência</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL OCORRÊNCIA FUNCIONÁRIO -->
+<div class="overlay" id="modal-ocorrencia-emp">
+  <div class="modal" style="width:500px">
+    <div class="modal-title">📝 Registrar Ocorrência</div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:18px;font-size:13px;color:var(--text)">
+      👤 Funcionário: <strong id="oc-target-name"></strong>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">📋 Tipo de Ocorrência</label>
+        <select class="form-input" id="oc-tipo">
+          <option value="">— Selecione —</option>
+          <option value="Justificativa">📄 Justificativa</option>
+          <option value="Ajuste">🔧 Ajuste</option>
+          <option value="Ocorrência">⚠️ Ocorrência</option>
+          <option value="Entrada">🟢 Entrada</option>
+          <option value="Saída">🔴 Saída</option>
+          <option value="Advertência">🚨 Advertência</option>
+          <option value="Elogio">⭐ Elogio</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">📅 Data</label>
+        <input class="form-input" type="date" id="oc-data">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">📝 Descrição</label>
+        <textarea class="form-input" id="oc-desc" rows="4" placeholder="Descreva a ocorrência..." style="resize:vertical;min-height:90px"></textarea>
+      </div>
+    </div>
+    <input type="hidden" id="oc-edit-id">
+    <input type="hidden" id="oc-tipo-ref" value="funcionario">
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeOcorrenciaModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveOcorrencia()">📝 Salvar Ocorrência</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+// ESTADO
+// ════════════════════════════════════════════════════════
+let currentUser  = null;
+let activeFilter = '';
+
+const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
+const MONTHS   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  currentUser = await requireSession();
+  if (!currentUser) return;
+
+  initTheme();
+  initSidebar('employees', currentUser);
+
+  // Botão "Novo Funcionário" só para quem pode criar
+  const btnNovo = document.getElementById('btn-novo');
+  if (btnNovo) {
+    const podeCreate = (typeof can === 'function')
+      ? can(currentUser, 'employees', 'create')
+      : true;
+    btnNovo.style.display = podeCreate ? '' : 'none';
+  }
+
+  populateDeptSelect();
+  renderCards();
+});
+
+// ════════════════════════════════════════════════════════
+// SCORE HELPERS
+// ════════════════════════════════════════════════════════
+function getWeights() {
+  const cfg = (await getStore()).config || {};
+  const pw  = Math.min(100, Math.max(0, parseInt(cfg.perfWeight) || 40));
+  const aw  = Math.min(100, Math.max(0, parseInt(cfg.aptWeight)  || 35));
+  return { perf:pw, apt:aw, abs:Math.max(0,100-pw-aw) };
+}
+function calcAptMedia(emp) {
+  const c = emp.competencies || {};
+  return APT_KEYS.reduce((s,k) => s+(c[k]||0), 0) / APT_KEYS.length;
+}
+function calcAssid(emp) {
+  if (emp.afastado) return 100;
+  const total  = getTotalFaltasEmp(emp);
+  const maxAbs = (await getStore()).config?.maxAbs || 36;
+  return Math.max(0, 100-(total/maxAbs)*100);
+}
+function calcBonus(emp) {
+  const BONUS_POR_DIA = 0.5;
+  const BONUS_MAX     = 5;
+  try {
+    const allPonto = JSON.parse(localStorage.getItem('rh_ponto') || '{}');
+    const ano      = emp.year || new Date().getFullYear();
+    const feriadosCustom = (await getStore()).config?.feriadosCustom || [];
+    const ferNac = [
+      {d:1,m:0},{d:21,m:3},{d:1,m:4},{d:7,m:8},
+      {d:12,m:9},{d:2,m:10},{d:15,m:10},{d:25,m:11}
+    ];
+    let diasBonus = 0;
+    for (let m = 1; m <= 12; m++) {
+      const key  = `${emp.id}_${ano}_${String(m).padStart(2,'0')}`;
+      const dias = allPonto[key] || {};
+      Object.entries(dias).forEach(([dStr, status]) => {
+        if (status !== 'presente') return;
+        const d   = parseInt(dStr);
+        const dow = new Date(ano, m-1, d).getDay();
+        if (dow === 0) { diasBonus++; return; }
+        if (ferNac.some(f => f.d===d && f.m===(m-1))) { diasBonus++; return; }
+        const mesStr = String(m).padStart(2,'0');
+        const diaStr = String(d).padStart(2,'0');
+        if (feriadosCustom.some(f => f.chave===`${mesStr}-${diaStr}`)) diasBonus++;
+      });
+    }
+    return Math.min(BONUS_MAX, diasBonus * BONUS_POR_DIA);
+  } catch(e) { return 0; }
+}
+function calcScore(emp) {
+  const w     = getWeights();
+  const base  = emp.perf*(w.perf/100) + calcAptMedia(emp)*10*(w.apt/100) + calcAssid(emp)*(w.abs/100);
+  const bonus = calcBonus(emp);
+  return Math.min(100, Math.round(base + bonus));
+}
+function getStatus(score) {
+  if (score>=85) return { tag:'promo', label:'🏆 Promoção', cls:'tag-promo' };
+  if (score>=70) return { tag:'ok',    label:'✅ Regular',  cls:'tag-ok'    };
+  if (score>=55) return { tag:'watch', label:'⚠️ Atenção',  cls:'tag-watch' };
+  return               { tag:'risk',  label:'🔴 Risco',    cls:'tag-risk'  };
+}
+function hasAlert(emp) {
+  return calcAptMedia(emp) >= 7 && calcAssid(emp) < 70;
+}
+function getHeatColor(v) {
+  if (v===0) return '#34d399';
+  if (v<=1)  return '#4f8ef7';
+  if (v<=2)  return '#fbbf24';
+  if (v<=3)  return '#fb923c';
+  return           '#f87171';
+}
+
+// ════════════════════════════════════════════════════════
+// ESCOPO DE DADOS
+// ════════════════════════════════════════════════════════
+function getMyEmployees() {
+  const all   = (await getStore()).employees || [];
+  const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
+  if (scope.all) return all;
+  if (scope.sector) {
+    const depts = currentUser?.perfil?.depts || [];
+    const setor = currentUser?.setor || '';
+    return all.filter(e => depts.includes(e.dept) || e.dept===setor);
+  }
+  return all.filter(e => (e.owner_id||e.ownerId) === currentUser?.id);
+}
+
+function canEditEmp(emp) {
+  if (typeof canEdit === 'function') return canEdit(currentUser, 'employees', emp);
+  return true;
+}
+function canDeleteEmp(emp) {
+  if (typeof canDelete === 'function') return canDelete(currentUser, 'employees', emp);
+  return true;
+}
+function canTransferEmp() {
+  return (typeof can==='function') ? can(currentUser,'employees','transfer') : false;
+}
+function canOcorrenciaEmp() {
+  return (typeof can==='function') ? can(currentUser,'employees','ocorrencia') : true;
+}
+
+// Retorna o líder/responsável direto do funcionário com base no dept e turno atuais
+function getLiderDoFuncionario(emp) {
+  const store = await getStore();
+  const users = Object.values(store.users || {});
+  const dept  = emp.dept  || '';
+  const turno = emp.turno || '';
+
+  // Prioridade: lider operacional → encarregado → coordenação → gerencia → diretoria
+  const PRIORIDADE = ['lider','encarregado','coordenacao','gerencia','diretoria'];
+
+  for (const nivel of PRIORIDADE) {
+    const match = users.find(u => {
+      if (u.id === ADMIN_ID || u.nivel === 'admin_master') return false;
+      if ((u.nivel || 'lider') !== nivel) return false;
+
+      // Gerência/Diretoria: responsável por todos
+      if (['gerencia','diretoria'].includes(nivel)) return true;
+
+      const depts     = u.perfil?.depts || [];
+      const setor     = u.setor || '';
+      const liderTurno = u.perfil?.turno || '';
+
+      // Verifica se o dept do funcionário está coberto pelo líder
+      const deptOk = depts.length || setor
+        ? depts.includes(dept) || setor === dept
+        : (emp.owner_id || emp.ownerId) === u.id;
+
+      // Se o líder tem turno definido, o funcionário precisa estar no mesmo turno
+      const turnoOk = liderTurno ? liderTurno === turno : true;
+
+      return deptOk && turnoOk;
+    });
+    if (match) return match;
+  }
+  return null;
+}
+
+// ── Lê faltas reais do rh_ponto (mais atualizado que emp.absences) ──
+function getTotalFaltasEmp(emp) {
+  const PONTO_KEY = 'rh_ponto';
+  try {
+    const allPonto = JSON.parse(localStorage.getItem(PONTO_KEY) || '{}');
+    const ano      = emp.year || new Date().getFullYear();
+    let   total    = 0;
+    for (let m = 1; m <= 12; m++) {
+      const key  = `${emp.id}_${ano}_${String(m).padStart(2,'0')}`;
+      const dias = allPonto[key] || {};
+      Object.values(dias).forEach(s => {
+        if (s === 'falta')    total += 1;
+        if (s === 'atestado') total += 0.5;
+      });
+    }
+    // Se encontrou dados no ponto, usa esse total; caso contrário, cai no absences do store
+    return total > 0 ? total : (emp.absences||[]).reduce((a,b)=>a+b, 0);
+  } catch(e) {
+    return (emp.absences||[]).reduce((a,b)=>a+b, 0);
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// POPULAR SELECTS
+// ════════════════════════════════════════════════════════
+function populateFilialSelect() {
+  const emps    = getMyEmployees();
+  const filiais = [...new Set(emps.map(e=>e.filial))].filter(Boolean).sort();
+  const sel     = document.getElementById('filial-select');
+  const cur     = sel.value;
+  sel.innerHTML = '<option value="">Todas as filiais</option>' +
+    filiais.map(f=>`<option value="${f}" ${f===cur?'selected':''}>${f}</option>`).join('');
+}
+
+function populateDeptSelect() {
+  const store  = await getStore();
+  const emps   = getMyEmployees();
+  const depts  = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
+  const sel    = document.getElementById('dept-select');
+  const cur    = sel.value;
+  sel.innerHTML = '<option value="">Todos os departamentos</option>' +
+    depts.map(d=>`<option value="${d}" ${d===cur?'selected':''}>${d}</option>`).join('');
+}
+
+function populateModalSelects(emp) {
+  const store = await getStore();
+  const opt   = (list, val) =>
+    `<option value="">— Selecione —</option>` +
+    list.map(x=>`<option value="${x.nome||x.name}" ${(x.nome||x.name)===val?'selected':''}>${x.nome||x.name}</option>`).join('');
+
+  document.getElementById('f-dept').innerHTML   = opt(store.depts,   emp?.dept  || '');
+  document.getElementById('f-role').innerHTML   = opt(store.funcoes, emp?.role  || '');
+  document.getElementById('f-filial').innerHTML = opt(store.filiais, emp?.filial|| '');
+  document.getElementById('f-turno').innerHTML  = opt(store.turnos,  emp?.turno || '');
+}
+
+// ════════════════════════════════════════════════════════
+// FILTRO
+// ════════════════════════════════════════════════════════
+function setFilter(el, val) {
+  activeFilter = val;
+  document.querySelectorAll('.filter-chip').forEach(c => {
+    c.classList.remove('active');
+    // reaplica cor correta ao active
+  });
+  el.classList.add('active');
+  renderCards();
+}
+
+// ════════════════════════════════════════════════════════
+// RENDER CARDS
+// ════════════════════════════════════════════════════════
+function renderCards() {
+  const search    = document.getElementById('search-input').value.toLowerCase();
+  const filialSel = document.getElementById('filial-select').value;
+  const deptSel   = document.getElementById('dept-select').value;
+  let   list      = getMyEmployees();
+
+  // Atualiza selects
+  populateFilialSelect();
+  if (filialSel) document.getElementById('filial-select').value = filialSel;
+  populateDeptSelect();
+  if (deptSel) document.getElementById('dept-select').value = deptSel;
+
+  // Aplica filtros
+  list = list.filter(e => {
+    const matchName   = e.name.toLowerCase().includes(search);
+    const matchFilial = !filialSel || e.filial === filialSel;
+    const matchDept   = !deptSel   || e.dept   === deptSel;
+    const matchStatus = !activeFilter || getStatus(calcScore(e)).tag === activeFilter;
+    return matchName && matchFilial && matchDept && matchStatus;
+  });
+
+  const grid = document.getElementById('emp-grid');
+  if (!list.length) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <p style="font-size:14px">Nenhum funcionário encontrado</p>
+        <p style="font-size:12px;margin-top:6px">Tente mudar os filtros ou cadastre um novo funcionário.</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(emp => buildCard(emp)).join('');
+}
+
+function buildCard(emp) {
+  const score    = calcScore(emp);
+  const st       = getStatus(score);
+  const assid    = Math.round(calcAssid(emp));
+  const aptAvg   = calcAptMedia(emp).toFixed(1);
+  const ini      = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const podEdit     = canEditEmp(emp);
+  const podDel      = canDeleteEmp(emp);
+  const podTransfer = canTransferEmp();
+  const podOcorr    = canOcorrenciaEmp();
+  const alert       = hasAlert(emp);
+
+  // Lê faltas do rh_ponto (fonte real) — fallback para emp.absences
+  const totalAbs = getTotalFaltasEmp(emp);
+
+  // Líder responsável pelo funcionário
+  const lider = getLiderDoFuncionario(emp);
+  const liderNome = lider ? lider.name : null;
+  const liderNivel = lider ? (lider.nivel || 'lider') : null;
+  const NIVEL_COR = { diretoria:'#fb923c', gerencia:'#a78bfa', coordenacao:'#fbbf24', encarregado:'#34d399', lider:'rgba(255,255,255,0.5)' };
+
+  // Sparkline — lê faltas mês a mês direto do rh_ponto
+  const sparkData = (() => {
+    try {
+      const PONTO_KEY = 'rh_ponto';
+      const allPonto  = JSON.parse(localStorage.getItem(PONTO_KEY) || '{}');
+      const ano       = emp.year || new Date().getFullYear();
+      return Array.from({length:12}, (_, m) => {
+        const key  = `${emp.id}_${ano}_${String(m+1).padStart(2,'0')}`;
+        const dias = allPonto[key] || {};
+        let f = 0;
+        Object.values(dias).forEach(s => { if(s==='falta') f+=1; if(s==='atestado') f+=0.5; });
+        return f || (emp.absences?.[m] || 0);
+      });
+    } catch(e) { return emp.absences || Array(12).fill(0); }
+  })();
+  const maxAbs = Math.max(...sparkData, 1);
+  const spark  = sparkData.map(v => {
+    const h   = v===0 ? 3 : Math.round((v/maxAbs)*22)+2;
+    const cor = getHeatColor(v);
+    return `<div class="sparkline-bar" style="height:${h}px;background:${cor}"></div>`;
+  }).join('');
+
+  // Barra score
+  const barColor = score>=85?'#34d399':score>=70?'#4f8ef7':score>=55?'#fbbf24':'#f87171';
+
+  // Banner topo
+  const hoje       = new Date(); hoje.setHours(0,0,0,0);
+  const emFerias   = emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim &&
+    new Date(emp.data_ferias_inicio+'T00:00:00') <= hoje &&
+    new Date(emp.data_ferias_fim+'T00:00:00') >= hoje;
+  const banner = emp.afastado
+    ? `<div class="emp-banner afastado">🚫 AFASTADO</div>`
+    : emFerias
+      ? `<div class="emp-banner ferias">🏖️ FÉRIAS${emp.data_ferias_fim?' · até '+new Date(emp.data_ferias_fim+'T00:00:00').toLocaleDateString('pt-BR'):''}</div>`
+      : '';
+  const topPad = (emp.afastado||emFerias) ? 'margin-top:26px' : '';
+
+  return `
+  <div class="emp-card" style="${emp.afastado?'border-color:rgba(239,68,68,.4)':emFerias?'border-color:rgba(34,211,238,.4)':''}">
+    ${banner}
+    <div class="emp-card-header" style="${topPad}">
+      <div class="emp-avatar">${emp.foto ? `<img src="${emp.foto}" style="width:42px;height:42px;border-radius:50%;object-fit:cover">` : ini}</div>
+      <div class="emp-info">
+        <div class="emp-name">${emp.name}</div>
+        <div class="emp-role">${emp.role||''}${emp.dept?' · '+emp.dept:''}</div>
+      </div>
+
+    </div>
+
+    ${alert ? `<div class="emp-alert">⚠️ Alta aptidão, baixa assiduidade</div>` : ''}
+
+    <div class="emp-metrics">
+      <div class="emp-metric">
+        <div class="emp-metric-val perf">${emp.perf}%</div>
+        <div class="emp-metric-label">Desemp.</div>
+      </div>
+      <div class="emp-metric">
+        <div class="emp-metric-val apt">${aptAvg}</div>
+        <div class="emp-metric-label">Apt./10</div>
+      </div>
+      <div class="emp-metric">
+        <div class="emp-metric-val assid ${assid<70?'low':''}">${assid}%</div>
+        <div class="emp-metric-label">Assid.</div>
+      </div>
+      <div class="emp-metric">
+        <div class="emp-metric-val faltas">${totalAbs}</div>
+        <div class="emp-metric-label">Faltas</div>
+      </div>
+    </div>
+
+    <div class="emp-card-footer">
+      <div class="emp-score">${score}</div>
+      <span class="tag ${st.cls}">${st.label}</span>
+    </div>
+
+
+    ${emp.filial||emp.turno ? `
+    <div class="emp-tags">
+      ${emp.filial?`<span class="emp-tag filial">🏭 ${emp.filial}</span>`:''}
+      ${emp.turno ?`<span class="emp-tag turno">🕐 ${emp.turno}</span>`:''}
+    </div>` : ''}
+
+    ${emp.matricula ? `
+    <div class="emp-matricula">
+      🪪 Matrícula: <strong>${emp.matricula}</strong>
+    </div>` : ''}
+
+    ${liderNome ? `
+    <div class="emp-lider" style="margin:0 12px 12px;padding:7px 12px;border-radius:8px;
+      background:var(--surface2);border:1px solid var(--border);
+      display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)">
+      <span style="width:8px;height:8px;border-radius:50%;background:${NIVEL_COR[liderNivel]||'var(--muted)'};flex-shrink:0"></span>
+      <span>Resp.: <strong style="color:var(--text)">${liderNome}</strong></span>
+    </div>` : ''}
+    <div class="emp-actions-bottom">
+      ${podEdit     ? `<button class="emp-btn edit"     onclick="editEmployee(${emp.id})"     title="Editar">✏️</button>` : ''}
+      ${podDel      ? `<button class="emp-btn del"      onclick="deleteEmployee(${emp.id})"   title="Excluir">✕</button>` : ''}
+      ${podTransfer ? `<button class="emp-btn transfer" onclick="openTransferModal(${emp.id})" title="Transferir">🔀</button>` : ''}
+      ${podOcorr    ? `<button class="emp-btn ocorr"    onclick="openOcorrenciaModal(${emp.id},'emp')" title="Ocorrência">📝</button>` : ''}
+    </div>
+
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+// MODAL — ABRIR / FECHAR
+// ════════════════════════════════════════════════════════
+function openModal(emp) {
+  document.getElementById('modal-title').textContent = emp ? 'Editar Funcionário' : 'Novo Funcionário';
+  document.getElementById('f-edit-id').value         = emp?.id || '';
+  document.getElementById('f-name').value            = emp?.name       || '';
+  document.getElementById('f-perf').value            = emp?.perf       || '';
+  document.getElementById('f-matricula').value       = emp?.matricula  || '';
+
+  // Afastado
+  document.getElementById('f-afastado').checked           = !!emp?.afastado;
+  document.getElementById('f-data-afastamento').value     = emp?.data_afastamento || '';
+  document.getElementById('afastado-date-wrap').style.display = emp?.afastado ? 'block' : 'none';
+
+  // Férias
+  document.getElementById('f-ferias').checked             = !!emp?.ferias;
+  document.getElementById('f-ferias-inicio').value        = emp?.data_ferias_inicio || '';
+  document.getElementById('f-ferias-fim').value           = emp?.data_ferias_fim    || '';
+  document.getElementById('ferias-date-wrap').style.display = emp?.ferias ? 'block' : 'none';
+
+  // Absences
+  for (let i=0; i<12; i++) {
+    const el = document.getElementById(`abs-${i}`);
+    if (el) el.value = emp?.absences?.[i] || '';
+  }
+
+  // Competências
+  APT_KEYS.forEach(k => {
+    const el = document.getElementById(`c-${k}`);
+    if (el) el.value = emp?.competencies?.[k] ?? 5;
+  });
+
+  populateModalSelects(emp);
+
+  // Foto — preserva ao editar
+  const fotoVal = emp?.foto || '';
+  document.getElementById('f-foto').value = fotoVal;
+  const prevEl = document.getElementById('foto-preview-modal');
+  if (fotoVal) {
+    prevEl.innerHTML = `<img src="${fotoVal}" alt="foto">`;
+  } else {
+    const nm  = emp?.name || '';
+    const ini = nm.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase() || '?';
+    prevEl.innerHTML = `<span id="foto-ini-modal">${ini}</span>`;
+  }
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('f-name').focus();
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function editEmployee(id) {
+  const emp = ((await getStore()).employees||[]).find(e=>e.id===id);
+  if (!emp) return;
+  if (!canEditEmp(emp)) { showToast('⚠️ Sem permissão para editar este funcionário.','warn'); return; }
+  openModal(emp);
+}
+
+function deleteEmployee(id) {
+  const store = await getStore();
+  const emp   = (store.employees||[]).find(e=>e.id===id);
+  if (!emp) return;
+  if (!canDeleteEmp(emp)) { showToast('⚠️ Sem permissão para excluir este funcionário.','warn'); return; }
+  if (!confirm(`Excluir "${emp.name}"?\nEsta ação não pode ser desfeita.`)) return;
+  store.employees = store.employees.filter(e=>e.id!==id);
+  await saveStore(store);
+  renderCards();
+  await registrarLog('excluiu', 'Funcionários', `Removeu: <strong>${emp.name}</strong>`);
+  showToast('✅ Funcionário excluído.');
+}
+
+// ════════════════════════════════════════════════════════
+// SALVAR
+// ════════════════════════════════════════════════════════
+function saveEmployee() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { showToast('⚠️ Nome é obrigatório.','warn'); document.getElementById('f-name').focus(); return; }
+
+  const editId = document.getElementById('f-edit-id').value;
+  const store  = await getStore();
+  if (!store.employees) store.employees = [];
+
+  const competencies = {};
+  APT_KEYS.forEach(k => {
+    const el = document.getElementById(`c-${k}`);
+    competencies[k] = el ? Math.min(10, Math.max(0, parseInt(el.value)||5)) : 5;
+  });
+
+  const absences = Array.from({length:12},(_,i) => {
+    const el = document.getElementById(`abs-${i}`);
+    return el ? parseInt(el.value)||0 : 0;
+  });
+
+  const afastado        = document.getElementById('f-afastado').checked;
+  const ferias          = document.getElementById('f-ferias').checked;
+  const data_afastamento = afastado  ? (document.getElementById('f-data-afastamento').value||null) : null;
+  const data_ferias_inicio = ferias  ? (document.getElementById('f-ferias-inicio').value||null) : null;
+  const data_ferias_fim    = ferias  ? (document.getElementById('f-ferias-fim').value||null) : null;
+
+  const data = {
+    name,
+    dept:      document.getElementById('f-dept').value,
+    role:      document.getElementById('f-role').value,
+    filial:    document.getElementById('f-filial').value,
+    turno:     document.getElementById('f-turno').value,
+    matricula: document.getElementById('f-matricula').value.trim(),
+    perf:      parseInt(document.getElementById('f-perf').value)||70,
+    year:      new Date().getFullYear(),
+    absences, competencies,
+    afastado, data_afastamento,
+    ferias, data_ferias_inicio, data_ferias_fim,
+    foto: document.getElementById('f-foto').value || null,
+  };
+
+  if (editId) {
+    const idx = store.employees.findIndex(e=>String(e.id)===String(editId));
+    if (idx >= 0) {
+      store.employees[idx] = { ...store.employees[idx], ...data };
+    }
+    await registrarLog('editou', 'Funcionários', `Editou: <strong>${name}</strong>`);
+    showToast('✅ Funcionário atualizado!');
+  } else {
+    const newId = Date.now();
+    store.employees.push({
+      id: newId, ...data,
+      owner_id: currentUser.id,
+    });
+    await registrarLog('criou', 'Funcionários', `Novo registro: <strong>${name}</strong> — ${data.dept||''}`);
+    showToast('✅ Funcionário cadastrado!');
+  }
+
+  await saveStore(store);
+  closeModal();
+  renderCards();
+}
+
+// ════════════════════════════════════════════════════════
+// TOGGLE AFASTADO / FÉRIAS
+// ════════════════════════════════════════════════════════
+function toggleAfastado() {
+  const checked = document.getElementById('f-afastado').checked;
+  document.getElementById('afastado-date-wrap').style.display = checked ? 'block' : 'none';
+  if (checked && !document.getElementById('f-data-afastamento').value) {
+    document.getElementById('f-data-afastamento').value = new Date().toISOString().split('T')[0];
+  }
+}
+
+function toggleFerias() {
+  const checked = document.getElementById('f-ferias').checked;
+  document.getElementById('ferias-date-wrap').style.display = checked ? 'block' : 'none';
+  if (checked) {
+    const hoje = new Date();
+    if (!document.getElementById('f-ferias-inicio').value)
+      document.getElementById('f-ferias-inicio').value = hoje.toISOString().split('T')[0];
+    if (!document.getElementById('f-ferias-fim').value) {
+      const fim = new Date(); fim.setDate(fim.getDate()+29);
+      document.getElementById('f-ferias-fim').value = fim.toISOString().split('T')[0];
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// TRANSFERIR FUNCIONÁRIO
+// ════════════════════════════════════════════════════════
+function openTransferModal(id) {
+  const store = await getStore();
+  const emp   = (store.employees||[]).find(e=>e.id===id);
+  if (!emp) return;
+
+  const opt = (list, curVal) =>
+    `<option value="">— Manter atual (${curVal||'—'}) —</option>` +
+    list.map(x=>`<option value="${x.nome||x.name}">${x.nome||x.name}</option>`).join('');
+
+  document.getElementById('tr-emp-name').textContent = emp.name;
+  document.getElementById('tr-edit-id').value        = id;
+  // Popula líderes
+  const liderAtual = Object.values(store.users||{}).find(u=>u.id===(emp.owner_id||emp.ownerId));
+  const lideres = Object.values(store.users||{}).filter(u=>u.nivel && u.nivel !== 'admin_master');
+  document.getElementById('tr-lider').innerHTML =
+    `<option value="">— Manter líder atual (${liderAtual?.name||'—'}) —</option>` +
+    lideres.map(u=>`<option value="${u.id}">${u.name} · ${u.nivel||''}</option>`).join('');
+
+  document.getElementById('tr-dept').innerHTML   = opt(store.depts||[],   emp.dept);
+  document.getElementById('tr-role').innerHTML   = opt(store.funcoes||[], emp.role);
+  document.getElementById('tr-filial').innerHTML = opt(store.filiais||[], emp.filial);
+  document.getElementById('tr-turno').innerHTML  = opt(store.turnos||[],  emp.turno);
+
+  document.getElementById('modal-transfer').classList.add('open');
+}
+
+function closeTransferModal() {
+  document.getElementById('modal-transfer').classList.remove('open');
+}
+
+function saveTransfer() {
+  const id    = document.getElementById('tr-edit-id').value;
+  const store = await getStore();
+  const idx   = (store.employees||[]).findIndex(e=>String(e.id)===String(id));
+  if (idx < 0) { showToast('❌ Funcionário não encontrado.','error'); return; }
+
+  const dept   = document.getElementById('tr-dept').value;
+  const role   = document.getElementById('tr-role').value;
+  const filial = document.getElementById('tr-filial').value;
+  const turno  = document.getElementById('tr-turno').value;
+
+  if (dept)   store.employees[idx].dept   = dept;
+  if (role)   store.employees[idx].role   = role;
+  if (filial) store.employees[idx].filial = filial;
+  if (turno)  store.employees[idx].turno  = turno;
+
+  const novoLider = document.getElementById('tr-lider').value;
+  if (novoLider) {
+    store.employees[idx].owner_id = novoLider;
+    store.employees[idx].ownerId  = novoLider;
+  }
+
+  await saveStore(store);
+  closeTransferModal();
+  renderCards();
+  await registrarLog('editou', 'Funcionários', `Transferiu: <strong>${store.employees[idx]?.name||''}</strong>`);
+  showToast('✅ Funcionário transferido!');
+}
+
+document.getElementById('modal-transfer').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeTransferModal();
+});
+
+// ════════════════════════════════════════════════════════
+// OCORRÊNCIA DO FUNCIONÁRIO
+// ════════════════════════════════════════════════════════
+function openOcorrenciaModal(id, tipo) {
+  const store = await getStore();
+  const emp   = (store.employees||[]).find(e=>e.id===id);
+  if (!emp) return;
+
+  document.getElementById('oc-target-name').textContent = emp.name;
+  document.getElementById('oc-edit-id').value   = id;
+  document.getElementById('oc-tipo-ref').value  = 'funcionario';
+  document.getElementById('oc-tipo').value      = '';
+  document.getElementById('oc-desc').value      = '';
+  document.getElementById('oc-data').value      = new Date().toISOString().split('T')[0];
+
+  document.getElementById('modal-ocorrencia-emp').classList.add('open');
+}
+
+function closeOcorrenciaModal() {
+  document.getElementById('modal-ocorrencia-emp').classList.remove('open');
+}
+
+function saveOcorrencia() {
+  const refId = document.getElementById('oc-edit-id').value;
+  const tipo  = document.getElementById('oc-tipo').value;
+  const desc  = document.getElementById('oc-desc').value.trim();
+  const data  = document.getElementById('oc-data').value;
+
+  if (!tipo) { showToast('⚠️ Selecione o tipo de ocorrência.','warn'); return; }
+  if (!desc) { showToast('⚠️ Descreva a ocorrência.','warn'); document.getElementById('oc-desc').focus(); return; }
+
+  const store  = await getStore();
+  const emp    = (store.employees||[]).find(e=>String(e.id)===String(refId));
+
+  // Salva em rh_ocorrencias — mesma chave que ocorrencias.html lê
+  const lista = await LS.get('rh_ocorrencias', []);
+  lista.unshift({
+    id:        uid(),
+    ts:        data ? new Date(data+'T00:00:00').toISOString() : new Date().toISOString(),
+    empId:     emp?.id,
+    empName:   emp?.name  || '—',
+    empDept:   emp?.dept  || '—',
+    tipo,
+    desc,
+    obs:       '',
+    status:    'pendente',
+    respName:  currentUser.name,
+    respId:    currentUser.id,
+    createdAt: new Date().toISOString(),
+  });
+  await LS.set('rh_ocorrencias', lista);
+  await registrarLog('criou', 'Ocorrências', `Ocorrência <strong>${tipo}</strong> para <strong>${emp?.name||'—'}</strong>`);
+  closeOcorrenciaModal();
+  showToast('✅ Ocorrência registrada!');
+}
+
+document.getElementById('modal-ocorrencia-emp').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeOcorrenciaModal();
+});
+
+// ════════════════════════════════════════════════════════
+// FECHAR MODAL AO CLICAR FORA
+// ════════════════════════════════════════════════════════
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ── Foto do funcionário ──────────────────────────────
+function processarFoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      canvas.width  = 80;
+      canvas.height = 80;
+      const ctx = canvas.getContext('2d');
+      // Crop centralizado
+      const size = Math.min(img.width, img.height);
+      const sx = (img.width  - size) / 2;
+      const sy = (img.height - size) / 2;
+      ctx.drawImage(img, sx, sy, size, size, 0, 0, 80, 80);
+      const base64 = canvas.toDataURL('image/jpeg', 0.65);
+      document.getElementById('f-foto').value = base64;
+      document.getElementById('foto-preview-modal').innerHTML =
+        `<img src="${base64}" alt="foto">`;
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = ''; // reset para permitir reselecionar
+}
+
+function removerFoto() {
+  document.getElementById('f-foto').value = '';
+  const nm  = document.getElementById('f-name').value.trim();
+  const ini = nm.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase() || '?';
+  document.getElementById('foto-preview-modal').innerHTML =
+    `<span id="foto-ini-modal">${ini}</span>`;
+}
+
+
+// ── Verificação de nome duplicado ───────────────────
+function verificarNomeDuplicado() {
+  const nome    = document.getElementById('f-name').value.trim().toLowerCase();
+  const editId  = document.getElementById('f-edit-id').value;
+  const aviso   = document.getElementById('nome-duplicado-aviso');
+  aviso.style.display = 'none';
+  aviso.innerHTML = '';
+
+  if (!nome || nome.length < 3) return;
+
+  const store = await getStore();
+  const dups  = (store.employees || []).filter(e =>
+    e.name.toLowerCase() === nome &&
+    String(e.id) !== String(editId)
+  );
+
+  if (!dups.length) return;
+
+  const itens = dups.map(e => {
+    const lider = Object.values(store.users || {}).find(u => u.id === (e.owner_id || e.ownerId));
+    return `<div class="dup-item">
+      👤 <strong>${e.name}</strong>
+      ${e.dept   ? ` · 🏢 ${e.dept}`   : ''}
+      ${e.filial ? ` · 🏭 ${e.filial}` : ''}
+      ${e.turno  ? ` · 🕐 ${e.turno}`  : ''}
+      ${e.role   ? ` · 💼 ${e.role}`   : ''}
+      ${e.matricula ? ` · 🪪 ${e.matricula}` : ''}
+      ${lider    ? ` · 👷 ${lider.name}` : ''}
+    </div>`;
+  }).join('');
+
+  aviso.innerHTML = `⚠️ <strong>Atenção!</strong> Já existe ${dups.length > 1 ? dups.length + ' funcionários' : 'um funcionário'} com este nome:${itens}`;
+  aviso.style.display = 'block';
+}
+
+</script>
+</body>
+</html>

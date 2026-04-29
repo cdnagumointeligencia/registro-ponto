@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registros · RH Nagumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sidebar.css">
+<link rel="stylesheet" href="../light-theme.css">
+<link rel="stylesheet" href="../responsive.css">
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../firebase.js"></script>
+<script src="../permissions.js"></script>
+<script src="../shared.js"></script>
+<style>
+:root {
+  --bg:#0b0d14; --surface:#12151f; --surface2:#1a1e2e; --surface3:#222638;
+  --border:#2a2f45; --accent:#4f8ef7; --accent2:#a78bfa;
+  --green:#34d399; --yellow:#fbbf24; --red:#f87171; --orange:#fb923c;
+  --cyan:#22d3ee; --text:#ffffff; --muted:#94a3b8;
+  --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --sidebar-w:220px;
+}
+/* [light-theme.css] body.light-theme {
+  --bg:#EEF2F8; --surface:#fff; --surface2:#F4F7FB; --surface3:#E8EDF5;
+  --border:#D6DDE8; --accent:#2563eb; --accent2:#7c3aed; --green:#059669;
+  --yellow:#d97706; --red:#dc2626; --orange:#ea580c; --cyan:#0891b2;
+  --text:#0f172a; --muted:#64748b;
+} */
+/* [light-theme.css] body.light-theme 
+
+body.light-theme .main             { background:#EEF2F8; } */
+/* [light-theme.css] body.light-theme .page-title       { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .page-title span  { color:#2563eb; } */
+/* [light-theme.css] body.light-theme .page-sub         { color:#64748b; } */
+/* [light-theme.css] body.light-theme .search-input     { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .filter-select    { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .filter-chip      { background:#fff; border-color:#CBD5E1; color:#64748b; } */
+/* [light-theme.css] body.light-theme .filter-chip.active { background:rgba(37,99,235,.1); border-color:#2563eb; color:#2563eb; } */
+/* [light-theme.css] body.light-theme .log-card         { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .log-header       { background:#F4F7FB; border-bottom-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .log-col-header   { color:#475569; border-bottom-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .log-row          { border-bottom-color:#F1F5F9; } */
+/* [light-theme.css] body.light-theme .log-row:hover    { background:#F4F7FB; } */
+/* [light-theme.css] body.light-theme .log-datetime     { color:#94a3b8; } */
+/* [light-theme.css] body.light-theme .log-modulo       { color:#374151; } */
+/* [light-theme.css] body.light-theme .log-ip           { color:#94a3b8; } */
+/* [light-theme.css] body.light-theme .log-detail       { color:#374151; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-track { background:#F1F5F9; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-thumb { background:#CBD5E1; } */
+
+/* ── Base ── */
+* { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:14px; }
+body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
+
+/* ── Main ── */
+.main { margin-left:var(--sidebar-w); padding:24px 28px; min-height:100vh; }
+
+/* ── Topbar ── */
+.topbar { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:12px; }
+.page-title { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; }
+.page-title span { color:var(--accent); }
+.page-sub { font-size:12px; color:var(--muted); margin-top:4px; }
+
+/* ── Botão exportar ── */
+.btn-export {
+  display:inline-flex; align-items:center; gap:8px; padding:9px 18px;
+  border-radius:8px; border:1px solid rgba(79,142,247,.4);
+  background:rgba(79,142,247,.1); color:var(--accent);
+  font-family:var(--font-body); font-size:12px; font-weight:600;
+  cursor:pointer; transition:all .2s;
+}
+.btn-export:hover { background:rgba(79,142,247,.2); transform:translateY(-1px); }
+
+/* ── Filtros ── */
+.filter-row { display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+.search-wrap { position:relative; }
+.search-icon { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:13px; pointer-events:none; }
+.search-input {
+  background:var(--surface); border:1px solid var(--border); border-radius:9px;
+  color:var(--text); font-family:var(--font-body); font-size:13px;
+  padding:8px 12px 8px 32px; outline:none; transition:border-color .2s; width:220px;
+}
+.search-input:focus { border-color:var(--accent); }
+.search-input::placeholder { color:var(--muted); }
+.filter-select {
+  background:var(--surface); border:1px solid var(--border); border-radius:9px;
+  color:var(--text); font-family:var(--font-body); font-size:13px;
+  padding:7px 12px; outline:none; cursor:pointer; transition:border-color .2s;
+}
+.filter-select:focus { border-color:var(--accent); }
+.filter-select option { background:var(--surface2); }
+.filter-chip {
+  padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600;
+  cursor:pointer; border:1px solid var(--border); background:var(--surface);
+  color:var(--muted); transition:all .15s; user-select:none;
+}
+.filter-chip:hover { border-color:var(--accent); color:var(--text); }
+.filter-chip.active { background:rgba(79,142,247,.15); border-color:var(--accent); color:var(--accent); }
+
+/* ── Log card ── */
+.log-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+.log-header {
+  padding:14px 20px; display:flex; align-items:center; gap:10px;
+  border-bottom:1px solid var(--border); background:var(--surface2);
+}
+.log-title  { font-family:var(--font-head); font-size:14px; font-weight:700; color:var(--text); }
+.log-count  { padding:2px 10px; border-radius:20px; font-size:11px; font-weight:600; background:rgba(79,142,247,.15); color:var(--accent); }
+
+/* ── Tabela ── */
+.log-table { width:100%; border-collapse:collapse; min-width:900px; }
+.log-col-header {
+  font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px;
+  color:var(--muted); padding:10px 16px; border-bottom:2px solid var(--border);
+  text-align:left; background:var(--surface2); white-space:nowrap;
+}
+.log-row { border-bottom:1px solid rgba(42,47,69,.4); transition:background .12s; }
+.log-row:last-child { border-bottom:none; }
+.log-row:hover { background:var(--surface2); }
+.log-row td { padding:11px 16px; vertical-align:middle; }
+
+.log-datetime { font-size:12px; color:var(--muted); font-family:monospace; white-space:nowrap; }
+
+/* avatar usuário */
+.user-cell  { display:flex; align-items:center; gap:8px; }
+.user-avatar {
+  width:30px; height:30px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:10px; font-weight:800; color:#fff;
+}
+.user-name { font-size:13px; font-weight:600; color:var(--text); }
+
+/* badges ação */
+.acao-badge { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:7px; font-size:11px; font-weight:700; white-space:nowrap; }
+.acao-criou  { background:rgba(52,211,153,.15);  color:#34d399; border:1px solid rgba(52,211,153,.3);  }
+.acao-editou { background:rgba(79,142,247,.15);  color:#4f8ef7; border:1px solid rgba(79,142,247,.3);  }
+.acao-excluiu{ background:rgba(248,113,113,.15); color:#f87171; border:1px solid rgba(248,113,113,.3); }
+.acao-login  { background:rgba(251,191,36,.15);  color:#fbbf24; border:1px solid rgba(251,191,36,.3);  }
+.acao-outro  { background:rgba(167,139,250,.15); color:#a78bfa; border:1px solid rgba(167,139,250,.3); }
+
+.log-modulo { font-size:13px; color:var(--text); }
+.log-ip     { font-size:11px; color:var(--muted); font-family:monospace; }
+
+/* detalhe com setas de mudança */
+.log-detail { font-size:12px; color:var(--muted); max-width:320px; }
+.log-detail .de   { color:#f87171; text-decoration:line-through; }
+.log-detail .para { color:#34d399; font-weight:700; }
+.log-detail .seta { color:var(--muted); margin:0 4px; }
+.log-detail strong { color:var(--text); }
+
+/* ── Toast ── */
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+.toast { padding:10px 18px; border-radius:10px; font-size:12px; font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4); animation:fadeUp .25s ease; max-width:320px; pointer-events:auto; }
+.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
+.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
+.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── Responsive ── */
+@media(max-width:1024px) {
+  :root { --sidebar-w:56px; }
+  
+  
+  
+  
+
+}
+@media(max-width:768px) {
+  :root { --sidebar-w:0px; }
+  
+  .main { margin-left:0; padding:16px; }
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+<nav id="app-sidebar"></nav>
+
+<main class="main">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div>
+      <div class="page-title">Registros <span>Auditoria</span></div>
+      <div class="page-sub">Log completo de alterações no sistema</div>
+    </div>
+    <button class="btn-export" onclick="exportarCSV()">📋 Exportar CSV</button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filter-row">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" id="search-input"
+        placeholder="Buscar usuário ou ação..." oninput="renderLog()">
+    </div>
+    <select class="filter-select" id="filter-acao" onchange="renderLog()">
+      <option value="">Todas as ações</option>
+      <option value="criou">Criação</option>
+      <option value="editou">Edição</option>
+      <option value="excluiu">Exclusão</option>
+      <option value="login">Login</option>
+    </select>
+    <select class="filter-select" id="filter-modulo" onchange="renderLog()">
+      <option value="">Todos os módulos</option>
+      <option value="Funcionários">Funcionários</option>
+      <option value="Ponto">Ponto</option>
+      <option value="Aptidões">Aptidões</option>
+      <option value="Quadro">Quadro</option>
+      <option value="Sistema">Sistema</option>
+      <option value="Configurações">Configurações</option>
+    </select>
+    <select class="filter-select" id="filter-periodo" onchange="renderLog()">
+      <option value="30">Últimos 30 dias</option>
+      <option value="7">Últimos 7 dias</option>
+      <option value="1">Hoje</option>
+      <option value="90">Últimos 90 dias</option>
+      <option value="0">Todos</option>
+    </select>
+    <div class="filter-chip active" onclick="setTipo(this,'')">Todas</div>
+    <div class="filter-chip"        onclick="setTipo(this,'criou')">Criação</div>
+    <div class="filter-chip"        onclick="setTipo(this,'editou')">Edição</div>
+    <div class="filter-chip"        onclick="setTipo(this,'excluiu')">Exclusão</div>
+  </div>
+
+  <!-- Log -->
+  <div class="log-card">
+    <div class="log-header">
+      <div class="log-title">Log de Atividades</div>
+      <div class="log-count" id="log-count">0 eventos</div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th class="log-col-header">Data/Hora</th>
+            <th class="log-col-header">Usuário</th>
+            <th class="log-col-header">Ação</th>
+            <th class="log-col-header">Módulo</th>
+            <th class="log-col-header">Detalhes</th>
+            <th class="log-col-header">Dispositivo</th>
+          </tr>
+        </thead>
+        <tbody id="log-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ════════════════════════════════════════════════════════
+// ESTADO
+// ════════════════════════════════════════════════════════
+let currentUser = null;
+let tipoFiltro  = '';
+
+const LOG_KEY = 'rh_audit_log';
+
+// Paleta de cores por usuário (consistente)
+const USER_COLORS = [
+  ['#4f8ef7','#a78bfa'], ['#34d399','#22d3ee'], ['#f87171','#fb923c'],
+  ['#fbbf24','#34d399'], ['#a78bfa','#f472b6'], ['#22d3ee','#4f8ef7'],
+];
+function userColorIdx(id) {
+  let h = 0;
+  for (let i=0; i<id.length; i++) h = (h*31 + id.charCodeAt(i)) & 0xffffffff;
+  return Math.abs(h) % USER_COLORS.length;
+}
+
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  currentUser = await requireSession();
+  if (!currentUser) return;
+
+  initTheme();
+  initSidebar('audit', currentUser);
+
+  // Gera logs demo se vazio
+  renderLog();
+});
+
+// ════════════════════════════════════════════════════════
+// DADOS — localStorage
+// ════════════════════════════════════════════════════════
+async function await getLogs() {
+  return await LS.get(LOG_KEY, []);
+}
+
+// ════════════════════════════════════════════════════════
+// FILTRO CHIPS
+// ════════════════════════════════════════════════════════
+function setTipo(el, val) {
+  tipoFiltro = val;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  // Sincroniza o select de ação
+  document.getElementById('filter-acao').value = val;
+  renderLog();
+}
+
+// ════════════════════════════════════════════════════════
+// RENDER LOG
+// ════════════════════════════════════════════════════════
+function renderLog() {
+  const search  = document.getElementById('search-input').value.toLowerCase();
+  const acao    = document.getElementById('filter-acao').value;
+  const modulo  = document.getElementById('filter-modulo').value;
+  const periodo = parseInt(document.getElementById('filter-periodo').value);
+
+  let logs = await getLogs();
+
+  // Filtro período
+  if (periodo > 0) {
+    const corte = new Date();
+    corte.setDate(corte.getDate() - periodo);
+    logs = logs.filter(l => new Date(l.ts) >= corte);
+  }
+
+  // Filtro ação
+  if (acao) logs = logs.filter(l => l.acao === acao);
+
+  // Filtro chip tipo (sincronizado com select)
+  if (tipoFiltro) logs = logs.filter(l => l.acao === tipoFiltro);
+
+  // Filtro módulo
+  if (modulo) logs = logs.filter(l => l.modulo === modulo);
+
+  // Busca
+  if (search) logs = logs.filter(l =>
+    l.userName?.toLowerCase().includes(search) ||
+    l.acao?.toLowerCase().includes(search)     ||
+    l.modulo?.toLowerCase().includes(search)   ||
+    l.detalhes?.toLowerCase().includes(search)
+  );
+
+  document.getElementById('log-count').textContent = `${logs.length} evento${logs.length!==1?'s':''}`;
+
+  const tbody = document.getElementById('log-tbody');
+  if (!logs.length) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:50px;color:var(--muted)">
+      Nenhum registro encontrado com esses filtros.
+    </td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = logs.map(l => buildRow(l)).join('');
+}
+
+// ════════════════════════════════════════════════════════
+// BUILD ROW
+// ════════════════════════════════════════════════════════
+function buildRow(l) {
+  // Data/hora
+  const dt     = new Date(l.ts);
+  const data   = dt.toLocaleDateString('pt-BR');
+  const hora   = dt.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+
+  // Avatar usuário
+  const ini    = (l.userName||'?').split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const [c1,c2]= USER_COLORS[userColorIdx(l.userId||l.userName||'?')];
+
+  // Badge ação
+  let acaoCls, acaoEmoji, acaoLabel;
+  switch(l.acao) {
+    case 'criou':   acaoCls='acao-criou';   acaoEmoji='＋';  acaoLabel='Criou';   break;
+    case 'editou':  acaoCls='acao-editou';  acaoEmoji='✏️';  acaoLabel='Editou';  break;
+    case 'excluiu': acaoCls='acao-excluiu'; acaoEmoji='🗑️';  acaoLabel='Excluiu'; break;
+    case 'login':   acaoCls='acao-login';   acaoEmoji='🔑';  acaoLabel='Login';   break;
+    default:        acaoCls='acao-outro';   acaoEmoji='·';   acaoLabel=l.acao||'—';
+  }
+
+  return `
+  <tr class="log-row">
+    <td>
+      <div class="log-datetime">${data} ${hora}</div>
+    </td>
+    <td>
+      <div class="user-cell">
+        <div class="user-avatar" style="background:linear-gradient(135deg,${c1},${c2})">${ini}</div>
+        <div class="user-name">${l.userName||'—'}</div>
+      </div>
+    </td>
+    <td>
+      <span class="acao-badge ${acaoCls}">${acaoEmoji} ${acaoLabel}</span>
+    </td>
+    <td class="log-modulo">${l.modulo||'—'}</td>
+    <td class="log-detail">${l.detalhes||'—'}</td>
+    <td class="log-ip">${l.device||'—'}</td>
+  </tr>`;
+}
+
+// ════════════════════════════════════════════════════════
+// EXPORTAR CSV
+// ════════════════════════════════════════════════════════
+function exportarCSV() {
+  const logs = await getLogs();
+  if (!logs.length) { showToast('⚠️ Nenhum registro para exportar.','warn'); return; }
+
+  const header = ['Data/Hora','Usuário','Ação','Módulo','Detalhes','Dispositivo'];
+  const rows   = logs.map(l => {
+    const dt  = new Date(l.ts).toLocaleString('pt-BR');
+    const det = (l.detalhes||'').replace(/<[^>]+>/g,''); // remove HTML tags
+    return [dt, l.userName||'', l.acao||'', l.modulo||'', det, l.device||''].map(v=>`"${v}"`).join(',');
+  });
+
+  const csv  = [header.join(','), ...rows].join('\n');
+  const blob = new Blob(['\uFEFF'+csv], { type:'text/csv;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  const date = new Date().toISOString().slice(0,10);
+  a.href     = url;
+  a.download = `auditoria-nagumo-${date}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('✅ CSV exportado com sucesso!');
+}
+</script>
+</body>
+</html>

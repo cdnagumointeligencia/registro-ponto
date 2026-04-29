@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ranking · RH Nagumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sidebar.css">
+<link rel="stylesheet" href="../light-theme.css">
+<link rel="stylesheet" href="../responsive.css">
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../firebase.js"></script>
+<script src="../permissions.js"></script>
+<script src="../shared.js"></script>
+<style>
+:root {
+  --bg:#0b0d14; --surface:#12151f; --surface2:#1a1e2e; --surface3:#222638;
+  --border:#2a2f45; --accent:#4f8ef7; --accent2:#a78bfa;
+  --green:#34d399; --yellow:#fbbf24; --red:#f87171; --orange:#fb923c;
+  --cyan:#22d3ee; --text:#ffffff; --muted:#94a3b8;
+  --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --sidebar-w:220px;
+}
+/* [light-theme.css] body.light-theme {
+  --bg:#EEF2F8; --surface:#fff; --surface2:#F4F7FB; --surface3:#E8EDF5;
+  --border:#D6DDE8; --accent:#2563eb; --accent2:#7c3aed; --green:#059669;
+  --yellow:#d97706; --red:#dc2626; --orange:#ea580c; --cyan:#0891b2;
+  --text:#0f172a; --muted:#64748b;
+} */
+/* [light-theme.css] body.light-theme 
+
+body.light-theme .main             { background:#EEF2F8; } */
+/* [light-theme.css] body.light-theme .page-title       { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .page-title span  { color:#fbbf24; } */
+/* [light-theme.css] body.light-theme .page-subtitle    { color:#64748b; } */
+.page-subtitle { font-size:12px; color:var(--muted); margin-top:8px; display:flex; align-items:center; flex-wrap:wrap; gap:4px; }
+/* [light-theme.css] body.light-theme .filter-select    { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .sort-chip        { background:#fff; border-color:#CBD5E1; color:#64748b; } */
+/* [light-theme.css] body.light-theme .sort-chip.active { background:rgba(37,99,235,.1); border-color:#2563eb; color:#2563eb; } */
+/* [light-theme.css] body.light-theme .podium-card      { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .podium-card.first{ background:linear-gradient(160deg,#fef9e7,#fff8d6); border-color:#fbbf24; } */
+/* [light-theme.css] body.light-theme .podium-name      { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .podium-dept      { color:#64748b; } */
+/* [light-theme.css] body.light-theme .rank-table th    { background:#F4F7FB; color:#475569; border-bottom-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .rank-table td    { border-bottom-color:#F1F5F9; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .rank-table tr:hover td { background:#F4F7FB; } */
+/* [light-theme.css] body.light-theme .score-bar-bg     { background:#E2E8F0; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-track { background:#F1F5F9; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-thumb { background:#CBD5E1; } */
+
+/* ── Base ── */
+* { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:14px; }
+body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
+
+/* ── Main ── */
+.main { margin-left:var(--sidebar-w); padding:24px 28px; min-height:100vh; }
+.topbar { margin-bottom:18px; }
+.page-title { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; }
+.page-title span { color:var(--yellow); }
+/* ── Score Tri-Pilar subtitle ── */
+.pilar-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;
+  cursor: help; white-space: nowrap; transition: filter .15s;
+}
+.pilar-pill:hover { filter: brightness(1.15); }
+.pilar-sep { display:inline-block; margin:0 4px; color:var(--muted); font-size:11px; }
+
+/* Tooltip global — posicionado via JS */
+#pilar-tooltip {
+  position: fixed; z-index: 99999; pointer-events: none;
+  width: 300px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.6);
+  opacity: 0; visibility: hidden; transition: opacity .18s, visibility .18s;
+  font-size: 12px; color: var(--text); line-height: 1.55; font-weight: 400;
+}
+#pilar-tooltip.show { opacity: 1; visibility: visible; }
+#pilar-tooltip::after {
+  content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+  border:6px solid transparent; border-top-color:var(--border);
+}
+.pilar-tip-title { font-family:var(--font-head); font-size:13px; font-weight:800; color:var(--text); margin-bottom:7px; }
+.pilar-tip-formula {
+  font-size:11px; color:var(--accent); background:rgba(79,142,247,.1);
+  border:1px solid rgba(79,142,247,.2); border-radius:7px;
+  padding:6px 9px; margin-bottom:8px; font-family:monospace;
+}
+.pilar-tip-desc { font-size:11.5px; color:var(--text); opacity:.8; }
+.pilar-tip-table { width:100%; border-collapse:collapse; margin-top:8px; font-size:11px; }
+.pilar-tip-table td { padding:3px 5px; border-bottom:1px solid rgba(128,128,128,.15); color:var(--text); }
+.pilar-tip-table td:first-child { opacity:.65; white-space:nowrap; }
+/* [light-theme.css] body.light-theme #pilar-tooltip { background:#fff; border-color:#e2e8f0; } */
+/* [light-theme.css] body.light-theme #pilar-tooltip::after { border-top-color:#e2e8f0; } */
+
+/* ── Filtros ── */
+.filter-row { display:flex; align-items:center; gap:10px; margin-bottom:22px; flex-wrap:wrap; }
+.filter-select {
+  background:var(--surface); border:1px solid var(--border); border-radius:9px;
+  color:var(--text); font-family:var(--font-body); font-size:13px;
+  padding:7px 12px; outline:none; cursor:pointer; transition:border-color .2s;
+}
+.filter-select:focus { border-color:var(--accent); }
+.filter-select option { background:var(--surface2); }
+
+.sort-chip {
+  padding:6px 16px; border-radius:20px; font-size:12px; font-weight:600;
+  cursor:pointer; border:1px solid var(--border); background:var(--surface);
+  color:var(--muted); transition:all .15s; user-select:none;
+}
+.sort-chip:hover { border-color:var(--accent); color:var(--text); }
+.sort-chip.active { background:var(--yellow); border-color:var(--yellow); color:#0b0d14; }
+
+/* ── Pódio Top 3 ── */
+.podium-row {
+  display:grid; grid-template-columns:1fr 1.12fr 1fr;
+  gap:14px; margin-bottom:22px; align-items:end;
+}
+.podium-card {
+  background:var(--surface); border:1.5px solid var(--border);
+  border-radius:16px; padding:28px 20px 22px;
+  text-align:center; position:relative;
+  transition:transform .2s, box-shadow .2s;
+}
+.podium-card:hover { transform:translateY(-3px); box-shadow:0 8px 28px rgba(0,0,0,.25); }
+
+/* 1º lugar — destaque dourado */
+.podium-card.first {
+  background:linear-gradient(160deg,rgba(251,191,36,.08),rgba(11,13,20,.9));
+  border-color:rgba(251,191,36,.5);
+  box-shadow:0 0 30px rgba(251,191,36,.1);
+  padding-top:36px;
+}
+
+.podium-medal {
+  font-size:32px; margin-bottom:10px;
+  display:block; line-height:1;
+}
+.podium-avatar {
+  width:68px; height:68px; border-radius:50%; margin:0 auto 12px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:22px; font-weight:800; color:#fff;
+}
+.podium-card.first .podium-avatar {
+  width:76px; height:76px; font-size:25px;
+  box-shadow:0 0 20px rgba(251,191,36,.4);
+}
+.podium-name { font-family:var(--font-head); font-size:16px; font-weight:800; color:var(--text); margin-bottom:3px; }
+.podium-dept { font-size:12px; color:var(--muted); margin-bottom:12px; }
+.podium-score {
+  font-family:var(--font-head); font-size:42px; font-weight:800;
+  letter-spacing:-2px; line-height:1; margin-bottom:6px;
+}
+.podium-card.first  .podium-score { color:var(--yellow); }
+.podium-card:not(.first) .podium-score { color:var(--accent2); }
+.podium-breakdown { font-size:11px; color:var(--muted); margin-bottom:10px; }
+.podium-breakdown strong { color:var(--text); }
+.podium-tag {
+  display:inline-block; padding:4px 12px; border-radius:20px;
+  font-size:11px; font-weight:700;
+}
+
+/* ── Tabela ranking completo ── */
+.ranking-section { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+.ranking-header { padding:16px 20px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); }
+.ranking-title { font-family:var(--font-head); font-size:15px; font-weight:700; color:var(--text); }
+.ranking-badge {
+  padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600;
+  background:rgba(79,142,247,.15); color:var(--accent);
+}
+
+.rank-table { width:100%; border-collapse:collapse; }
+.rank-table th {
+  font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px;
+  color:var(--muted); padding:10px 16px; border-bottom:2px solid var(--border);
+  text-align:left; background:var(--surface2); white-space:nowrap;
+  cursor:pointer; user-select:none; transition:color .15s;
+}
+.rank-table th:hover { color:var(--accent); }
+.rank-table th .sort-icon { margin-left:4px; opacity:.5; font-size:9px; }
+.rank-table th.sorted .sort-icon { opacity:1; color:var(--accent); }
+.rank-table td { padding:11px 16px; border-bottom:1px solid rgba(42,47,69,.4); vertical-align:middle; }
+.rank-table tr:last-child td { border-bottom:none; }
+.rank-table tr:hover td { background:var(--surface2); }
+
+/* posição */
+.pos-num {
+  font-family:var(--font-head); font-size:16px; font-weight:800;
+  color:var(--muted); width:28px; text-align:center;
+}
+.pos-num.gold   { color:#fbbf24; }
+.pos-num.silver { color:#94a3b8; }
+.pos-num.bronze { color:#c2855a; }
+
+/* célula nome */
+.name-cell { display:flex; align-items:center; gap:10px; }
+.mini-avatar {
+  width:32px; height:32px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:11px; font-weight:800; color:#fff;
+}
+.emp-name-text { font-size:13px; font-weight:600; color:var(--text); }
+
+/* barra de score */
+.score-cell { display:flex; align-items:center; gap:10px; min-width:160px; }
+.score-bar-bg { flex:1; height:6px; background:var(--surface3); border-radius:3px; overflow:hidden; }
+.score-bar-fill { height:100%; border-radius:3px; transition:width .6s ease; }
+.score-num { font-family:var(--font-head); font-size:16px; font-weight:800; min-width:28px; text-align:right; }
+
+/* tags status */
+.tag { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; white-space:nowrap; }
+.tag-promo  { background:rgba(52,211,153,.15);  color:var(--green);  border:1px solid rgba(52,211,153,.3); }
+.tag-ok     { background:rgba(52,211,153,.1);   color:var(--green);  border:1px solid rgba(52,211,153,.25);}
+.tag-watch  { background:rgba(251,191,36,.15);  color:var(--yellow); border:1px solid rgba(251,191,36,.3); }
+.tag-risk   { background:rgba(248,113,113,.15); color:var(--red);    border:1px solid rgba(248,113,113,.3);}
+
+/* ── Toast ── */
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+.toast { padding:10px 18px; border-radius:10px; font-size:12px; font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4); animation:fadeUp .25s ease; max-width:320px; pointer-events:auto; }
+.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
+.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
+.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── Responsive ── */
+@media(max-width:1024px) {
+  :root { --sidebar-w:56px; }
+  
+  
+  
+  
+
+  .podium-row { grid-template-columns:1fr 1fr 1fr; }
+}
+@media(max-width:768px) {
+  :root { --sidebar-w:0px; }
+  
+  .main { margin-left:0; padding:16px; }
+  .podium-row { grid-template-columns:1fr; }
+  .score-cell { min-width:100px; }
+}
+
+}
+
+
+/* ── Visual ranking v8 — barrinhas por pilar + breakdown ── */
+.score-breakdown { display:flex; gap:0; border-radius:6px; overflow:hidden; height:6px; margin:4px 0 2px; }
+.score-seg { transition:flex .6s ease; }
+.pilar-bar-wrap { display:flex; flex-direction:column; gap:2px; }
+.pilar-bar-bg { height:5px; background:var(--surface3); border-radius:3px; overflow:hidden; width:70px; }
+.pilar-bar-fill { height:100%; border-radius:3px; transition:width .6s ease; }
+.pilar-val { font-size:11px; font-weight:700; }
+.pilar-pt  { font-size:9px; color:var(--muted); }
+/* [light-theme.css] body.light-theme .pilar-bar-bg { background:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .score-breakdown { opacity:.85; } */
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+<nav id="app-sidebar"></nav>
+
+<main class="main">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="page-title">Ranking <span>Geral</span></div>
+    <div class="page-subtitle" id="rank-subtitle"></div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filter-row">
+    <select class="filter-select" id="filter-filial" onchange="renderRanking()">
+      <option value="">Todas as filiais</option>
+    </select>
+    <select class="filter-select" id="filter-dept" onchange="renderRanking()">
+      <option value="">Todos os departamentos</option>
+    </select>
+    <select class="filter-select" id="filter-mes" onchange="renderRanking()">
+      <!-- meses preenchidos pelo JS -->
+    </select>
+    <div class="sort-chip active" data-sort="score"    onclick="setSort(this,'score')">Score Geral</div>
+    <div class="sort-chip"        data-sort="perf"     onclick="setSort(this,'perf')">Desempenho</div>
+    <div class="sort-chip"        data-sort="apt"      onclick="setSort(this,'apt')">Aptidões</div>
+    <div class="sort-chip"        data-sort="assid"    onclick="setSort(this,'assid')">Assiduidade</div>
+  </div>
+
+  <!-- Pódio Top 3 -->
+  <div class="podium-row" id="podium-row"></div>
+
+  <!-- Tabela ranking completo -->
+  <div class="ranking-section">
+    <div class="ranking-header">
+      <div class="ranking-title">Ranking Completo</div>
+      <div class="ranking-badge" id="ranking-badge">0 funcionários</div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="rank-table">
+        <thead>
+          <tr>
+            <th style="width:40px">#</th>
+            <th>
+              <span onclick="toggleSort('name')">
+                Funcionário <span class="sort-icon" id="si-name">↕</span>
+              </span>
+            </th>
+            <th onclick="toggleSort('dept')">Departamento <span class="sort-icon" id="si-dept">↕</span></th>
+            <th onclick="toggleSort('score')">Score <span class="sort-icon" id="si-score">↓</span></th>
+            <th onclick="toggleSort('perf')">Desemp. <span class="sort-icon" id="si-perf">↕</span></th>
+            <th onclick="toggleSort('apt')">Apt. <span class="sort-icon" id="si-apt">↕</span></th>
+            <th onclick="toggleSort('assid')">Assid. <span class="sort-icon" id="si-assid">↕</span></th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="rank-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<div id="pilar-tooltip"></div>
+
+<script>
+// ── Tooltip global dos pilares ────────────────────────
+const PILAR_TIPS = {}; // preenchido após getWeights() no init
+
+function buildPilarTips(w) {
+  PILAR_TIPS.desemp = `
+    <div class="pilar-tip-title">🎯 Pilar 1 — Desempenho (${w.perf}%)</div>
+    <div class="pilar-tip-formula">Contribuição = nota × ${w.perf}%</div>
+    <div class="pilar-tip-desc">
+      Nota de <strong>0 a 100</strong> inserida manualmente pelo líder.
+      Representa o rendimento geral — metas, qualidade, volume de trabalho
+      ou qualquer critério que o gestor defina.<br><br>
+      É o dado mais subjetivo dos três pilares.
+    </div>`;
+
+  PILAR_TIPS.apt = `
+    <div class="pilar-tip-title">⭐ Pilar 2 — Aptidões (${w.apt}%)</div>
+    <div class="pilar-tip-formula">Média(10 competências) × 10 × ${w.apt}%</div>
+    <div class="pilar-tip-desc">
+      Cada competência recebe uma nota de <strong>0 a 10</strong>.<br>
+      A média das 10 é multiplicada por 10 para virar percentual.<br><br>
+      <strong>Exemplo:</strong> média 7,5 → 75 pontos brutos → 75 × ${w.apt}% = <strong>${(75*w.apt/100).toFixed(1)} pts</strong> no score final.
+    </div>`;
+
+  PILAR_TIPS.assid = `
+    <div class="pilar-tip-title">📅 Pilar 3 — Assiduidade (${w.abs}%)</div>
+    <div class="pilar-tip-formula">[ 100 − (faltas ÷ 36) × 100 ] × ${w.abs}%</div>
+    <div class="pilar-tip-desc">
+      Calculado automaticamente pelo registro de ponto.<br><br>
+      <strong>Exemplo:</strong> 4 faltas → 100 − (4÷36)×100 = 88,9 pts → 88,9 × ${w.abs}% = <strong>${(88.9*w.abs/100).toFixed(1)} pts</strong> no score final.<br><br>
+      ⚠️ Atestado conta como <strong>meia falta</strong>. Máximo tolerado configurável em <em>Configurações</em>.
+    </div>`;
+
+  PILAR_TIPS.bonus = `
+    <div class="pilar-tip-title">🌟 Bônus Domingo & Feriado</div>
+    <div class="pilar-tip-formula">+0,5pt por dia trabalhado · máx. +5pt</div>
+    <div class="pilar-tip-desc">
+      Cada <strong>domingo</strong> ou <strong>feriado</strong> (nacional ou regional)
+      com presença marcada acrescenta <strong>+0,5 ponto</strong> ao score final.<br><br>
+      Bônus máximo: <strong>+5 pontos</strong> (10 domingos/feriados trabalhados).<br><br>
+      Aparece como <strong>⭐+N</strong> abaixo do score na tabela.
+    </div>`;
+}
+
+// Posiciona e exibe o tooltip global
+const _pTip = document.getElementById('pilar-tooltip');
+document.addEventListener('mouseover', e => {
+  const pill = e.target.closest('.pilar-pill[data-tip]');
+  if (!pill) return;
+  const key = pill.dataset.tip;
+  if (!PILAR_TIPS[key]) return;
+  _pTip.innerHTML = PILAR_TIPS[key];
+  _pTip.classList.add('show');
+  _positionTip(pill);
+});
+document.addEventListener('mousemove', e => {
+  if (!_pTip.classList.contains('show')) return;
+  const pill = e.target.closest('.pilar-pill[data-tip]');
+  if (!pill) { _pTip.classList.remove('show'); return; }
+  _positionTip(pill);
+});
+document.addEventListener('mouseleave', () => _pTip.classList.remove('show'), true);
+
+function _positionTip(pill) {
+  const rect  = pill.getBoundingClientRect();
+  const tw    = _pTip.offsetWidth  || 300;
+  const th    = _pTip.offsetHeight || 200;
+  let   left  = rect.left + rect.width / 2 - tw / 2;
+  let   top   = rect.top - th - 12;
+  // Não sair da tela à direita/esquerda
+  left = Math.max(8, Math.min(left, window.innerWidth - tw - 8));
+  // Se não couber acima, posiciona abaixo
+  if (top < 8) top = rect.bottom + 10;
+  _pTip.style.left = left + 'px';
+  _pTip.style.top  = top  + 'px';
+}
+// ════════════════════════════════════════════════════════
+// ESTADO
+// ════════════════════════════════════════════════════════
+let currentUser = null;
+let sortKey     = 'score';
+let sortAsc     = false; // false = decrescente (maior score primeiro)
+
+const APT_KEYS    = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
+const MONTHS_FULL = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                     'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  currentUser = await requireSession();
+  if (!currentUser) return;
+
+  initTheme();
+  initSidebar('ranking', currentUser);
+  buildSelects();
+  renderRanking();
+});
+
+// ════════════════════════════════════════════════════════
+// HELPERS DE SCORE
+// ════════════════════════════════════════════════════════
+function getWeights() {
+  const cfg = (await getStore()).config || {};
+  const pw  = Math.min(100, Math.max(0, parseInt(cfg.perfWeight)||40));
+  const aw  = Math.min(100, Math.max(0, parseInt(cfg.aptWeight) ||35));
+  return { perf:pw, apt:aw, abs:Math.max(0,100-pw-aw) };
+}
+function calcAptMedia(emp) {
+  const c = emp.competencies || {};
+  return APT_KEYS.reduce((s,k)=>s+(c[k]||0),0)/APT_KEYS.length;
+}
+// ── Lê faltas reais do rh_ponto ──────────────────────────
+function getTotalFaltasEmp(emp) {
+  try {
+    const allPonto = JSON.parse(localStorage.getItem('rh_ponto') || '{}');
+    const ano      = emp.year || new Date().getFullYear();
+    let   total    = 0;
+    for (let m = 1; m <= 12; m++) {
+      const key  = `${emp.id}_${ano}_${String(m).padStart(2,'0')}`;
+      const dias = allPonto[key] || {};
+      Object.values(dias).forEach(s => {
+        if (s === 'falta')    total += 1;
+        if (s === 'atestado') total += 0.5;
+      });
+    }
+    return total > 0 ? total : (emp.absences||[]).reduce((a,b)=>a+b, 0);
+  } catch(e) {
+    return (emp.absences||[]).reduce((a,b)=>a+b, 0);
+  }
+}
+
+function calcAssid(emp) {
+  // Afastado/férias: score congelado — usa histórico real (não infla com 100)
+  const total  = getTotalFaltasEmp(emp);
+  const maxAbs = (await getStore()).config?.maxAbs || 36;
+  return Math.max(0, 100 - (total / maxAbs) * 100);
+}
+// ── Conta dias trabalhados em domingo/feriado (bônus) ────
+function calcBonus(emp) {
+  const BONUS_POR_DIA = 0.5;
+  const BONUS_MAX     = 5;
+  try {
+    const allPonto = JSON.parse(localStorage.getItem('rh_ponto') || '{}');
+    const ano      = emp.year || new Date().getFullYear();
+    const store    = await getStore();
+    const feriadosCustom = store.config?.feriadosCustom || [];
+
+    // Feriados nacionais fixos (mes 0-based)
+    const ferNac = [
+      {d:1,m:0},{d:21,m:3},{d:1,m:4},{d:7,m:8},
+      {d:12,m:9},{d:2,m:10},{d:15,m:10},{d:25,m:11}
+    ];
+
+    let diasBonus = 0;
+    for (let m = 1; m <= 12; m++) {
+      const key  = `${emp.id}_${ano}_${String(m).padStart(2,'0')}`;
+      const dias = allPonto[key] || {};
+      Object.entries(dias).forEach(([dStr, status]) => {
+        if (status !== 'presente') return;
+        const d   = parseInt(dStr);
+        const dt  = new Date(ano, m-1, d);
+        const dow = dt.getDay();
+        // Domingo
+        if (dow === 0) { diasBonus++; return; }
+        // Feriado nacional
+        if (ferNac.some(f => f.d===d && f.m===(m-1))) { diasBonus++; return; }
+        // Feriado regional
+        const mesStr = String(m).padStart(2,'0');
+        const diaStr = String(d).padStart(2,'0');
+        if (feriadosCustom.some(f => f.chave===`${mesStr}-${diaStr}`)) { diasBonus++; }
+      });
+    }
+    return Math.min(BONUS_MAX, diasBonus * BONUS_POR_DIA);
+  } catch(e) { return 0; }
+}
+
+function calcScore(emp) {
+  const w     = getWeights();
+  const base  = emp.perf*(w.perf/100) + calcAptMedia(emp)*10*(w.apt/100) + calcAssid(emp)*(w.abs/100);
+  const bonus = calcBonus(emp);
+  return Math.min(100, Math.round(base + bonus));
+}
+function getStatus(score) {
+  if (score>=85) return { tag:'promo', label:'🏆 Promoção', cls:'tag-promo' };
+  if (score>=70) return { tag:'ok',    label:'✅ Regular',  cls:'tag-ok'    };
+  if (score>=55) return { tag:'watch', label:'⚠️ Atenção',  cls:'tag-watch' };
+  return               { tag:'risk',  label:'🔴 Risco',    cls:'tag-risk'  };
+}
+
+function getMyEmployees() {
+  const all   = (await getStore()).employees || [];
+  const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
+  if (scope.all) return all;
+  if (scope.sector) {
+    const depts = currentUser?.perfil?.depts||[];
+    const setor = currentUser?.setor||'';
+    return all.filter(e=>depts.includes(e.dept)||e.dept===setor);
+  }
+  return all.filter(e=>(e.owner_id||e.ownerId)===currentUser?.id);
+}
+
+// ════════════════════════════════════════════════════════
+// SELECTS
+// ════════════════════════════════════════════════════════
+function buildSelects() {
+  const emps  = getMyEmployees();
+  const depts = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
+  const w     = getWeights();
+
+  // Pré-carrega conteúdo dos tooltips com os pesos atuais
+  buildPilarTips(w);
+  document.getElementById('rank-subtitle').innerHTML = `
+    <span style="color:var(--muted);font-size:11px;font-weight:600;margin-right:4px">Score Tri-Pilar:</span>
+
+    <span class="pilar-pill" style="background:rgba(79,142,247,.15);color:var(--accent);border:1px solid rgba(79,142,247,.25)"
+      data-tip="desemp">
+      🎯 Desempenho ${w.perf}%
+    </span>
+
+    <span class="pilar-sep">+</span>
+
+    <span class="pilar-pill" style="background:rgba(167,139,250,.15);color:var(--accent2);border:1px solid rgba(167,139,250,.25)"
+      data-tip="apt">
+      ⭐ Aptidões ${w.apt}%
+    </span>
+
+    <span class="pilar-sep">+</span>
+
+    <span class="pilar-pill" style="background:rgba(52,211,153,.15);color:var(--green);border:1px solid rgba(52,211,153,.25)"
+      data-tip="assid">
+      📅 Assiduidade ${w.abs}%
+    </span>
+
+    <span class="pilar-sep">+</span>
+
+    <span class="pilar-pill" style="background:rgba(251,191,36,.15);color:var(--yellow);border:1px solid rgba(251,191,36,.25)"
+      data-tip="bonus">
+      🌟 Bônus Dom./Feriado
+    </span>
+  `;
+
+  // Filial
+  const fSel    = document.getElementById('filter-filial');
+  const curFil  = fSel.value;
+  const filiais = [...new Set((getMyEmployees()).map(e=>e.filial))].filter(Boolean).sort();
+  fSel.innerHTML = '<option value="">Todas as filiais</option>' +
+    filiais.map(f=>`<option value="${f}" ${f===curFil?'selected':''}>${f}</option>`).join('');
+
+  // Dept
+  const dSel = document.getElementById('filter-dept');
+  dSel.innerHTML = '<option value="">Todos os departamentos</option>' +
+    depts.map(d=>`<option value="${d}">${d}</option>`).join('');
+
+  // Mês
+  const mSel = document.getElementById('filter-mes');
+  const now  = new Date();
+  mSel.innerHTML = MONTHS_FULL.map((m,i)=>
+    `<option value="${i}" ${i===now.getMonth()?'selected':''}>${m} ${now.getFullYear()}</option>`
+  ).join('');
+}
+
+// ════════════════════════════════════════════════════════
+// SORT
+// ════════════════════════════════════════════════════════
+function setSort(el, key) {
+  sortKey = key;
+  sortAsc = false;
+  document.querySelectorAll('.sort-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderRanking();
+}
+
+function toggleSort(key) {
+  if (sortKey === key) sortAsc = !sortAsc;
+  else { sortKey = key; sortAsc = false; }
+  updateSortIcons();
+  renderRanking();
+}
+
+function updateSortIcons() {
+  ['name','dept','score','perf','apt','assid'].forEach(k => {
+    const el = document.getElementById(`si-${k}`);
+    if (!el) return;
+    el.textContent = sortKey===k ? (sortAsc?'↑':'↓') : '↕';
+    el.style.opacity = sortKey===k ? '1' : '.5';
+    el.style.color   = sortKey===k ? 'var(--accent)' : '';
+  });
+}
+
+// ════════════════════════════════════════════════════════
+// RENDER RANKING
+// ════════════════════════════════════════════════════════
+function isForaDeAtividade(emp) {
+  // Afastado explícito
+  if (emp.afastado) return { fora: true, motivo: '🚫 Afastado' };
+  // Em férias na data atual
+  if (emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {
+    const hoje = new Date(); hoje.setHours(0,0,0,0);
+    const ini  = new Date(emp.data_ferias_inicio + 'T00:00:00');
+    const fim  = new Date(emp.data_ferias_fim    + 'T00:00:00');
+    if (ini <= hoje && hoje <= fim) return { fora: true, motivo: '🏖️ Férias' };
+  }
+  return { fora: false };
+}
+
+function renderRanking() {
+  const filial = document.getElementById('filter-filial').value;
+  const dept   = document.getElementById('filter-dept').value;
+  let   list   = getMyEmployees();
+  if (filial) list = list.filter(e=>e.filial===filial);
+  if (dept)   list = list.filter(e=>e.dept===dept);
+  if (!list.length) {
+    document.getElementById('podium-row').innerHTML = '';
+    document.getElementById('rank-tbody').innerHTML =
+      `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--muted)">Nenhum funcionário encontrado.</td></tr>`;
+    document.getElementById('ranking-badge').textContent = '0 funcionários';
+    return;
+  }
+
+  // Separa ativos de afastados/férias
+  const ativos    = [];
+  const inativos  = [];
+  list.forEach(e => {
+    const { fora, motivo } = isForaDeAtividade(e);
+    const enriched = {
+      ...e,
+      _score: calcScore(e),
+      _apt:   +calcAptMedia(e).toFixed(1),
+      _assid: Math.round(calcAssid(e)),
+      _bonus: calcBonus(e),
+    };
+    if (fora) inativos.push({ ...enriched, _motivo: motivo });
+    else      ativos.push(enriched);
+  });
+
+  // Ordena apenas os ativos
+  const sortFn = (a,b) => {
+    let va, vb;
+    switch(sortKey) {
+      case 'perf':  va=a.perf;   vb=b.perf;   break;
+      case 'apt':   va=a._apt;   vb=b._apt;   break;
+      case 'assid': va=a._assid; vb=b._assid; break;
+      default:      va=a._score; vb=b._score; break;
+    }
+    return sortAsc ? va-vb : vb-va;
+  };
+  ativos.sort(sortFn);
+
+  document.getElementById('ranking-badge').textContent =
+    `${ativos.length} ativos${inativos.length ? ` · ${inativos.length} fora` : ''}`;
+  updateSortIcons();
+
+  // Pódio só com ativos
+  renderPodium(ativos.slice(0,3));
+
+  // Tabela: ativos + separador + inativos
+  renderTable(ativos, inativos);
+}
+
+// ════════════════════════════════════════════════════════
+// PÓDIO TOP 3
+// ════════════════════════════════════════════════════════
+function renderPodium(top3) {
+  // Ordena para exibição: 2º | 1º | 3º
+  const display = top3.length >= 3
+    ? [top3[1], top3[0], top3[2]]
+    : top3.length === 2
+      ? [top3[1], top3[0]]
+      : top3;
+
+  const medals  = ['🥈','🥇','🥉'];
+  const realPos = top3.length >= 3
+    ? [1, 0, 2]  // índices no array original
+    : top3.length === 2 ? [1,0] : [0];
+
+  const GRAD_COLORS = [
+    ['#4f8ef7','#a78bfa'],  // 2º — azul/roxo
+    ['#fbbf24','#fb923c'],  // 1º — dourado
+    ['#c2855a','#a78bfa'],  // 3º — bronze/roxo
+  ];
+
+  document.getElementById('podium-row').innerHTML = display.map((emp, idx) => {
+    if (!emp) return '';
+    const origIdx = realPos[idx];
+    const medal   = medals[idx];
+    const isFirst = origIdx === 0;
+    const st      = getStatus(emp._score);
+    const ini     = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+    const [c1,c2] = GRAD_COLORS[idx] || GRAD_COLORS[0];
+    const w       = getWeights();
+
+    return `
+    <div class="podium-card ${isFirst?'first':''}">
+      <span class="podium-medal">${medal}</span>
+      <div class="podium-avatar" style="${emp.foto ? '' : `background:linear-gradient(135deg,${c1},${c2})`}">${emp.foto ? `<img src="${emp.foto}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">` : ini}</div>
+      <div class="podium-name">${emp.name}</div>
+      <div class="podium-dept">${emp.dept||''}</div>
+      <div class="podium-score">${emp._score}</div>
+      <div class="podium-breakdown">
+        Des: <strong>${emp.perf}%</strong>
+        &nbsp;Apt: <strong>${emp._apt}</strong>
+        &nbsp;Ass: <strong>${emp._assid}%</strong>
+        ${emp._bonus > 0 ? `&nbsp;⭐ Bônus: <strong style="color:var(--yellow)">+${emp._bonus}</strong>` : ''}
+      </div>
+      <span class="podium-tag ${st.cls}">${st.label}</span>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════
+// TABELA
+// ════════════════════════════════════════════════════════
+function renderTable(ativos, inativos = []) {
+  const tbody = document.getElementById('rank-tbody');
+  if (!ativos.length && !inativos.length) {
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--muted)">Sem dados</td></tr>`;
+    return;
+  }
+
+  const posClasses = ['gold','silver','bronze'];
+
+  function buildRow(emp, pos, isInativo) {
+    const posCls   = isInativo ? '' : (posClasses[pos-1] || '');
+    const st       = getStatus(emp._score);
+    const ini      = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+    const barColor = isInativo ? 'var(--muted)'
+      : emp._score>=85?'#34d399':emp._score>=70?'#4f8ef7':emp._score>=55?'#fbbf24':'#f87171';
+    const posLabel = isInativo
+      ? `<span style="font-size:11px;color:var(--muted)">—</span>`
+      : pos<=3 ? ['🥇','🥈','🥉'][pos-1] : pos;
+
+    // Contribuição de cada pilar no score final
+    const w   = getWeights();
+    const bd  = {
+      perf:  +(emp.perf*(w.perf/100)).toFixed(1),
+      apt:   +(emp._apt*10*(w.apt/100)).toFixed(1),
+      abs:   +(emp._assid*(w.abs/100)).toFixed(1),
+      bonus: emp._bonus||0,
+    };
+
+    return `
+    <tr style="${isInativo ? 'opacity:0.55' : ''}">
+      <td><div class="pos-num ${posCls}">${posLabel}</div></td>
+      <td>
+        <div class="name-cell">
+          <div class="mini-avatar" style="${isInativo?'opacity:.5':''}">
+            ${ini}
+          </div>
+          <div>
+            <div class="emp-name-text">${emp.name}</div>
+            ${emp.matricula?`<div style="font-size:10px;color:var(--muted)">Mat. ${emp.matricula}</div>`:''}
+          </div>
+        </div>
+      </td>
+      <td style="color:var(--muted);font-size:13px">${emp.dept||'—'}</td>
+      <td>
+        <div class="score-cell">
+          <div class="score-bar-bg">
+            <div class="score-bar-fill" style="width:${isInativo?0:emp._score}%;background:${barColor}"></div>
+          </div>
+          <div class="score-num" style="color:${barColor}">${isInativo?'—':emp._score}</div>
+        </div>
+        ${!isInativo ? `
+        <div class="score-breakdown" style="margin-top:3px">
+          <div class="score-seg" style="flex:${bd.perf+.01};background:#4f8ef7" title="Desempenho"></div>
+          <div class="score-seg" style="flex:${bd.apt+.01};background:#a78bfa"  title="Aptidões"></div>
+          <div class="score-seg" style="flex:${bd.abs+.01};background:#34d399"  title="Assiduidade"></div>
+          ${bd.bonus>0?`<div class="score-seg" style="flex:${bd.bonus+.01};background:#fbbf24" title="Bônus"></div>`:''}
+        </div>` : ''}
+        ${!isInativo && emp._bonus > 0 ? `<div style="font-size:9px;color:var(--yellow);font-weight:700;text-align:center">⭐+${emp._bonus}</div>` : ''}
+      </td>
+      <td>
+        <div class="pilar-bar-wrap">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span class="pilar-val" style="color:#4f8ef7">${emp.perf}%</span>
+            ${!isInativo?`<span class="pilar-pt">+${bd.perf}pt</span>`:''}
+          </div>
+          <div class="pilar-bar-bg"><div class="pilar-bar-fill" style="width:${emp.perf}%;background:#4f8ef7"></div></div>
+        </div>
+      </td>
+      <td>
+        <div class="pilar-bar-wrap">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span class="pilar-val" style="color:#a78bfa">${emp._apt}/10</span>
+            ${!isInativo?`<span class="pilar-pt">+${bd.apt}pt</span>`:''}
+          </div>
+          <div class="pilar-bar-bg"><div class="pilar-bar-fill" style="width:${emp._apt*10}%;background:#a78bfa"></div></div>
+        </div>
+      </td>
+      <td>
+        <div class="pilar-bar-wrap">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span class="pilar-val" style="color:${emp._assid>=70?'#34d399':'#f87171'}">${emp._assid}%</span>
+            ${!isInativo?`<span class="pilar-pt">+${bd.abs}pt</span>`:''}
+          </div>
+          <div class="pilar-bar-bg"><div class="pilar-bar-fill" style="width:${emp._assid}%;background:${emp._assid>=70?'#34d399':'#f87171'}"></div></div>
+        </div>
+      </td>
+      <td>
+        ${isInativo
+          ? `<span class="tag" style="background:rgba(148,163,184,.12);color:var(--muted);border:1px solid rgba(148,163,184,.2)">${emp._motivo}</span>`
+          : `<span class="tag ${st.cls}">${st.label}</span>`}
+      </td>
+    </tr>`;
+  }
+
+  let html = ativos.map((emp, i) => buildRow(emp, i+1, false)).join('');
+
+  if (inativos.length) {
+    html += `
+    <tr>
+      <td colspan="8" style="padding:10px 20px 6px;background:var(--surface2)">
+        <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)">
+          ⏸ Fora do ranking ativo — ${inativos.length} ${inativos.length===1?'funcionário':'funcionários'}
+        </span>
+      </td>
+    </tr>`;
+    html += inativos.map(emp => buildRow(emp, null, true)).join('');
+  }
+
+  tbody.innerHTML = html;
+}
+</script>
+</body>
+</html>

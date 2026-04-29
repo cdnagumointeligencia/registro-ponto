@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configurações · RH Nagumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sidebar.css">
+<link rel="stylesheet" href="../light-theme.css">
+<link rel="stylesheet" href="../responsive.css">
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../firebase.js"></script>
+<script src="../permissions.js"></script>
+<script src="../shared.js"></script>
+<style>
+/* ════════════════════════════════════════════
+   TEMA ESCURO (padrão)
+════════════════════════════════════════════ */
+:root {
+  --bg:        #0b0d14;
+  --surface:   #12151f;
+  --surface2:  #1a1e2e;
+  --surface3:  #222638;
+  --border:    #2a2f45;
+  --accent:    #4f8ef7;
+  --accent2:   #a78bfa;
+  --green:     #34d399;
+  --yellow:    #fbbf24;
+  --red:       #f87171;
+  --text:      #ffffff;
+  --muted:     #94a3b8;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --sidebar-w: 220px;
+}
+
+/* ════════════════════════════════════════════
+   TEMA CLARO
+════════════════════════════════════════════ */
+/* [light-theme.css] body.light-theme {
+  --bg:      #EEF2F8;
+  --surface: #ffffff;
+  --surface2:#F4F7FB;
+  --surface3:#E8EDF5;
+  --border:  #D6DDE8;
+  --accent:  #2563eb;
+  --accent2: #7c3aed;
+  --green:   #059669;
+  --yellow:  #d97706;
+  --red:     #dc2626;
+  --text:    #0f172a;
+  --muted:   #64748b;
+} */
+/* [light-theme.css] body.light-theme 
+
+body.light-theme .main             { background:#EEF2F8; } */
+/* [light-theme.css] body.light-theme .page-title       { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .page-title span  { color:#2563eb; } */
+/* [light-theme.css] body.light-theme .card             { background:#fff; border-color:#E2E8F0; box-shadow:0 1px 4px rgba(15,23,42,.04); } */
+/* [light-theme.css] body.light-theme .card-title       { color:#0f172a; } */
+/* [light-theme.css] body.light-theme input,
+body.light-theme select            { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme label             { color:#475569; } */
+/* [light-theme.css] body.light-theme .btn-primary      { background:#2563eb; color:#fff; } */
+/* [light-theme.css] body.light-theme .btn-primary:hover{ background:#1d4ed8; } */
+/* [light-theme.css] body.light-theme .btn-ghost        { background:#fff; border-color:#CBD5E1; color:#374151; } */
+/* [light-theme.css] body.light-theme .btn-ghost:hover  { background:#F1F5F9; } */
+/* [light-theme.css] body.light-theme .btn-danger       { background:rgba(220,38,38,.08); color:#dc2626; border-color:rgba(220,38,38,.2); } */
+/* [light-theme.css] body.light-theme .dept-item        { background:#F4F7FB; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .dept-item-name   { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .inline-edit      { background:#fff; border-color:#2563eb; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .section-sep      { background:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .info-box         { background:rgba(37,99,235,.05); border-color:rgba(37,99,235,.2); color:#1e3a8a; } */
+/* [light-theme.css] body.light-theme .info-box strong  { color:#1d4ed8; } */
+/* [light-theme.css] body.light-theme .change-pass-box  { background:#F4F7FB; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .theme-toggle-btn { background:#F4F7FB; border-color:#CBD5E1; color:#374151; } */
+/* [light-theme.css] body.light-theme .theme-toggle-btn.light-on .toggle-track { background:#2563eb; border-color:#1d4ed8; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-track { background:#F1F5F9; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-thumb { background:#CBD5E1; } */
+
+/* ════════════════════════════════════════════
+   BASE
+════════════════════════════════════════════ */
+* { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:14px; }
+body {
+  background:var(--bg); color:var(--text);
+  font-family:var(--font-body); min-height:100vh; overflow-x:hidden;
+}
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
+
+/* ════════════════════════════════════════════
+   SIDEBAR
+════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════
+   MAIN
+════════════════════════════════════════════ */
+.main { margin-left:var(--sidebar-w); padding:28px 32px; min-height:100vh; }
+
+.topbar {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:28px; flex-wrap:wrap; gap:12px;
+}
+.page-title {
+  font-family:var(--font-head); font-size:22px;
+  font-weight:800; letter-spacing:-1px; color:var(--text);
+}
+.page-title span { color:var(--accent); }
+
+/* ════════════════════════════════════════════
+   CARDS
+════════════════════════════════════════════ */
+.card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:20px;
+}
+.card-title {
+  font-family:var(--font-head); font-size:13px; font-weight:700;
+  letter-spacing:-.3px; margin-bottom:16px;
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap; color:var(--text);
+}
+.card-title .badge {
+  font-family:var(--font-body); font-size:10px; font-weight:500;
+  background:rgba(79,142,247,.15); color:var(--accent);
+  padding:2px 8px; border-radius:20px; letter-spacing:.5px;
+}
+
+/* ════════════════════════════════════════════
+   BOTÕES
+════════════════════════════════════════════ */
+.btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 16px; border-radius:8px; border:none;
+  font-family:var(--font-body); font-size:12px; font-weight:500;
+  cursor:pointer; transition:all .2s; color:var(--text);
+}
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:#3a7ae0; transform:translateY(-1px); box-shadow:0 4px 16px rgba(79,142,247,.4); }
+.btn-ghost { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
+.btn-ghost:hover { background:var(--surface3); }
+.btn-danger { background:rgba(248,113,113,.15); color:var(--red); border:1px solid rgba(248,113,113,.3); }
+.btn-danger:hover { background:rgba(248,113,113,.25); }
+.btn-sm { padding:5px 11px; font-size:11px; }
+
+/* ════════════════════════════════════════════
+   FORMULÁRIOS
+════════════════════════════════════════════ */
+.form-group { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+.form-group.last { margin-bottom:0; }
+.form-group.full { grid-column:1/-1; }
+label {
+  font-size:10px; font-weight:600; color:var(--muted);
+  text-transform:uppercase; letter-spacing:1px;
+}
+input, select {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; color:var(--text);
+  font-family:var(--font-body); font-size:13px;
+  padding:9px 11px; outline:none; transition:border-color .2s;
+}
+input:focus, select:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(79,142,247,.1); }
+select option { background:var(--surface2); color:var(--text); }
+input[readonly] { opacity:.6; cursor:not-allowed; background:var(--surface3); }
+
+/* ════════════════════════════════════════════
+   DEPT LIST
+════════════════════════════════════════════ */
+.dept-list { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+.dept-item {
+  display:flex; align-items:center; gap:10px;
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; padding:9px 12px;
+}
+.dept-item-name { flex:1; font-size:13px; font-weight:500; color:var(--text); }
+.dept-add-row { display:flex; gap:10px; }
+.dept-add-row input { flex:1; }
+.inline-edit {
+  background:var(--surface2); border:1px solid var(--accent);
+  border-radius:6px; color:var(--text); font-family:var(--font-body);
+  font-size:13px; padding:4px 8px; outline:none; width:140px;
+}
+
+/* ════════════════════════════════════════════
+   MISC
+════════════════════════════════════════════ */
+.section-sep { height:1px; background:var(--border); margin:18px 0; }
+.info-box {
+  background:rgba(79,142,247,.07); border:1px solid rgba(79,142,247,.2);
+  border-radius:10px; padding:12px 16px; margin-bottom:20px;
+  font-size:12px; color:var(--text); line-height:1.7;
+}
+.info-box strong { color:var(--accent); }
+.change-pass-box {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:12px; padding:16px;
+}
+
+/* ════════════════════════════════════════════
+   THEME TOGGLE
+════════════════════════════════════════════ */
+.theme-toggle-btn {
+  display:flex; align-items:center; gap:10px; width:100%;
+  padding:12px 16px; border-radius:10px;
+  border:1.5px solid var(--border); background:var(--surface2);
+  color:var(--text); font-family:var(--font-body);
+  font-size:13px; font-weight:600; cursor:pointer; transition:all .2s;
+}
+.theme-toggle-btn:hover { background:var(--surface3); border-color:var(--accent); }
+.toggle-track {
+  width:42px; height:22px; border-radius:11px;
+  background:var(--surface3); border:1.5px solid var(--border);
+  position:relative; transition:background .25s; flex-shrink:0;
+}
+.theme-toggle-btn.light-on .toggle-track { background:#2563eb; border-color:#1d4ed8; }
+.toggle-knob {
+  position:absolute; top:2px; left:2px; width:16px; height:16px;
+  border-radius:50%; background:var(--muted);
+  transition:transform .25s, background .25s;
+}
+.theme-toggle-btn.light-on .toggle-knob { transform:translateX(20px); background:#fff; }
+
+/* ════════════════════════════════════════════
+   WEIGHT VISUAL
+════════════════════════════════════════════ */
+.weight-visual { display:flex; gap:0; border-radius:8px; overflow:hidden; height:10px; margin:8px 0; }
+.weight-seg { transition:flex .6s ease; }
+.weight-legend { display:flex; gap:14px; font-size:11px; margin-top:6px; flex-wrap:wrap; }
+.weight-legend-item { display:flex; align-items:center; gap:5px; color:var(--muted); }
+.weight-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+/* ════════════════════════════════════════════
+   GRADE
+════════════════════════════════════════════ */
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+
+/* ════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════ */
+.toast-container {
+  position:fixed; bottom:24px; right:24px;
+  z-index:99999; display:flex; flex-direction:column; gap:8px;
+}
+.toast {
+  padding:10px 18px; border-radius:10px; font-size:12px;
+  font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4);
+  animation:fadeUp .25s ease; max-width:320px;
+}
+.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
+.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
+.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ════════════════════════════════════════════
+   PERFIL BADGE
+════════════════════════════════════════════ */
+.perfil-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:5px 14px; border-radius:20px; font-size:11px; font-weight:600;
+}
+
+/* ════════════════════════════════════════════
+   PERMISSÕES TABLE
+════════════════════════════════════════════ */
+.perm-table { width:100%; border-collapse:collapse; font-size:12px; }
+.perm-table th {
+  font-size:10px; font-weight:700; color:var(--muted);
+  text-transform:uppercase; letter-spacing:1px;
+  padding:8px 12px; border-bottom:2px solid var(--border);
+  text-align:left; background:var(--surface2); white-space:nowrap;
+}
+.perm-table th.role-col { text-align:center; min-width:90px; }
+.perm-table td { padding:7px 12px; border-bottom:1px solid rgba(42,47,69,.4); vertical-align:middle; }
+.perm-table tr:last-child td { border-bottom:none; }
+.perm-table tr:hover td { background:var(--surface2); }
+.perm-page-header td {
+  background:var(--surface3); font-family:var(--font-head);
+  font-size:12px; font-weight:700; color:var(--text);
+  padding:10px 12px; border-bottom:1px solid var(--border);
+}
+.perm-action-label { color:var(--muted); font-size:12px; }
+.perm-select {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:6px; color:var(--text); font-family:var(--font-body);
+  font-size:11px; padding:4px 8px; outline:none; cursor:pointer;
+  transition:border-color .2s; width:100%;
+}
+.perm-select:focus { border-color:var(--accent); }
+.perm-changed { border-color:var(--yellow) !important; background:rgba(251,191,36,.08) !important; }
+
+/* Import/Export */
+.io-card {
+  border:1px solid var(--border); border-radius:12px; padding:20px;
+  background:var(--surface); margin-bottom:16px;
+}
+.io-btn-row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.btn-export {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 20px; border-radius:8px; border:none;
+  background:rgba(52,211,153,.15); color:var(--green);
+  border:1px solid rgba(52,211,153,.3);
+  font-family:var(--font-body); font-size:12px; font-weight:600;
+  cursor:pointer; transition:all .2s;
+}
+.btn-export:hover { background:rgba(52,211,153,.25); transform:translateY(-1px); }
+.btn-import {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 20px; border-radius:8px; border:none;
+  background:rgba(79,142,247,.15); color:var(--accent);
+  border:1px solid rgba(79,142,247,.3);
+  font-family:var(--font-body); font-size:12px; font-weight:600;
+  cursor:pointer; transition:all .2s;
+}
+.btn-import:hover { background:rgba(79,142,247,.25); transform:translateY(-1px); }
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+@media(max-width:1024px) {
+  :root { --sidebar-w:56px; }
+  
+  
+  
+  
+
+  .grid-2 { grid-template-columns:1fr; }
+}
+@media(max-width:768px) {
+  :root { --sidebar-w:0px; }
+  
+  .main { margin-left:0; padding:16px; }
+  .grid-2 { grid-template-columns:1fr; }
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+
+<!-- ══ SIDEBAR (preenchida pelo shared.js) ══ -->
+<nav id="app-sidebar"></nav>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div>
+      <div class="page-title">⚙️ <span>Configurações</span></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px" id="config-subtitle"></div>
+    </div>
+    <div id="config-perfil-badge"></div>
+  </div>
+
+  <!-- ══ PAINEL ADMIN MASTER ══ -->
+  <div id="panel-admin-master" style="display:none">
+
+    <div class="info-box">
+      🛡️ Você está logado como <strong>Admin Master</strong>. Tem acesso total: pode criar estruturas, gerenciar usuários e ajustar todos os parâmetros do sistema.
+    </div>
+
+    <!-- Filiais + Turnos + Depts + Funções -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🏭 Filiais <span class="badge" id="badge-filiais">0</span></div>
+        <div class="dept-list" id="list-filiais"></div>
+        <div class="dept-add-row">
+          <input type="text" id="input-filial" placeholder="Ex: CD1, Matriz..."
+            onkeydown="if(event.key==='Enter')addItem('filiais')"
+            oninput="this.value=toTitleCase(this.value)">
+          <button class="btn btn-primary btn-sm" onclick="addItem('filiais')">＋</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🕐 Turnos <span class="badge" id="badge-turnos">0</span></div>
+        <div class="dept-list" id="list-turnos"></div>
+        <div class="dept-add-row">
+          <input type="text" id="input-turno" placeholder="Ex: Manhã, Tarde..."
+            onkeydown="if(event.key==='Enter')addItem('turnos')"
+            oninput="this.value=toTitleCase(this.value)">
+          <button class="btn btn-primary btn-sm" onclick="addItem('turnos')">＋</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏢 Departamentos <span class="badge" id="badge-depts">0</span></div>
+        <div class="dept-list" id="list-depts"></div>
+        <div class="dept-add-row">
+          <input type="text" id="input-dept" placeholder="Ex: Conferência, Expedição..."
+            onkeydown="if(event.key==='Enter')addItem('depts')"
+            oninput="this.value=toTitleCase(this.value)">
+          <button class="btn btn-primary btn-sm" onclick="addItem('depts')">＋</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💼 Funções / Cargos <span class="badge" id="badge-funcoes">0</span></div>
+        <div class="dept-list" id="list-funcoes"></div>
+        <div class="dept-add-row">
+          <input type="text" id="input-funcao" placeholder="Ex: Conferente, Analista..."
+            onkeydown="if(event.key==='Enter')addItem('funcoes')"
+            oninput="this.value=toTitleCase(this.value)">
+          <button class="btn btn-primary btn-sm" onclick="addItem('funcoes')">＋</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pesos + Aparência / Auth / Usuários -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">⚖️ Pesos do Score Tri-Pilar</div>
+        <small style="color:var(--muted);font-size:11px;display:block;margin-bottom:14px">Os três valores devem somar 100%.</small>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div class="form-group">
+            <label>🎯 Desempenho (%)</label>
+            <input type="number" id="cfg-perf" placeholder="40" min="0" max="100" oninput="refreshPesos()">
+          </div>
+          <div class="form-group">
+            <label>⭐ Aptidões (%)</label>
+            <input type="number" id="cfg-apt" placeholder="35" min="0" max="100" oninput="refreshPesos()">
+          </div>
+          <div class="form-group full" style="grid-column:1/-1">
+            <label>📅 Assiduidade (%) — calculado</label>
+            <input type="number" id="cfg-abs" readonly>
+          </div>
+        </div>
+        <div class="weight-visual" id="weight-visual">
+          <div class="weight-seg" style="background:#4f8ef7;flex:40"></div>
+          <div class="weight-seg" style="background:#a78bfa;flex:35"></div>
+          <div class="weight-seg" style="background:#34d399;flex:25"></div>
+        </div>
+        <div class="weight-legend">
+          <div class="weight-legend-item"><div class="weight-dot" style="background:#4f8ef7"></div><span id="wl-p">Desempenho 40%</span></div>
+          <div class="weight-legend-item"><div class="weight-dot" style="background:#a78bfa"></div><span id="wl-a">Aptidões 35%</span></div>
+          <div class="weight-legend-item"><div class="weight-dot" style="background:#34d399"></div><span id="wl-b">Assiduidade 25%</span></div>
+        </div>
+        <div class="section-sep"></div>
+        <div class="form-group" style="margin-bottom:16px">
+          <label>📅 Máx. faltas toleradas / ano</label>
+          <input type="number" id="cfg-maxabs" placeholder="36" min="1" max="200">
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="saveCfg()">💾 Salvar Configurações</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎨 Aparência</div>
+        <button class="theme-toggle-btn" onclick="toggleTheme()">
+          <div class="toggle-track"><div class="toggle-knob"></div></div>
+          <span class="theme-toggle-label">☀️ Tema Claro</span>
+        </button>
+
+        <div class="section-sep"></div>
+
+        <div class="card-title" style="margin-bottom:8px">🛡️ Código de Autorização</div>
+        <div class="info-box" style="margin-bottom:12px;font-size:11px">
+          Compartilhe este código com quem vai se cadastrar no sistema.
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label>Código atual</label>
+          <div style="display:flex;gap:8px">
+            <input type="text" id="auth-code-display" readonly
+              style="flex:1;font-family:monospace;font-size:14px;font-weight:700;letter-spacing:2px;cursor:pointer"
+              onclick="this.select()" title="Clique para selecionar">
+            <button class="btn btn-ghost btn-sm" onclick="gerarNovoCodigo()">🔄 Novo</button>
+          </div>
+        </div>
+
+        <div class="section-sep"></div>
+
+        <div class="card-title" style="margin-bottom:10px">👥 Usuários Cadastrados</div>
+        <div id="users-list" style="display:flex;flex-direction:column;gap:6px"></div>
+      </div>
+    </div>
+
+    <!-- Feriados -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">📅 Feriados Regionais <span class="badge" id="badge-feriados">0</span></div>
+      <small style="color:var(--muted);font-size:11px;display:block;margin-bottom:14px">Feriados municipais/estaduais destacados em amarelo no Ponto Diário.</small>
+      <div id="list-feriados" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
+      <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
+        <div class="form-group" style="margin:0">
+          <label>Dia</label>
+          <input type="number" id="feriado-dia" min="1" max="31" placeholder="DD" style="width:70px;text-align:center">
+        </div>
+        <div class="form-group" style="margin:0">
+          <label>Mês</label>
+          <select id="feriado-mes" style="padding:9px 11px">
+            <option value="">—</option>
+            <option value="01">Janeiro</option><option value="02">Fevereiro</option>
+            <option value="03">Março</option><option value="04">Abril</option>
+            <option value="05">Maio</option><option value="06">Junho</option>
+            <option value="07">Julho</option><option value="08">Agosto</option>
+            <option value="09">Setembro</option><option value="10">Outubro</option>
+            <option value="11">Novembro</option><option value="12">Dezembro</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0;flex:1;min-width:160px">
+          <label>Nome do Feriado</label>
+          <input type="text" id="feriado-nome" placeholder="Ex: Aniversário de Guarulhos"
+            onkeydown="if(event.key==='Enter')addFeriado()">
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="addFeriado()">＋ Adicionar</button>
+      </div>
+    </div>
+
+    <!-- ══ IMPORTAR / EXPORTAR ══ -->
+    <div class="io-card">
+      <div class="card-title" style="margin-bottom:8px">
+        💾 Importar / Exportar Dados
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.6">
+        Use para mover todos os dados entre computadores sem perder nada.
+        O arquivo JSON inclui usuários, configurações, filiais, turnos, departamentos e permissões.
+      </p>
+      <div class="io-btn-row">
+        <button class="btn-export" onclick="exportarJSON()">
+          ⬇️ Exportar JSON
+        </button>
+        <button class="btn-import" onclick="document.getElementById('import-file-input').click()">
+          ⬆️ Importar JSON
+        </button>
+        <input type="file" id="import-file-input" accept=".json"
+          style="display:none" onchange="importarJSON(this)">
+        <span style="font-size:11px;color:var(--muted);margin-left:4px" id="import-status"></span>
+      </div>
+    </div>
+
+    <!-- ══ PERMISSÕES POR ROLE ══ -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title" style="margin-bottom:6px">
+        🔐 Permissões por Nível
+        <span class="badge" id="perm-changed-badge" style="display:none;background:rgba(251,191,36,.2);color:#fbbf24;border:1px solid rgba(251,191,36,.3)">modificado</span>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.6">
+        Define qual o <strong style="color:var(--text)">nível mínimo</strong> necessário para cada ação em cada página.
+        Qualquer alteração aqui afeta imediatamente todas as páginas do sistema.
+      </p>
+      <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" onclick="salvarPermissoes()">💾 Salvar Permissões</button>
+        <button class="btn btn-ghost btn-sm" onclick="resetarPermissoes()">↩️ Restaurar Padrões</button>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="perm-table" id="perm-table"></table>
+      </div>
+    </div>
+
+  </div><!-- /panel-admin-master -->
+
+  <!-- ══ PAINEL ADMIN GESTOR ══ -->
+  <div id="panel-admin-gestor" style="display:none">
+
+    <div class="info-box" id="gestor-info-box"></div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">👤 Meu Perfil</div>
+        <div class="form-group">
+          <label>🏭 Filiais que gerencio</label>
+          <div id="gestor-filiais" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
+        </div>
+        <div class="form-group">
+          <label>🕐 Turnos que gerencio</label>
+          <div id="gestor-turnos" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
+        </div>
+        <div class="form-group">
+          <label>🏢 Departamentos que gerencio</label>
+          <div id="gestor-depts" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
+        </div>
+        <div class="form-group last">
+          <label>💼 Função / Cargo</label>
+          <select id="gestor-funcao"></select>
+        </div>
+        <div class="section-sep"></div>
+        <button class="btn btn-primary btn-sm" onclick="savePerfilGestor()">💾 Salvar Perfil</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎨 Aparência</div>
+        <button class="theme-toggle-btn" onclick="toggleTheme()">
+          <div class="toggle-track"><div class="toggle-knob"></div></div>
+          <span class="theme-toggle-label">☀️ Tema Claro</span>
+        </button>
+        <div class="section-sep"></div>
+        <div class="card-title" style="margin-bottom:10px">🔑 Alterar Minha Senha</div>
+        <div class="change-pass-box">
+          <div class="form-group"><label>Senha Atual</label><input type="password" id="gcp-current" placeholder="Senha atual"></div>
+          <div class="form-group"><label>Nova Senha</label><input type="password" id="gcp-new" placeholder="Nova senha (mín. 6)"></div>
+          <div class="form-group last"><label>Confirmar</label><input type="password" id="gcp-new2" placeholder="Repita a nova senha"></div>
+          <div class="section-sep"></div>
+          <button class="btn btn-primary btn-sm" onclick="changePassword('gcp')">🔒 Salvar Nova Senha</button>
+          <div class="login-msg" id="gcp-msg" style="margin-top:10px;display:none;padding:8px 12px;border-radius:8px;font-size:12px;text-align:center"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-admin-gestor -->
+
+  <!-- ══ PAINEL LÍDER OPERACIONAL ══ -->
+  <div id="panel-lider" style="display:none">
+
+    <div class="info-box">
+      👷 Você está logado como <strong>Líder Operacional</strong>. Você pode cadastrar funcionários, gerenciar ponto diário e avaliar aptidões da sua equipe.
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">👤 Meu Perfil</div>
+        <div class="form-group">
+          <label>🏭 Filial</label>
+          <select id="lider-filial"></select>
+        </div>
+        <div class="form-group">
+          <label>🕐 Turno</label>
+          <select id="lider-turno"></select>
+        </div>
+        <div class="form-group">
+          <label>🏢 Departamentos que gerencio</label>
+          <div id="lider-depts-list" style="display:flex;flex-direction:column;gap:6px;margin-top:6px"></div>
+          <small style="color:var(--muted);font-size:11px;margin-top:6px;display:block">Selecione todos os departamentos que você gerencia</small>
+        </div>
+        <div class="section-sep"></div>
+        <button class="btn btn-primary btn-sm" onclick="savePerfilLider()">💾 Salvar Perfil</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎨 Aparência</div>
+        <button class="theme-toggle-btn" onclick="toggleTheme()">
+          <div class="toggle-track"><div class="toggle-knob"></div></div>
+          <span class="theme-toggle-label">☀️ Tema Claro</span>
+        </button>
+        <div class="section-sep"></div>
+        <div class="card-title" style="margin-bottom:10px">🔑 Alterar Minha Senha</div>
+        <div class="change-pass-box">
+          <div class="form-group"><label>Senha Atual</label><input type="password" id="lcp-current" placeholder="Senha atual"></div>
+          <div class="form-group"><label>Nova Senha</label><input type="password" id="lcp-new" placeholder="Nova senha (mín. 6)"></div>
+          <div class="form-group last"><label>Confirmar</label><input type="password" id="lcp-new2" placeholder="Repita a nova senha"></div>
+          <div class="section-sep"></div>
+          <button class="btn btn-primary btn-sm" onclick="changePassword('lcp')">🔒 Salvar Nova Senha</button>
+          <div class="login-msg" id="lcp-msg" style="margin-top:10px;display:none;padding:8px 12px;border-radius:8px;font-size:12px;text-align:center"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-lider -->
+
+</main>
+
+<script>
+// ════════════════════════════════════════════════════════
+// INICIALIZAÇÃO
+// ════════════════════════════════════════════════════════
+const LIST_CONFIG = {
+  filiais: { listId:'list-filiais', badgeId:'badge-filiais', inputId:'input-filial' },
+  turnos:  { listId:'list-turnos',  badgeId:'badge-turnos',  inputId:'input-turno'  },
+  depts:   { listId:'list-depts',   badgeId:'badge-depts',   inputId:'input-dept'   },
+  funcoes: { listId:'list-funcoes', badgeId:'badge-funcoes', inputId:'input-funcao' },
+};
+
+const MESES_PT = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                  'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+let currentUser = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  currentUser = await requireSession();
+  if (!currentUser) return;
+
+  initTheme();
+  initSidebar('config', currentUser);
+
+  // Badge de perfil — usa o nivel real do usuário
+  const perfil    = getUserPerfil(currentUser);
+  const nivelReal = currentUser.nivel || 'lider';
+  const meta      = NIVEL_LABELS[nivelReal] || NIVEL_LABELS['lider'];
+
+  document.getElementById('config-perfil-badge').innerHTML = `
+    <span class="perfil-badge"
+      style="background:${meta.cor}18;color:${meta.cor};border:1px solid ${meta.cor}33">
+      ${meta.emoji} ${meta.label}
+    </span>`;
+
+  // Subtítulo
+  document.getElementById('config-subtitle').textContent =
+    `Logado como ${currentUser.name}` +
+    (NIVEL_NAMES[currentUser.nivel] ? ` · ${NIVEL_NAMES[currentUser.nivel]}` : '');
+
+  // Mostra painel correto
+  document.getElementById('panel-admin-master').style.display = perfil==='admin_master' ? 'block':'none';
+  document.getElementById('panel-admin-gestor').style.display = perfil==='admin_gestor' ? 'block':'none';
+  document.getElementById('panel-lider').style.display        = perfil==='lider'        ? 'block':'none';
+
+  if (perfil === 'admin_master') renderAdminMaster();
+  if (perfil === 'admin_gestor') renderAdminGestor();
+  if (perfil === 'lider')        renderLider();
+});
+
+// ════════════════════════════════════════════════════════
+// ADMIN MASTER
+// ════════════════════════════════════════════════════════
+function renderAdminMaster() {
+  const store = await getStore();
+  renderLista('filiais', store.filiais);
+  renderLista('turnos',  store.turnos);
+  renderLista('depts',   store.depts);
+  renderLista('funcoes', store.funcoes);
+  document.getElementById('cfg-perf').value  = store.config.perfWeight || 40;
+  document.getElementById('cfg-apt').value   = store.config.aptWeight  || 35;
+  document.getElementById('cfg-maxabs').value = store.config.maxAbs    || 36;
+  refreshPesos();
+  document.getElementById('auth-code-display').value = store.authCode || AUTH_CODE_DEFAULT;
+  renderFeriados();
+  renderUsers();
+  renderTabelaPermissoes();
+}
+
+// ── Listas estruturais ──
+function renderLista(tipo, lista) {
+  const cfg   = LIST_CONFIG[tipo];
+  const badge = document.getElementById(cfg.badgeId);
+  const el    = document.getElementById(cfg.listId);
+  if (badge) badge.textContent = lista.length;
+  if (!el) return;
+
+  el.innerHTML = lista.map(item =>
+    `<div class="dept-item">
+      <span class="dept-item-name" id="item-${tipo}-${item.id}">${item.nome}</span>
+      <div style="display:flex;gap:4px">
+        <button class="btn btn-ghost btn-sm"
+          onclick="startEdit('${tipo}','${item.id}','${item.nome.replace(/'/g,"\\'")}')">✏️</button>
+        <button class="btn btn-danger btn-sm"
+          onclick="removeItem('${tipo}','${item.id}')">✕</button>
+      </div>
+    </div>`
+  ).join('') || `<div style="color:var(--muted);font-size:13px;padding:6px 0">Nenhum cadastrado.</div>`;
+}
+
+function addItem(tipo) {
+  const cfg   = LIST_CONFIG[tipo];
+  const input = document.getElementById(cfg.inputId);
+  const nome  = input.value.trim();
+  if (!nome) { input.focus(); return; }
+
+  const store = await getStore();
+  if (store[tipo].some(x => x.nome.toLowerCase() === nome.toLowerCase())) {
+    showToast('⚠️ Já existe um item com este nome.','warn'); return;
+  }
+  store[tipo].push({ id: uid(), nome });
+  await saveStore(store);
+  input.value = '';
+  renderLista(tipo, store[tipo]);
+  showToast('✅ Adicionado!');
+}
+
+function removeItem(tipo, id) {
+  const store = await getStore();
+  const item  = store[tipo].find(x => x.id === id);
+  if (!confirm(`Excluir "${item?.nome}"?`)) return;
+  store[tipo] = store[tipo].filter(x => x.id !== id);
+  await saveStore(store);
+  renderLista(tipo, store[tipo]);
+  showToast('✅ Excluído.');
+}
+
+function startEdit(tipo, id, oldNome) {
+  const span = document.getElementById(`item-${tipo}-${id}`);
+  if (!span) return;
+  const inp = document.createElement('input');
+  inp.className = 'inline-edit';
+  inp.value = oldNome;
+  inp.addEventListener('keydown', ev => {
+    if (ev.key === 'Enter') {
+      ev.preventDefault();
+      const nw = inp.value.trim();
+      if (nw && nw !== oldNome) {
+        const store = await getStore();
+        const item  = store[tipo].find(x => x.id === id);
+        if (item) { item.nome = nw; await saveStore(store); showToast('✅ Atualizado!'); }
+      }
+      renderLista(tipo, await getStore()[tipo]);
+    }
+    if (ev.key === 'Escape') renderLista(tipo, await getStore()[tipo]);
+  });
+  span.innerHTML = '';
+  span.appendChild(inp);
+  inp.focus(); inp.select();
+}
+
+// ── Pesos ──
+function refreshPesos() {
+  const pw = Math.min(100, Math.max(0, parseInt(document.getElementById('cfg-perf')?.value)||40));
+  const aw = Math.min(100, Math.max(0, parseInt(document.getElementById('cfg-apt')?.value)||35));
+  const bw = Math.max(0, 100 - pw - aw);
+  const ad = document.getElementById('cfg-abs'); if(ad) ad.value = bw;
+  const vis = document.getElementById('weight-visual');
+  if (vis) {
+    const s = vis.querySelectorAll('.weight-seg');
+    if(s[0]){s[0].style.flex=pw;s[0].style.display=pw===0?'none':'';}
+    if(s[1]){s[1].style.flex=aw;s[1].style.display=aw===0?'none':'';}
+    if(s[2]){s[2].style.flex=bw;s[2].style.display=bw===0?'none':'';}
+  }
+  const wP=document.getElementById('wl-p'); if(wP) wP.textContent=`Desempenho ${pw}%`;
+  const wA=document.getElementById('wl-a'); if(wA) wA.textContent=`Aptidões ${aw}%`;
+  const wB=document.getElementById('wl-b'); if(wB) wB.textContent=`Assiduidade ${bw}%`;
+}
+
+function saveCfg() {
+  const pw = Math.min(100, Math.max(0, parseInt(document.getElementById('cfg-perf').value)||40));
+  const aw = Math.min(100, Math.max(0, parseInt(document.getElementById('cfg-apt').value)||35));
+  if (pw + aw > 100) { showToast('⚠️ Desempenho + Aptidões não pode ultrapassar 100%.','warn'); return; }
+  const store = await getStore();
+  store.config.perfWeight = pw;
+  store.config.aptWeight  = aw;
+  store.config.maxAbs     = parseInt(document.getElementById('cfg-maxabs').value)||36;
+  await saveStore(store);
+  showToast('✅ Configurações salvas!');
+  refreshPesos();
+}
+
+// ── Código de autorização ──
+function gerarNovoCodigo() {
+  if (!confirm('Gerar um novo código? O atual ficará inválido para novos cadastros.')) return;
+  const novo  = 'NAGUMO-' + Math.random().toString(36).toUpperCase().slice(2,8);
+  const store = await getStore();
+  store.authCode = novo;
+  await saveStore(store);
+  document.getElementById('auth-code-display').value = novo;
+  showToast('✅ Novo código gerado! Compartilhe com novos usuários.');
+}
+
+// ── Feriados ──
+function renderFeriados() {
+  const store = await getStore();
+  const lista = store.config.feriadosCustom || [];
+  const badge = document.getElementById('badge-feriados');
+  const box   = document.getElementById('list-feriados');
+  if (badge) badge.textContent = lista.length;
+  if (!box) return;
+  box.innerHTML = !lista.length
+    ? '<div style="color:var(--muted);font-size:13px;padding:4px 0">Nenhum feriado regional cadastrado.</div>'
+    : lista.sort((a,b)=>a.chave.localeCompare(b.chave)).map((f,i) => {
+        const p = (f.chave||'').split('-');
+        return `<div class="dept-item">
+          <span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;
+            background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.3);white-space:nowrap">
+            📅 ${String(parseInt(p[1])).padStart(2,'0')} de ${MESES_PT[parseInt(p[0])]||'?'}
+          </span>
+          <span class="dept-item-name">${f.nome||'—'}</span>
+          <button class="btn btn-danger btn-sm" onclick="removeFeriado(${i})">✕</button>
+        </div>`;
+      }).join('');
+}
+
+function addFeriado() {
+  const dia  = String(parseInt(document.getElementById('feriado-dia').value)||0).padStart(2,'0');
+  const mes  = document.getElementById('feriado-mes').value;
+  const nome = document.getElementById('feriado-nome').value.trim();
+  if (!mes || parseInt(dia)<1 || parseInt(dia)>31) { showToast('⚠️ Informe dia e mês válidos.','warn'); return; }
+  if (!nome) { document.getElementById('feriado-nome').focus(); return; }
+  const chave = `${mes}-${dia}`;
+  const store = await getStore();
+  if (!store.config.feriadosCustom) store.config.feriadosCustom = [];
+  if (store.config.feriadosCustom.some(f=>f.chave===chave)) { showToast('⚠️ Já existe feriado nesta data.','warn'); return; }
+  store.config.feriadosCustom.push({ chave, nome });
+  await saveStore(store);
+  document.getElementById('feriado-dia').value  = '';
+  document.getElementById('feriado-mes').value  = '';
+  document.getElementById('feriado-nome').value = '';
+  renderFeriados();
+  showToast('✅ Feriado adicionado!');
+}
+
+function removeFeriado(i) {
+  if (!confirm('Remover este feriado?')) return;
+  const store = await getStore();
+  store.config.feriadosCustom.splice(i, 1);
+  await saveStore(store);
+  renderFeriados();
+  showToast('✅ Feriado removido.');
+}
+
+// ── Usuários ──
+function renderUsers() {
+  const store = await getStore();
+  const box   = document.getElementById('users-list');
+  if (!box) return;
+  const users = Object.values(store.users).filter(u => u.id !== ADMIN_ID);
+  if (!users.length) {
+    box.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:4px 0">Nenhum usuário cadastrado além do admin.</div>';
+    return;
+  }
+  const EM = { lider:'👷', encarregado:'🔰', coordenacao:'📋', gerencia:'📊', diretoria:'🏢' };
+  box.innerHTML = users.map(u =>
+    `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600;color:var(--text)">${EM[u.nivel]||'👤'} ${u.name}</div>
+        <div style="font-size:11px;color:var(--muted)">${u.id}${u.setor?' · '+u.setor:''}</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="adminResetPass('${u.id}')">🔑</button>
+      <button class="btn btn-danger btn-sm" onclick="adminDeleteUser('${u.id}')">✕</button>
+    </div>`
+  ).join('');
+}
+
+function adminResetPass(userId) {
+  const nova = prompt(`Nova senha para "${userId}" (mín. 6 caracteres):`);
+  if (!nova) return;
+  if (nova.length < 6) { showToast('❌ Senha muito curta.','error'); return; }
+  const store = await getStore();
+  if (!store.users[userId]) { showToast('❌ Usuário não encontrado.','error'); return; }
+  store.users[userId].pass = nova;
+  await saveStore(store);
+  showToast('✅ Senha redefinida!');
+}
+
+function adminDeleteUser(userId) {
+  const store = await getStore();
+  if (!confirm(`Excluir "${store.users[userId]?.name}"? Esta ação não pode ser desfeita.`)) return;
+  delete store.users[userId];
+  await saveStore(store);
+  renderUsers();
+  showToast('✅ Usuário removido.');
+}
+
+// ════════════════════════════════════════════════════════
+// ADMIN GESTOR
+// ════════════════════════════════════════════════════════
+function renderAdminGestor() {
+  const store  = await getStore();
+  const nivel  = currentUser.nivel;
+  const NOMES  = { encarregado:'Encarregado', coordenacao:'Coordenação', gerencia:'Gerência', diretoria:'Diretoria' };
+
+  document.getElementById('gestor-info-box').innerHTML =
+    `📊 Você está logado como <strong>${NOMES[nivel]||nivel}</strong>. Gerencie abaixo suas filiais, turnos e departamentos de responsabilidade.`;
+
+  const p          = currentUser.perfil || {};
+  const selFiliais = p.filiais || (p.filial ? [p.filial] : []);
+  const selTurnos  = p.turnos  || (p.turno  ? [p.turno]  : []);
+  const selDepts   = p.depts   || [];
+
+  const checks = (listId, items, selectedArr, emoji) => {
+    const el = document.getElementById(listId);
+    if (!items.length) { el.innerHTML = `<span style="color:var(--muted);font-size:12px">Nenhum cadastrado pelo Admin.</span>`; return; }
+    el.innerHTML = items.map(x => `
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;padding:5px 8px;
+        border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text)">
+        <input type="checkbox" value="${x.nome}" ${selectedArr.includes(x.nome)?'checked':''}
+          style="accent-color:var(--accent);width:15px;height:15px">
+        ${emoji} ${x.nome}
+      </label>`).join('');
+  };
+
+  checks('gestor-filiais', store.filiais||[], selFiliais, '🏭');
+  checks('gestor-turnos',  store.turnos||[],  selTurnos,  '🕐');
+  checks('gestor-depts',   store.depts||[],   selDepts,   '🏢');
+
+  const opt = (list, val) =>
+    `<option value="">— Selecione —</option>` +
+    list.map(x => `<option value="${x.nome}" ${x.nome===val?'selected':''}>${x.nome}</option>`).join('');
+  document.getElementById('gestor-funcao').innerHTML = opt(store.funcoes||[], p.funcao||'');
+}
+
+function savePerfilGestor() {
+  const store   = await getStore();
+  const filiais = [...document.querySelectorAll('#gestor-filiais input:checked')].map(c=>c.value);
+  const turnos  = [...document.querySelectorAll('#gestor-turnos input:checked')].map(c=>c.value);
+  const depts   = [...document.querySelectorAll('#gestor-depts input:checked')].map(c=>c.value);
+  const funcao  = document.getElementById('gestor-funcao').value;
+
+  const perfil = {
+    filiais,  filial:  filiais[0] || '',
+    turnos,   turno:   turnos[0]  || '',
+    depts,    funcao,
+  };
+
+  store.users[currentUser.id].perfil = perfil;
+  store.users[currentUser.id].setor  = depts[0] || '';
+  currentUser.perfil = perfil;
+  await saveStore(store);
+  await registrarLog('editou', 'Configurações', 'Atualizou perfil próprio');
+  showToast('✅ Perfil salvo!');
+}
+
+// ════════════════════════════════════════════════════════
+// LÍDER OPERACIONAL
+// ════════════════════════════════════════════════════════
+function renderLider() {
+  const store = await getStore();
+  const p     = currentUser.perfil || {};
+  const opt   = (list, val) =>
+    `<option value="">— Selecione —</option>` +
+    list.map(x => `<option value="${x.nome}" ${x.nome===val?'selected':''}>${x.nome}</option>`).join('');
+
+  document.getElementById('lider-filial').innerHTML = opt(store.filiais, p.filial||'');
+  document.getElementById('lider-turno').innerHTML  = opt(store.turnos,  p.turno||'');
+
+  const selected = p.depts || [];
+  document.getElementById('lider-depts-list').innerHTML = store.depts.map(d =>
+    `<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;
+      color:var(--text);padding:6px 10px;border-radius:6px;
+      background:var(--surface2);border:1px solid var(--border)">
+      <input type="checkbox" value="${d.nome}" ${selected.includes(d.nome)?'checked':''}
+        style="accent-color:var(--accent);width:16px;height:16px">
+      🏢 ${d.nome}
+    </label>`
+  ).join('') || '<div style="color:var(--muted);font-size:12px;padding:4px 0">Nenhum departamento cadastrado.</div>';
+}
+
+function savePerfilLider() {
+  const store = await getStore();
+  const depts = [...document.querySelectorAll('#lider-depts-list input[type=checkbox]:checked')]
+                .map(c => c.value);
+  const perfil = {
+    filial: document.getElementById('lider-filial').value,
+    turno:  document.getElementById('lider-turno').value,
+    depts,
+  };
+  store.users[currentUser.id].perfil = perfil;
+  currentUser.perfil = perfil;
+  await saveStore(store);
+  showToast('✅ Perfil salvo!');
+}
+
+// ════════════════════════════════════════════════════════
+// IMPORTAR / EXPORTAR JSON
+// ════════════════════════════════════════════════════════
+function exportarJSON() {
+  const payload = {
+    rh_store:          await LS.get('rh_store'),
+    rh_perm_overrides: LS_LOCAL.get('rh_perm_overrides') || null,
+    rh_theme:          LS_LOCAL.get('rh_theme') || 'dark',
+    rh_quadro:         await LS.get('rh_quadro') || {},
+    rh_ponto:          await LS.get('rh_ponto') || {},
+    rh_ocorrencias:    await LS.get('rh_ocorrencias') || [],
+    rh_audit_log:      await LS.get('rh_audit_log') || [],
+    exported_at:       new Date().toISOString(),
+    version:           '2.0',
+  };
+
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type:'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  const date = new Date().toISOString().slice(0,10);
+  a.href     = url;
+  a.download = `rh-nagumo-backup-${date}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('✅ Backup exportado com sucesso!');
+}
+
+function importarJSON(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const status = document.getElementById('import-status');
+  status.textContent = '⏳ Lendo arquivo...';
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+
+      // Validação básica
+      if (!data.rh_store || !data.rh_store.users) {
+        status.textContent = '❌ Arquivo inválido ou corrompido.';
+        showToast('❌ Arquivo inválido.','error');
+        return;
+      }
+
+      const totalUsers   = Object.keys(data.rh_store.users).length;
+      const totalFiliais = (data.rh_store.filiais || []).length;
+      const exportedAt   = data.exported_at
+        ? new Date(data.exported_at).toLocaleString('pt-BR')
+        : 'data desconhecida';
+
+      const ok = confirm(
+        `📦 Importar backup?\n\n` +
+        `Exportado em: ${exportedAt}\n` +
+        `Usuários: ${totalUsers}\n` +
+        `Filiais: ${totalFiliais}\n\n` +
+        `⚠️ ATENÇÃO: isso vai substituir todos os dados atuais desta máquina.\n` +
+        `Esta ação não pode ser desfeita.`
+      );
+      if (!ok) { status.textContent = ''; input.value = ''; return; }
+
+      // Aplica os dados
+      await LS.set('rh_store', data.rh_store);
+      if (data.rh_perm_overrides) await LS.set('rh_perm_overrides', data.rh_perm_overrides);
+      if (data.rh_theme)          await LS.set('rh_theme', data.rh_theme);
+      if (data.rh_quadro)         await LS.set('rh_quadro', data.rh_quadro);
+      if (data.rh_ponto)          await LS.set('rh_ponto', data.rh_ponto);
+      if (data.rh_ocorrencias)    await LS.set('rh_ocorrencias', data.rh_ocorrencias);
+      if (data.rh_audit_log)      await LS.set('rh_audit_log', data.rh_audit_log);
+
+      status.textContent = '';
+      input.value = '';
+      showToast(`✅ Dados importados! ${totalUsers} usuários carregados.`);
+
+      // Recarrega a página para refletir os novos dados
+      setTimeout(() => window.location.reload(), 1200);
+
+    } catch(err) {
+      status.textContent = '❌ Erro ao ler o arquivo.';
+      showToast('❌ Erro ao importar: ' + err.message,'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ════════════════════════════════════════════════════════
+// TABELA DE PERMISSÕES
+// ════════════════════════════════════════════════════════
+function renderTabelaPermissoes() {
+  const tabela   = document.getElementById('perm-table');
+  if (!tabela) return;
+
+  const ativas   = getActivePermissions();
+  const defaults = PERMISSIONS;
+  const overrides= _getPermissionOverrides() || {};
+  const temOverride = Object.keys(overrides).length > 0;
+  const badge    = document.getElementById('perm-changed-badge');
+  if (badge) badge.style.display = temOverride ? 'inline-flex' : 'none';
+
+  // Cabeçalho
+  const roles = ROLE_HIERARCHY.filter(r => r !== 'admin_master');
+  let html = `<thead><tr>
+    <th style="min-width:160px">Página / Ação</th>
+    ${roles.map(r => `<th class="role-col">${ROLE_LABELS[r]}</th>`).join('')}
+  </tr></thead><tbody>`;
+
+  Object.entries(PAGE_LABELS).forEach(([page, meta]) => {
+    html += `<tr class="perm-page-header"><td colspan="${roles.length + 1}">${meta.label}</td></tr>`;
+
+    meta.actions.forEach(action => {
+      const currentRole = ativas[page]?.[action] || 'admin_master';
+      const defaultRole = defaults[page]?.[action] || 'admin_master';
+      const changed     = overrides[page]?.[action] && overrides[page][action] !== defaultRole;
+
+      html += `<tr>
+        <td class="perm-action-label">${ACTION_LABELS[action] || action}</td>
+        ${roles.map(role => {
+          const isMin     = role === currentRole;
+          const isAllowed = roleLevel(role) >= roleLevel(currentRole);
+          const dot = isMin
+            ? `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;
+                background:var(--accent);box-shadow:0 0 6px var(--accent);
+                margin:0 auto"></span>`
+            : isAllowed
+              ? `<span style="display:inline-block;width:6px;height:6px;border-radius:50%;
+                  background:rgba(79,142,247,.3);margin:0 auto"></span>`
+              : `<span style="display:inline-block;width:6px;height:6px;border-radius:50%;
+                  background:var(--surface3);margin:0 auto"></span>`;
+          return `<td style="text-align:center">${dot}</td>`;
+        }).join('')}
+        <td style="min-width:130px">
+          <select class="perm-select ${changed?'perm-changed':''}"
+            data-page="${page}" data-action="${action}"
+            onchange="onPermChange(this)">
+            ${ROLE_HIERARCHY.map(r =>
+              `<option value="${r}" ${r===currentRole?'selected':''}>${ROLE_LABELS[r]}</option>`
+            ).join('')}
+          </select>
+        </td>
+      </tr>`;
+    });
+  });
+
+  html += '</tbody>';
+  tabela.innerHTML = html;
+}
+
+function onPermChange(select) {
+  select.classList.add('perm-changed');
+  const badge = document.getElementById('perm-changed-badge');
+  if (badge) badge.style.display = 'inline-flex';
+}
+
+function salvarPermissoes() {
+  const selects   = document.querySelectorAll('.perm-select');
+  const overrides = {};
+
+  selects.forEach(sel => {
+    const page   = sel.dataset.page;
+    const action = sel.dataset.action;
+    const val    = sel.value;
+    const def    = PERMISSIONS[page]?.[action];
+
+    // Só salva se diferente do padrão
+    if (val !== def) {
+      if (!overrides[page]) overrides[page] = {};
+      overrides[page][action] = val;
+    }
+  });
+
+  savePermissionOverrides(overrides);
+  showToast('✅ Permissões salvas!');
+  renderTabelaPermissoes();
+}
+
+function resetarPermissoes() {
+  if (!confirm('Restaurar todas as permissões para os valores padrão?\nIsso remove todos os ajustes personalizados.')) return;
+  resetPermissionsToDefault();
+  showToast('✅ Permissões restauradas para o padrão.');
+  renderTabelaPermissoes();
+}
+
+function changePassword(pre) {
+  const cur  = document.getElementById(`${pre}-current`).value;
+  const nw   = document.getElementById(`${pre}-new`).value;
+  const nw2  = document.getElementById(`${pre}-new2`).value;
+  const msgEl = document.getElementById(`${pre}-msg`);
+
+  const showMsgLocal = (txt, type) => {
+    msgEl.textContent = txt;
+    msgEl.style.display   = 'block';
+    msgEl.style.background = type==='error' ? 'rgba(248,113,113,.15)' : 'rgba(52,211,153,.15)';
+    msgEl.style.color      = type==='error' ? 'var(--red)' : 'var(--green)';
+    msgEl.style.border     = type==='error' ? '1px solid rgba(248,113,113,.3)' : '1px solid rgba(52,211,153,.3)';
+  };
+
+  if (!cur||!nw||!nw2)  { showMsgLocal('⚠️ Preencha todos os campos.','error'); return; }
+  if (nw !== nw2)        { showMsgLocal('❌ As senhas não coincidem.','error');   return; }
+  if (nw.length < 6)     { showMsgLocal('❌ Mínimo 6 caracteres.','error');       return; }
+
+  const store = await getStore();
+  if (store.users[currentUser.id].pass !== cur) {
+    showMsgLocal('❌ Senha atual incorreta.','error'); return;
+  }
+  store.users[currentUser.id].pass = nw;
+  currentUser.pass = nw;
+  await saveStore(store);
+  showMsgLocal('✅ Senha alterada com sucesso!','success');
+  [`${pre}-current`,`${pre}-new`,`${pre}-new2`].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value='';
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+/* ════════════════════════════════════════════════════════
+   LIGHT-THEME.CSS — Tema Claro Institucional · Nagumo
+   Cores: #D40138 (vermelho) · #023665 (azul marinho) · #3CCBDB (ciano)
+   Importar em TODAS as páginas, após sidebar.css
+════════════════════════════════════════════════════════ */
+
+/* ── Variáveis globais do tema claro ── */
+body.light-theme {
+  /* Backgrounds */
+  --bg:       #F0F4F8;
+  --surface:  #FFFFFF;
+  --surface2: #EBF1F7;
+  --surface3: #DCE6EE;
+
+  /* Borders */
+  --border:   #C8D6E3;
+
+  /* Cores institucionais Nagumo */
+  --accent:   #D40138;        /* vermelho institucional */
+  --accent2:  #023665;        /* azul marinho */
+  --cyan:     #3CCBDB;        /* ciano */
+
+  /* Semânticas */
+  --green:    #0A7C4E;
+  --yellow:   #B45309;
+  --red:      #C0001E;
+  --orange:   #C2410C;
+  --pink:     #B91C80;
+
+  /* Texto */
+  --text:     #04152E;
+  --muted:    #4D6680;
+}
+
+/* ══════════════════════════════════════════
+   LAYOUT BASE
+══════════════════════════════════════════ */
+body.light-theme .main {
+  background: var(--bg);
+}
+body.light-theme ::-webkit-scrollbar-track { background: #EBF1F7; }
+body.light-theme ::-webkit-scrollbar-thumb { background: #B0C4D4; border-radius: 3px; }
+
+/* ══════════════════════════════════════════
+   TOPBAR & TÍTULOS
+══════════════════════════════════════════ */
+body.light-theme .page-title       { color: #04152E; }
+body.light-theme .page-title span  { color: #D40138; }
+body.light-theme .page-date        { color: #4D6680; }
+
+/* ══════════════════════════════════════════
+   CARDS GENÉRICOS
+══════════════════════════════════════════ */
+body.light-theme .card {
+  background: #FFFFFF;
+  border-color: #C8D6E3;
+  box-shadow: 0 1px 6px rgba(2, 54, 101, .07);
+}
+body.light-theme .card-title { color: #04152E; }
+
+/* ══════════════════════════════════════════
+   KPI CARDS — Dashboard
+══════════════════════════════════════════ */
+/* Blue → Azul marinho Nagumo */
+body.light-theme .kpi-card.blue   { background: #E8F0F8; border-color: #BACED8; }
+body.light-theme .kpi-card.blue   .kpi-value { color: #023665; }
+
+/* Green */
+body.light-theme .kpi-card.green  { background: #E6F5EF; border-color: #A8D9C4; }
+body.light-theme .kpi-card.green  .kpi-value { color: #0A7C4E; }
+
+/* Cyan → Ciano Nagumo */
+body.light-theme .kpi-card.cyan   { background: #E4F8FA; border-color: #9DE4EC; }
+body.light-theme .kpi-card.cyan   .kpi-value { color: #1A9EAB; }
+
+/* Purple */
+body.light-theme .kpi-card.purple { background: #EEE8F8; border-color: #C8B8F0; }
+body.light-theme .kpi-card.purple .kpi-value { color: #5B21B6; }
+
+/* Yellow */
+body.light-theme .kpi-card.yellow { background: #FBF3E6; border-color: #F0D9A8; }
+body.light-theme .kpi-card.yellow .kpi-value { color: #B45309; }
+
+/* Red → Vermelho Nagumo */
+body.light-theme .kpi-card.red    { background: #FCE8EC; border-color: #F0B8C4; }
+body.light-theme .kpi-card.red    .kpi-value { color: #D40138; }
+
+/* Orange */
+body.light-theme .kpi-card.orange { background: #FDF0E8; border-color: #F5CCB0; }
+body.light-theme .kpi-card.orange .kpi-value { color: #C2410C; }
+
+body.light-theme .kpi-label { color: #4D6680; }
+body.light-theme .kpi-sub   { color: #7A9AB5; }
+
+/* ══════════════════════════════════════════
+   BOTÕES
+══════════════════════════════════════════ */
+body.light-theme .btn-primary {
+  background: #D40138;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(212, 1, 56, .25);
+}
+body.light-theme .btn-primary:hover {
+  background: #B5002F;
+  box-shadow: 0 4px 16px rgba(212, 1, 56, .35);
+}
+body.light-theme .btn-cyan {
+  background: rgba(60, 203, 219, .12);
+  color: #1A9EAB;
+  border: 1px solid rgba(60, 203, 219, .4);
+}
+body.light-theme .btn-cyan:hover { background: rgba(60, 203, 219, .22); }
+
+body.light-theme .btn-purple {
+  background: rgba(2, 54, 101, .08);
+  color: #023665;
+  border: 1px solid rgba(2, 54, 101, .25);
+}
+body.light-theme .btn-purple:hover { background: rgba(2, 54, 101, .15); }
+
+body.light-theme .btn-green {
+  background: rgba(10, 124, 78, .08);
+  color: #0A7C4E;
+  border: 1px solid rgba(10, 124, 78, .25);
+}
+body.light-theme .btn-green:hover { background: rgba(10, 124, 78, .15); }
+
+/* Botão genérico outline */
+body.light-theme .btn-outline,
+body.light-theme button.btn:not(.btn-primary):not(.btn-cyan):not(.btn-purple):not(.btn-green) {
+  background: #FFFFFF;
+  border: 1px solid #C8D6E3;
+  color: #023665;
+}
+body.light-theme .btn-outline:hover { background: #EBF1F7; }
+
+/* ══════════════════════════════════════════
+   INPUTS, SELECT, SEARCH
+══════════════════════════════════════════ */
+body.light-theme input,
+body.light-theme select,
+body.light-theme textarea,
+body.light-theme .search-input,
+body.light-theme .dept-select,
+body.light-theme .filter-select {
+  background: #FFFFFF;
+  border-color: #B0C4D4;
+  color: #04152E;
+}
+body.light-theme input::placeholder,
+body.light-theme .search-input::placeholder { color: #7A9AB5; }
+body.light-theme input:focus,
+body.light-theme select:focus,
+body.light-theme .search-input:focus {
+  border-color: #D40138;
+  box-shadow: 0 0 0 3px rgba(212, 1, 56, .12);
+  outline: none;
+}
+
+/* ══════════════════════════════════════════
+   FILTER CHIPS & TABS
+══════════════════════════════════════════ */
+body.light-theme .filter-chip {
+  background: #FFFFFF;
+  border-color: #B0C4D4;
+  color: #4D6680;
+}
+body.light-theme .filter-chip.active {
+  background: rgba(212, 1, 56, .08);
+  border-color: #D40138;
+  color: #D40138;
+}
+body.light-theme .filter-chip:hover { background: #EBF1F7; }
+
+body.light-theme .tab-btn,
+body.light-theme .login-tab {
+  background: #EBF1F7;
+  color: #4D6680;
+}
+body.light-theme .tab-btn.active,
+body.light-theme .login-tab.active {
+  background: #D40138;
+  color: #FFFFFF;
+}
+
+/* ══════════════════════════════════════════
+   EMPLOYEES PAGE
+══════════════════════════════════════════ */
+body.light-theme .emp-card {
+  background: #FFFFFF;
+  border-color: #C8D6E3;
+  box-shadow: 0 1px 4px rgba(2, 54, 101, .06);
+}
+body.light-theme .emp-card:hover {
+  border-color: #D40138;
+  box-shadow: 0 4px 20px rgba(212, 1, 56, .12);
+}
+body.light-theme .emp-name         { color: #04152E; }
+body.light-theme .emp-role         { color: #4D6680; }
+body.light-theme .emp-metric-label { color: #7A9AB5; }
+body.light-theme .emp-matricula    { border-top-color: #DCE6EE; color: #4D6680; }
+body.light-theme .emp-matricula strong { color: #04152E; }
+body.light-theme .score-bar-bg     { background: #DCE6EE; }
+body.light-theme .score-bar-fill   { background: linear-gradient(90deg, #D40138, #023665); }
+body.light-theme .emp-score-big    { color: #023665; }
+
+/* ══════════════════════════════════════════
+   LEADERS PAGE
+══════════════════════════════════════════ */
+body.light-theme .leader-card {
+  background: #FFFFFF;
+  border-color: #C8D6E3;
+}
+body.light-theme .leader-card:hover {
+  border-color: #023665;
+  box-shadow: 0 4px 20px rgba(2, 54, 101, .12);
+}
+body.light-theme .leader-name { color: #04152E; }
+body.light-theme .leader-role { color: #4D6680; }
+
+/* ══════════════════════════════════════════
+   RANKING PAGE
+══════════════════════════════════════════ */
+body.light-theme .podium-card {
+  background: #FFFFFF;
+  border-color: #C8D6E3;
+}
+body.light-theme .podium-card:hover { border-color: #D40138; }
+body.light-theme .podium-name  { color: #04152E; }
+body.light-theme .podium-score { color: #023665; }
+body.light-theme .top5-name    { color: #04152E; }
+body.light-theme .top5-dept    { color: #4D6680; }
+body.light-theme .top5-score   { color: #D40138; }
+
+/* ══════════════════════════════════════════
+   QUADRO OPERACIONAL
+══════════════════════════════════════════ */
+body.light-theme .quadro-card {
+  background: #FFFFFF;
+  border-color: #C8D6E3;
+}
+body.light-theme .quadro-num   { color: #023665; }
+body.light-theme .quadro-label { color: #4D6680; }
+
+/* ══════════════════════════════════════════
+   TABELAS (Ponto, Audit, Absenteísmo)
+══════════════════════════════════════════ */
+body.light-theme table { border-color: #C8D6E3; }
+body.light-theme th {
+  background: #023665;
+  color: #FFFFFF;
+  border-color: #2050A0;
+}
+body.light-theme td {
+  color: #04152E;
+  border-color: #DCE6EE;
+}
+body.light-theme tr:nth-child(even) td { background: #F4F8FC; }
+body.light-theme tr:hover td           { background: #E8F3FA; }
+
+body.light-theme .log-row:hover { background: rgba(212, 1, 56, .04); }
+
+/* ══════════════════════════════════════════
+   ABSENTEÍSMO — HEATMAP
+══════════════════════════════════════════ */
+body.light-theme .heat-cell {
+  background: #FFFFFF;
+  border-color: #C8D6E3;
+}
+body.light-theme .heat-cell.has-abs { background: rgba(212, 1, 56, .12); border-color: rgba(212, 1, 56, .3); }
+body.light-theme .heat-cell.many    { background: rgba(212, 1, 56, .28); border-color: rgba(212, 1, 56, .5); }
+body.light-theme .heat-name { color: #04152E; }
+
+/* ══════════════════════════════════════════
+   APTIDÕES
+══════════════════════════════════════════ */
+body.light-theme .apt-row:hover td { background: rgba(60, 203, 219, .06); }
+body.light-theme .apt-badge {
+  background: rgba(2, 54, 101, .08);
+  color: #023665;
+  border: 1px solid rgba(2, 54, 101, .2);
+}
+body.light-theme .apt-badge.ok  { background: rgba(10, 124, 78, .08); color: #0A7C4E; border-color: rgba(10, 124, 78, .2); }
+body.light-theme .apt-badge.nok { background: rgba(212, 1, 56, .08);  color: #D40138; border-color: rgba(212, 1, 56, .2); }
+
+/* ══════════════════════════════════════════
+   OCORRÊNCIAS
+══════════════════════════════════════════ */
+body.light-theme .oc-row:hover td { background: rgba(212, 1, 56, .04); }
+body.light-theme .oc-tag {
+  background: rgba(2, 54, 101, .08);
+  color: #023665;
+  border: 1px solid rgba(2, 54, 101, .2);
+}
+
+/* ══════════════════════════════════════════
+   PONTO DIÁRIO
+══════════════════════════════════════════ */
+body.light-theme .ponto-panel {
+  background: #FFFFFF;
+  border-color: #C8D6E3;
+}
+body.light-theme .ponto-header { background: #023665; color: #FFFFFF; }
+body.light-theme .ponto-day-btn {
+  background: #FFFFFF;
+  border-color: #C8D6E3;
+  color: #04152E;
+}
+body.light-theme .ponto-day-btn.active {
+  background: #D40138;
+  color: #FFFFFF;
+  border-color: #D40138;
+}
+body.light-theme .ponto-day-btn:hover:not(.active) { background: #EBF1F7; border-color: #023665; }
+
+/* ══════════════════════════════════════════
+   MODAIS
+══════════════════════════════════════════ */
+body.light-theme .modal {
+  background: #FFFFFF;
+  border-color: #C8D6E3;
+  box-shadow: 0 24px 64px rgba(2, 54, 101, .18);
+}
+body.light-theme .modal h2,
+body.light-theme .modal h3  { color: #023665; }
+body.light-theme .modal label { color: #334D66; }
+body.light-theme .modal input,
+body.light-theme .modal select,
+body.light-theme .modal textarea {
+  background: #F0F4F8;
+  border-color: #B0C4D4;
+  color: #04152E;
+}
+body.light-theme .modal input:focus,
+body.light-theme .modal select:focus {
+  border-color: #D40138;
+  box-shadow: 0 0 0 3px rgba(212, 1, 56, .10);
+}
+body.light-theme .overlay { background: rgba(2, 22, 50, .5); }
+
+/* ══════════════════════════════════════════
+   REPORT
+══════════════════════════════════════════ */
+body.light-theme .report-section { background: #FFFFFF; border-color: #C8D6E3; }
+body.light-theme .report-kpi-card { background: #EBF1F7; border-color: #C8D6E3; }
+body.light-theme .report-kpi-val  { color: #023665; }
+body.light-theme .report-kpi-lbl  { color: #4D6680; }
+
+/* ══════════════════════════════════════════
+   CONFIG
+══════════════════════════════════════════ */
+body.light-theme .config-section {
+  background: #FFFFFF;
+  border-color: #C8D6E3;
+}
+body.light-theme .config-section h3 { color: #023665; }
+body.light-theme .config-item-label { color: #4D6680; }
+body.light-theme .range-value       { color: #D40138; font-weight: 700; }
+
+/* ══════════════════════════════════════════
+   AUDIT LOG
+══════════════════════════════════════════ */
+body.light-theme .audit-badge {
+  background: rgba(2, 54, 101, .08);
+  color: #023665;
+  border: 1px solid rgba(2, 54, 101, .2);
+}
+
+/* ══════════════════════════════════════════
+   TOASTS
+══════════════════════════════════════════ */
+body.light-theme .toast {
+  background: #FFFFFF;
+  border: 1px solid #C8D6E3;
+  color: #04152E;
+  box-shadow: 0 4px 16px rgba(2, 54, 101, .12);
+}
+body.light-theme .toast.ok    { border-left: 4px solid #0A7C4E; }
+body.light-theme .toast.error { border-left: 4px solid #D40138; }
+body.light-theme .toast.warn  { border-left: 4px solid #B45309; }
+
+/* ══════════════════════════════════════════
+   SIDEBAR — Tema Claro Institucional
+══════════════════════════════════════════ */
+body.light-theme {
+  --sb-bg:           #FFFFFF;
+  --sb-border:       #C8D6E3;
+  --sb-text:         #4D6680;
+  --sb-text-hover:   #04152E;
+  --sb-bg-hover:     #EBF1F7;
+  --sb-active-color: #D40138;
+  --sb-active-bg:    rgba(212, 1, 56, .08);
+}
+
+/* Logo do sidebar no modo claro */
+body.light-theme #app-sidebar .sb-logo-box {
+  background: linear-gradient(135deg, #D40138 0%, #023665 100%);
+  box-shadow: 0 2px 10px rgba(212, 1, 56, .3);
+}
+body.light-theme #app-sidebar .sb-logo small { color: #4D6680; }
+
+/* Botão de logout */
+body.light-theme #app-sidebar .sb-logout {
+  border-color: #C8D6E3;
+  color: #4D6680;
+}
+body.light-theme #app-sidebar .sb-logout:hover {
+  background: rgba(212, 1, 56, .08);
+  color: #D40138;
+  border-color: rgba(212, 1, 56, .3);
+}
+
+/* User role text */
+body.light-theme #app-sidebar .sb-user-role { color: #4D6680; }
+body.light-theme #app-sidebar .sb-brand     { color: #7A9AB5; }
+
+/* Scrollbar do sidebar */
+body.light-theme #app-sidebar .sb-nav::-webkit-scrollbar-thumb { background: #B0C4D4; }
+
+/* ══════════════════════════════════════════
+   LOGIN PAGE
+══════════════════════════════════════════ */
+body.light-theme .login-box {
+  background: #FFFFFF;
+  border-color: #C8D6E3;
+  box-shadow: 0 8px 40px rgba(2, 54, 101, .12);
+}
+body.light-theme .login-tab-row  { border-color: #C8D6E3; }
+body.light-theme .login-admin-hint { color: #7A9AB5; }
+body.light-theme .login-admin-hint:hover { color: #023665; }
+
+body.light-theme .login-btn {
+  background: linear-gradient(135deg, #D40138 0%, #A8002C 100%);
+  box-shadow: 0 4px 16px rgba(212, 1, 56, .3);
+}
+body.light-theme .login-btn:hover {
+  background: linear-gradient(135deg, #B5002F 0%, #8A0022 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(212, 1, 56, .4);
+}
+
+body.light-theme .login-msg.info {
+  background: rgba(2, 54, 101, .08);
+  color: #023665;
+}
+
+/* Logo wrap na login */
+body.light-theme .logo-wrap {
+  background: linear-gradient(135deg, #D40138, #023665);
+  box-shadow: 0 2px 12px rgba(212, 1, 56, .25);
+}
+
+/* ══════════════════════════════════════════
+   SCORE BARS — Gradiente institucional
+══════════════════════════════════════════ */
+body.light-theme .score-bar-fill,
+body.light-theme [class*="bar-fill"] {
+  background: linear-gradient(90deg, #D40138 0%, #3CCBDB 100%);
+}
+
+/* ══════════════════════════════════════════
+   BADGES / TAGS DE STATUS
+══════════════════════════════════════════ */
+body.light-theme .badge-ok,
+body.light-theme .status-ok    { background: rgba(10, 124, 78, .10); color: #0A7C4E; border: 1px solid rgba(10, 124, 78, .25); }
+body.light-theme .badge-nok,
+body.light-theme .status-nok   { background: rgba(212, 1, 56, .10);  color: #D40138; border: 1px solid rgba(212, 1, 56, .25); }
+body.light-theme .badge-warn,
+body.light-theme .status-warn  { background: rgba(180, 83, 9, .10);  color: #B45309; border: 1px solid rgba(180, 83, 9, .25); }
+body.light-theme .badge-info   { background: rgba(2, 54, 101, .08);  color: #023665; border: 1px solid rgba(2, 54, 101, .22); }
+
+/* ══════════════════════════════════════════
+   SEPARADORES / DIVIDERS
+══════════════════════════════════════════ */
+body.light-theme hr,
+body.light-theme .divider { border-color: #C8D6E3; }
+
+/* ══════════════════════════════════════════
+   TOOLTIP DO SIDEBAR
+══════════════════════════════════════════ */
+body.light-theme #_sb-tip {
+  background: linear-gradient(135deg, #023665, #04152E) !important;
+  border-color: rgba(60, 203, 219, .4) !important;
+  color: #FFFFFF !important;
+}
+
+/* ══════════════════════════════════════════
+   SCROLLBAR GLOBAL
+══════════════════════════════════════════ */
+body.light-theme ::-webkit-scrollbar-track { background: #EBF1F7; }
+body.light-theme ::-webkit-scrollbar-thumb { background: #B0C4D4; border-radius: 3px; }
+body.light-theme ::-webkit-scrollbar-thumb:hover { background: #023665; }

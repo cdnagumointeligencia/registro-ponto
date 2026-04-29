@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aptidões · RH Nagumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sidebar.css">
+<link rel="stylesheet" href="../light-theme.css">
+<link rel="stylesheet" href="../responsive.css">
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../firebase.js"></script>
+<script src="../permissions.js"></script>
+<script src="../shared.js"></script>
+<style>
+:root {
+  --bg:#0b0d14; --surface:#12151f; --surface2:#1a1e2e; --surface3:#222638;
+  --border:#2a2f45; --accent:#4f8ef7; --accent2:#a78bfa;
+  --green:#34d399; --yellow:#fbbf24; --red:#f87171; --orange:#fb923c;
+  --cyan:#22d3ee; --text:#ffffff; --muted:#94a3b8;
+  --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --sidebar-w:220px;
+}
+/* [light-theme.css] body.light-theme {
+  --bg:#EEF2F8; --surface:#fff; --surface2:#F4F7FB; --surface3:#E8EDF5;
+  --border:#D6DDE8; --accent:#2563eb; --accent2:#7c3aed; --green:#059669;
+  --yellow:#d97706; --red:#dc2626; --orange:#ea580c; --cyan:#0891b2;
+  --text:#0f172a; --muted:#64748b;
+} */
+/* [light-theme.css] body.light-theme 
+
+body.light-theme .main            { background:#EEF2F8; } */
+/* [light-theme.css] body.light-theme .page-title      { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .search-input    { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .dept-select     { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .filter-chip     { background:#fff; border-color:#CBD5E1; color:#64748b; } */
+/* [light-theme.css] body.light-theme .filter-chip.active { background:rgba(37,99,235,.1); border-color:#2563eb; color:#2563eb; } */
+/* [light-theme.css] body.light-theme .apt-table-wrap  { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .apt-table thead th { background:#F4F7FB; color:#475569; border-bottom-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .apt-table tbody td { border-bottom-color:#F1F5F9; } */
+/* [light-theme.css] body.light-theme .apt-table tbody tr:hover td { background:#F4F7FB; } */
+/* [light-theme.css] body.light-theme .emp-name-text   { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .emp-role-text   { color:#64748b; } */
+/* [light-theme.css] body.light-theme .dept-text       { color:#64748b; } */
+/* [light-theme.css] body.light-theme .score-bubble    { border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .apt-input       { background:#fff; border-color:#2563eb; color:#0f172a; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-track { background:#F1F5F9; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-thumb { background:#CBD5E1; } */
+/* modal */
+/* [light-theme.css] body.light-theme .overlay         { background:rgba(15,23,42,.45); } */
+/* [light-theme.css] body.light-theme .modal           { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .modal input,
+body.light-theme .modal select    { background:#F4F7FB; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .modal label     { color:#475569; } */
+
+/* ── Base ── */
+* { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:14px; }
+body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
+
+/* ── Main ── */
+.main { margin-left:var(--sidebar-w); padding:24px 28px; min-height:100vh; }
+.topbar { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:12px; }
+.page-title { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; }
+.page-title span { color:var(--accent2); }
+.page-sub { font-size:12px; color:var(--muted); margin-top:4px; }
+
+/* ── Botão nova avaliação ── */
+.btn-primary {
+  display:inline-flex; align-items:center; gap:8px; padding:9px 18px;
+  border-radius:8px; border:none; background:var(--accent); color:#fff;
+  font-family:var(--font-body); font-size:12px; font-weight:700;
+  cursor:pointer; transition:all .2s;
+}
+.btn-primary:hover { background:#3a7ae0; transform:translateY(-1px); box-shadow:0 4px 16px rgba(79,142,247,.4); }
+.btn-ghost { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
+.btn-ghost:hover { background:var(--surface3); }
+.btn-sm { padding:5px 11px; font-size:11px; }
+.btn { display:inline-flex; align-items:center; gap:7px; padding:9px 16px; border-radius:8px; border:none; font-family:var(--font-body); font-size:12px; font-weight:600; cursor:pointer; transition:all .2s; }
+
+/* ── Filtros ── */
+.filter-bar { display:flex; align-items:center; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+.search-wrap { position:relative; }
+.search-icon { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:13px; pointer-events:none; }
+.search-input {
+  background:var(--surface); border:1px solid var(--border); border-radius:9px;
+  color:var(--text); font-family:var(--font-body); font-size:13px;
+  padding:8px 12px 8px 32px; outline:none; transition:border-color .2s; width:200px;
+}
+.search-input:focus { border-color:var(--accent); }
+.search-input::placeholder { color:var(--muted); }
+.dept-select {
+  background:var(--surface); border:1px solid var(--border); border-radius:9px;
+  color:var(--text); font-family:var(--font-body); font-size:13px;
+  padding:8px 12px; outline:none; cursor:pointer; transition:border-color .2s;
+}
+.dept-select:focus { border-color:var(--accent); }
+.dept-select option { background:var(--surface2); }
+.filter-chip {
+  padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600;
+  cursor:pointer; border:1px solid var(--border); background:var(--surface);
+  color:var(--muted); transition:all .15s; user-select:none;
+}
+.filter-chip:hover { border-color:var(--accent); color:var(--text); }
+.filter-chip.active { background:rgba(79,142,247,.15); border-color:var(--accent); color:var(--accent); }
+
+/* ── Tabela wrapper ── */
+.apt-table-wrap {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:14px; margin-bottom:16px;
+}
+.table-header {
+  padding:14px 20px; display:flex; align-items:center; gap:10px;
+  border-bottom:1px solid var(--border);
+}
+.table-title { font-family:var(--font-head); font-size:14px; font-weight:700; color:var(--text); }
+.table-badge {
+  padding:2px 10px; border-radius:20px; font-size:11px; font-weight:600;
+  background:rgba(79,142,247,.15); color:var(--accent);
+}
+
+/* ── Tabela ── */
+.apt-table { width:100%; border-collapse:collapse; min-width:1100px; }
+
+.apt-table thead th {
+  font-size:10px; font-weight:700; text-transform:uppercase;
+  letter-spacing:.8px; color:var(--muted); padding:10px 10px;
+  border-bottom:2px solid var(--border); text-align:center;
+  background:var(--surface2); white-space:nowrap; position:sticky; top:0; z-index:2;
+}
+.apt-table thead th.th-emp { text-align:left; min-width:170px; position:sticky; left:0; z-index:3; padding-left:16px; }
+.apt-table thead th.th-dept { text-align:left; min-width:110px; }
+
+.apt-table tbody td {
+  padding:10px 10px; border-bottom:1px solid rgba(42,47,69,.4);
+  vertical-align:middle; text-align:center;
+}
+.apt-table tbody tr:last-child td { border-bottom:none; }
+.apt-table tbody tr:hover td { background:var(--surface2); }
+.apt-table tbody td.td-emp {
+  text-align:left; position:sticky; left:0; z-index:1;
+  background:var(--surface); padding-left:16px;
+}
+/* [light-theme.css] body.light-theme .apt-table tbody td.td-emp { background:#fff; } */
+.apt-table tbody tr:hover td.td-emp { background:var(--surface2); }
+
+/* ── Célula funcionário ── */
+.emp-cell { display:flex; align-items:center; gap:10px; }
+.emp-mini-avatar {
+  width:32px; height:32px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:11px; font-weight:800; color:#fff;
+}
+.emp-name-text { font-size:13px; font-weight:700; color:var(--text); white-space:nowrap; }
+.emp-role-text { font-size:10px; color:var(--muted); }
+.dept-text { font-size:12px; color:var(--muted); text-align:left; }
+
+/* ── Score bubble — nota de competência ── */
+.score-bubble {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:36px; height:36px; border-radius:10px;
+  font-family:var(--font-head); font-size:14px; font-weight:800;
+  cursor:pointer; transition:transform .15s, box-shadow .15s;
+  border:1.5px solid transparent;
+}
+.score-bubble:hover { transform:scale(1.15); box-shadow:0 2px 12px rgba(0,0,0,.4); }
+/* read-only */
+.score-bubble.readonly { cursor:default; }
+.score-bubble.readonly:hover { transform:none; box-shadow:none; }
+
+/* input de edição inline */
+.apt-input {
+  width:44px; text-align:center;
+  background:var(--surface3); border:2px solid var(--accent);
+  border-radius:8px; color:var(--text);
+  font-family:var(--font-head); font-size:14px; font-weight:700;
+  padding:4px 2px; outline:none;
+}
+
+/* ── Colunas fixas direita ── */
+.med-val { font-family:var(--font-head); font-size:14px; font-weight:800; }
+.assid-val { font-size:13px; font-weight:600; }
+.score-tag {
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:42px; padding:4px 8px; border-radius:8px;
+  font-family:var(--font-head); font-size:14px; font-weight:800;
+}
+
+/* ── Coluna cabeçalho com ícone ── */
+.th-icon { font-size:18px; display:block; margin-bottom:3px; }
+.th-label { font-size:9px; }
+
+/* ══ TOOLTIP DE APTIDÃO ══════════════════════════════════
+   Aparece ao hover no <th> da coluna de aptidão
+════════════════════════════════════════════════════════ */
+.th-apt {
+  position: relative;
+  cursor: help;
+}
+.th-apt .apt-tooltip { display: none; }
+/* seta */
+.apt-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid var(--border);
+}
+.apt-tooltip::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid var(--surface);
+}
+.apt-tip-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.apt-tip-emoji {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.apt-tip-title {
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+}
+.apt-tip-desc {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+.apt-tip-example {
+  font-size: 11px;
+  color: var(--accent);
+  background: rgba(79,142,247,.08);
+  border: 1px solid rgba(79,142,247,.15);
+  border-radius: 7px;
+  padding: 6px 9px;
+  line-height: 1.5;
+}
+/* [light-theme.css] body.light-theme .apt-tooltip {
+  background: #fff;
+  border-color: #E2E8F0;
+  box-shadow: 0 8px 30px rgba(0,0,0,.12);
+} */
+/* [light-theme.css] body.light-theme .apt-tooltip::after  { border-bottom-color: #fff; } */
+/* [light-theme.css] body.light-theme .apt-tooltip::before { border-bottom-color: #E2E8F0; } */
+/* [light-theme.css] body.light-theme .apt-tip-example { background:rgba(37,99,235,.06); border-color:rgba(37,99,235,.15); color:#2563eb; } */
+
+/* ── Modal ── */
+.overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.75);
+  backdrop-filter:blur(4px); z-index:200;
+  display:none; align-items:center; justify-content:center;
+}
+.overlay.open { display:flex; }
+.modal {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:28px; width:560px;
+  max-width:95vw; max-height:90vh; overflow-y:auto;
+  animation:fadeUp .25s ease;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.modal-title { font-family:var(--font-head); font-size:18px; font-weight:800; margin-bottom:22px; color:var(--text); }
+.modal-footer { display:flex; gap:10px; justify-content:flex-end; margin-top:22px; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.form-group { display:flex; flex-direction:column; gap:6px; }
+.form-group.full { grid-column:1/-1; }
+.form-label { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+.form-input {
+  background:var(--surface2); border:1px solid var(--border); border-radius:8px;
+  color:var(--text); font-family:var(--font-body); font-size:13px;
+  padding:9px 11px; outline:none; transition:border-color .2s;
+}
+.form-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(79,142,247,.1); }
+.form-input option { background:var(--surface2); }
+.apt-modal-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:4px; }
+
+/* ── Toast ── */
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+.toast { padding:10px 18px; border-radius:10px; font-size:12px; font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4); animation:fadeUp .25s ease; max-width:320px; pointer-events:auto; }
+.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
+.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
+.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
+
+/* ── Responsive ── */
+@media(max-width:1024px) {
+  :root { --sidebar-w:56px; }
+  
+  
+  
+  
+
+}
+@media(max-width:768px) {
+  :root { --sidebar-w:0px; }
+  
+  .main { margin-left:0; padding:16px; }
+  .form-grid { grid-template-columns:1fr; }
+  .apt-modal-grid { grid-template-columns:repeat(2,1fr); }
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+<nav id="app-sidebar"></nav>
+
+<main class="main">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div>
+      <div class="page-title">Aptidões <span>Competências</span></div>
+      <div class="page-sub">Avaliação de habilidades técnicas e comportamentais</div>
+    </div>
+    <button class="btn-primary" id="btn-nova" onclick="openModal()">＋ Nova Avaliação</button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filter-bar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" id="search-input"
+        placeholder="Buscar funcionário..." oninput="renderTabela()">
+    </div>
+    <select class="dept-select" id="filial-select" onchange="renderTabela()">
+      <option value="">Todas as filiais</option>
+    </select>
+    <select class="dept-select" id="dept-select" onchange="renderTabela()">
+      <option value="">Todos os departamentos</option>
+    </select>
+    <div class="filter-chip active" onclick="setFiltro(this,'todos')">Todos</div>
+    <div class="filter-chip"        onclick="setFiltro(this,'acima8')">Acima de 8</div>
+    <div class="filter-chip"        onclick="setFiltro(this,'6a8')">6 a 8</div>
+    <div class="filter-chip"        onclick="setFiltro(this,'abaixo6')">Abaixo de 6</div>
+  </div>
+
+  <!-- Tabela -->
+  <div class="apt-table-wrap">
+    <div class="table-header">
+      <div class="table-title">Avaliações por Funcionário</div>
+      <div class="table-badge" id="table-badge">0 funcionários</div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="apt-table" id="apt-table">
+        <thead>
+          <tr>
+            <th class="th-emp">Funcionário</th>
+            <th class="th-dept">Departamento</th>
+
+            <th class="th-apt">
+              <span class="th-icon">✨</span><span class="th-label">Qualidade</span>
+              <div class="apt-tooltip">
+                <div class="apt-tip-header"><span class="apt-tip-emoji">✨</span><span class="apt-tip-title">Qualidade</span></div>
+                <div class="apt-tip-desc">Capacidade de executar tarefas com precisão, cuidado e excelência.</div>
+                <div class="apt-tip-example">Ex: conferir mercadorias sem erros, garantindo que quantidades e produtos estejam corretos.</div>
+              </div>
+            </th>
+
+            <th class="th-apt">
+              <span class="th-icon">⚡</span><span class="th-label">Proatividade</span>
+              <div class="apt-tooltip">
+                <div class="apt-tip-header"><span class="apt-tip-emoji">⚡</span><span class="apt-tip-title">Proatividade</span></div>
+                <div class="apt-tip-desc">Disposição para agir sem precisar ser mandado, buscando sempre o que fazer.</div>
+                <div class="apt-tip-example">Ex: ao terminar uma tarefa, procurar o líder para ajudar em outra atividade.</div>
+              </div>
+            </th>
+
+            <th class="th-apt">
+              <span class="th-icon">📚</span><span class="th-label">Conhecimento</span>
+              <div class="apt-tooltip">
+                <div class="apt-tip-header"><span class="apt-tip-emoji">📚</span><span class="apt-tip-title">Conhecimento</span></div>
+                <div class="apt-tip-desc">Domínio das atividades e processos da função.</div>
+                <div class="apt-tip-example">Ex: saber montar paletes corretamente e entender todo o fluxo de conferência.</div>
+              </div>
+            </th>
+
+            <th class="th-apt">
+              <span class="th-icon">💬</span><span class="th-label">Comunicação</span>
+              <div class="apt-tooltip">
+                <div class="apt-tip-header"><span class="apt-tip-emoji">💬</span><span class="apt-tip-title">Comunicação</span></div>
+                <div class="apt-tip-desc">Capacidade de se comunicar bem e trabalhar em harmonia com superiores.</div>
+                <div class="apt-tip-example">Ex: tirar dúvidas com respeito e colaborar quando solicitado pela liderança.</div>
+              </div>
+            </th>
+
+            <th class="th-apt">
+              <span class="th-icon">📈</span><span class="th-label">Produtiv.</span>
+              <div class="apt-tooltip">
+                <div class="apt-tip-header"><span class="apt-tip-emoji">📈</span><span class="apt-tip-title">Produtividade</span></div>
+                <div class="apt-tip-desc">Rendimento no trabalho aliado ao foco e dedicação.</div>
+                <div class="apt-tip-example">Ex: realizar muitas conferências no dia mantendo atenção para evitar erros.</div>
+              </div>
+            </th>
+
+            <th class="th-apt">
+              <span class="th-icon">📅</span><span class="th-label">Assid.</span>
+              <div class="apt-tooltip">
+                <div class="apt-tip-header"><span class="apt-tip-emoji">📅</span><span class="apt-tip-title">Assiduidade</span></div>
+                <div class="apt-tip-desc">Compromisso com horários e presença no trabalho.</div>
+                <div class="apt-tip-example">Ex: chegar sempre no horário ou antes e evitar faltas.</div>
+              </div>
+            </th>
+
+            <th class="th-apt">
+              <span class="th-icon">🗂️</span><span class="th-label">Organização</span>
+              <div class="apt-tooltip">
+                <div class="apt-tip-header"><span class="apt-tip-emoji">🗂️</span><span class="apt-tip-title">Organização</span></div>
+                <div class="apt-tip-desc">Manter o ambiente e as tarefas organizadas e bem estruturadas.</div>
+                <div class="apt-tip-example">Ex: deixar o local de trabalho limpo e organizar os produtos de forma eficiente.</div>
+              </div>
+            </th>
+
+            <th class="th-apt">
+              <span class="th-icon">🤝</span><span class="th-label">Equipe</span>
+              <div class="apt-tooltip">
+                <div class="apt-tip-header"><span class="apt-tip-emoji">🤝</span><span class="apt-tip-title">Equipe</span></div>
+                <div class="apt-tip-desc">Capacidade de se expressar bem e interagir com a equipe.</div>
+                <div class="apt-tip-example">Ex: avisar problemas rapidamente e colaborar com colegas de forma clara.</div>
+              </div>
+            </th>
+
+            <th class="th-apt">
+              <span class="th-icon">💡</span><span class="th-label">Criatividade</span>
+              <div class="apt-tooltip">
+                <div class="apt-tip-header"><span class="apt-tip-emoji">💡</span><span class="apt-tip-title">Criatividade</span></div>
+                <div class="apt-tip-desc">Habilidade de encontrar soluções ou melhorar processos.</div>
+                <div class="apt-tip-example">Ex: sugerir uma forma mais rápida de organizar ou separar mercadorias.</div>
+              </div>
+            </th>
+
+            <th class="th-apt">
+              <span class="th-icon">🔥</span><span class="th-label">Motivação</span>
+              <div class="apt-tooltip">
+                <div class="apt-tip-header"><span class="apt-tip-emoji">🔥</span><span class="apt-tip-title">Motivação</span></div>
+                <div class="apt-tip-desc">Vontade de trabalhar, aprender e crescer profissionalmente.</div>
+                <div class="apt-tip-example">Ex: buscar novos conhecimentos e demonstrar interesse em evoluir na empresa.</div>
+              </div>
+            </th>
+
+            <th>Méd.</th>
+            <th>Assid.</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody id="apt-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ MODAL NOVA AVALIAÇÃO ══ -->
+<div class="overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Nova Avaliação</div>
+    <div class="form-grid" style="margin-bottom:16px">
+      <div class="form-group full">
+        <label class="form-label">👤 Funcionário</label>
+        <select class="form-input" id="f-emp"></select>
+      </div>
+    </div>
+    <div class="form-label" style="margin-bottom:10px">⭐ Competências (0 – 10)</div>
+    <div class="apt-modal-grid" id="modal-apt-grid"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveAvaliacao()">💾 Salvar Avaliação</button>
+    </div>
+    <input type="hidden" id="f-edit-id" value="">
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+// CONSTANTES
+// ════════════════════════════════════════════════════════
+const _abrev = n => { const p = n.trim().split(/\s+/); return p.length > 1 ? p[0] + ' ' + p[p.length-1] : p[0]; };
+const nomeAbrev = (emp, lista) => {
+  const ab = _abrev(emp.name);
+  const dup = lista.filter(e => e.id !== emp.id && _abrev(e.name) === ab).length > 0;
+  return dup && emp.matricula ? `${ab} · ${emp.matricula}` : ab;
+};
+const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
+const APT_META = {
+  qual:  { emoji:'✨', label:'Qualidade'   },
+  prio:  { emoji:'⚡', label:'Proatividade'},
+  know:  { emoji:'📚', label:'Conhecimento'},
+  comm:  { emoji:'💬', label:'Comunicação' },
+  prod:  { emoji:'📈', label:'Produtiv.'   },
+  assid: { emoji:'📅', label:'Assid.'      },
+  org:   { emoji:'🗂️', label:'Organização' },
+  equip: { emoji:'🤝', label:'Equipe'      },
+  cria:  { emoji:'💡', label:'Criatividade'},
+  motv:  { emoji:'🔥', label:'Motivação'   },
+};
+
+// ════════════════════════════════════════════════════════
+// ESTADO
+// ════════════════════════════════════════════════════════
+let currentUser  = null;
+let filtroAtivo  = 'todos';
+let podeEditar   = false;
+
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  currentUser = await requireSession();
+  if (!currentUser) return;
+
+  initTheme();
+  initSidebar('aptidoes', currentUser);
+
+  podeEditar = (typeof can === 'function')
+    ? can(currentUser, 'aptidoes', 'edit')
+    : true;
+
+  // Botão nova avaliação
+  const btnNova = document.getElementById('btn-nova');
+  if (btnNova) btnNova.style.display = podeEditar ? '' : 'none';
+
+  buildDeptSelect();
+  renderTabela();
+});
+
+// ════════════════════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════════════════════
+function getMyEmployees() {
+  const all   = (await getStore()).employees || [];
+  const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
+  if (scope.all) return all;
+  if (scope.sector) {
+    const depts = currentUser?.perfil?.depts||[];
+    const setor = currentUser?.setor||'';
+    return all.filter(e=>depts.includes(e.dept)||e.dept===setor);
+  }
+  return all.filter(e=>(e.owner_id||e.ownerId)===currentUser?.id);
+}
+
+function calcAptMedia(emp) {
+  const c = emp.competencies || {};
+  return APT_KEYS.reduce((s,k)=>s+(c[k]||0),0)/APT_KEYS.length;
+}
+function calcAssid(emp) {
+  if (emp.afastado) return 100;
+  const total  = (emp.absences||[]).reduce((a,b)=>a+b,0);
+  const maxAbs = (await getStore()).config?.maxAbs||36;
+  return Math.max(0,100-(total/maxAbs)*100);
+}
+function getWeights() {
+  const cfg = (await getStore()).config||{};
+  const pw  = Math.min(100,Math.max(0,parseInt(cfg.perfWeight)||40));
+  const aw  = Math.min(100,Math.max(0,parseInt(cfg.aptWeight) ||35));
+  return { perf:pw, apt:aw, abs:Math.max(0,100-pw-aw) };
+}
+function calcScore(emp) {
+  const w = getWeights();
+  return Math.min(100,Math.round(
+    emp.perf*(w.perf/100)+calcAptMedia(emp)*10*(w.apt/100)+calcAssid(emp)*(w.abs/100)
+  ));
+}
+
+// Cor da bubble conforme nota
+function bubbleColor(v) {
+  const n = parseFloat(v);
+  if (n >= 9)  return { bg:'rgba(52,211,153,.25)',  color:'#34d399' };
+  if (n >= 7)  return { bg:'rgba(79,142,247,.25)',  color:'#93C5FD' };
+  if (n >= 5)  return { bg:'rgba(251,191,36,.22)',  color:'#fbbf24' };
+  if (n >= 3)  return { bg:'rgba(251,146,60,.22)',  color:'#fb923c' };
+  return             { bg:'rgba(248,113,113,.22)',  color:'#f87171' };
+}
+
+function scoreTagStyle(score) {
+  if (score>=85) return 'background:rgba(52,211,153,.2);color:#34d399';
+  if (score>=70) return 'background:rgba(79,142,247,.2);color:#4f8ef7';
+  if (score>=55) return 'background:rgba(251,191,36,.15);color:#fbbf24';
+  return               'background:rgba(248,113,113,.2);color:#f87171';
+}
+
+// ════════════════════════════════════════════════════════
+// SELECTS
+// ════════════════════════════════════════════════════════
+function buildFilialSelect() {
+  const emps    = getMyEmployees();
+  const filiais = [...new Set(emps.map(e=>e.filial))].filter(Boolean).sort();
+  const sel     = document.getElementById('filial-select');
+  const cur     = sel.value;
+  sel.innerHTML = '<option value="">Todas as filiais</option>' +
+    filiais.map(f=>`<option value="${f}" ${f===cur?'selected':''}>${f}</option>`).join('');
+}
+
+function buildDeptSelect() {
+  const emps  = getMyEmployees();
+  const depts = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
+  const sel   = document.getElementById('dept-select');
+  const cur   = sel.value;
+  sel.innerHTML = '<option value="">Todos os departamentos</option>' +
+    depts.map(d=>`<option value="${d}" ${d===cur?'selected':''}>${d}</option>`).join('');
+}
+
+// ════════════════════════════════════════════════════════
+// FILTRO CHIPS
+// ════════════════════════════════════════════════════════
+function setFiltro(el, val) {
+  filtroAtivo = val;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderTabela();
+}
+
+// ════════════════════════════════════════════════════════
+// RENDER TABELA
+// ════════════════════════════════════════════════════════
+function renderTabela() {
+  buildFilialSelect();
+  buildDeptSelect();
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const filial = document.getElementById('filial-select').value;
+  const dept   = document.getElementById('dept-select').value;
+  let   list   = getMyEmployees();
+
+  // Filtros
+  if (search) list = list.filter(e=>e.name.toLowerCase().includes(search));
+  if (filial) list = list.filter(e=>e.filial===filial);
+  if (dept)   list = list.filter(e=>e.dept===dept);
+
+  // Filtro por média
+  list = list.filter(e => {
+    const avg = calcAptMedia(e);
+    if (filtroAtivo==='acima8')  return avg > 8;
+    if (filtroAtivo==='6a8')     return avg >= 6 && avg <= 8;
+    if (filtroAtivo==='abaixo6') return avg < 6;
+    return true;
+  });
+
+  document.getElementById('table-badge').textContent = `${list.length} funcionário${list.length!==1?'s':''}`;
+
+  const tbody = document.getElementById('apt-tbody');
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="15" style="text-align:center;padding:50px;color:var(--muted)">
+      Nenhum funcionário encontrado com esses filtros.
+    </td></tr>`;
+    return;
+  }
+
+  const sortedList = list.sort((a,b)=>calcAptMedia(b)-calcAptMedia(a));
+  tbody.innerHTML = sortedList.map(emp => buildRow(emp, sortedList)).join('');
+}
+
+function buildRow(emp, lista) {
+  const c      = emp.competencies || {};
+  const avg    = calcAptMedia(emp).toFixed(1);
+  const assid  = Math.round(calcAssid(emp));
+  const score  = calcScore(emp);
+  const ini    = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const { bg:avgBg, color:avgColor } = bubbleColor(parseFloat(avg));
+  const assidColor = assid>=85?'#34d399':assid>=70?'#4f8ef7':assid>=50?'#fbbf24':'#f87171';
+
+  // ── Verifica bloqueio ──
+  const { bloqueado, motivo } = isEmpBloqueado(emp);
+  const podeEditarEste = podeEditar && !bloqueado;
+
+  // Badge de status bloqueado
+  const bloqueioBadge = bloqueado ? `
+    <span style="margin-left:6px;padding:1px 7px;border-radius:20px;font-size:9px;font-weight:700;
+      ${motivo==='afastado'
+        ? 'background:rgba(239,68,68,.18);color:#ef4444;border:1px solid rgba(239,68,68,.3)'
+        : 'background:rgba(34,211,238,.14);color:#22d3ee;border:1px solid rgba(34,211,238,.3)'}>
+      ${motivo==='afastado' ? '🚫 Afastado' : '🏖️ Férias'}
+    </span>` : '';
+
+  // Ícone de score congelado
+  const scoreCongelado = bloqueado
+    ? `<span title="Score congelado durante afastamento/férias"
+        style="font-size:10px;margin-left:3px;opacity:.7">❄️</span>`
+    : '';
+
+  const cells = APT_KEYS.map(k => {
+    const v = c[k]!=null ? c[k] : 5;
+    const { bg, color } = bubbleColor(v);
+
+    // Se bloqueado: sempre readonly, com tooltip explicativo
+    if (!podeEditarEste) {
+      const title = bloqueado
+        ? `title="Edição bloqueada — funcionário ${motivo==='afastado'?'afastado':'em férias'}"`
+        : '';
+      return `<td>
+        <span class="score-bubble readonly"
+          style="background:${bg};color:${color};${bloqueado?'opacity:.55;cursor:not-allowed':''}"
+          ${title}>${v}</span>
+      </td>`;
+    }
+
+    return `<td>
+      <span class="score-bubble" style="background:${bg};color:${color}"
+        onclick="startEdit(${emp.id},'${k}',this)">${v}</span>
+    </td>`;
+  }).join('');
+
+  return `
+  <tr style="${bloqueado?'opacity:.75':''}">
+    <td class="td-emp">
+      <div class="emp-cell">
+        <div class="emp-mini-avatar"
+          style="${motivo==='afastado'?'background:linear-gradient(135deg,#ef4444,#fb923c)':
+                  motivo==='ferias'  ?'background:linear-gradient(135deg,#22d3ee,#4f8ef7)':''}">
+          ${ini}</div>
+        <div>
+          <div class="emp-name-text">${nomeAbrev(emp, lista)}${bloqueioBadge}</div>
+          <div class="emp-role-text">${emp.role||''}</div>
+        </div>
+      </div>
+    </td>
+    <td class="dept-text">${emp.dept||'—'}</td>
+    ${cells}
+    <td>
+      <span class="med-val" style="color:${avgColor};${bloqueado?'opacity:.6':''}">${avg}</span>
+    </td>
+    <td>
+      <span class="assid-val" style="color:${assidColor};${bloqueado?'opacity:.6':''}">${assid}%</span>
+    </td>
+    <td>
+      <span class="score-tag" style="${scoreTagStyle(score)};${bloqueado?'opacity:.65':''}">
+        ${score}${scoreCongelado}
+      </span>
+    </td>
+  </tr>`;
+}
+
+// ════════════════════════════════════════════════════════
+// EDIÇÃO INLINE — clique na bubble
+// ════════════════════════════════════════════════════════
+function startEdit(empId, key, cell) {
+  if (!podeEditar) return;
+  if (cell.querySelector('.apt-input')) return;
+
+  const store = await getStore();
+  const emp   = (store.employees||[]).find(e=>e.id===empId);
+  if (!emp) return;
+
+  // Bloqueia se afastado ou em férias
+  const { bloqueado, motivo } = isEmpBloqueado(emp);
+  if (bloqueado) {
+    const msg = motivo==='afastado'
+      ? '🚫 Afastado — edição bloqueada até o retorno.'
+      : '🏖️ Em férias — edição bloqueada até o fim do período.';
+    showToast(msg, 'warn');
+    return;
+  }
+
+  const cur = (emp.competencies||{})[key] ?? 5;
+  const { color } = bubbleColor(cur);
+
+  cell.innerHTML = `<input class="apt-input" type="number" min="0" max="10"
+    value="${cur}" style="color:${color}"
+    onblur="commitEdit(${empId},'${key}',this)"
+    onkeydown="if(event.key==='Enter')this.blur();if(event.key==='Escape'){this.dataset.cancel='1';this.blur();}">`;
+
+  const inp = cell.querySelector('input');
+  inp.focus(); inp.select();
+}
+
+async function commitEdit(empId, key, input) {
+  if (input.dataset.cancel) { renderTabela(); return; }
+  const v     = Math.min(10, Math.max(0, parseFloat(input.value)||0));
+  const store = await getStore();
+  const emps  = store.employees||[];
+  const idx   = emps.findIndex(e=>e.id===empId);
+  if (idx<0) { renderTabela(); return; }
+  if (!emps[idx].competencies) emps[idx].competencies = {};
+
+  // Só salva e loga se o valor realmente mudou
+  const anterior = emps[idx].competencies[key] ?? null;
+  if (anterior === v) { renderTabela(); return; }
+
+  emps[idx].competencies[key] = v;
+  store.employees = emps;
+  await saveStore(store);
+  renderTabela();
+  await registrarLog('editou', 'Aptidões', `<strong>${emps[idx]?.name||empId}</strong> — ${key}: <span class="de">${anterior??'—'}</span><span class="seta">→</span><span class="para">${v}</span>`);
+  showToast('✅ Competência atualizada!');
+}
+
+// ════════════════════════════════════════════════════════
+// MODAL NOVA AVALIAÇÃO
+// ════════════════════════════════════════════════════════
+function openModal(empId) {
+  const store = await getStore();
+  const emps  = getMyEmployees();
+  const emp   = empId ? emps.find(e=>e.id===empId) : null;
+
+  document.getElementById('modal-title').textContent = emp ? `Editar — ${emp.name}` : 'Nova Avaliação';
+  document.getElementById('f-edit-id').value = emp?.id || '';
+
+  // Select de funcionários
+  const sel = document.getElementById('f-emp');
+  sel.innerHTML = '<option value="">— Selecione —</option>' +
+    emps.map(e=>`<option value="${e.id}" ${e.id===empId?'selected':''}>${e.name} · ${e.dept||''}</option>`).join('');
+  sel.disabled = !!emp;
+  sel.style.opacity = emp ? '.6' : '1';
+
+  // Grid de competências
+  const c   = emp?.competencies || {};
+  const grd = document.getElementById('modal-apt-grid');
+  grd.innerHTML = APT_KEYS.map(k => `
+    <div class="form-group">
+      <label class="form-label">${APT_META[k].emoji} ${APT_META[k].label}</label>
+      <input class="form-input" type="number" id="m-${k}"
+        min="0" max="10" value="${c[k]??5}" placeholder="5">
+    </div>`).join('');
+
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function saveAvaliacao() {
+  const editId = document.getElementById('f-edit-id').value;
+  const empSel = document.getElementById('f-emp').value;
+  const empId  = editId || empSel;
+
+  if (!empId) { showToast('⚠️ Selecione um funcionário.','warn'); return; }
+
+  const store = await getStore();
+  const emps  = store.employees||[];
+  const idx   = emps.findIndex(e=>String(e.id)===String(empId));
+  if (idx<0) { showToast('❌ Funcionário não encontrado.','error'); return; }
+
+  // Verifica bloqueio
+  const { bloqueado, motivo } = isEmpBloqueado(emps[idx]);
+  if (bloqueado) {
+    const msg = motivo==='afastado'
+      ? '🚫 Funcionário afastado. Aptidões não podem ser editadas durante o afastamento.'
+      : '🏖️ Funcionário em férias. Aptidões não podem ser editadas durante as férias.';
+    showToast(msg, 'warn');
+    return;
+  }
+
+  const competencies = {};
+  APT_KEYS.forEach(k => {
+    const el = document.getElementById(`m-${k}`);
+    competencies[k] = el ? Math.min(10,Math.max(0,parseFloat(el.value)||5)) : 5;
+  });
+
+  store.employees[idx].competencies = competencies;
+  await saveStore(store);
+  closeModal();
+  renderTabela();
+  await registrarLog('editou', 'Aptidões', `Avaliação completa de <strong>${store.employees[idx]?.name||empId}</strong>`);
+  showToast('✅ Avaliação salva com sucesso!');
+}
+
+// ════════════════════════════════════════════════════════
+// FECHAR MODAL
+// ════════════════════════════════════════════════════════
+document.getElementById('modal-overlay').addEventListener('click', e=>{
+  if (e.target===e.currentTarget) closeModal();
+});
+document.addEventListener('keydown', e=>{
+  if (e.key==='Escape') closeModal();
+});
+
+// ── Tooltip global para aptidões ──────────────────────
+(async function() {
+  const tip = document.createElement('div');
+  tip.id = '_apt-tip';
+  tip.style.cssText = [
+    'position:fixed','z-index:9999','pointer-events:none',
+    'width:260px','background:var(--surface)',
+    'border:1px solid var(--border)','border-radius:12px',
+    'padding:14px 16px','box-shadow:0 12px 40px rgba(0,0,0,.5)',
+    'text-align:left','white-space:normal',
+    'opacity:0','transition:opacity .18s','top:0','left:0'
+  ].join(';');
+  document.body.appendChild(tip);
+
+  document.querySelectorAll('.th-apt').forEach(th => {
+    const inner = th.querySelector('.apt-tooltip');
+    if (!inner) return;
+
+    th.addEventListener('mouseenter', () => {
+      tip.innerHTML = inner.innerHTML;
+      tip.style.opacity = '1';
+    });
+
+    th.addEventListener('mousemove', e => {
+      const tw = 260;
+      let left = e.clientX + 12;
+      if (left + tw > window.innerWidth - 8) left = e.clientX - tw - 12;
+      tip.style.left = left + 'px';
+      tip.style.top  = (e.clientY + 14) + 'px';
+    });
+
+    th.addEventListener('mouseleave', () => {
+      tip.style.opacity = '0';
+    });
+  });
+})();
+</script>
+</body>
+</html>

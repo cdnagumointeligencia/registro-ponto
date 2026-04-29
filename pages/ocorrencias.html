@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ocorrências · RH Nagumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sidebar.css">
+<link rel="stylesheet" href="../light-theme.css">
+<link rel="stylesheet" href="../responsive.css">
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../firebase.js"></script>
+<script src="../permissions.js"></script>
+<script src="../shared.js"></script>
+<style>
+:root {
+  --bg:#0b0d14; --surface:#12151f; --surface2:#1a1e2e; --surface3:#222638;
+  --border:#2a2f45; --accent:#4f8ef7; --accent2:#a78bfa;
+  --green:#34d399; --yellow:#fbbf24; --red:#f87171; --orange:#fb923c;
+  --cyan:#22d3ee; --text:#ffffff; --muted:#94a3b8;
+  --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --sidebar-w:220px;
+}
+/* [light-theme.css] body.light-theme {
+  --bg:#EEF2F8; --surface:#fff; --surface2:#F4F7FB; --surface3:#E8EDF5;
+  --border:#D6DDE8; --accent:#2563eb; --accent2:#7c3aed; --green:#059669;
+  --yellow:#d97706; --red:#dc2626; --orange:#ea580c; --cyan:#0891b2;
+  --text:#0f172a; --muted:#64748b;
+} */
+/* [light-theme.css] body.light-theme .main             { background:#EEF2F8; } */
+/* [light-theme.css] body.light-theme .page-title       { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .page-title span  { color:#fb923c; } */
+/* [light-theme.css] body.light-theme .search-input     { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .filter-select    { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .filter-chip      { background:#fff; border-color:#CBD5E1; color:#64748b; } */
+/* [light-theme.css] body.light-theme .filter-chip.active { background:rgba(37,99,235,.1); border-color:#2563eb; color:#2563eb; } */
+/* [light-theme.css] body.light-theme .log-card         { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .log-header       { background:#F4F7FB; border-bottom-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .log-col-header   { color:#475569; border-bottom-color:#E2E8F0; background:#F4F7FB; } */
+/* [light-theme.css] body.light-theme .log-row          { border-bottom-color:#F1F5F9; } */
+/* [light-theme.css] body.light-theme .log-row:hover    { background:#F4F7FB; } */
+/* [light-theme.css] body.light-theme .log-datetime     { color:#94a3b8; } */
+/* [light-theme.css] body.light-theme .user-name        { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .log-desc         { color:#374151; } */
+/* [light-theme.css] body.light-theme .log-resp         { color:#64748b; } */
+/* [light-theme.css] body.light-theme .overlay          { background:rgba(15,23,42,.45); } */
+/* [light-theme.css] body.light-theme .modal            { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .modal input,
+body.light-theme .modal select,
+body.light-theme .modal textarea   { background:#F4F7FB; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .modal label      { color:#475569; } */
+/* [light-theme.css] body.light-theme .detail-box       { background:#F4F7FB; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .detail-label     { color:#64748b; } */
+/* [light-theme.css] body.light-theme .detail-val       { color:#0f172a; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-track { background:#F1F5F9; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-thumb { background:#CBD5E1; } */
+
+/* ── Base ── */
+* { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:14px; }
+body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
+
+/* ── Main ── */
+.main { margin-left:var(--sidebar-w); padding:24px 28px; min-height:100vh; }
+.topbar { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:12px; }
+.page-title { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; }
+.page-title span { color:var(--orange); }
+.page-sub { font-size:12px; color:var(--muted); margin-top:4px; }
+
+/* ── Botões ── */
+.btn { display:inline-flex; align-items:center; gap:7px; padding:9px 16px; border-radius:8px; border:none; font-family:var(--font-body); font-size:12px; font-weight:600; cursor:pointer; transition:all .2s; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:#3a7ae0; transform:translateY(-1px); box-shadow:0 4px 16px rgba(79,142,247,.4); }
+.btn-ghost { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
+.btn-ghost:hover { background:var(--surface3); }
+.btn-sm { padding:5px 11px; font-size:11px; }
+.btn-green { background:rgba(52,211,153,.15); color:var(--green); border:1px solid rgba(52,211,153,.3); }
+.btn-green:hover { background:rgba(52,211,153,.25); }
+.btn-red { background:rgba(248,113,113,.15); color:var(--red); border:1px solid rgba(248,113,113,.3); }
+.btn-red:hover { background:rgba(248,113,113,.25); }
+
+/* ── Filtros ── */
+.filter-row { display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+.search-wrap { position:relative; }
+.search-icon { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:13px; pointer-events:none; }
+.search-input { background:var(--surface); border:1px solid var(--border); border-radius:9px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 12px 8px 32px; outline:none; transition:border-color .2s; width:220px; }
+.search-input:focus { border-color:var(--accent); }
+.search-input::placeholder { color:var(--muted); }
+.filter-select { background:var(--surface); border:1px solid var(--border); border-radius:9px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:7px 12px; outline:none; cursor:pointer; transition:border-color .2s; }
+.filter-select:focus { border-color:var(--accent); }
+.filter-select option { background:var(--surface2); }
+.filter-chip { padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; border:1px solid var(--border); background:var(--surface); color:var(--muted); transition:all .15s; user-select:none; }
+.filter-chip:hover { border-color:var(--accent); color:var(--text); }
+.filter-chip.active { background:rgba(79,142,247,.15); border-color:var(--accent); color:var(--accent); }
+.filter-chip.aprovado.active { background:rgba(52,211,153,.15); border-color:var(--green); color:var(--green); }
+.filter-chip.pendente.active { background:rgba(251,191,36,.15); border-color:var(--yellow); color:var(--yellow); }
+.filter-chip.rejeitado.active { background:rgba(248,113,113,.15); border-color:var(--red); color:var(--red); }
+
+/* ── Tabela de ocorrências ── */
+.log-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+.log-header { padding:14px 20px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); background:var(--surface2); }
+.log-title  { font-family:var(--font-head); font-size:14px; font-weight:700; color:var(--text); }
+.log-count  { padding:2px 10px; border-radius:20px; font-size:11px; font-weight:600; background:rgba(79,142,247,.15); color:var(--accent); }
+
+.log-table { width:100%; border-collapse:collapse; min-width:900px; }
+.log-col-header { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); padding:10px 16px; border-bottom:2px solid var(--border); text-align:left; background:var(--surface2); white-space:nowrap; }
+.log-row { border-bottom:1px solid rgba(42,47,69,.4); transition:background .12s; }
+.log-row:last-child { border-bottom:none; }
+.log-row:hover { background:var(--surface2); }
+.log-row td { padding:11px 16px; vertical-align:middle; }
+
+/* status dot */
+.status-dot-icon { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+.sd-aprovado { background:rgba(52,211,153,.2);  color:#34d399; border:1.5px solid rgba(52,211,153,.4); }
+.sd-pendente { background:rgba(251,191,36,.2);  color:#fbbf24; border:1.5px solid rgba(251,191,36,.4); }
+.sd-rejeitado{ background:rgba(248,113,113,.2); color:#f87171; border:1.5px solid rgba(248,113,113,.4); }
+
+.log-datetime { font-size:12px; color:var(--muted); font-family:monospace; white-space:nowrap; }
+
+/* avatar funcionário */
+.user-cell  { display:flex; align-items:center; gap:8px; }
+.user-avatar { width:30px; height:30px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-head); font-size:10px; font-weight:800; color:#fff; }
+.user-name { font-size:13px; font-weight:600; color:var(--text); }
+
+/* tipo badge */
+.tipo-badge { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:7px; font-size:11px; font-weight:700; white-space:nowrap; }
+.tipo-justificativa { background:rgba(79,142,247,.15);  color:#4f8ef7; border:1px solid rgba(79,142,247,.3);  }
+.tipo-ajuste        { background:rgba(167,139,250,.15); color:#a78bfa; border:1px solid rgba(167,139,250,.3); }
+.tipo-ocorrencia    { background:rgba(251,191,36,.15);  color:#fbbf24; border:1px solid rgba(251,191,36,.3);  }
+.tipo-entrada       { background:rgba(52,211,153,.15);  color:#34d399; border:1px solid rgba(52,211,153,.3);  }
+.tipo-saida         { background:rgba(251,146,60,.15);  color:#fb923c; border:1px solid rgba(251,146,60,.3);  }
+.tipo-advertencia   { background:rgba(248,113,113,.15); color:#f87171; border:1px solid rgba(248,113,113,.3); }
+.tipo-elogio        { background:rgba(34,211,238,.15);  color:#22d3ee; border:1px solid rgba(34,211,238,.3);  }
+
+.log-desc { font-size:12px; color:var(--muted); max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.log-resp { font-size:12px; color:var(--muted); }
+
+/* ── Modal ── */
+.overlay { position:fixed; inset:0; background:rgba(0,0,0,.75); backdrop-filter:blur(4px); z-index:200; display:none; align-items:center; justify-content:center; }
+.overlay.open { display:flex; }
+.modal { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px; width:540px; max-width:95vw; max-height:90vh; overflow-y:auto; animation:fadeUp .25s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.modal-title { font-family:var(--font-head); font-size:18px; font-weight:800; margin-bottom:22px; color:var(--text); }
+.modal-footer { display:flex; gap:10px; justify-content:flex-end; margin-top:22px; flex-wrap:wrap; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.form-group { display:flex; flex-direction:column; gap:6px; }
+.form-group.full { grid-column:1/-1; }
+.form-label { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+.form-input { background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:9px 11px; outline:none; transition:border-color .2s; }
+.form-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(79,142,247,.1); }
+.form-input option { background:var(--surface2); }
+textarea.form-input { resize:vertical; min-height:80px; }
+
+/* ── Modal detalhe ── */
+.detail-box { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin-bottom:12px; }
+.detail-label { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+.detail-val { font-size:13px; color:var(--text); line-height:1.6; }
+.detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+
+/* ── Toast ── */
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+.toast { padding:10px 18px; border-radius:10px; font-size:12px; font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4); animation:fadeUp .25s ease; max-width:320px; pointer-events:auto; }
+.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
+.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
+.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
+
+/* ── Responsive ── */
+@media(max-width:1024px) {
+  :root { --sidebar-w:56px; }
+  
+  
+  
+  
+}
+@media(max-width:768px) {
+  :root { --sidebar-w:0px; }
+  .main { margin-left:0; padding:16px; }
+  .form-grid { grid-template-columns:1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+<nav id="app-sidebar"></nav>
+
+<!-- Modal Nova/Editar Ocorrência -->
+<div class="overlay" id="modal-form">
+  <div class="modal">
+    <div class="modal-title" id="modal-form-title">Nova Ocorrência</div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="form-label">👤 Funcionário</label>
+        <select class="form-input" id="f-emp"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">📋 Tipo</label>
+        <select class="form-input" id="f-tipo">
+          <option value="justificativa">📄 Justificativa</option>
+          <option value="ajuste">✏️ Ajuste de Ponto</option>
+          <option value="ocorrencia">⚠️ Ocorrência</option>
+          <option value="entrada">→ Entrada Manual</option>
+          <option value="saida">← Saída Manual</option>
+          <option value="advertencia">🚨 Advertência</option>
+          <option value="elogio">⭐ Elogio</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">📅 Data / Hora</label>
+        <input class="form-input" type="datetime-local" id="f-dt">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">📝 Descrição</label>
+        <textarea class="form-input" id="f-desc" placeholder="Descreva a ocorrência em detalhes..."></textarea>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">📎 Observação interna (opcional)</label>
+        <textarea class="form-input" id="f-obs" placeholder="Observação para uso interno da gestão..." style="min-height:60px"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-form')">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarOcorrencia()">💾 Salvar</button>
+    </div>
+    <input type="hidden" id="f-edit-id">
+  </div>
+</div>
+
+<!-- Modal Detalhes -->
+<div class="overlay" id="modal-detail">
+  <div class="modal">
+    <div class="modal-title" id="detail-title">Detalhes da Ocorrência</div>
+    <div class="detail-grid">
+      <div class="detail-box">
+        <div class="detail-label">👤 Funcionário</div>
+        <div class="detail-val" id="d-emp">—</div>
+      </div>
+      <div class="detail-box">
+        <div class="detail-label">📅 Data / Hora</div>
+        <div class="detail-val" id="d-dt">—</div>
+      </div>
+      <div class="detail-box">
+        <div class="detail-label">📋 Tipo</div>
+        <div class="detail-val" id="d-tipo">—</div>
+      </div>
+      <div class="detail-box">
+        <div class="detail-label">🔖 Status</div>
+        <div class="detail-val" id="d-status">—</div>
+      </div>
+    </div>
+    <div class="detail-box" style="margin-bottom:10px">
+      <div class="detail-label">📝 Descrição</div>
+      <div class="detail-val" id="d-desc">—</div>
+    </div>
+    <div class="detail-box" id="d-obs-wrap" style="margin-bottom:10px;display:none">
+      <div class="detail-label">📎 Observação Interna</div>
+      <div class="detail-val" id="d-obs">—</div>
+    </div>
+    <div class="detail-box">
+      <div class="detail-label">👨‍💼 Registrado por</div>
+      <div class="detail-val" id="d-resp">—</div>
+    </div>
+    <div class="modal-footer" id="detail-footer"></div>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div>
+      <div class="page-title">📝 Ocorrências <span>Registros</span></div>
+      <div class="page-sub">Histórico de alterações, justificativas e ocorrências</div>
+    </div>
+    <button class="btn btn-primary" id="btn-novo" onclick="openFormModal()">＋ Nova Ocorrência</button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filter-row">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" id="search-input"
+        placeholder="Buscar funcionário..." oninput="renderTabela()">
+    </div>
+    <select class="filter-select" id="filter-tipo" onchange="renderTabela()">
+      <option value="">Todos os tipos</option>
+      <option value="justificativa">Justificativa</option>
+      <option value="ajuste">Ajuste</option>
+      <option value="ocorrencia">Ocorrência</option>
+      <option value="entrada">Entrada</option>
+      <option value="saida">Saída</option>
+      <option value="advertencia">Advertência</option>
+      <option value="elogio">Elogio</option>
+    </select>
+    <select class="filter-select" id="filter-periodo" onchange="renderTabela()">
+      <option value="30">Últimos 30 dias</option>
+      <option value="7">Últimos 7 dias</option>
+      <option value="1">Hoje</option>
+      <option value="90">Últimos 90 dias</option>
+      <option value="0">Todos</option>
+    </select>
+    <div class="filter-chip active"    onclick="setStatus(this,'')">Todos</div>
+    <div class="filter-chip aprovado"  onclick="setStatus(this,'aprovado')">✅ Aprovados</div>
+    <div class="filter-chip pendente"  onclick="setStatus(this,'pendente')">⏳ Pendentes</div>
+    <div class="filter-chip rejeitado" onclick="setStatus(this,'rejeitado')">❌ Rejeitados</div>
+  </div>
+
+  <!-- Tabela -->
+  <div class="log-card">
+    <div class="log-header">
+      <div class="log-title">Histórico de Registros</div>
+      <div class="log-count" id="log-count">0 registros</div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th class="log-col-header" style="width:36px">Status</th>
+            <th class="log-col-header">Data/Hora</th>
+            <th class="log-col-header">Funcionário</th>
+            <th class="log-col-header">Tipo</th>
+            <th class="log-col-header">Descrição</th>
+            <th class="log-col-header">Responsável</th>
+            <th class="log-col-header" style="width:80px">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="log-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ════════════════════════════════════════════════════════
+// CONSTANTES
+// ════════════════════════════════════════════════════════
+const OC_KEY = 'rh_ocorrencias';
+
+const TIPO_META = {
+  justificativa: { emoji:'📄', label:'Justificativa', cls:'tipo-justificativa' },
+  ajuste:        { emoji:'✏️', label:'Ajuste',        cls:'tipo-ajuste'        },
+  ocorrencia:    { emoji:'⚠️', label:'Ocorrência',    cls:'tipo-ocorrencia'    },
+  entrada:       { emoji:'→',  label:'Entrada',       cls:'tipo-entrada'       },
+  saida:         { emoji:'←',  label:'Saída',         cls:'tipo-saida'         },
+  advertencia:   { emoji:'🚨', label:'Advertência',   cls:'tipo-advertencia'   },
+  elogio:        { emoji:'⭐', label:'Elogio',        cls:'tipo-elogio'        },
+};
+
+const STATUS_META = {
+  aprovado:  { emoji:'✅', cls:'sd-aprovado' },
+  pendente:  { emoji:'⏳', cls:'sd-pendente' },
+  rejeitado: { emoji:'❌', cls:'sd-rejeitado'},
+};
+
+const USER_COLORS = [
+  ['#4f8ef7','#a78bfa'],['#34d399','#22d3ee'],['#f87171','#fb923c'],
+  ['#fbbf24','#34d399'],['#a78bfa','#f472b6'],['#22d3ee','#4f8ef7'],
+];
+function userColor(name) {
+  let h=0; for(let i=0;i<name.length;i++) h=(h*31+name.charCodeAt(i))&0xffffffff;
+  return USER_COLORS[Math.abs(h)%USER_COLORS.length];
+}
+
+// ════════════════════════════════════════════════════════
+// ESTADO
+// ════════════════════════════════════════════════════════
+let currentUser   = null;
+let statusFiltro  = '';
+let podeAprovar   = false;
+let podeCriar     = false;
+let podeEditar    = false;
+let podeExcluir   = false;
+
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  currentUser = await requireSession();
+  if (!currentUser) return;
+
+  initTheme();
+  initSidebar('ocorrencias', currentUser);
+
+  podeCriar   = (typeof can==='function') ? can(currentUser,'ocorrencias','create')  : true;
+  podeEditar  = (typeof can==='function') ? can(currentUser,'ocorrencias','edit')    : false;
+  podeExcluir = (typeof can==='function') ? can(currentUser,'ocorrencias','delete')  : false;
+  podeAprovar = (typeof can==='function') ? can(currentUser,'ocorrencias','approve') : false;
+
+  document.getElementById('btn-novo').style.display = podeCriar ? '' : 'none';
+
+  renderTabela();
+});
+
+// ════════════════════════════════════════════════════════
+// DADOS
+// ════════════════════════════════════════════════════════
+async function await getOcorrencias() { return await LS.get(OC_KEY, []); }
+function saveOcorrencias(list) { await LS.set(OC_KEY, list); }
+
+// ════════════════════════════════════════════════════════
+// FILTROS
+// ════════════════════════════════════════════════════════
+function setStatus(el, val) {
+  statusFiltro = val;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderTabela();
+}
+
+// ════════════════════════════════════════════════════════
+// RENDER TABELA
+// ════════════════════════════════════════════════════════
+function renderTabela() {
+  const search  = document.getElementById('search-input').value.toLowerCase();
+  const tipo    = document.getElementById('filter-tipo').value;
+  const periodo = parseInt(document.getElementById('filter-periodo').value);
+
+  let list = await getOcorrencias();
+
+  // Período
+  if (periodo > 0) {
+    const corte = new Date(); corte.setDate(corte.getDate()-periodo);
+    list = list.filter(o=>new Date(o.ts)>=corte);
+  }
+
+  // Escopo: lider vê só os próprios
+  const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
+  if (scope.own) list = list.filter(o=>o.respId===currentUser.id||o.empId===currentUser.id);
+  else if (scope.sector) {
+    const depts = currentUser?.perfil?.depts||[];
+    const setor = currentUser?.setor||'';
+    list = list.filter(o=>depts.includes(o.empDept)||o.empDept===setor);
+  }
+
+  if (tipo)         list = list.filter(o=>o.tipo===tipo);
+  if (statusFiltro) list = list.filter(o=>o.status===statusFiltro);
+  if (search)       list = list.filter(o=>
+    o.empName?.toLowerCase().includes(search)||
+    o.desc?.toLowerCase().includes(search)||
+    o.respName?.toLowerCase().includes(search)
+  );
+
+  // Ordena mais recentes primeiro
+  list.sort((a,b)=>new Date(b.ts)-new Date(a.ts));
+
+  document.getElementById('log-count').textContent = `${list.length} registro${list.length!==1?'s':''}`;
+
+  const tbody = document.getElementById('log-tbody');
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:50px;color:var(--muted)">
+      Nenhuma ocorrência encontrada com esses filtros.
+    </td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(o=>buildRow(o)).join('');
+}
+
+function buildRow(o) {
+  const sm    = STATUS_META[o.status] || STATUS_META.pendente;
+  const tm    = TIPO_META[o.tipo]     || { emoji:'📝', label:o.tipo, cls:'tipo-ajuste' };
+  const dt    = new Date(o.ts);
+  const data  = dt.toLocaleDateString('pt-BR');
+  const hora  = dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  const ini   = (o.empName||'?').split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const [c1,c2] = userColor(o.empName||'?');
+
+  return `
+  <tr class="log-row">
+    <td>
+      <div class="status-dot-icon ${sm.cls}" title="${o.status}">${sm.emoji}</div>
+    </td>
+    <td class="log-datetime">${data}<br>${hora}</td>
+    <td>
+      <div class="user-cell">
+        <div class="user-avatar" style="background:linear-gradient(135deg,${c1},${c2})">${ini}</div>
+        <div>
+          <div class="user-name">${o.empName||'—'}</div>
+          <div style="font-size:10px;color:var(--muted)">${o.empDept||''}</div>
+        </div>
+      </div>
+    </td>
+    <td><span class="tipo-badge ${tm.cls}">${tm.emoji} ${tm.label}</span></td>
+    <td class="log-desc" title="${o.desc||''}">${o.desc||'—'}</td>
+    <td class="log-resp">${o.respName||'—'}</td>
+    <td>
+      <button class="btn btn-ghost btn-sm" onclick="verDetalhe('${o.id}')">👁 Ver</button>
+    </td>
+  </tr>`;
+}
+
+// ════════════════════════════════════════════════════════
+// MODAL NOVA / EDITAR
+// ════════════════════════════════════════════════════════
+function openFormModal(oc) {
+  const store = await getStore();
+  const emps  = store.employees || [];
+
+  // Popula select de funcionários (escopo)
+  const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
+  let lista   = emps;
+  if (scope.own)    lista = emps.filter(e=>(e.owner_id||e.ownerId)===currentUser.id);
+  if (scope.sector) {
+    const depts = currentUser?.perfil?.depts||[];
+    const setor = currentUser?.setor||'';
+    lista = emps.filter(e=>depts.includes(e.dept)||e.dept===setor);
+  }
+
+  document.getElementById('f-emp').innerHTML =
+    '<option value="">— Selecione —</option>' +
+    lista.map(e=>`<option value="${e.id}" ${oc&&oc.empId===e.id?'selected':''}>${e.name} · ${e.dept||''}</option>`).join('');
+
+  document.getElementById('modal-form-title').textContent = oc ? 'Editar Ocorrência' : 'Nova Ocorrência';
+  document.getElementById('f-edit-id').value = oc?.id || '';
+  document.getElementById('f-tipo').value    = oc?.tipo  || 'justificativa';
+  document.getElementById('f-desc').value    = oc?.desc  || '';
+  document.getElementById('f-obs').value     = oc?.obs   || '';
+
+  // Data/hora padrão = agora
+  const agora = new Date();
+  agora.setMinutes(agora.getMinutes()-agora.getTimezoneOffset());
+  document.getElementById('f-dt').value = oc?.ts
+    ? new Date(oc.ts).toISOString().slice(0,16)
+    : agora.toISOString().slice(0,16);
+
+  document.getElementById('f-emp').disabled = !!oc;
+  document.getElementById('modal-form').classList.add('open');
+}
+
+function editarOcorrencia(id) {
+  const oc = await getOcorrencias().find(o=>o.id===id);
+  if (!oc) return;
+  openFormModal(oc);
+}
+
+function salvarOcorrencia() {
+  const empEl  = document.getElementById('f-emp');
+  const empId  = empEl.value;
+  const editId = document.getElementById('f-edit-id').value;
+  const tipo   = document.getElementById('f-tipo').value;
+  const desc   = document.getElementById('f-desc').value.trim();
+  const obs    = document.getElementById('f-obs').value.trim();
+  const dtVal  = document.getElementById('f-dt').value;
+
+  if (!empId && !editId) { showToast('⚠️ Selecione um funcionário.','warn'); return; }
+  if (!desc)             { showToast('⚠️ Descrição é obrigatória.','warn'); return; }
+
+  const store = await getStore();
+  const emps  = store.employees||[];
+  const emp   = editId
+    ? { id: await getOcorrencias().find(o=>o.id===editId)?.empId, name:'', dept:'' }
+    : emps.find(e=>String(e.id)===String(empId));
+
+  const list = await getOcorrencias();
+
+  if (editId) {
+    const idx = list.findIndex(o=>o.id===editId);
+    if (idx<0) { showToast('❌ Ocorrência não encontrada.','error'); return; }
+    list[idx] = { ...list[idx], tipo, desc, obs, ts: dtVal ? new Date(dtVal).toISOString() : list[idx].ts };
+    await registrarLog('editou', 'Ocorrências', `Editou ocorrência <strong>${tipo}</strong> de <strong>${list[idx].empName||'—'}</strong>`);
+    showToast('✅ Ocorrência atualizada!');
+  } else {
+    const empData = emps.find(e=>String(e.id)===String(empId));
+    list.unshift({
+      id:        uid(),
+      ts:        dtVal ? new Date(dtVal).toISOString() : new Date().toISOString(),
+      empId:     empData?.id,
+      empName:   empData?.name || '—',
+      empDept:   empData?.dept || '—',
+      empFilial: empData?.filial || '—',
+      tipo, desc, obs,
+      status:    'pendente',
+      respName:  currentUser.name,
+      respId:    currentUser.id,
+      createdAt: new Date().toISOString(),
+    });
+    await registrarLog('criou', 'Ocorrências', `Nova ocorrência <strong>${tipo}</strong> para <strong>${empData?.name||'—'}</strong>`);
+    showToast('✅ Ocorrência registrada com status Pendente!');
+  }
+
+  saveOcorrencias(list);
+  closeModal('modal-form');
+  renderTabela();
+}
+
+// ════════════════════════════════════════════════════════
+// MODAL DETALHE
+// ════════════════════════════════════════════════════════
+function verDetalhe(id) {
+  const o = await getOcorrencias().find(x=>x.id===id);
+  if (!o) return;
+  const sm = STATUS_META[o.status]||STATUS_META.pendente;
+  const tm = TIPO_META[o.tipo]||{ emoji:'📝', label:o.tipo };
+  const dt = new Date(o.ts).toLocaleString('pt-BR');
+
+  document.getElementById('d-emp').textContent    = `${o.empName||'—'} · ${o.empDept||''}`;
+  document.getElementById('d-dt').textContent     = dt;
+  document.getElementById('d-tipo').innerHTML     = `<span class="tipo-badge ${TIPO_META[o.tipo]?.cls||''}">${tm.emoji} ${tm.label}</span>`;
+  document.getElementById('d-status').textContent = `${sm.emoji} ${o.status.charAt(0).toUpperCase()+o.status.slice(1)}`;
+  document.getElementById('d-desc').textContent   = o.desc||'—';
+  document.getElementById('d-resp').textContent   = o.respName||'—';
+
+  const obsWrap = document.getElementById('d-obs-wrap');
+  if (o.obs) {
+    document.getElementById('d-obs').textContent = o.obs;
+    obsWrap.style.display = 'block';
+  } else {
+    obsWrap.style.display = 'none';
+  }
+
+  // Botões de ação no rodapé
+  const footer = document.getElementById('detail-footer');
+  let btns = `<button class="btn btn-ghost" onclick="closeModal('modal-detail')">Fechar</button>`;
+
+  if (podeEditar && o.status==='pendente') {
+    btns += `<button class="btn btn-ghost" onclick="closeModal('modal-detail');editarOcorrencia('${id}')">✏️ Editar</button>`;
+  }
+  if (podeExcluir) {
+    btns += `<button class="btn btn-red" onclick="closeModal('modal-detail');excluirOcorrencia('${id}')">✕ Excluir</button>`;
+  }
+  if (podeAprovar && o.status==='pendente') {
+    btns += `
+      <button class="btn btn-green" onclick="mudarStatus('${id}','aprovado')">✅ Aprovar</button>
+      <button class="btn btn-red"   onclick="mudarStatus('${id}','rejeitado')">❌ Rejeitar</button>`;
+  }
+  if (podeAprovar && o.status!=='pendente') {
+    btns += `<button class="btn btn-ghost btn-sm" onclick="mudarStatus('${id}','pendente')">↩️ Reverter para Pendente</button>`;
+  }
+  footer.innerHTML = btns;
+
+  document.getElementById('modal-detail').classList.add('open');
+}
+
+function mudarStatus(id, novoStatus) {
+  const list = await getOcorrencias();
+  const idx  = list.findIndex(o=>o.id===id);
+  if (idx<0) return;
+  const o = list[idx];
+  list[idx].status = novoStatus;
+  saveOcorrencias(list);
+  closeModal('modal-detail');
+  renderTabela();
+  const msgs = { aprovado:'✅ Ocorrência aprovada!', rejeitado:'❌ Ocorrência rejeitada.', pendente:'↩️ Revertida para pendente.' };
+  const logMsg = { aprovado:'Aprovou', rejeitado:'Rejeitou', pendente:'Reverteu para pendente' };
+  await registrarLog('editou', 'Ocorrências', `${logMsg[novoStatus]||'Atualizou'} ocorrência <strong>${o.tipo}</strong> de <strong>${o.empName||'—'}</strong>`);
+  showToast(msgs[novoStatus]||'✅ Status atualizado!');
+}
+
+function excluirOcorrencia(id) {
+  const o = await getOcorrencias().find(x=>x.id===id);
+  if (!confirm('Excluir esta ocorrência? Esta ação não pode ser desfeita.')) return;
+  saveOcorrencias(await getOcorrencias().filter(x=>x.id!==id));
+  renderTabela();
+  await registrarLog('excluiu', 'Ocorrências', `Excluiu ocorrência <strong>${o?.tipo||'—'}</strong> de <strong>${o?.empName||'—'}</strong>`);
+  showToast('✅ Ocorrência excluída.');
+}
+
+// ════════════════════════════════════════════════════════
+// FECHAR MODAIS
+// ════════════════════════════════════════════════════════
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target===e.currentTarget) el.classList.remove('open'); });
+});
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape') document.querySelectorAll('.overlay.open').forEach(el=>el.classList.remove('open'));
+});
+</script>
+</body>
+</html>

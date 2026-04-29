@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Líderes · RH Nagumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sidebar.css">
+<link rel="stylesheet" href="../light-theme.css">
+<link rel="stylesheet" href="../responsive.css">
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../firebase.js"></script>
+<script src="../permissions.js"></script>
+<script src="../shared.js"></script>
+<style>
+/* ════════════════════════════════════════════
+   VARIÁVEIS
+════════════════════════════════════════════ */
+:root {
+  --bg:#0b0d14; --surface:#12151f; --surface2:#1a1e2e; --surface3:#222638;
+  --border:#2a2f45; --accent:#4f8ef7; --accent2:#a78bfa;
+  --green:#34d399; --yellow:#fbbf24; --red:#f87171; --orange:#fb923c;
+  --cyan:#22d3ee; --text:#ffffff; --muted:#94a3b8;
+  --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --sidebar-w:220px;
+}
+/* [light-theme.css] body.light-theme {
+  --bg:#EEF2F8; --surface:#fff; --surface2:#F4F7FB; --surface3:#E8EDF5;
+  --border:#D6DDE8; --accent:#2563eb; --accent2:#7c3aed; --green:#059669;
+  --yellow:#d97706; --red:#dc2626; --orange:#ea580c; --cyan:#0891b2;
+  --text:#0f172a; --muted:#64748b;
+} */
+/* [light-theme.css] body.light-theme 
+
+body.light-theme .main             { background:#EEF2F8; } */
+/* [light-theme.css] body.light-theme .page-title       { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .search-input     { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .search-input::placeholder { color:#94a3b8; } */
+/* [light-theme.css] body.light-theme .dept-chip        { background:#fff; border-color:#CBD5E1; color:#64748b; } */
+/* [light-theme.css] body.light-theme .dept-chip.active { background:rgba(37,99,235,.1); border-color:#2563eb; color:#2563eb; } */
+/* [light-theme.css] body.light-theme .leader-card      { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .leader-card:hover{ border-color:#2563eb; box-shadow:0 4px 20px rgba(37,99,235,.12); } */
+/* [light-theme.css] body.light-theme .leader-name      { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .leader-role      { color:#64748b; } */
+/* [light-theme.css] body.light-theme .stat-box         { background:#F4F7FB; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .stat-label       { color:#94a3b8; } */
+/* [light-theme.css] body.light-theme .team-section     { color:#64748b; } */
+/* [light-theme.css] body.light-theme .score-footer     { background:#EEF4FF; border-color:#C7D8FB; } */
+/* [light-theme.css] body.light-theme .score-footer span{ color:#1D4ED8; } */
+/* [light-theme.css] body.light-theme .avatar-bubble    { background:#E2E8F0; color:#475569; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-track { background:#F1F5F9; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-thumb { background:#CBD5E1; } */
+/* [light-theme.css] body.light-theme .modal            { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .modal input,
+body.light-theme .modal select     { background:#F4F7FB; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .modal label      { color:#475569; } */
+/* [light-theme.css] body.light-theme .overlay          { background:rgba(15,23,42,.45); } */
+
+/* ════════════════════════════════════════════
+   BASE
+════════════════════════════════════════════ */
+* { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:14px; }
+body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
+
+/* ════════════════════════════════════════════
+   SIDEBAR
+════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════
+   MAIN
+════════════════════════════════════════════ */
+.main { margin-left:var(--sidebar-w); padding:24px 28px; min-height:100vh; }
+.topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; flex-wrap:wrap; gap:12px; }
+.page-title { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; color:var(--text); }
+
+/* ════════════════════════════════════════════
+   BOTÕES
+════════════════════════════════════════════ */
+.btn {
+  display:inline-flex; align-items:center; gap:7px; padding:9px 16px;
+  border-radius:8px; border:none; font-family:var(--font-body);
+  font-size:12px; font-weight:600; cursor:pointer; transition:all .2s;
+}
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:#3a7ae0; transform:translateY(-1px); box-shadow:0 4px 16px rgba(79,142,247,.4); }
+.btn-ghost { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
+.btn-ghost:hover { background:var(--surface3); }
+.btn-danger { background:rgba(248,113,113,.15); color:var(--red); border:1px solid rgba(248,113,113,.3); }
+.btn-danger:hover { background:rgba(248,113,113,.25); }
+.btn-sm { padding:5px 11px; font-size:11px; }
+
+/* ════════════════════════════════════════════
+   FILTROS
+════════════════════════════════════════════ */
+.filter-bar { display:flex; align-items:center; gap:10px; margin-bottom:22px; flex-wrap:wrap; }
+.search-wrap { position:relative; }
+.search-icon { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:14px; pointer-events:none; }
+.search-input {
+  background:var(--surface); border:1px solid var(--border); border-radius:9px;
+  color:var(--text); font-family:var(--font-body); font-size:13px;
+  padding:8px 12px 8px 34px; outline:none; transition:border-color .2s; width:200px;
+}
+.search-input:focus { border-color:var(--accent); }
+.search-input::placeholder { color:var(--muted); }
+
+.dept-chip {
+  padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600;
+  cursor:pointer; border:1px solid var(--border); background:var(--surface);
+  color:var(--muted); transition:all .15s; user-select:none; white-space:nowrap;
+}
+.dept-chip:hover  { border-color:var(--accent); color:var(--text); }
+.dept-chip.active { background:rgba(79,142,247,.15); border-color:var(--accent); color:var(--accent); }
+
+/* ════════════════════════════════════════════
+   HIERARQUIA — SEÇÕES
+════════════════════════════════════════════ */
+.hierarquia-secao {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+.hierarquia-secao:first-child { margin-top: 0; }
+.hierarquia-label {
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  padding: 4px 14px;
+  border-radius: 20px;
+}
+.hierarquia-linha {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  opacity: 0.6;
+}
+
+/* Cores de label por nível */
+.hierarquia-label.diretoria  { background:rgba(251,146,60,.15);  color:#fb923c; border:1px solid rgba(251,146,60,.35); }
+.hierarquia-label.gerencia   { background:rgba(167,139,250,.15); color:#a78bfa; border:1px solid rgba(167,139,250,.35); }
+.hierarquia-label.coordenacao{ background:rgba(251,191,36,.15);  color:#fbbf24; border:1px solid rgba(251,191,36,.35); }
+.hierarquia-label.encarregado{ background:rgba(52,211,153,.15);  color:#34d399; border:1px solid rgba(52,211,153,.35); }
+.hierarquia-label.lider      { background:rgba(255,255,255,.08); color:#e2e8f0; border:1px solid rgba(255,255,255,.2); }
+
+/* Light theme */
+/* [light-theme.css] body.light-theme .hierarquia-label.lider { background:rgba(100,116,139,.08); color:#475569; border-color:rgba(100,116,139,.25); } */
+
+/* ════════════════════════════════════════════
+   LEADERS GRID
+════════════════════════════════════════════ */
+.leaders-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(320px,1fr));
+  gap:18px;
+}
+
+/* ── Card ── */
+.leader-card {
+  background:var(--surface); border:1.5px solid var(--border);
+  border-radius:16px; overflow:hidden;
+  transition:border-color .2s, transform .2s, box-shadow .2s;
+  display:flex; flex-direction:column;
+}
+
+/* Bordas coloridas por nível — estado normal */
+.leader-card.nivel-diretoria   { border-color:rgba(251,146,60,.6);  }
+.leader-card.nivel-gerencia    { border-color:rgba(167,139,250,.6); }
+.leader-card.nivel-coordenacao { border-color:rgba(251,191,36,.6);  }
+.leader-card.nivel-encarregado { border-color:rgba(52,211,153,.6);  }
+.leader-card.nivel-lider       { border-color:rgba(255,255,255,.25);}
+
+/* Hover — intensifica a cor do nível */
+.leader-card.nivel-diretoria:hover   { border-color:#fb923c; box-shadow:0 8px 28px rgba(251,146,60,.2);  transform:translateY(-3px); }
+.leader-card.nivel-gerencia:hover    { border-color:#a78bfa; box-shadow:0 8px 28px rgba(167,139,250,.2); transform:translateY(-3px); }
+.leader-card.nivel-coordenacao:hover { border-color:#fbbf24; box-shadow:0 8px 28px rgba(251,191,36,.2);  transform:translateY(-3px); }
+.leader-card.nivel-encarregado:hover { border-color:#34d399; box-shadow:0 8px 28px rgba(52,211,153,.2);  transform:translateY(-3px); }
+.leader-card.nivel-lider:hover       { border-color:rgba(255,255,255,.6); box-shadow:0 8px 28px rgba(255,255,255,.08); transform:translateY(-3px); }
+
+/* Light theme hover */
+/* [light-theme.css] body.light-theme .leader-card.nivel-lider       { border-color:rgba(100,116,139,.35); } */
+/* [light-theme.css] body.light-theme .leader-card.nivel-lider:hover { border-color:#64748b; box-shadow:0 8px 28px rgba(100,116,139,.15); } */
+
+/* Faixa colorida no topo do card */
+.leader-card::before {
+  content:'';
+  display:block;
+  height:3px;
+  background:var(--border);
+  flex-shrink:0;
+}
+.leader-card.nivel-diretoria::before   { background:linear-gradient(90deg,#fb923c,#f97316); }
+.leader-card.nivel-gerencia::before    { background:linear-gradient(90deg,#a78bfa,#7c3aed); }
+.leader-card.nivel-coordenacao::before { background:linear-gradient(90deg,#fbbf24,#d97706); }
+.leader-card.nivel-encarregado::before { background:linear-gradient(90deg,#34d399,#059669); }
+.leader-card.nivel-lider::before       { background:linear-gradient(90deg,rgba(255,255,255,.4),rgba(255,255,255,.1)); }
+/* [light-theme.css] body.light-theme .leader-card.nivel-lider::before { background:linear-gradient(90deg,#cbd5e1,#e2e8f0); } */
+
+/* ── Card header ── */
+.card-header { padding:18px 18px 14px; display:flex; align-items:flex-start; gap:14px; }
+.leader-avatar {
+  width:52px; height:52px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:17px; font-weight:800; color:#fff;
+}
+.leader-info { flex:1; min-width:0; }
+.leader-name { font-family:var(--font-head); font-size:17px; font-weight:800; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.leader-role { font-size:12px; color:var(--muted); margin-top:3px; }
+.leader-badge {
+  flex-shrink:0; display:inline-flex; align-items:center; gap:5px;
+  padding:4px 10px; border-radius:20px; font-size:10px; font-weight:700;
+  white-space:nowrap;
+}
+
+/* ── Métricas principais ── */
+.card-metrics { padding:0 18px 14px; display:flex; gap:20px; align-items:flex-end; }
+.metric-big { display:flex; flex-direction:column; gap:2px; }
+.metric-big-val {
+  font-family:var(--font-head); font-size:22px; font-weight:800; letter-spacing:-1px;
+}
+.metric-big-val.time   { color:var(--text); }
+.metric-big-val.desemp { color:var(--green); }
+.metric-big-val.score  { color:var(--accent2); }
+.metric-big-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; color:var(--muted); }
+
+/* ── Team avatars ── */
+.team-section { padding:0 18px 14px; }
+.team-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; color:var(--muted); margin-bottom:8px; }
+.team-avatars { display:flex; gap:5px; flex-wrap:wrap; align-items:center; }
+.avatar-bubble {
+  width:30px; height:30px; border-radius:50%;
+  background:var(--surface3); border:1.5px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:700; color:var(--muted);
+  font-family:var(--font-head);
+}
+.avatar-more {
+  padding:0 8px; height:30px; border-radius:15px;
+  background:var(--surface3); border:1.5px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:700; color:var(--muted);
+}
+
+/* ── Stat boxes ── */
+.card-stats { padding:0 18px 14px; display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.stat-box {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:10px; padding:10px 14px;
+}
+.stat-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; color:var(--muted); margin-bottom:5px; }
+.stat-val { font-family:var(--font-head); font-size:20px; font-weight:800; letter-spacing:-1px; }
+.stat-val.assid  { color:var(--green); }
+.stat-val.faltas { color:var(--text); }
+.stat-val.promo  { color:var(--green); }
+.stat-val.risco  { color:var(--red); }
+.stat-val.assid.low { color:var(--yellow); }
+
+/* ── Score footer ── */
+.score-footer {
+  margin:0 18px 18px; padding:10px 16px;
+  background:rgba(79,142,247,.08); border:1px solid rgba(79,142,247,.2);
+  border-radius:10px; display:flex; align-items:center; gap:8px;
+}
+.score-footer-label { font-size:12px; font-weight:600; color:var(--muted); flex:1; }
+.score-footer span  { font-family:var(--font-head); font-size:18px; font-weight:800; color:var(--accent2); }
+
+/* ── Ações admin ── */
+.card-actions { padding:0 18px 16px; display:flex; gap:8px; }
+
+/* ════════════════════════════════════════════
+   EMPTY STATE
+════════════════════════════════════════════ */
+.empty-state { text-align:center; padding:60px 20px; color:var(--muted); grid-column:1/-1; }
+.empty-icon  { font-size:52px; margin-bottom:14px; }
+
+/* ════════════════════════════════════════════
+   MODAL
+════════════════════════════════════════════ */
+.overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.75);
+  backdrop-filter:blur(4px); z-index:200;
+  display:none; align-items:center; justify-content:center;
+}
+.overlay.open { display:flex; }
+.modal {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:28px; width:500px;
+  max-width:95vw; max-height:90vh; overflow-y:auto;
+  animation:fadeUp .25s ease;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.modal-title { font-family:var(--font-head); font-size:18px; font-weight:800; margin-bottom:22px; color:var(--text); }
+.modal-footer { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.form-group { display:flex; flex-direction:column; gap:6px; }
+.form-group.full { grid-column:1/-1; }
+.form-label { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+.form-input {
+  background:var(--surface2); border:1px solid var(--border); border-radius:8px;
+  color:var(--text); font-family:var(--font-body); font-size:13px;
+  padding:9px 11px; outline:none; transition:border-color .2s;
+}
+.form-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(79,142,247,.1); }
+.form-input option { background:var(--surface2); }
+
+/* ════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════ */
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+.toast { padding:10px 18px; border-radius:10px; font-size:12px; font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4); animation:fadeUp .25s ease; max-width:320px; pointer-events:auto; }
+.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
+.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
+.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+@media(max-width:1024px) {
+  :root { --sidebar-w:56px; }
+  
+  
+  
+  
+
+}
+@media(max-width:768px) {
+  :root { --sidebar-w:0px; }
+  
+  .main { margin-left:0; padding:16px; }
+  .leaders-grid { grid-template-columns:1fr; }
+  .form-grid { grid-template-columns:1fr; }
+}
+
+}
+
+
+/* ── Foto do líder ── */
+.foto-upload-wrap {
+  display:flex; align-items:center; gap:14px; margin-bottom:4px;
+}
+.foto-preview-lider {
+  width:64px; height:64px; border-radius:50%; object-fit:cover;
+  border:2px solid var(--border); flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:20px; font-weight:800; color:#fff;
+  overflow:hidden;
+}
+.foto-preview-lider img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.foto-btns { display:flex; flex-direction:column; gap:6px; }
+.btn-foto {
+  padding:6px 14px; border-radius:8px; border:1px solid var(--border);
+  background:transparent; color:var(--muted); font-family:var(--font-body);
+  font-size:11px; font-weight:600; cursor:pointer; transition:all .15s;
+}
+.btn-foto:hover { border-color:var(--accent); color:var(--accent); }
+.btn-foto.remove:hover { border-color:var(--red); color:var(--red); }
+
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+<nav id="app-sidebar"></nav>
+
+<main class="main">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="page-title">Líderes</div>
+    <button class="btn btn-primary" id="btn-novo" onclick="openModal()">＋ Novo Líder</button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filter-bar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" id="search-input"
+        placeholder="Buscar líder..." oninput="renderLeaders()">
+    </div>
+    <div id="dept-chips"></div>
+  </div>
+
+  <!-- Grid -->
+  <div class="leaders-grid" id="leaders-grid"></div>
+
+</main>
+
+<!-- ══ MODAL NOVO/EDITAR LÍDER ══ -->
+<div class="overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Novo Líder</div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="form-label">📷 Foto do Líder</label>
+        <div class="foto-upload-wrap">
+          <div class="foto-preview-lider" id="foto-preview-lider">
+            <span id="foto-ini-lider">?</span>
+          </div>
+          <div class="foto-btns">
+            <input type="file" id="foto-input-lider" accept="image/*" style="display:none" onchange="processarFotoLider(this)">
+            <button type="button" class="btn-foto" onclick="document.getElementById('foto-input-lider').click()">📷 Selecionar Foto</button>
+            <button type="button" class="btn-foto remove" onclick="removerFotoLider()">✕ Remover</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">👤 Nome Completo</label>
+        <input class="form-input" type="text" id="f-name" placeholder="Ex: Roberto Carlos"
+          oninput="this.value=toTitleCase(this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g,''))">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">🪪 ID de Acesso (login)</label>
+        <input class="form-input" type="text" id="f-id" placeholder="Ex: roberto@email.com ou (11)99999"
+          oninput="this.value=this.value.toLowerCase()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">💼 Cargo / Função</label>
+        <input class="form-input" type="text" id="f-role" placeholder="Ex: Supervisor">
+      </div>
+      <div class="form-group">
+        <label class="form-label">🏅 Nível</label>
+        <select class="form-input" id="f-nivel">
+          <option value="lider">👷 Líder Operacional</option>
+          <option value="encarregado">🔰 Encarregado</option>
+          <option value="coordenacao">📋 Coordenação</option>
+          <option value="gerencia">📊 Gerência</option>
+          <option value="diretoria">🏢 Diretoria</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">🏭 Filiais que gerencia</label>
+        <div id="f-filiais-list" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">🕐 Turnos que gerencia</label>
+        <div id="f-turnos-list" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">🏢 Departamentos que gerencia</label>
+        <div id="f-depts-list" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
+      </div>
+      <div class="form-group" id="nova-senha-wrap">
+        <label class="form-label">🔑 Senha inicial</label>
+        <input class="form-input" type="password" id="f-pass" placeholder="Mín. 6 caracteres">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveLeader()">💾 Salvar</button>
+    </div>
+    <input type="hidden" id="f-edit-id" value="">
+    <input type="hidden" id="f-foto-lider" value="">
+  </div>
+</div>
+
+<!-- MODAL TRANSFERIR LÍDER -->
+<div class="overlay" id="modal-leader-transfer">
+  <div class="modal" style="width:520px">
+    <div class="modal-title">🔀 Transferir / Atualizar Líder</div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--text)">
+      🧑‍💼 <strong id="ltr-leader-name"></strong>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label class="form-label">🏭 Filiais que gerencia</label>
+      <div id="ltr-filiais" style="display:flex;flex-direction:column;gap:6px;margin-top:6px"></div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label class="form-label">🕐 Turnos que gerencia</label>
+      <div id="ltr-turnos" style="display:flex;flex-direction:column;gap:6px;margin-top:6px"></div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label class="form-label">🏢 Departamentos responsáveis</label>
+      <div id="ltr-depts" style="display:flex;flex-direction:column;gap:6px;margin-top:6px"></div>
+    </div>
+    <input type="hidden" id="ltr-edit-id">
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeLeaderTransferModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveLeaderTransfer()">💾 Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL OCORRÊNCIA LÍDER -->
+<div class="overlay" id="modal-leader-ocorrencia">
+  <div class="modal" style="width:500px">
+    <div class="modal-title">📝 Registrar Ocorrência</div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--text)">
+      🧑‍💼 Líder: <strong id="loc-leader-name"></strong>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">📋 Tipo de Ocorrência</label>
+        <select class="form-input" id="loc-tipo">
+          <option value="">— Selecione —</option>
+          <option value="Justificativa">📄 Justificativa</option>
+          <option value="Ajuste">🔧 Ajuste</option>
+          <option value="Ocorrência">⚠️ Ocorrência</option>
+          <option value="Entrada">🟢 Entrada</option>
+          <option value="Saída">🔴 Saída</option>
+          <option value="Advertência">🚨 Advertência</option>
+          <option value="Elogio">⭐ Elogio</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">📅 Data</label>
+        <input class="form-input" type="date" id="loc-data">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">📝 Descrição</label>
+        <textarea class="form-input" id="loc-desc" rows="4"
+          placeholder="Descreva a ocorrência..."
+          style="resize:vertical;min-height:90px"></textarea>
+      </div>
+    </div>
+    <input type="hidden" id="loc-edit-id">
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeLeaderOcorrencia()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveLeaderOcorrencia()">📝 Salvar Ocorrência</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+// ESTADO
+// ════════════════════════════════════════════════════════
+let currentUser   = null;
+let activeDeptFilter = '';
+
+const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
+
+const NIVEL_META = {
+  admin_master: { label:'Admin Master', emoji:'🛡️', cor:'#f87171' },
+  diretoria:    { label:'Diretoria',    emoji:'🏢', cor:'#fb923c' },
+  gerencia:     { label:'Gerência',     emoji:'📊', cor:'#fbbf24' },
+  coordenacao:  { label:'Coordenação',  emoji:'📋', cor:'#a78bfa' },
+  encarregado:  { label:'Encarregado',  emoji:'🔰', cor:'#22d3ee' },
+  lider:        { label:'Líder',        emoji:'👷', cor:'#4f8ef7' },
+};
+
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  currentUser = await requireSession();
+  if (!currentUser) return;
+
+  initTheme();
+  initSidebar('leaders', currentUser);
+
+  // Só Admin Master pode criar novos líderes via esta página
+  const perfil  = getUserPerfil(currentUser);
+  const btnNovo = document.getElementById('btn-novo');
+  if (btnNovo) btnNovo.style.display = perfil === 'admin_master' ? '' : 'none';
+
+  buildDeptChips();
+  renderLeaders();
+});
+
+// ════════════════════════════════════════════════════════
+// SCORE HELPERS
+// ════════════════════════════════════════════════════════
+function getWeights() {
+  const cfg = (await getStore()).config || {};
+  const pw  = Math.min(100, Math.max(0, parseInt(cfg.perfWeight)||40));
+  const aw  = Math.min(100, Math.max(0, parseInt(cfg.aptWeight) ||35));
+  return { perf:pw, apt:aw, abs:Math.max(0,100-pw-aw) };
+}
+function calcAptMedia(emp) {
+  const c = emp.competencies || {};
+  return APT_KEYS.reduce((s,k)=>s+(c[k]||0),0)/APT_KEYS.length;
+}
+// ── Lê faltas reais do rh_ponto para um funcionário ──────
+function getTotalFaltasEmp(emp) {
+  const PONTO_KEY = 'rh_ponto';
+  try {
+    const allPonto = JSON.parse(localStorage.getItem(PONTO_KEY) || '{}');
+    const ano      = emp.year || new Date().getFullYear();
+    let   total    = 0;
+    for (let m = 1; m <= 12; m++) {
+      const key  = `${emp.id}_${ano}_${String(m).padStart(2,'0')}`;
+      const dias = allPonto[key] || {};
+      Object.values(dias).forEach(s => {
+        if (s === 'falta')    total += 1;
+        if (s === 'atestado') total += 0.5;
+      });
+    }
+    return total > 0 ? total : (emp.absences||[]).reduce((a,b)=>a+b, 0);
+  } catch(e) {
+    return (emp.absences||[]).reduce((a,b)=>a+b, 0);
+  }
+}
+
+function calcAssid(emp) {
+  if (emp.afastado) return 100;
+  const total  = getTotalFaltasEmp(emp);
+  const maxAbs = (await getStore()).config?.maxAbs||36;
+  return Math.max(0,100-(total/maxAbs)*100);
+}
+function calcBonus(emp) {
+  const BONUS_POR_DIA = 0.5;
+  const BONUS_MAX     = 5;
+  try {
+    const allPonto = JSON.parse(localStorage.getItem('rh_ponto') || '{}');
+    const ano      = emp.year || new Date().getFullYear();
+    const feriadosCustom = (await getStore()).config?.feriadosCustom || [];
+    const ferNac = [
+      {d:1,m:0},{d:21,m:3},{d:1,m:4},{d:7,m:8},
+      {d:12,m:9},{d:2,m:10},{d:15,m:10},{d:25,m:11}
+    ];
+    let diasBonus = 0;
+    for (let m = 1; m <= 12; m++) {
+      const key  = `${emp.id}_${ano}_${String(m).padStart(2,'0')}`;
+      const dias = allPonto[key] || {};
+      Object.entries(dias).forEach(([dStr, status]) => {
+        if (status !== 'presente') return;
+        const d   = parseInt(dStr);
+        const dow = new Date(ano, m-1, d).getDay();
+        if (dow === 0) { diasBonus++; return; }
+        if (ferNac.some(f => f.d===d && f.m===(m-1))) { diasBonus++; return; }
+        const mesStr = String(m).padStart(2,'0');
+        const diaStr = String(d).padStart(2,'0');
+        if (feriadosCustom.some(f => f.chave===`${mesStr}-${diaStr}`)) diasBonus++;
+      });
+    }
+    return Math.min(BONUS_MAX, diasBonus * BONUS_POR_DIA);
+  } catch(e) { return 0; }
+}
+function calcScore(emp) {
+  const w     = getWeights();
+  const base  = emp.perf*(w.perf/100)+calcAptMedia(emp)*10*(w.apt/100)+calcAssid(emp)*(w.abs/100);
+  const bonus = calcBonus(emp);
+  return Math.min(100, Math.round(base + bonus));
+}
+
+// Score + status para card de funcionário operacional
+function calcEmpScore(emp) {
+  const w     = getWeights();
+  const base  = (emp.perf||0)*(w.perf/100) + calcAptMedia(emp)*10*(w.apt/100) + calcAssid(emp)*(w.abs/100);
+  const bonus = calcBonus(emp);
+  return Math.min(100, Math.round(base + bonus));
+}
+function getEmpStatus(score) {
+  if (score>=85) return { label:'🏆 Promoção', cls:'tag-promo' };
+  if (score>=70) return { label:'✅ Regular',  cls:'tag-ok'   };
+  if (score>=55) return { label:'⚠️ Atenção',  cls:'tag-watch'};
+  return               { label:'🔴 Risco',    cls:'tag-risk' };
+}
+
+// Retorna o líder responsável por um funcionário com base no dept+turno
+function getLiderDoFuncionario(emp, store) {
+  const users = Object.values(store.users || {});
+  const dept  = emp.dept  || '';
+  const turno = emp.turno || '';
+  const PRIORIDADE = ['lider','encarregado','coordenacao','gerencia','diretoria'];
+
+  for (const nivel of PRIORIDADE) {
+    const match = users.find(u => {
+      if (u.id === ADMIN_ID || u.nivel === 'admin_master') return false;
+      if ((u.nivel || 'lider') !== nivel) return false;
+      const depts      = getMeusDepts(u);
+      const liderTurno = u.perfil?.turno || '';
+      const deptOk     = depts.length
+        ? depts.includes(dept)
+        : (emp.owner_id || emp.ownerId) === u.id;
+      const turnoOk    = liderTurno ? liderTurno === turno : true;
+      return deptOk && turnoOk;
+    });
+    if (match) return match;
+  }
+  return null;
+}
+
+// Score de liderança = média das aptidões dos funcionários do líder
+function calcLeaderScore(teamEmps) {
+  if (!teamEmps.length) return 0;
+  const avg = teamEmps.reduce((s,e)=>s+calcAptMedia(e),0)/teamEmps.length;
+  return +avg.toFixed(1);
+}
+
+// ════════════════════════════════════════════════════════
+// CHIPS DE DEPARTAMENTO
+// ════════════════════════════════════════════════════════
+function buildDeptChips() {
+  const store = await getStore();
+  const emps  = store.employees || [];
+  const depts = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
+  const wrap  = document.getElementById('dept-chips');
+
+  wrap.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap';
+  wrap.innerHTML = [
+    { label:'Todos', val:'' },
+    ...depts.map(d=>({ label:d, val:d }))
+  ].map(({ label, val }) => `
+    <div class="dept-chip ${val===activeDeptFilter?'active':''}"
+      onclick="setDeptFilter('${val}')">${label}</div>
+  `).join('');
+}
+
+function setDeptFilter(val) {
+  activeDeptFilter = val;
+  buildDeptChips();
+  renderLeaders();
+}
+
+// ════════════════════════════════════════════════════════
+// RENDER LEADERS — agrupado por hierarquia
+// ════════════════════════════════════════════════════════
+function renderLeaders() {
+  const store   = await getStore();
+  const search  = document.getElementById('search-input').value.toLowerCase();
+  const perfil  = getUserPerfil(currentUser);
+  const isAdmin = perfil === 'admin_master';
+
+  // Lista de usuários que são líderes (todos exceto admin master)
+  let leaders = Object.values(store.users || {})
+    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
+
+  // Busca
+  if (search) leaders = leaders.filter(u => u.name.toLowerCase().includes(search));
+
+  // Filtro por departamento
+  if (activeDeptFilter) {
+    leaders = leaders.filter(u => {
+      const teamEmps = getTeamEmps(u, store.employees||[]);
+      return teamEmps.some(e=>e.dept===activeDeptFilter);
+    });
+  }
+
+  const grid = document.getElementById('leaders-grid');
+
+  if (!leaders.length) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🧑‍💼</div>
+        <p style="font-size:14px">Nenhum líder encontrado</p>
+        <p style="font-size:12px;margin-top:6px">Cadastre novos usuários pelo botão acima.</p>
+      </div>`;
+    return;
+  }
+
+  // Ordem hierárquica — do mais alto para o mais baixo
+  const HIERARQUIA_ORDER = ['diretoria','gerencia','coordenacao','encarregado','lider'];
+  const HIERARQUIA_META  = {
+    diretoria:   { label:'🏢 Diretoria',    cls:'diretoria'   },
+    gerencia:    { label:'📊 Gerência',     cls:'gerencia'    },
+    coordenacao: { label:'📋 Coordenação',  cls:'coordenacao' },
+    encarregado: { label:'🔰 Encarregado',  cls:'encarregado' },
+    lider:       { label:'👷 Liderança Operacional', cls:'lider' },
+  };
+
+  // Agrupa por nível
+  const grupos = {};
+  HIERARQUIA_ORDER.forEach(n => grupos[n] = []);
+  leaders.forEach(u => {
+    const nivel = u.nivel || 'lider';
+    if (grupos[nivel]) grupos[nivel].push(u);
+    else grupos['lider'].push(u);
+  });
+
+  // Monta HTML por grupo
+  let html = '';
+  HIERARQUIA_ORDER.forEach(nivel => {
+    const lista = grupos[nivel];
+    if (!lista.length) return;
+
+    const meta = HIERARQUIA_META[nivel];
+    html += `
+      <div class="hierarquia-secao">
+        <span class="hierarquia-label ${meta.cls}">${meta.label}</span>
+        <div class="hierarquia-linha"></div>
+        <span style="font-size:11px;color:var(--muted);white-space:nowrap">${lista.length} ${lista.length===1?'pessoa':'pessoas'}</span>
+      </div>`;
+    lista.forEach(u => { html += buildCard(u, store, isAdmin); });
+  });
+
+  // ── Seção operacional — funcionários cadastrados ──
+  let emps = store.employees || [];
+  if (search) emps = emps.filter(e => e.name.toLowerCase().includes(search));
+  if (activeDeptFilter) emps = emps.filter(e => e.dept === activeDeptFilter);
+
+  if (emps.length) {
+    html += `
+      <div class="hierarquia-secao">
+        <span class="hierarquia-label" style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25)">
+          👥 Operacional
+        </span>
+        <div class="hierarquia-linha"></div>
+        <span style="font-size:11px;color:var(--muted);white-space:nowrap">${emps.length} ${emps.length===1?'funcionário':'funcionários'}</span>
+      </div>`;
+
+    emps.forEach(emp => {
+      const lider = getLiderDoFuncionario(emp, store);
+      const ini   = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+      const score = calcEmpScore(emp);
+      const st    = getEmpStatus(score);
+
+      html += `
+      <div class="leader-card nivel-lider" style="border-color:rgba(79,142,247,.35)">
+        <div style="height:3px;background:linear-gradient(90deg,rgba(79,142,247,.6),rgba(79,142,247,.2));flex-shrink:0"></div>
+        <div class="card-header">
+          <div class="leader-avatar" style="background:linear-gradient(135deg,#4f8ef7,#3b6fd4);font-size:13px">${ini}</div>
+          <div class="leader-info">
+            <div class="leader-name">${emp.name}</div>
+            <div class="leader-role">${[emp.role||'', emp.dept||''].filter(Boolean).join(' · ')}</div>
+          </div>
+          <div class="leader-badge" style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25)">
+            👤 Operacional
+          </div>
+        </div>
+        <div class="card-metrics">
+          <div class="metric-item">
+            <div class="metric-label">Desempenho</div>
+            <div class="metric-val" style="color:var(--accent)">${emp.perf||0}%</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-label">Score</div>
+            <div class="metric-val" style="color:${score>=85?'#34d399':score>=70?'#4f8ef7':score>=55?'#fbbf24':'#f87171'}">${score}</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-label">Líder</div>
+            <div class="metric-val" style="font-size:11px;color:var(--muted)">${lider ? lider.name.split(' ')[0] : '—'}</div>
+          </div>
+        </div>
+        ${emp.filial||emp.turno ? `
+        <div style="display:flex;gap:5px;flex-wrap:wrap;padding:0 18px 14px">
+          ${emp.filial?`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.2)">🏭 ${emp.filial}</span>`:''}
+          ${emp.turno ?`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(167,139,250,.12);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">🕐 ${emp.turno}</span>`:''}
+        </div>` : ''}
+      </div>`;
+    });
+  }
+
+  grid.innerHTML = html;
+}
+
+// Helpers — retornam arrays de depts/filiais/turnos do líder
+function getMeusDepts(leader) {
+  const depts = leader.perfil?.depts || [];
+  const setor = leader.setor || '';
+  return [...new Set([...depts, ...(setor ? [setor] : [])])];
+}
+function getMeusFiliais(leader) {
+  return leader.perfil?.filiais || (leader.perfil?.filial ? [leader.perfil.filial] : []);
+}
+function getMeusTurnos(leader) {
+  return leader.perfil?.turnos || (leader.perfil?.turno ? [leader.perfil.turno] : []);
+}
+
+// Funcionários operacionais do líder — para métricas/médias
+function getTeamEmps(leader, allEmps) {
+  const depts  = getMeusDepts(leader);
+  const turnos = getMeusTurnos(leader);
+
+  if (!depts.length) {
+    return allEmps.filter(e => (e.owner_id||e.ownerId) === leader.id);
+  }
+  return allEmps.filter(e => {
+    const deptOk  = depts.includes(e.dept);
+    const turnoOk = turnos.length ? turnos.includes(e.turno) : true;
+    return deptOk && turnoOk;
+  });
+}
+
+// Contagem total hierárquica
+function getTeamTotal(leader, store) {
+  const nivel    = leader.nivel || 'lider';
+  const allEmps  = store.employees || [];
+  const allUsers = Object.values(store.users || {})
+    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master' && u.id !== leader.id);
+
+  const ORDEM     = ['lider','encarregado','coordenacao','gerencia','diretoria'];
+  const meuIdx    = ORDEM.indexOf(nivel);
+  const meusDepts = getMeusDepts(leader);
+  const meusTurnos = getMeusTurnos(leader);
+
+  // Funcionários nos depts (e turnos, se definidos) do líder
+  let totalFuncionarios;
+  if (!meusDepts.length) {
+    totalFuncionarios = allEmps.filter(e => (e.owner_id||e.ownerId) === leader.id).length;
+  } else {
+    totalFuncionarios = allEmps.filter(e => {
+      const deptOk  = meusDepts.includes(e.dept);
+      const turnoOk = meusTurnos.length ? meusTurnos.includes(e.turno) : true;
+      return deptOk && turnoOk;
+    }).length;
+  }
+
+  // Usuários subordinados (abaixo na hierarquia) com sobreposição de dept
+  const subordinados = allUsers.filter(u => {
+    const uIdx = ORDEM.indexOf(u.nivel || 'lider');
+    if (uIdx >= meuIdx) return false;
+    if (!meusDepts.length) return false;
+    const uDepts = getMeusDepts(u);
+    return meusDepts.some(d => uDepts.includes(d));
+  });
+
+  return totalFuncionarios + subordinados.length;
+}
+
+// ════════════════════════════════════════════════════════
+// BUILD CARD
+// ════════════════════════════════════════════════════════
+function buildCard(leader, store, isAdmin) {
+  const allEmps = store.employees || [];
+  const team    = getTeamEmps(leader, allEmps);
+  const nivel   = leader.nivel || 'lider';
+  const meta    = NIVEL_META[nivel] || NIVEL_META['lider'];
+
+  // Métricas da equipe (só funcionários operacionais para médias)
+  const totalTime   = team.length;
+  const avgDesemp   = totalTime ? Math.round(team.reduce((s,e)=>s+e.perf,0)/totalTime) : 0;
+  const avgAssid    = totalTime ? Math.round(team.reduce((s,e)=>s+calcAssid(e),0)/totalTime) : 0;
+  const totalFaltas = team.reduce((s,e) => s + getTotalFaltasEmp(e), 0);
+  const promos      = team.filter(e=>calcScore(e)>=85).length;
+  const riscos      = team.filter(e=>calcScore(e)<55).length;
+  const leaderScore = calcLeaderScore(team);
+
+  // Total hierárquico (funcionários + subordinados líderes/encarregados/etc.)
+  const totalHierarquico = getTeamTotal(leader, store);
+
+  // Avatar do líder
+  const ini = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+
+  // Cargo e dept
+  const roleParts = [
+    leader.perfil?.funcao || '',
+    leader.setor || (leader.perfil?.depts||[])[0] || '',
+  ].filter(Boolean).join(' · ');
+
+  // Mini avatares da equipe (5 primeiros + "+N")
+  const shown  = team.slice(0,5);
+  const extras = team.length - shown.length;
+  const avatarBubbles = shown.map(e => {
+    const i = e.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+    return `<div class="avatar-bubble">${i}</div>`;
+  }).join('') + (extras>0 ? `<div class="avatar-more">+${extras}</div>` : '');
+
+  // Ações admin
+  const podTransfer = isAdmin || (typeof can==='function' && can(currentUser,'leaders','transfer'));
+  const podOcorr    = typeof can==='function' && can(currentUser,'leaders','ocorrencia');
+
+  const adminBtns = (isAdmin || podOcorr) ? `
+    <div class="card-actions">
+      ${isAdmin ? `<button class="btn btn-ghost btn-sm" onclick="editLeader('${leader.id}')">✏️ Editar</button>` : ''}
+      ${isAdmin ? `<button class="btn btn-ghost btn-sm" onclick="resetLeaderPass('${leader.id}','${leader.name.replace(/'/g,"\\'")}')">🔑 Senha</button>` : ''}
+      ${isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteLeader('${leader.id}')">✕ Remover</button>` : ''}
+      ${podTransfer ? `<button class="btn btn-sm" style="background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.3)" onclick="openLeaderTransferModal('${leader.id}')">🔀 Transferir</button>` : ''}
+      ${podOcorr    ? `<button class="btn btn-sm" style="background:rgba(167,139,250,.1);color:var(--accent2);border:1px solid rgba(167,139,250,.3)" onclick="openLeaderOcorrencia('${leader.id}')">📝 Ocorrência</button>` : ''}
+    </div>` : '';
+
+  return `
+  <div class="leader-card nivel-${nivel}">
+    <!-- Header -->
+    <div class="card-header">
+      <div class="leader-avatar">${leader.foto ? `<img src="${leader.foto}" style="width:52px;height:52px;border-radius:50%;object-fit:cover">` : ini}</div>
+      <div class="leader-info">
+        <div class="leader-name">${leader.name}</div>
+        <div class="leader-role">${roleParts || nivel}</div>
+      </div>
+      <div class="leader-badge"
+        style="background:${meta.cor}18;color:${meta.cor};border:1px solid ${meta.cor}33">
+        ${meta.emoji} ${meta.label}
+      </div>
+    </div>
+
+    <!-- Métricas principais -->
+    <div class="card-metrics">
+      <div class="metric-big">
+        <div class="metric-big-val time">${totalHierarquico}</div>
+        <div class="metric-big-label">Time</div>
+      </div>
+      <div class="metric-big">
+        <div class="metric-big-val desemp">${avgDesemp}%</div>
+        <div class="metric-big-label">Desemp. Médio</div>
+      </div>
+      <div class="metric-big">
+        <div class="metric-big-val score">${leaderScore}</div>
+        <div class="metric-big-label">Score</div>
+      </div>
+    </div>
+
+    <!-- Team avatares -->
+    ${totalHierarquico > 0 ? `
+    <div class="team-section">
+      <div class="team-label">
+        Equipe · ${totalHierarquico} ${totalHierarquico===1?'pessoa':'pessoas'}
+        ${totalHierarquico > totalTime && totalTime > 0 ? `<span style="font-weight:400;opacity:.6"> (${totalTime} operac.)</span>` : ''}
+      </div>
+      <div class="team-avatars">${avatarBubbles}</div>
+    </div>` : `
+    <div class="team-section">
+      <div class="team-label" style="color:var(--muted);font-style:italic">Sem funcionários cadastrados</div>
+    </div>`}
+
+    <!-- Stat boxes -->
+    <div class="card-stats">
+      <div class="stat-box">
+        <div class="stat-label">Assiduidade</div>
+        <div class="stat-val assid ${avgAssid<70?'low':''}">${totalTime ? avgAssid+'%' : '—'}</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Faltas/Mês</div>
+        <div class="stat-val faltas">${totalFaltas}</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Promoção</div>
+        <div class="stat-val promo">${promos}</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Risco</div>
+        <div class="stat-val risco">${riscos}</div>
+      </div>
+    </div>
+
+    <!-- Score footer -->
+    <div class="score-footer">
+      <div class="score-footer-label">⭐ Score Liderança:</div>
+      <span>${leaderScore}</span>
+    </div>
+
+    ${!['gerencia','diretoria'].includes(nivel) && (getMeusFiliais(leader).length || getMeusTurnos(leader).length) ? `
+    <div style="display:flex;gap:5px;flex-wrap:wrap;padding:0 18px 14px">
+      ${getMeusFiliais(leader).map(f=>`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.2)">🏭 ${f}</span>`).join('')}
+      ${getMeusTurnos(leader).map(t=>`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(167,139,250,.12);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">🕐 ${t}</span>`).join('')}
+    </div>` : ''}
+
+    ${adminBtns}
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+// MODAL
+// ════════════════════════════════════════════════════════
+function openModal(leader) {
+  const store = await getStore();
+  document.getElementById('modal-title').textContent = leader ? 'Editar Líder' : 'Novo Líder';
+  document.getElementById('f-edit-id').value = leader?.id || '';
+  if (!leader) { document.getElementById('f-foto-lider').value=''; document.getElementById('foto-preview-lider').innerHTML='<span id="foto-ini-lider">?</span>'; }
+  // Foto
+  const fotoValLider = leader?.foto || '';
+  document.getElementById('f-foto-lider').value = fotoValLider;
+  const prevLider = document.getElementById('foto-preview-lider');
+  if (fotoValLider) {
+    prevLider.innerHTML = `<img src="${fotoValLider}" alt="foto">`;
+  } else {
+    const nm  = leader?.name || '';
+    const ini = nm.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase() || '?';
+    prevLider.innerHTML = `<span id="foto-ini-lider">${ini}</span>`;
+  }
+  document.getElementById('f-name').value    = leader?.name  || '';
+  document.getElementById('f-id').value      = leader?.id    || '';
+  document.getElementById('f-role').value    = leader?.perfil?.funcao || '';
+  document.getElementById('f-nivel').value   = leader?.nivel || 'lider';
+  document.getElementById('f-pass').value    = '';
+
+  // Bloqueia edição do ID se for edição
+  const idInput = document.getElementById('f-id');
+  idInput.disabled = !!leader;
+  idInput.style.opacity = leader ? '.5' : '1';
+
+  // Wrap de senha — oculta na edição
+  document.getElementById('nova-senha-wrap').style.display = leader ? 'none' : '';
+
+  // Helper para gerar lista de checkboxes
+  const checks = (listId, items, selectedArr, emoji) => {
+    const el = document.getElementById(listId);
+    if (!items.length) { el.innerHTML = `<div style="color:var(--muted);font-size:12px">Nenhum cadastrado.</div>`; return; }
+    el.innerHTML = items.map(x => `
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;
+        color:var(--text);padding:6px 10px;border-radius:6px;background:var(--surface2);border:1px solid var(--border)">
+        <input type="checkbox" value="${x.nome}" ${selectedArr.includes(x.nome)?'checked':''}
+          style="accent-color:var(--accent);width:16px;height:16px">
+        ${emoji} ${x.nome}
+      </label>`).join('');
+  };
+
+  // Filiais / Turnos / Depts — checkboxes múltiplos
+  const selFiliais = leader?.perfil?.filiais || (leader?.perfil?.filial ? [leader.perfil.filial] : []);
+  const selTurnos  = leader?.perfil?.turnos  || (leader?.perfil?.turno  ? [leader.perfil.turno]  : []);
+  const selDepts   = leader?.perfil?.depts   || [];
+
+  checks('f-filiais-list', store.filiais, selFiliais, '🏭');
+  checks('f-turnos-list',  store.turnos,  selTurnos,  '🕐');
+  checks('f-depts-list',   store.depts,   selDepts,   '🏢');
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('f-name').focus();
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function editLeader(id) {
+  const store  = await getStore();
+  const leader = store.users[id];
+  if (!leader) return;
+  openModal(leader);
+}
+
+// ════════════════════════════════════════════════════════
+// SALVAR LÍDER
+// ════════════════════════════════════════════════════════
+function saveLeader() {
+  const name  = document.getElementById('f-name').value.trim();
+  const id    = document.getElementById('f-id').value.trim();
+  const nivel = document.getElementById('f-nivel').value;
+  const editId= document.getElementById('f-edit-id').value;
+
+  if (!name) { showToast('⚠️ Nome é obrigatório.','warn'); return; }
+  if (!editId && !id) { showToast('⚠️ ID de acesso é obrigatório.','warn'); return; }
+
+  const store = await getStore();
+  const pass  = document.getElementById('f-pass').value;
+  if (!editId && pass.length < 6) { showToast('⚠️ Senha com mínimo 6 caracteres.','warn'); return; }
+  if (!editId && store.users[id]) { showToast('❌ Este ID já está cadastrado.','error'); return; }
+
+  const depts   = [...document.querySelectorAll('#f-depts-list input:checked')].map(c=>c.value);
+  const filiais = [...document.querySelectorAll('#f-filiais-list input:checked')].map(c=>c.value);
+  const turnos  = [...document.querySelectorAll('#f-turnos-list input:checked')].map(c=>c.value);
+
+  const perfil = {
+    filiais,
+    turnos,
+    filial: filiais[0] || '',   // retrocompatibilidade
+    turno:  turnos[0]  || '',   // retrocompatibilidade
+    funcao: document.getElementById('f-role').value,
+    depts,
+  };
+
+  if (editId) {
+    if (!store.users[editId]) { showToast('❌ Usuário não encontrado.','error'); return; }
+    const fotoLider = document.getElementById('f-foto-lider').value || store.users[editId].foto || null;
+    store.users[editId] = { ...store.users[editId], name, nivel, perfil, foto: fotoLider };
+    await registrarLog('editou', 'Líderes', `Editou: <strong>${name}</strong>`);
+    showToast('✅ Líder atualizado!');
+  } else {
+    const fotoLiderNovo = document.getElementById('f-foto-lider').value || null;
+    store.users[id] = { id, name, pass, nivel, setor: depts[0] || '', perfil, foto: fotoLiderNovo };
+    await registrarLog('criou', 'Líderes', `Novo líder: <strong>${name}</strong> (${nivel})`);
+    showToast('✅ Líder cadastrado!');
+  }
+
+  await saveStore(store);
+  closeModal();
+  renderLeaders();
+}
+
+// ════════════════════════════════════════════════════════
+// AÇÕES ADMIN
+// ════════════════════════════════════════════════════════
+function resetLeaderPass(id, nome) {
+  const nova = prompt(`Nova senha para "${nome}" (mín. 6 caracteres):`);
+  if (!nova) return;
+  if (nova.length < 6) { showToast('❌ Senha muito curta.','error'); return; }
+  const store = await getStore();
+  if (!store.users[id]) { showToast('❌ Usuário não encontrado.','error'); return; }
+  store.users[id].pass = nova;
+  await saveStore(store);
+  await registrarLog('editou', 'Líderes', `Redefiniu senha de: <strong>${nome}</strong>`);
+  showToast('✅ Senha redefinida!');
+}
+
+function deleteLeader(id) {
+  const store = await getStore();
+  const u     = store.users[id];
+  if (!u) return;
+  if (!confirm(`Remover o líder "${u.name}"?\nOs funcionários cadastrados por ele não serão removidos.`)) return;
+  delete store.users[id];
+  await saveStore(store);
+  renderLeaders();
+  await registrarLog('excluiu', 'Líderes', `Removeu: <strong>${u.name}</strong>`);
+  showToast('✅ Líder removido.');
+}
+
+// ════════════════════════════════════════════════════════
+// TRANSFERIR LÍDER (filial / turno / departamento)
+// ════════════════════════════════════════════════════════
+function openLeaderTransferModal(id) {
+  const store  = await getStore();
+  const leader = store.users?.[id];
+  if (!leader) return;
+
+  const checks = (listId, items, selectedArr, emoji) => {
+    const el = document.getElementById(listId);
+    if (!items.length) { el.innerHTML = `<span style="color:var(--muted);font-size:12px">Nenhum cadastrado.</span>`; return; }
+    el.innerHTML = items.map(x => `
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;
+        color:var(--text);padding:5px 8px;border-radius:6px;background:var(--surface2);border:1px solid var(--border)">
+        <input type="checkbox" value="${x.nome}" ${selectedArr.includes(x.nome)?'checked':''}
+          style="accent-color:var(--accent);width:14px;height:14px">
+        ${emoji} ${x.nome}
+      </label>`).join('');
+  };
+
+  const selFiliais = leader.perfil?.filiais || (leader.perfil?.filial ? [leader.perfil.filial] : []);
+  const selTurnos  = leader.perfil?.turnos  || (leader.perfil?.turno  ? [leader.perfil.turno]  : []);
+  const selDepts   = leader.perfil?.depts   || [];
+
+  document.getElementById('ltr-leader-name').textContent = leader.name;
+  document.getElementById('ltr-edit-id').value           = id;
+
+  checks('ltr-filiais', store.filiais||[], selFiliais, '🏭');
+  checks('ltr-turnos',  store.turnos||[],  selTurnos,  '🕐');
+  checks('ltr-depts',   store.depts||[],   selDepts,   '🏢');
+
+  document.getElementById('modal-leader-transfer').classList.add('open');
+}
+
+function closeLeaderTransferModal() {
+  document.getElementById('modal-leader-transfer').classList.remove('open');
+}
+
+function saveLeaderTransfer() {
+  const id    = document.getElementById('ltr-edit-id').value;
+  const store = await getStore();
+  if (!store.users?.[id]) { showToast('❌ Usuário não encontrado.','error'); return; }
+
+  const filiais = [...document.querySelectorAll('#ltr-filiais input:checked')].map(c=>c.value);
+  const turnos  = [...document.querySelectorAll('#ltr-turnos input:checked')].map(c=>c.value);
+  const depts   = [...document.querySelectorAll('#ltr-depts input:checked')].map(c=>c.value);
+
+  if (!store.users[id].perfil) store.users[id].perfil = {};
+  store.users[id].perfil.filiais = filiais;
+  store.users[id].perfil.turnos  = turnos;
+  store.users[id].perfil.filial  = filiais[0] || ''; // retrocompatibilidade
+  store.users[id].perfil.turno   = turnos[0]  || ''; // retrocompatibilidade
+  store.users[id].perfil.depts   = depts;
+  store.users[id].setor          = depts[0]   || '';
+
+  await saveStore(store);
+  closeLeaderTransferModal();
+  renderLeaders();
+  await registrarLog('editou', 'Líderes', `Atualizou responsabilidades: <strong>${store.users[id]?.name||id}</strong>`);
+  showToast('✅ Responsabilidades atualizadas!');
+}
+
+document.getElementById('modal-leader-transfer').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeLeaderTransferModal();
+});
+
+// ════════════════════════════════════════════════════════
+// OCORRÊNCIA DO LÍDER
+// ════════════════════════════════════════════════════════
+function openLeaderOcorrencia(id) {
+  const store  = await getStore();
+  const leader = store.users?.[id];
+  if (!leader) return;
+
+  document.getElementById('loc-leader-name').textContent = leader.name;
+  document.getElementById('loc-edit-id').value   = id;
+  document.getElementById('loc-tipo').value      = '';
+  document.getElementById('loc-desc').value      = '';
+  document.getElementById('loc-data').value      = new Date().toISOString().split('T')[0];
+
+  document.getElementById('modal-leader-ocorrencia').classList.add('open');
+}
+
+function closeLeaderOcorrencia() {
+  document.getElementById('modal-leader-ocorrencia').classList.remove('open');
+}
+
+function saveLeaderOcorrencia() {
+  const refId = document.getElementById('loc-edit-id').value;
+  const tipo  = document.getElementById('loc-tipo').value;
+  const desc  = document.getElementById('loc-desc').value.trim();
+  const data  = document.getElementById('loc-data').value;
+
+  if (!tipo) { showToast('⚠️ Selecione o tipo de ocorrência.','warn'); return; }
+  if (!desc) { showToast('⚠️ Descreva a ocorrência.','warn'); document.getElementById('loc-desc').focus(); return; }
+
+  const store  = await getStore();
+  const leader = store.users?.[refId];
+
+  // Salva em rh_ocorrencias — mesma chave que ocorrencias.html lê
+  const lista = await LS.get('rh_ocorrencias', []);
+  lista.unshift({
+    id:        uid(),
+    ts:        data ? new Date(data+'T00:00:00').toISOString() : new Date().toISOString(),
+    empId:     refId,
+    empName:   leader?.name || '—',
+    empDept:   leader?.setor || leader?.perfil?.depts?.[0] || '—',
+    tipo,
+    desc,
+    obs:       '',
+    status:    'pendente',
+    respName:  currentUser.name,
+    respId:    currentUser.id,
+    createdAt: new Date().toISOString(),
+    _isLider:  true,   // flag para distinguir na página de ocorrências
+  });
+  await LS.set('rh_ocorrencias', lista);
+  await registrarLog('criou', 'Ocorrências', `Ocorrência <strong>${tipo}</strong> para líder <strong>${leader?.name||'—'}</strong>`);
+  closeLeaderOcorrencia();
+  showToast('✅ Ocorrência do líder registrada!');
+}
+
+document.getElementById('modal-leader-ocorrencia').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeLeaderOcorrencia();
+});
+
+// ════════════════════════════════════════════════════════
+// FECHAR MODAL
+// ════════════════════════════════════════════════════════
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ── Foto do líder ────────────────────────────────────
+function processarFotoLider(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 80; canvas.height = 80;
+      const ctx = canvas.getContext('2d');
+      const size = Math.min(img.width, img.height);
+      const sx = (img.width  - size) / 2;
+      const sy = (img.height - size) / 2;
+      ctx.drawImage(img, sx, sy, size, size, 0, 0, 80, 80);
+      const base64 = canvas.toDataURL('image/jpeg', 0.65);
+      document.getElementById('f-foto-lider').value = base64;
+      document.getElementById('foto-preview-lider').innerHTML =
+        `<img src="${base64}" alt="foto">`;
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function removerFotoLider() {
+  document.getElementById('f-foto-lider').value = '';
+  const nm  = document.getElementById('f-name').value.trim();
+  const ini = nm.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase() || '?';
+  document.getElementById('foto-preview-lider').innerHTML =
+    `<span id="foto-ini-lider">${ini}</span>`;
+}
+
+</script>
+</body>
+</html>

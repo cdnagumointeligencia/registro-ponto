@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Absenteísmo · RH Nagumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="../sidebar.css">
+<link rel="stylesheet" href="../light-theme.css">
+<link rel="stylesheet" href="../responsive.css">
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../firebase.js"></script>
+<script src="../permissions.js"></script>
+<script src="../shared.js"></script>
+<style>
+:root {
+  --bg:#0b0d14; --surface:#12151f; --surface2:#1a1e2e; --surface3:#222638;
+  --border:#2a2f45; --accent:#4f8ef7; --accent2:#a78bfa;
+  --green:#34d399; --yellow:#fbbf24; --red:#f87171; --orange:#fb923c;
+  --cyan:#22d3ee; --text:#ffffff; --muted:#94a3b8;
+  --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --sidebar-w:220px;
+}
+/* [light-theme.css] body.light-theme {
+  --bg:#EEF2F8; --surface:#fff; --surface2:#F4F7FB; --surface3:#E8EDF5;
+  --border:#D6DDE8; --accent:#2563eb; --accent2:#7c3aed; --green:#059669;
+  --yellow:#d97706; --red:#dc2626; --orange:#ea580c; --cyan:#0891b2;
+  --text:#0f172a; --muted:#64748b;
+} */
+/* [light-theme.css] body.light-theme 
+
+body.light-theme .main             { background:#EEF2F8; } */
+/* [light-theme.css] body.light-theme .page-title       { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .page-title span  { color:#ef4444; } */
+/* [light-theme.css] body.light-theme .kpi-card         { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .kpi-label        { color:#64748b; } */
+/* [light-theme.css] body.light-theme .kpi-sub          { color:#94a3b8; } */
+/* [light-theme.css] body.light-theme .card             { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .card-title       { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .filter-select    { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .abs-table th     { background:#F4F7FB; color:#475569; border-bottom-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .abs-table td     { border-bottom-color:#F1F5F9; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .abs-table tr:hover td { background:#F4F7FB; } */
+/* [light-theme.css] body.light-theme .heat-cell        { filter:brightness(.9) saturate(1.2); } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-track { background:#F1F5F9; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-thumb { background:#CBD5E1; } */
+
+/* ── Base ── */
+* { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:14px; }
+body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
+
+/* ── Main ── */
+.main { margin-left:var(--sidebar-w); padding:24px 28px; min-height:100vh; }
+
+/* ── Topbar ── */
+.topbar { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px; }
+.page-title { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; }
+.page-title span { color:#ef4444; }
+.page-date { font-size:12px; color:var(--muted); margin-top:3px; }
+
+/* ── Botão exportar ── */
+.btn-export {
+  display:inline-flex; align-items:center; gap:8px; padding:9px 18px;
+  border-radius:8px; border:1px solid rgba(79,142,247,.4);
+  background:rgba(79,142,247,.1); color:var(--accent);
+  font-family:var(--font-body); font-size:12px; font-weight:600;
+  cursor:pointer; transition:all .2s;
+}
+.btn-export:hover { background:rgba(79,142,247,.2); transform:translateY(-1px); }
+
+/* ── Filtros ── */
+.filter-row { display:flex; align-items:center; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+.filter-select {
+  background:var(--surface); border:1px solid var(--border); border-radius:9px;
+  color:var(--text); font-family:var(--font-body); font-size:13px;
+  padding:8px 12px; outline:none; cursor:pointer; transition:border-color .2s;
+}
+.filter-select:focus { border-color:var(--accent); }
+.filter-select option { background:var(--surface2); }
+
+/* ── KPI Cards ── */
+.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+.kpi-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:16px 18px; position:relative; overflow:hidden;
+  transition:transform .2s, box-shadow .2s;
+}
+.kpi-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.2); }
+.kpi-card::before { content:''; position:absolute; inset:0; opacity:.06; pointer-events:none; }
+.kpi-card.red::before    { background:linear-gradient(135deg,#f87171,transparent 70%); }
+.kpi-card.orange::before { background:linear-gradient(135deg,#fb923c,transparent 70%); }
+.kpi-card.yellow::before { background:linear-gradient(135deg,#fbbf24,transparent 70%); }
+.kpi-card.cyan::before   { background:linear-gradient(135deg,#22d3ee,transparent 70%); }
+.kpi-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:6px; }
+.kpi-value { font-family:var(--font-head); font-size:32px; font-weight:800; letter-spacing:-2px; line-height:1; margin-bottom:4px; }
+.kpi-card.red    .kpi-value { color:#fca5a5; }
+.kpi-card.orange .kpi-value { color:#fdba74; }
+.kpi-card.yellow .kpi-value { color:#fde68a; }
+.kpi-card.cyan   .kpi-value { color:#67e8f9; }
+.kpi-sub { font-size:11px; color:var(--muted); }
+/* tema claro */
+/* [light-theme.css] body.light-theme .kpi-card.red    { background:#FEF1F1; border-color:#FBCBCB; } */
+/* [light-theme.css] body.light-theme .kpi-card.orange { background:#FFF4EE; border-color:#FDDCC8; } */
+/* [light-theme.css] body.light-theme .kpi-card.yellow { background:#FFFBEB; border-color:#FDE68A; } */
+/* [light-theme.css] body.light-theme .kpi-card.cyan   { background:#EEF9FD; border-color:#BAE6FD; } */
+/* [light-theme.css] body.light-theme .kpi-card.red    .kpi-value { color:#dc2626; } */
+/* [light-theme.css] body.light-theme .kpi-card.orange .kpi-value { color:#ea580c; } */
+/* [light-theme.css] body.light-theme .kpi-card.yellow .kpi-value { color:#d97706; } */
+/* [light-theme.css] body.light-theme .kpi-card.cyan   .kpi-value { color:#0891b2; } */
+
+/* ── Layout dois painéis ── */
+.main-row { display:grid; grid-template-columns:1fr 280px; gap:16px; margin-bottom:16px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; }
+.card-title { font-family:var(--font-head); font-size:14px; font-weight:700; letter-spacing:-.4px; margin-bottom:16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; color:var(--text); }
+.card-badge { font-family:var(--font-body); font-size:10px; font-weight:600; padding:2px 8px; border-radius:20px; }
+.card-badge.red    { background:rgba(248,113,113,.15); color:var(--red); border:1px solid rgba(248,113,113,.3); }
+.card-badge.accent { background:rgba(79,142,247,.15);  color:var(--accent); }
+
+/* ── Gráfico barras ── */
+.chart-wrap { position:relative; height:220px; }
+
+/* ── Heatmap semanal ── */
+.heatmap-title  { font-family:var(--font-head); font-size:14px; font-weight:700; margin-bottom:4px; color:var(--text); }
+.heatmap-sub    { font-size:11px; font-weight:600; color:#ef4444; margin-bottom:14px; }
+.heatmap-days   { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-bottom:12px; }
+.heat-day-label { font-size:10px; font-weight:700; text-align:center; color:var(--muted); margin-bottom:4px; }
+.heat-cell {
+  border-radius:8px; height:44px; display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:14px; font-weight:800;
+  transition:transform .15s;
+}
+.heat-cell:hover { transform:scale(1.1); }
+.heat-legend { display:flex; align-items:center; gap:12px; font-size:10px; color:var(--muted); flex-wrap:wrap; margin-top:8px; }
+.heat-legend-item { display:flex; align-items:center; gap:5px; }
+.heat-dot { width:10px; height:10px; border-radius:3px; }
+
+/* ── Tabela top faltosos ── */
+.abs-table { width:100%; border-collapse:collapse; }
+.abs-table th {
+  font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px;
+  color:var(--muted); padding:8px 12px; border-bottom:2px solid var(--border);
+  text-align:left; background:var(--surface2); white-space:nowrap;
+}
+.abs-table td { padding:11px 12px; border-bottom:1px solid rgba(42,47,69,.4); vertical-align:middle; font-size:13px; }
+.abs-table tr:last-child td { border-bottom:none; }
+.abs-table tr:hover td { background:var(--surface2); }
+
+.emp-cell { display:flex; align-items:center; gap:10px; }
+.emp-mini-avatar {
+  width:32px; height:32px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:11px; font-weight:800; color:#fff;
+}
+.faltas-val { font-family:var(--font-head); font-size:15px; font-weight:800; }
+.pct-val    { font-size:12px; color:var(--muted); }
+
+.trend-badge { display:inline-flex; align-items:center; gap:4px; font-size:12px; font-weight:600; padding:2px 8px; border-radius:6px; }
+.trend-alto  { color:#f87171; background:rgba(248,113,113,.1); }
+.trend-medio { color:#fbbf24; background:rgba(251,191,36,.1);  }
+.trend-baixo { color:#34d399; background:rgba(52,211,153,.1);  }
+
+.status-badge { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; white-space:nowrap; }
+.status-critico { background:rgba(248,113,113,.15); color:#f87171; border:1px solid rgba(248,113,113,.3); }
+.status-atencao { background:rgba(251,191,36,.15);  color:#fbbf24; border:1px solid rgba(251,191,36,.3); }
+.status-regular { background:rgba(52,211,153,.15);  color:#34d399; border:1px solid rgba(52,211,153,.3); }
+
+/* ── Toast ── */
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+.toast { padding:10px 18px; border-radius:10px; font-size:12px; font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4); animation:fadeUp .25s ease; max-width:320px; pointer-events:auto; }
+.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
+.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
+.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── Responsive ── */
+@media(max-width:1200px) {
+  .main-row { grid-template-columns:1fr; }
+  .kpi-row  { grid-template-columns:repeat(2,1fr); }
+}
+@media(max-width:1024px) {
+  :root { --sidebar-w:56px; }
+  
+  
+  
+  
+
+}
+@media(max-width:768px) {
+  :root { --sidebar-w:0px; }
+  
+  .main { margin-left:0; padding:16px; }
+  .kpi-row { grid-template-columns:1fr 1fr; }
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+<nav id="app-sidebar"></nav>
+
+<main class="main">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div>
+      <div class="page-title">Absenteísmo <span>Análise</span></div>
+      <div class="page-date" id="abs-date"></div>
+    </div>
+    <button class="btn-export" onclick="exportarRelatorio()">📋 Exportar Relatório</button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filter-row">
+    <select class="filter-select" id="filter-mes" onchange="renderAll()">
+      <!-- preenchido pelo JS -->
+    </select>
+    <select class="filter-select" id="filter-filial" onchange="renderAll()">
+      <option value="">Todas as filiais</option>
+    </select>
+    <select class="filter-select" id="filter-dept" onchange="renderAll()">
+      <option value="">Todos os departamentos</option>
+    </select>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-row" id="kpi-row"></div>
+
+  <!-- Gráfico + Heatmap -->
+  <div class="main-row">
+    <div class="card">
+      <div class="card-title">
+        Faltas por Mês
+        <span class="card-badge red">Últimos 12 meses</span>
+      </div>
+      <div class="chart-wrap"><canvas id="chart-barras"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="heatmap-title">Heatmap Semanal</div>
+      <div class="heatmap-sub">Dia da Semana</div>
+      <div class="heat-day-header" style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px">
+        <div class="heat-day-label">Dom</div>
+        <div class="heat-day-label">Seg</div>
+        <div class="heat-day-label">Ter</div>
+        <div class="heat-day-label">Qua</div>
+        <div class="heat-day-label">Qui</div>
+        <div class="heat-day-label">Sex</div>
+        <div class="heat-day-label">Sáb</div>
+      </div>
+      <div class="heatmap-days" id="heatmap-days"></div>
+      <div class="heat-legend">
+        <div class="heat-legend-item"><div class="heat-dot" style="background:#34d399"></div> Baixo</div>
+        <div class="heat-legend-item"><div class="heat-dot" style="background:#fbbf24"></div> Médio</div>
+        <div class="heat-legend-item"><div class="heat-dot" style="background:#f87171"></div> Alto</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabela top faltosos -->
+  <div class="card">
+    <div class="card-title">
+      Top Faltosos do Mês
+      <span class="card-badge accent" id="badge-mes-atual"></span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="abs-table">
+        <thead>
+          <tr>
+            <th>Funcionário</th>
+            <th>Departamento</th>
+            <th>Faltas</th>
+            <th>% Período</th>
+            <th>Tendência</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="abs-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ════════════════════════════════════════════════════════
+// ESTADO
+// ════════════════════════════════════════════════════════
+let currentUser  = null;
+let chartBarras  = null;
+
+const MONTHS_FULL = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                     'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const MONTHS_SHORT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  currentUser = await requireSession();
+  if (!currentUser) return;
+
+  initTheme();
+  initSidebar('absenteeism', currentUser);
+
+  const now = new Date();
+  document.getElementById('abs-date').textContent =
+    now.toLocaleDateString('pt-BR',{ weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  buildMesSelect();
+  buildFilialSelect();
+  buildDeptSelect();
+  renderAll();
+});
+
+// ════════════════════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════════════════════
+function getMyEmployees() {
+  const all   = (await getStore()).employees || [];
+  const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
+  if (scope.all) return all;
+  if (scope.sector) {
+    const depts = currentUser?.perfil?.depts || [];
+    const setor = currentUser?.setor || '';
+    return all.filter(e => depts.includes(e.dept) || e.dept === setor);
+  }
+  return all.filter(e => (e.owner_id||e.ownerId) === currentUser?.id);
+}
+
+function getFilteredEmps() {
+  const filial = document.getElementById('filter-filial').value;
+  const dept   = document.getElementById('filter-dept').value;
+  let list     = getMyEmployees();
+  if (filial) list = list.filter(e => e.filial === filial);
+  if (dept)   list = list.filter(e => e.dept   === dept);
+  return list;
+}
+
+function getMesIndex() {
+  return parseInt(document.getElementById('filter-mes').value);
+}
+
+// ════════════════════════════════════════════════════════
+// LEITURA DO rh_ponto — fonte única de verdade
+// ════════════════════════════════════════════════════════
+const PONTO_KEY = 'rh_ponto';
+
+// Retorna faltas do funcionário em um mês específico (0-based) lendo o rh_ponto
+function getFaltasMes(emp, mesIdx, ano) {
+  try {
+    const allPonto = JSON.parse(localStorage.getItem(PONTO_KEY) || '{}');
+    const key  = `${emp.id}_${ano}_${String(mesIdx+1).padStart(2,'0')}`;
+    const dias = allPonto[key] || {};
+    let f = 0;
+    Object.values(dias).forEach(s => {
+      if (s === 'falta')    f += 1;
+      if (s === 'atestado') f += 0.5;
+    });
+    // Fallback para emp.absences se não houver nada no ponto
+    return f > 0 ? f : ((emp.absences||[])[mesIdx] || 0);
+  } catch(e) {
+    return (emp.absences||[])[mesIdx] || 0;
+  }
+}
+
+// Retorna total anual de faltas lendo o rh_ponto
+function getFaltasAnual(emp, ano) {
+  let total = 0;
+  for (let m = 0; m < 12; m++) total += getFaltasMes(emp, m, ano);
+  return total;
+}
+
+// ════════════════════════════════════════════════════════
+// SELECTS
+// ════════════════════════════════════════════════════════
+function buildMesSelect() {
+  const now = new Date();
+  const sel = document.getElementById('filter-mes');
+  sel.innerHTML = MONTHS_FULL.map((m,i) =>
+    `<option value="${i}" ${i===now.getMonth()?'selected':''}>${m} ${now.getFullYear()}</option>`
+  ).join('');
+}
+
+function buildFilialSelect() {
+  const emps    = getMyEmployees();
+  const filiais = [...new Set(emps.map(e=>e.filial))].filter(Boolean).sort();
+  const sel     = document.getElementById('filter-filial');
+  const cur     = sel.value;
+  sel.innerHTML = '<option value="">Todas as filiais</option>' +
+    filiais.map(f=>`<option value="${f}" ${f===cur?'selected':''}>${f}</option>`).join('');
+}
+
+function buildDeptSelect() {
+  const emps  = getMyEmployees();
+  const depts = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
+  const sel   = document.getElementById('filter-dept');
+  const cur   = sel.value;
+  sel.innerHTML = '<option value="">Todos os departamentos</option>' +
+    depts.map(d=>`<option value="${d}" ${d===cur?'selected':''}>${d}</option>`).join('');
+}
+
+// ════════════════════════════════════════════════════════
+// RENDER ALL
+// ════════════════════════════════════════════════════════
+function renderAll() {
+  const emps = getFilteredEmps();
+  const mes  = getMesIndex();
+
+  // Badge mês atual
+  const badgeMes = document.getElementById('badge-mes-atual');
+  if (badgeMes) badgeMes.textContent = MONTHS_FULL[mes] + ' ' + new Date().getFullYear();
+
+  renderKPIs(emps, mes);
+  renderBarras(emps);
+  renderHeatmap(emps, mes);
+  renderTabela(emps, mes);
+}
+
+// ════════════════════════════════════════════════════════
+// KPIs
+// ════════════════════════════════════════════════════════
+function renderKPIs(emps, mes) {
+  const ano         = new Date().getFullYear();
+  const total       = emps.length;
+  const faltasMes   = emps.reduce((s,e) => s + getFaltasMes(e, mes, ano), 0);
+  const faltasMesAnt= emps.reduce((s,e) => s + getFaltasMes(e, mes>0?mes-1:11, ano), 0);
+  const diasUteis   = 22;
+  const taxaAbs     = total ? ((faltasMes / (total * diasUteis)) * 100).toFixed(1) : '0.0';
+  const afetados    = emps.filter(e => getFaltasMes(e, mes, ano) > 0).length;
+  const pctAfetados = total ? Math.round((afetados/total)*100) : 0;
+  const totalAnual  = emps.reduce((s,e) => s + getFaltasAnual(e, ano), 0);
+  const mediaPessoa = total ? (totalAnual/total).toFixed(1) : '0.0';
+
+  const varPct = faltasMesAnt > 0
+    ? ((faltasMes - faltasMesAnt) / faltasMesAnt * 100).toFixed(0)
+    : null;
+  const varStr = varPct !== null
+    ? (varPct > 0 ? `↑ ${varPct}% vs mês anterior` : `↓ ${Math.abs(varPct)}% vs mês anterior`)
+    : 'sem dados anteriores';
+
+  document.getElementById('kpi-row').innerHTML = `
+    <div class="kpi-card red">
+      <div class="kpi-label">Faltas no Mês</div>
+      <div class="kpi-value">${faltasMes}</div>
+      <div class="kpi-sub">${varStr}</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label">Taxa Absenteísmo</div>
+      <div class="kpi-value">${taxaAbs}%</div>
+      <div class="kpi-sub">meta: &lt; 6%</div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="kpi-label">Funcionários Afetados</div>
+      <div class="kpi-value">${afetados}</div>
+      <div class="kpi-sub">${pctAfetados}% do total</div>
+    </div>
+    <div class="kpi-card cyan">
+      <div class="kpi-label">Média por Pessoa</div>
+      <div class="kpi-value">${mediaPessoa} <small style="font-size:16px;letter-spacing:0">dias</small></div>
+      <div class="kpi-sub">no período</div>
+    </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+// GRÁFICO BARRAS — últimos 12 meses
+// ════════════════════════════════════════════════════════
+function renderBarras(emps) {
+  const now    = new Date();
+  const labels = [];
+  const data   = [];
+
+  for (let i = 11; i >= 0; i--) {
+    const d   = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const m   = d.getMonth();
+    const y   = d.getFullYear();
+    const lbl = MONTHS_SHORT[m] + (y !== now.getFullYear() ? `'${String(y).slice(2)}` : '');
+    labels.push(lbl);
+    const total = emps.reduce((s,e) => s + getFaltasMes(e, m, y), 0);
+    data.push(total);
+  }
+
+  if (chartBarras) { chartBarras.destroy(); chartBarras = null; }
+
+  chartBarras = new Chart(document.getElementById('chart-barras'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets:[{
+        data,
+        backgroundColor: data.map(v => {
+          const max = Math.max(...data, 1);
+          const t   = v / max;
+          return t > .7
+            ? 'rgba(248,113,113,.8)'
+            : t > .4
+              ? 'rgba(251,146,60,.7)'
+              : 'rgba(248,113,113,.45)';
+        }),
+        borderColor: data.map(v => {
+          const max = Math.max(...data, 1);
+          return (v/max) > .7 ? '#f87171' : '#fb923c';
+        }),
+        borderWidth:2, borderRadius:5,
+      }],
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{ display:false },
+        tooltip:{
+          backgroundColor:'#1a1e2e', borderColor:'#2a2f45', borderWidth:1,
+          titleColor:'#e2e8f0', bodyColor:'#94a3b8',
+          callbacks:{ label: ctx => ` ${ctx.parsed.y} faltas` },
+        },
+      },
+      scales:{
+        x:{ grid:{ color:'rgba(42,47,69,.5)' }, ticks:{ color:'#64748b', font:{ size:10 } } },
+        y:{ grid:{ color:'rgba(42,47,69,.5)' }, ticks:{ color:'#64748b', font:{ size:10 } } },
+      },
+    },
+  });
+}
+
+// ════════════════════════════════════════════════════════
+// HEATMAP SEMANAL
+// Distribui as faltas do mês pelos dias da semana
+// com base em simulação proporcional
+// ════════════════════════════════════════════════════════
+function renderHeatmap(emps, mes) {
+  const now        = new Date();
+  const year       = now.getFullYear();
+  const faltasMes  = emps.reduce((s,e) => s + getFaltasMes(e, mes, year), 0);
+
+  // Pesos simulados por dia da semana (seg/sex têm mais faltas tipicamente)
+  const pesos = [0.06, 0.19, 0.17, 0.16, 0.17, 0.19, 0.06]; // dom→sáb
+  const vals  = pesos.map(p => Math.round(faltasMes * p));
+
+  const maxVal = Math.max(...vals, 1);
+
+  function heatColor(v) {
+    const t = v / maxVal;
+    if (t > .6) return { bg:'rgba(248,113,113,.35)', color:'#f87171' };
+    if (t > .3) return { bg:'rgba(251,191,36,.28)',  color:'#fbbf24' };
+    return             { bg:'rgba(52,211,153,.22)',  color:'#34d399' };
+  }
+
+  document.getElementById('heatmap-days').innerHTML = vals.map(v => {
+    const { bg, color } = heatColor(v);
+    return `<div class="heat-cell" style="background:${bg};color:${color}">${v}</div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════
+// TABELA TOP FALTOSOS
+// ════════════════════════════════════════════════════════
+function renderTabela(emps, mes) {
+  const agora   = new Date();
+  const ano     = agora.getFullYear();
+  const diasMes = new Date(ano, mes+1, 0).getDate();
+  const diasUteis = Math.round(diasMes * (5/7));
+
+  // Ordena por faltas no mês selecionado
+  const sorted = [...emps]
+    .map(e => ({ ...e, faltasMes: getFaltasMes(e, mes, ano), faltasAnt: getFaltasMes(e, mes>0?mes-1:11, ano) }))
+    .filter(e => e.faltasMes > 0)
+    .sort((a,b) => b.faltasMes - a.faltasMes)
+    .slice(0, 10);
+
+  const tbody = document.getElementById('abs-table-body');
+
+  if (!sorted.length) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--muted)">
+      Nenhuma falta registrada neste período.
+    </td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = sorted.map(e => {
+    const pct       = ((e.faltasMes / diasUteis) * 100).toFixed(1);
+    const ini       = e.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+
+    // Tendência: compara mês atual com anterior
+    const faltasAnt = e.faltasAnt;
+    let tendencia, trendCls;
+    if (e.faltasMes > faltasAnt + 1) {
+      tendencia = '↑ Alto'; trendCls = 'trend-alto';
+    } else if (e.faltasMes >= faltasAnt - 1) {
+      tendencia = '→ Médio'; trendCls = 'trend-medio';
+    } else {
+      tendencia = '↓ Baixo'; trendCls = 'trend-baixo';
+    }
+
+    // Status
+    let statusHtml;
+    if (e.faltasMes >= 6) {
+      statusHtml = `<span class="status-badge status-critico">🔴 Crítico</span>`;
+    } else if (e.faltasMes >= 3) {
+      statusHtml = `<span class="status-badge status-atencao">⚠️ Atenção</span>`;
+    } else {
+      statusHtml = `<span class="status-badge status-regular">✅ Regular</span>`;
+    }
+
+    return `
+    <tr>
+      <td>
+        <div class="emp-cell">
+          <div class="emp-mini-avatar">${ini}</div>
+          <span>${e.name}</span>
+        </div>
+      </td>
+      <td style="color:var(--muted)">${e.dept||'—'}</td>
+      <td><span class="faltas-val" style="color:${e.faltasMes>=6?'#f87171':e.faltasMes>=3?'#fbbf24':'#34d399'}">${e.faltasMes}</span></td>
+      <td><span class="pct-val">${pct}%</span></td>
+      <td><span class="trend-badge ${trendCls}">${tendencia}</span></td>
+      <td>${statusHtml}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════
+// EXPORTAR (simples — abre janela de impressão)
+// ════════════════════════════════════════════════════════
+function exportarRelatorio() {
+  showToast('📋 Abrindo relatório para impressão...','ok');
+  setTimeout(() => window.print(), 600);
+}
+</script>
+</body>
+</html>

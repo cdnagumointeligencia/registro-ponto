@@ -1,0 +1,245 @@
+/* ════════════════════════════════════════════════════════
+   SIDEBAR GLOBAL — CD Nagumo Performance
+   Importar em todas as páginas via <link rel="stylesheet">
+   Nunca duplicar estas regras nos <style> internos
+════════════════════════════════════════════════════════ */
+
+/* ── Variáveis locais do sidebar ── */
+:root {
+  --sb-w: 220px;
+  --sb-bg: #12151f;
+  --sb-border: #2a2f45;
+  --sb-text: #94a3b8;
+  --sb-text-hover: #ffffff;
+  --sb-bg-hover: #1a1e2e;
+  --sb-active-color: #4f8ef7;
+  --sb-active-bg: rgba(79,142,247,.08);
+  --sb-font: 'DM Sans', sans-serif;
+  --sb-font-head: 'Syne', sans-serif;
+}
+
+/* Light theme sidebar vars → definidos em light-theme.css */
+
+/* ── Container ── */
+#app-sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sb-w);
+  background: var(--sb-bg);
+  border-right: 1px solid var(--sb-border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  font-family: var(--sb-font);
+  overflow: hidden;
+}
+
+/* ── Logo ── */
+#app-sidebar .sb-logo {
+  flex-shrink: 0;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--sb-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+#app-sidebar .sb-logo-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #4f8ef7;
+  border-radius: 14px;
+  padding: 6px 16px;
+  box-shadow: 0 2px 10px rgba(79,142,247,.4);
+}
+
+#app-sidebar .sb-logo-box span {
+  font-family: var(--sb-font-head);
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+#app-sidebar .sb-logo small {
+  font-size: 9px;
+  color: #64748b;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* ── Usuário (entre logo e nav) ── */
+#app-sidebar .sb-user {
+  padding: 10px 18px 6px;
+  border-bottom: 1px solid var(--sb-border);
+  flex-shrink: 0;
+}
+
+#app-sidebar .sb-user-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+#app-sidebar .sb-user-role {
+  font-size: 10px;
+  color: #64748b;
+  padding-left: 2px;
+}
+
+/* ── Nav ── */
+#app-sidebar .sb-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 0 4px;
+}
+
+#app-sidebar .sb-nav::-webkit-scrollbar { width: 3px; }
+#app-sidebar .sb-nav::-webkit-scrollbar-thumb {
+  background: var(--sb-border);
+  border-radius: 3px;
+}
+
+/* ── Item ── */
+#app-sidebar .sb-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--sb-text);
+  cursor: pointer;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: color .15s, background .15s, border-color .15s;
+  white-space: nowrap;
+}
+
+#app-sidebar .sb-item:hover {
+  color: var(--sb-text-hover);
+  background: var(--sb-bg-hover);
+}
+
+#app-sidebar .sb-item.active {
+  color: var(--sb-active-color);
+  border-left-color: var(--sb-active-color);
+  background: var(--sb-active-bg);
+  font-weight: 600;
+}
+
+#app-sidebar .sb-icon {
+  font-size: 15px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+#app-sidebar .sb-label {
+  font-size: 12.5px;
+}
+
+/* ── Footer ── */
+#app-sidebar .sb-footer {
+  flex-shrink: 0;
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--sb-border);
+}
+
+#app-sidebar .sb-brand {
+  font-size: 10px;
+  color: #64748b;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+#app-sidebar .sb-logout {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--sb-border);
+  background: transparent;
+  color: #64748b;
+  font-family: var(--sb-font);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+
+#app-sidebar .sb-logout:hover {
+  background: rgba(248,113,113,.1);
+  color: #f87171;
+  border-color: rgba(248,113,113,.3);
+}
+
+/* ── Responsividade ── */
+@media (max-width: 1024px) {
+  :root { --sb-w: 56px; }
+
+  #app-sidebar .sb-label,
+  #app-sidebar .sb-brand,
+  #app-sidebar .sb-logo-box span,
+  #app-sidebar .sb-logo small,
+  #app-sidebar .sb-user-role,
+  #app-sidebar .sb-user-badge span:last-child,
+  #app-sidebar .sb-logout span:last-child { display: none; }
+
+  #app-sidebar .sb-item { justify-content: center; padding: 11px 0; }
+  #app-sidebar .sb-icon { font-size: 18px; width: auto; }
+  #app-sidebar .sb-logo { padding: 12px 0; }
+  #app-sidebar .sb-user { padding: 8px 0; text-align: center; }
+  #app-sidebar .sb-user-badge { padding: 4px 6px; }
+  #app-sidebar .sb-logout { justify-content: center; padding: 8px 0; }
+  #app-sidebar .sb-footer { padding: 8px 0; }
+}
+
+@media (max-width: 768px) {
+  #app-sidebar { display: none; }
+  .main { margin-left: 0; }
+}
+
+/* ── Modo Fullscreen (aberto via dashboard) ── */
+body.from-dashboard #app-sidebar { display:none; }
+body.from-dashboard .main,
+body.from-dashboard main { margin-left:0 !important; }
+
+/* ── Grupo de botões do topbar ── */
+.topbar-btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+
+/* ── Sidebar colapsado nas páginas filhas (só ícones) ── */
+body.sb-collapsed #app-sidebar { width: 56px; }
+body.sb-collapsed #app-sidebar .sb-label,
+body.sb-collapsed #app-sidebar .sb-brand,
+body.sb-collapsed #app-sidebar .sb-logo-box span,
+body.sb-collapsed #app-sidebar .sb-logo small,
+body.sb-collapsed #app-sidebar .sb-user-role,
+body.sb-collapsed #app-sidebar .sb-user-badge span:last-child,
+body.sb-collapsed #app-sidebar .sb-logout span:last-child { display: none; }
+body.sb-collapsed #app-sidebar .sb-item    { justify-content: center; padding: 11px 0; }
+body.sb-collapsed #app-sidebar .sb-icon   { font-size: 18px; width: auto; }
+body.sb-collapsed #app-sidebar .sb-logo   { padding: 12px 0; }
+body.sb-collapsed #app-sidebar .sb-user   { padding: 8px 0; text-align: center; }
+body.sb-collapsed #app-sidebar .sb-user-badge { padding: 4px 6px; }
+body.sb-collapsed #app-sidebar .sb-logout { justify-content: center; padding: 8px 0; }
+body.sb-collapsed #app-sidebar .sb-footer { padding: 8px 0; }
+body.sb-collapsed .main { margin-left: 56px !important; }

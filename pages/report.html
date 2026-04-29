@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório · RH Nagumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sidebar.css">
+<link rel="stylesheet" href="../light-theme.css">
+<link rel="stylesheet" href="../responsive.css">
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../firebase.js"></script>
+<script src="../permissions.js"></script>
+<script src="../shared.js"></script>
+<style>
+/* ════════════════════════════════════════════
+   VARIÁVEIS
+════════════════════════════════════════════ */
+:root {
+  --bg:#0b0d14; --surface:#12151f; --surface2:#1a1e2e; --surface3:#222638;
+  --border:#2a2f45; --accent:#4f8ef7; --accent2:#a78bfa;
+  --green:#34d399; --yellow:#fbbf24; --red:#f87171; --orange:#fb923c;
+  --cyan:#22d3ee; --text:#ffffff; --muted:#94a3b8;
+  --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --sidebar-w:220px;
+}
+/* [light-theme.css] body.light-theme {
+  --bg:#EEF2F8; --surface:#fff; --surface2:#F4F7FB; --surface3:#E8EDF5;
+  --border:#D6DDE8; --accent:#2563eb; --accent2:#7c3aed; --green:#059669;
+  --yellow:#d97706; --red:#dc2626; --orange:#ea580c; --cyan:#0891b2;
+  --text:#0f172a; --muted:#64748b;
+} */
+/* [light-theme.css] body.light-theme 
+
+body.light-theme .main            { background:#EEF2F8; } */
+/* [light-theme.css] body.light-theme .config-card     { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .form-label      { color:#475569; } */
+/* [light-theme.css] body.light-theme .form-input,
+body.light-theme .form-select     { background:#F4F7FB; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-track { background:#F1F5F9; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-thumb { background:#CBD5E1; } */
+
+/* ── Base (tela) ── */
+* { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:14px; }
+body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
+
+/* ── Main (tela) ── */
+.main { margin-left:var(--sidebar-w); padding:24px 28px; min-height:100vh; }
+.topbar { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px; }
+.page-title { font-family:var(--font-head); font-size:26px; font-weight:800; letter-spacing:-1.2px; color:var(--text); }
+.page-title span { color:var(--accent); }
+
+/* ── Config card ── */
+.config-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:14px; padding:22px; margin-bottom:20px;
+}
+.config-title { font-family:var(--font-head); font-size:14px; font-weight:700; color:var(--text); margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.config-grid  { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; }
+.form-group   { display:flex; flex-direction:column; gap:6px; }
+.form-label   { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+.form-input, .form-select {
+  background:var(--surface2); border:1px solid var(--border); border-radius:8px;
+  color:var(--text); font-family:var(--font-body); font-size:13px;
+  padding:8px 11px; outline:none; transition:border-color .2s;
+}
+.form-input:focus, .form-select:focus { border-color:var(--accent); }
+.form-select option { background:var(--surface2); }
+
+/* ── Botões ── */
+.btn-row { display:flex; gap:10px; flex-wrap:wrap; }
+.btn {
+  display:inline-flex; align-items:center; gap:8px; padding:10px 20px;
+  border-radius:8px; border:none; font-family:var(--font-body);
+  font-size:13px; font-weight:700; cursor:pointer; transition:all .2s;
+}
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:#3a7ae0; transform:translateY(-1px); box-shadow:0 4px 16px rgba(79,142,247,.4); }
+.btn-ghost { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
+.btn-ghost:hover { background:var(--surface3); }
+
+/* ── Preview wrapper ── */
+.preview-wrap {
+  background:var(--surface2); border-radius:14px; padding:24px;
+  display:flex; justify-content:center;
+}
+
+/* ════════════════════════════════════════════
+   DOCUMENTO A4 — estilos do relatório
+   Funciona tanto em preview quanto ao imprimir
+════════════════════════════════════════════ */
+.doc-a4 {
+  width:210mm; min-height:297mm;
+  background:#ffffff; color:#0f172a;
+  font-family:'DM Sans',sans-serif; font-size:9pt;
+  padding:14mm 14mm 12mm;
+  box-shadow:0 4px 30px rgba(0,0,0,.3);
+  border-radius:4px;
+  position:relative;
+}
+
+/* ── Cabeçalho do doc ── */
+.doc-header {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  padding-bottom:10px; border-bottom:2px solid #0f172a; margin-bottom:10px;
+}
+.doc-logo-name { font-family:'Syne',sans-serif; font-size:18pt; font-weight:800; color:#2563eb; letter-spacing:-1px; line-height:1; }
+.doc-logo-sub  { font-size:7pt; color:#64748b; text-transform:uppercase; letter-spacing:1.5px; margin-top:3px; }
+.doc-logo-tags { display:flex; gap:8px; margin-top:5px; }
+.doc-tag { display:inline-flex; align-items:center; gap:4px; font-size:7pt; color:#64748b; }
+
+.doc-meta { text-align:right; font-size:7.5pt; color:#64748b; line-height:1.7; }
+.doc-meta strong { color:#0f172a; }
+
+/* ── Seções ── */
+.doc-section { margin-bottom:12px; }
+.doc-section-title {
+  font-family:'Syne',sans-serif; font-size:11pt; font-weight:700;
+  color:#0f172a; margin-bottom:8px;
+  display:flex; align-items:center; gap:6px;
+  border-bottom:1px solid #e2e8f0; padding-bottom:4px;
+}
+
+/* ── Resumo executivo ── */
+.resumo-grid {
+  display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-bottom:6px;
+}
+.resumo-box {
+  border:1px solid #e2e8f0; border-radius:6px; padding:7px 8px;
+  background:#f8fafc;
+}
+.resumo-label { font-size:6.5pt; color:#64748b; text-transform:uppercase; letter-spacing:.8px; margin-bottom:3px; }
+.resumo-val   { font-family:'Syne',sans-serif; font-size:14pt; font-weight:800; color:#0f172a; line-height:1; }
+.resumo-val.blue   { color:#2563eb; }
+.resumo-val.green  { color:#059669; }
+.resumo-val.yellow { color:#d97706; }
+.resumo-val.red    { color:#dc2626; }
+.resumo-val.purple { color:#7c3aed; }
+
+/* ── Alertas ── */
+.alert-box {
+  border-radius:6px; padding:7px 10px; font-size:8pt; line-height:1.5;
+  margin-bottom:5px; display:flex; gap:6px; align-items:flex-start;
+}
+.alert-promo { background:#f0fdf4; border:1px solid #bbf7d0; color:#166534; }
+.alert-risco { background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; }
+.alert-icon  { font-size:10pt; flex-shrink:0; }
+
+/* ── Competências médias ── */
+.comp-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
+.comp-box {
+  border:1px solid #e2e8f0; border-radius:6px; padding:7px 8px;
+  background:#f8fafc; text-align:center;
+}
+.comp-icon  { font-size:12pt; display:block; margin-bottom:3px; }
+.comp-label { font-size:6pt; color:#64748b; text-transform:uppercase; letter-spacing:.5px; display:block; margin-bottom:2px; }
+.comp-val   { font-family:'Syne',sans-serif; font-size:13pt; font-weight:800; color:#2563eb; }
+
+/* ── Tabela de ranking ── */
+.rank-table { width:100%; border-collapse:collapse; font-size:8pt; }
+.rank-table th {
+  background:#1e3a8a; color:#fff; padding:6px 8px;
+  font-family:'Syne',sans-serif; font-size:7pt; font-weight:700;
+  text-transform:uppercase; letter-spacing:.8px; text-align:left;
+}
+.rank-table th:not(:first-child):not(:nth-child(2)):not(:nth-child(3)) { text-align:center; }
+.rank-table td { padding:6px 8px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
+.rank-table tr:nth-child(even) td { background:#f8fafc; }
+.rank-table tr:hover td { background:#eff6ff; }
+
+/* mini barra */
+.mini-bar-wrap { display:flex; align-items:center; gap:5px; }
+.mini-bar-bg   { flex:1; height:5px; background:#e2e8f0; border-radius:2px; overflow:hidden; }
+.mini-bar-fill { height:100%; border-radius:2px; }
+.mini-score    { font-family:'Syne',sans-serif; font-size:9pt; font-weight:800; min-width:22px; text-align:right; }
+
+/* status badge no doc */
+.doc-tag-status {
+  display:inline-block; padding:2px 7px; border-radius:20px;
+  font-size:7pt; font-weight:700; white-space:nowrap;
+}
+.ds-promo { background:#dcfce7; color:#166534; }
+.ds-ok    { background:#dbeafe; color:#1e40af; }
+.ds-watch { background:#fef3c7; color:#92400e; }
+.ds-risk  { background:#fee2e2; color:#991b1b; }
+
+/* posições */
+.pos-cell { font-family:'Syne',sans-serif; font-size:9pt; font-weight:800; text-align:center; }
+
+/* ── Rodapé do doc ── */
+.doc-footer {
+  position:absolute; bottom:10mm; left:14mm; right:14mm;
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:7pt; color:#94a3b8; border-top:1px solid #e2e8f0; padding-top:6px;
+}
+
+/* ════════════════════════════════════════════
+   IMPRESSÃO — oculta UI, mostra só o doc
+════════════════════════════════════════════ */
+@media print {
+  @page { size:A4; margin:0; }
+  body { background:#fff !important; }
+  .sidebar, .main > .topbar, .main > .config-card, .main > .btn-row-outer,
+  .preview-label, .toast-container { display:none !important; }
+  .main    { margin-left:0 !important; padding:0 !important; }
+  .preview-wrap { background:#fff !important; padding:0 !important; border-radius:0 !important; }
+  .doc-a4  { box-shadow:none !important; border-radius:0 !important; width:100% !important; }
+}
+
+/* ── Toast ── */
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+.toast { padding:10px 18px; border-radius:10px; font-size:12px; font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4); animation:fadeUp .25s ease; max-width:320px; pointer-events:auto; }
+.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
+.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
+.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── Responsive ── */
+@media(max-width:1024px) {
+  :root { --sidebar-w:56px; }
+  
+  
+  
+  
+  .preview-wrap { padding:10px; }
+  .doc-a4 { width:100%; padding:10mm; }
+}
+@media(max-width:768px) {
+  :root { --sidebar-w:0px; }
+  
+  .main { margin-left:0; padding:16px; }
+  .resumo-grid { grid-template-columns:repeat(4,1fr); }
+  .comp-grid { grid-template-columns:repeat(3,1fr); }
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+<nav id="app-sidebar"></nav>
+
+<main class="main">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div>
+      <div class="page-title">📄 Relatório <span>Desempenho</span></div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">Configure e gere o relatório para impressão ou PDF</div>
+    </div>
+  </div>
+
+  <!-- Configurações do relatório -->
+  <div class="config-card">
+    <div class="config-title">⚙️ Configurar Relatório</div>
+    <div class="config-grid">
+      <div class="form-group">
+        <label class="form-label">📅 Período — De</label>
+        <select class="form-select" id="cfg-mes-de">
+          <!-- preenchido pelo JS -->
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">📅 Período — Até</label>
+        <select class="form-select" id="cfg-mes-ate">
+          <!-- preenchido pelo JS -->
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">🏢 Departamento</label>
+        <select class="form-select" id="cfg-dept">
+          <option value="">Todos (geral)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">🏭 Filial</label>
+        <select class="form-select" id="cfg-filial">
+          <option value="">Todas</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">📊 Ordenar por</label>
+        <select class="form-select" id="cfg-sort">
+          <option value="score">Score Geral</option>
+          <option value="perf">Desempenho</option>
+          <option value="apt">Aptidões</option>
+          <option value="assid">Assiduidade</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">🔢 Limite de funcionários</label>
+        <select class="form-select" id="cfg-limite">
+          <option value="10">Top 10</option>
+          <option value="20">Top 20</option>
+          <option value="50">Top 50</option>
+          <option value="0">Todos</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botões -->
+  <div class="btn-row-outer" style="margin-bottom:20px">
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="gerarRelatorio()">🔄 Gerar Relatório</button>
+      <button class="btn btn-ghost"   onclick="imprimirRelatorio()">🖨️ Imprimir / Salvar PDF</button>
+    </div>
+  </div>
+
+  <!-- Preview do documento A4 -->
+  <div class="preview-label" style="font-size:11px;color:var(--muted);margin-bottom:10px;letter-spacing:.5px">
+    PRÉ-VISUALIZAÇÃO · Formato A4
+  </div>
+  <div class="preview-wrap">
+    <div class="doc-a4" id="doc-a4">
+      <div style="text-align:center;padding:60px 20px;color:#94a3b8;font-size:14px">
+        Configure os parâmetros acima e clique em <strong style="color:#2563eb">Gerar Relatório</strong>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ════════════════════════════════════════════════════════
+// ESTADO
+// ════════════════════════════════════════════════════════
+let currentUser = null;
+
+const MESES_FULL  = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                     'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const APT_KEYS    = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
+const APT_LABELS  = { qual:'Qualidade',prio:'Proatividade',know:'Conhecimento',
+                      comm:'Comunicação',prod:'Produtividade',assid:'Assiduidade',
+                      org:'Organização',equip:'Equipe',cria:'Criatividade',motv:'Motivação' };
+const APT_EMOJIS  = { qual:'✨',prio:'⚡',know:'📚',comm:'💬',prod:'📈',
+                      assid:'📅',org:'🗂️',equip:'🤝',cria:'💡',motv:'🔥' };
+
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  currentUser = await requireSession();
+  if (!currentUser) return;
+
+  initTheme();
+  initSidebar('report', currentUser);
+  buildSelects();
+});
+
+// ════════════════════════════════════════════════════════
+// SELECTS
+// ════════════════════════════════════════════════════════
+function buildSelects() {
+  const store = await getStore();
+  const now   = new Date();
+  const ano   = now.getFullYear();
+
+  // Meses
+  const mesOpts = MESES_FULL.map((m,i) =>
+    `<option value="${i}" ${i===now.getMonth()?'selected':''}>${m} ${ano}</option>`
+  ).join('');
+  document.getElementById('cfg-mes-de').innerHTML  = mesOpts;
+  document.getElementById('cfg-mes-ate').innerHTML = mesOpts;
+  // Padrão: de Jan até mês atual
+  document.getElementById('cfg-mes-de').value = '0';
+
+  // Depts
+  const emps  = getMyEmployees();
+  const depts = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
+  document.getElementById('cfg-dept').innerHTML =
+    '<option value="">Todos (geral)</option>' +
+    depts.map(d=>`<option value="${d}">${d}</option>`).join('');
+
+  // Filiais
+  document.getElementById('cfg-filial').innerHTML =
+    '<option value="">Todas</option>' +
+    (store.filiais||[]).map(f=>`<option value="${f.nome}">${f.nome}</option>`).join('');
+}
+
+// ════════════════════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════════════════════
+function getMyEmployees() {
+  const all   = (await getStore()).employees || [];
+  const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
+  if (scope.all) return all;
+  if (scope.sector) {
+    const depts = currentUser?.perfil?.depts||[];
+    const setor = currentUser?.setor||'';
+    return all.filter(e=>depts.includes(e.dept)||e.dept===setor);
+  }
+  return all.filter(e=>(e.owner_id||e.ownerId)===currentUser?.id);
+}
+
+function getWeights() {
+  const cfg = (await getStore()).config||{};
+  const pw  = Math.min(100,Math.max(0,parseInt(cfg.perfWeight)||40));
+  const aw  = Math.min(100,Math.max(0,parseInt(cfg.aptWeight) ||35));
+  return { perf:pw, apt:aw, abs:Math.max(0,100-pw-aw) };
+}
+function calcAptMedia(emp) {
+  const c = emp.competencies||{};
+  return APT_KEYS.reduce((s,k)=>s+(c[k]||0),0)/APT_KEYS.length;
+}
+function calcAssid(emp) {
+  if (emp.afastado) return 100;
+  const total  = (emp.absences||[]).reduce((a,b)=>a+b,0);
+  const maxAbs = (await getStore()).config?.maxAbs||36;
+  return Math.max(0,100-(total/maxAbs)*100);
+}
+function calcScore(emp) {
+  const w = getWeights();
+  return Math.min(100,Math.round(
+    emp.perf*(w.perf/100)+calcAptMedia(emp)*10*(w.apt/100)+calcAssid(emp)*(w.abs/100)
+  ));
+}
+function getStatus(score) {
+  if (score>=85) return { cls:'ds-promo', label:'🏆 Promoção' };
+  if (score>=70) return { cls:'ds-ok',    label:'✅ Regular'  };
+  if (score>=55) return { cls:'ds-watch', label:'⚠️ Atenção'  };
+  return               { cls:'ds-risk',  label:'🔴 Risco'    };
+}
+function barColor(score) {
+  if (score>=85) return '#059669';
+  if (score>=70) return '#2563eb';
+  if (score>=55) return '#d97706';
+  return '#dc2626';
+}
+
+// ════════════════════════════════════════════════════════
+// GERAR RELATÓRIO
+// ════════════════════════════════════════════════════════
+function gerarRelatorio() {
+  const mesDe   = parseInt(document.getElementById('cfg-mes-de').value);
+  const mesAte  = parseInt(document.getElementById('cfg-mes-ate').value);
+  const deptFlt = document.getElementById('cfg-dept').value;
+  const filFlt  = document.getElementById('cfg-filial').value;
+  const sortKey = document.getElementById('cfg-sort').value;
+  const limite  = parseInt(document.getElementById('cfg-limite').value);
+  const store   = await getStore();
+  const w       = getWeights();
+  const now     = new Date();
+  const ano     = now.getFullYear();
+
+  // Filtra funcionários
+  let emps = getMyEmployees();
+  if (deptFlt) emps = emps.filter(e=>e.dept===deptFlt);
+  if (filFlt)  emps = emps.filter(e=>e.filial===filFlt);
+
+  if (!emps.length) {
+    showToast('⚠️ Nenhum funcionário encontrado com esses filtros.','warn');
+    return;
+  }
+
+  // Enriquece e ordena
+  const enriched = emps.map(e => ({
+    ...e,
+    _score: calcScore(e),
+    _apt:   +calcAptMedia(e).toFixed(1),
+    _assid: Math.round(calcAssid(e)),
+    _totalAbs: (e.absences||[]).slice(mesDe, mesAte+1).reduce((a,b)=>a+b,0),
+  }));
+
+  enriched.sort((a,b) => {
+    switch(sortKey) {
+      case 'perf':  return b.perf   - a.perf;
+      case 'apt':   return b._apt   - a._apt;
+      case 'assid': return b._assid - a._assid;
+      default:      return b._score - a._score;
+    }
+  });
+
+  const lista = limite > 0 ? enriched.slice(0, limite) : enriched;
+
+  // ── Estatísticas gerais ──
+  const total    = enriched.length;
+  const avgScore = Math.round(enriched.reduce((s,e)=>s+e._score,0)/total);
+  const avgPerf  = Math.round(enriched.reduce((s,e)=>s+e.perf,0)/total);
+  const avgAssid = Math.round(enriched.reduce((s,e)=>s+e._assid,0)/total);
+  const totalAbs = enriched.reduce((s,e)=>s+e._totalAbs,0);
+  const avgApt   = (enriched.reduce((s,e)=>s+e._apt,0)/total).toFixed(1);
+  const promos   = enriched.filter(e=>e._score>=85);
+  const riscos   = enriched.filter(e=>e._score<55);
+
+  // ── Aptidões médias ──
+  const aptMedias = {};
+  APT_KEYS.forEach(k => {
+    aptMedias[k] = +(enriched.reduce((s,e)=>{
+      const c = e.competencies||{};
+      return s+(c[k]||0);
+    },0)/total).toFixed(1);
+  });
+
+  // ── Período label ──
+  const periodoLabel = mesDe===mesAte
+    ? `${MESES_FULL[mesDe]} ${ano}`
+    : `${MESES_FULL[mesDe].slice(0,3)} – ${MESES_FULL[mesAte].slice(0,3)} ${ano}`;
+
+  const deptLabel  = deptFlt  || 'Todos (geral)';
+  const filialLabel= filFlt   || 'Todas';
+  const emitido    = now.toLocaleDateString('pt-BR');
+
+  // ── Monta o HTML do documento ──
+  const html = `
+  <!-- CABEÇALHO -->
+  <div class="doc-header">
+    <div>
+      <div class="doc-logo-name">CD Nagumo</div>
+      <div class="doc-logo-sub">Relatório de Desempenho da Equipe</div>
+      <div class="doc-logo-tags">
+        <span class="doc-tag">🏢 ${filialLabel}</span>
+        <span class="doc-tag">👥 Gestão de Pessoas</span>
+      </div>
+    </div>
+    <div class="doc-meta">
+      <div>📅 <strong>Período:</strong> ${periodoLabel}</div>
+      <div>📋 <strong>Emitido em:</strong> ${emitido}</div>
+      <div>🏢 <strong>Departamento:</strong> ${deptLabel}</div>
+      <div style="margin-top:4px;font-size:6.5pt;color:#94a3b8">
+        Fórmula: (Desempenho × ${w.perf}%) + (Aptidões × ${w.apt}%) + (Assiduidade × ${w.abs}%)
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMO EXECUTIVO -->
+  <div class="doc-section">
+    <div class="doc-section-title">📊 Resumo Executivo</div>
+    <div class="resumo-grid">
+      <div class="resumo-box">
+        <div class="resumo-label">Funcionários</div>
+        <div class="resumo-val blue">${total}</div>
+      </div>
+      <div class="resumo-box">
+        <div class="resumo-label">Score Médio</div>
+        <div class="resumo-val">${avgScore}</div>
+      </div>
+      <div class="resumo-box">
+        <div class="resumo-label">Desemp. Médio</div>
+        <div class="resumo-val green">${avgPerf}%</div>
+      </div>
+      <div class="resumo-box">
+        <div class="resumo-label">Assid. Média</div>
+        <div class="resumo-val green">${avgAssid}%</div>
+      </div>
+      <div class="resumo-box">
+        <div class="resumo-label">Total Faltas</div>
+        <div class="resumo-val red">${totalAbs}</div>
+      </div>
+      <div class="resumo-box">
+        <div class="resumo-label">Aptidões Médias</div>
+        <div class="resumo-val purple">${avgApt}/10</div>
+      </div>
+      <div class="resumo-box">
+        <div class="resumo-label">⭐ Promoção</div>
+        <div class="resumo-val green">${promos.length}</div>
+      </div>
+    </div>
+    ${riscos.length ? `
+    <div class="resumo-box" style="max-width:100px;margin-top:6px">
+      <div class="resumo-label">🔴 Risco Imediato</div>
+      <div class="resumo-val red">${riscos.length}</div>
+    </div>` : ''}
+  </div>
+
+  <!-- ALERTAS -->
+  ${promos.length ? `
+  <div class="doc-section">
+    <div class="alert-box alert-promo">
+      <span class="alert-icon">🏆</span>
+      <span><strong>Candidatos à Promoção (Score ≥ 85):</strong>
+      ${promos.slice(0,5).map(e=>`<strong>${e.name}</strong>`).join(', ')}${promos.length>5?` e mais ${promos.length-5}`:''} — colaboradores com excelente performance.</span>
+    </div>
+  </div>` : ''}
+  ${riscos.length ? `
+  <div class="doc-section">
+    <div class="alert-box alert-risco">
+      <span class="alert-icon">⚠️</span>
+      <span><strong>Funcionários em Risco (Score &lt; 55):</strong>
+      ${riscos.map(e=>`<strong>${e.name}</strong>`).join(', ')} — recomenda-se ação imediata de desenvolvimento.</span>
+    </div>
+  </div>` : ''}
+
+  <!-- COMPETÊNCIAS MÉDIAS -->
+  <div class="doc-section">
+    <div class="doc-section-title">⭐ Competências Médias (0–10)</div>
+    <div class="comp-grid">
+      ${APT_KEYS.slice(0,5).map(k=>`
+      <div class="comp-box">
+        <span class="comp-icon">${APT_EMOJIS[k]}</span>
+        <span class="comp-label">${APT_LABELS[k]}</span>
+        <span class="comp-val">${aptMedias[k]}</span>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <!-- RANKING COMPLETO -->
+  <div class="doc-section">
+    <div class="doc-section-title">🏆 Ranking Geral de Desempenho</div>
+    <table class="rank-table">
+      <thead>
+        <tr>
+          <th style="width:24px">#</th>
+          <th>Funcionário</th>
+          <th>Cargo / Depto</th>
+          <th style="width:110px">📈 Desemp.</th>
+          <th style="width:100px">⭐ Aptidões</th>
+          <th style="width:100px">📅 Assiduidade</th>
+          <th style="width:38px">Score</th>
+          <th style="width:64px">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${lista.map((emp, i) => {
+          const pos  = i+1;
+          const st   = getStatus(emp._score);
+          const bc   = barColor(emp._score);
+          const medal= pos===1?'🥇':pos===2?'🥈':pos===3?'🥉':pos;
+          return `
+          <tr>
+            <td class="pos-cell">${medal}</td>
+            <td style="font-weight:600;font-size:8.5pt">${emp.name}</td>
+            <td style="color:#64748b;font-size:7.5pt">${emp.role||''}${emp.dept?'<br>'+emp.dept:''}</td>
+            <td>
+              <div class="mini-bar-wrap">
+                <div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${emp.perf}%;background:#2563eb"></div></div>
+                <span style="font-size:8pt;font-weight:700;color:#2563eb;min-width:28px;text-align:right">${emp.perf}%</span>
+              </div>
+            </td>
+            <td>
+              <div class="mini-bar-wrap">
+                <div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${emp._apt*10}%;background:#7c3aed"></div></div>
+                <span style="font-size:8pt;font-weight:700;color:#7c3aed;min-width:32px;text-align:right">${emp._apt}/10</span>
+              </div>
+            </td>
+            <td>
+              <div class="mini-bar-wrap">
+                <div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${emp._assid}%;background:${emp._assid>=70?'#059669':'#dc2626'}"></div></div>
+                <span style="font-size:8pt;font-weight:700;color:${emp._assid>=70?'#059669':'#dc2626'};min-width:28px;text-align:right">${emp._assid}%</span>
+              </div>
+            </td>
+            <td class="mini-score" style="color:${bc}">${emp._score}</td>
+            <td><span class="doc-tag-status ${st.cls}">${st.label}</span></td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RODAPÉ -->
+  <div class="doc-footer">
+    <span>CD Nagumo · RH Performance</span>
+    <span>Relatório gerado automaticamente · Sistema Integrado de Gestão</span>
+  </div>`;
+
+  document.getElementById('doc-a4').innerHTML = html;
+  showToast('✅ Relatório gerado! Use o botão Imprimir para salvar em PDF.');
+}
+
+// ════════════════════════════════════════════════════════
+// IMPRIMIR
+// ════════════════════════════════════════════════════════
+function imprimirRelatorio() {
+  const doc = document.getElementById('doc-a4');
+  if (doc.children.length <= 1 && !doc.querySelector('.doc-header')) {
+    showToast('⚠️ Gere o relatório primeiro.','warn'); return;
+  }
+  window.print();
+}
+</script>
+</body>
+</html>

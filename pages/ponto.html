@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ponto Diário · RH Nagumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sidebar.css">
+<link rel="stylesheet" href="../light-theme.css">
+<link rel="stylesheet" href="../responsive.css">
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../firebase.js"></script>
+<script src="../permissions.js"></script>
+<script src="../shared.js"></script>
+<style>
+:root {
+  --bg:#0b0d14; --surface:#12151f; --surface2:#1a1e2e; --surface3:#222638;
+  --border:#2a2f45; --accent:#4f8ef7; --accent2:#a78bfa;
+  --green:#34d399; --yellow:#fbbf24; --red:#f87171; --orange:#fb923c;
+  --cyan:#22d3ee; --pink:#f472b6; --text:#ffffff; --muted:#94a3b8;
+  --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  --sidebar-w:220px;
+
+  /* status colors */
+  --c-presente:  #34d399;
+  --c-falta:     #f87171;
+  --c-feriado:   #fbbf24;
+  --c-atestado:  #ffffff;
+  --c-ferias:    #fb923c;
+  --c-folga:     #22d3ee;
+  --c-afastado:  #f472b6;
+  --c-sabado:    #f9a8d4;
+  --c-domingo:   #4f8ef7;
+  --c-vazio:     #1a1e2e;
+}
+/* [light-theme.css] body.light-theme {
+  --bg:#EEF2F8; --surface:#fff; --surface2:#F4F7FB; --surface3:#E8EDF5;
+  --border:#D6DDE8; --accent:#2563eb; --accent2:#7c3aed; --green:#059669;
+  --yellow:#d97706; --red:#dc2626; --orange:#ea580c; --cyan:#0891b2;
+  --pink:#db2777; --text:#0f172a; --muted:#64748b;
+  --c-vazio:#E8EDF5; --c-domingo:#CBD5E1;
+} */
+/* [light-theme.css] body.light-theme 
+
+body.light-theme .main            { background:#EEF2F8; } */
+/* [light-theme.css] body.light-theme .topbar-mini     { background:#fff; border-bottom-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .page-title      { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .page-title span { color:#2563eb; } */
+/* [light-theme.css] body.light-theme .top-hint        { color:#64748b; } */
+/* [light-theme.css] body.light-theme .panel           { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .panel-label     { color:#64748b; } */
+/* [light-theme.css] body.light-theme .dept-btn        { background:#F4F7FB; border-color:#E2E8F0; color:#64748b; } */
+/* [light-theme.css] body.light-theme .dept-btn:hover  { border-color:#2563eb; color:#2563eb; } */
+/* [light-theme.css] body.light-theme .dept-btn.active { background:rgba(37,99,235,.1); border-color:#2563eb; color:#2563eb; } */
+/* [light-theme.css] body.light-theme .mes-chip        { color:#64748b; } */
+/* [light-theme.css] body.light-theme .mes-chip:hover  { color:#2563eb; } */
+/* [light-theme.css] body.light-theme .mes-chip.active { background:#2563eb; color:#fff; } */
+/* [light-theme.css] body.light-theme .mes-nav-btn     { background:#F4F7FB; border-color:#E2E8F0; color:#374151; } */
+/* [light-theme.css] body.light-theme .lancamento-bar  { background:#F4F7FB; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .lancamento-label{ color:#64748b; } */
+/* [light-theme.css] body.light-theme .dia-input       { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .legenda-bar     { background:#F4F7FB; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .grade-wrap      { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .grade-header    { background:#F4F7FB; border-bottom-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .grade-title     { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .emp-col-header  { background:#F4F7FB; border-right-color:#E2E8F0; color:#475569; } */
+/* [light-theme.css] body.light-theme .day-col-header  { color:#475569; border-bottom-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .day-col-header.domingo { color:#CBD5E1; } */
+/* [light-theme.css] body.light-theme .day-col-header.hoje   { color:#2563eb; background:rgba(37,99,235,.08); } */
+/* [light-theme.css] body.light-theme .emp-row         { border-bottom-color:#F1F5F9; } */
+/* [light-theme.css] body.light-theme .emp-row:hover .emp-info-col { background:#F4F7FB; } */
+/* [light-theme.css] body.light-theme .emp-name-g      { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .emp-role-g      { color:#64748b; } */
+/* [light-theme.css] body.light-theme .emp-info-col    { background:#fff; border-right-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .resumo-col      { border-left-color:#E2E8F0; color:#64748b; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-track { background:#F1F5F9; } */
+/* [light-theme.css] body.light-theme ::-webkit-scrollbar-thumb { background:#CBD5E1; } */
+
+/* ── Base ── */
+* { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:14px; }
+body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
+
+/* ── Main ── */
+.main { margin-left:var(--sidebar-w); min-height:100vh; display:flex; flex-direction:column; }
+
+/* ── Topbar mini (barra azul do print) ── */
+.topbar-mini {
+  background:var(--surface); border-bottom:1px solid var(--border);
+  padding:10px 24px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.page-title { font-family:var(--font-head); font-size:18px; font-weight:800; letter-spacing:-.8px; color:var(--accent); }
+.top-hint   { font-size:12px; color:var(--muted); }
+
+/* ── Conteúdo ── */
+.content { padding:18px 24px; flex:1; }
+
+/* ── Painéis (dept + período) ── */
+.panels-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:14px; }
+.panel { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px 18px; }
+.panel-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.dept-chips  { display:flex; gap:8px; flex-wrap:wrap; }
+.dept-btn {
+  display:inline-flex; align-items:center; gap:6px; padding:7px 14px;
+  border-radius:8px; border:1.5px solid var(--border); background:var(--surface2);
+  color:var(--muted); font-family:var(--font-body); font-size:12px; font-weight:600;
+  cursor:pointer; transition:all .18s;
+}
+.dept-btn:hover  { border-color:var(--accent); color:var(--text); }
+.dept-btn.active { background:rgba(79,142,247,.15); border-color:var(--accent); color:var(--accent); }
+
+/* período */
+.periodo-header { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+.mes-nav-btn {
+  width:26px; height:26px; border-radius:6px; border:1px solid var(--border);
+  background:var(--surface2); color:var(--text); font-size:14px; font-weight:700;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:all .15s;
+}
+.mes-nav-btn:hover { border-color:var(--accent); color:var(--accent); }
+.mes-atual { font-family:var(--font-head); font-size:16px; font-weight:800; color:var(--text); min-width:110px; text-align:center; }
+.mes-chips  { display:flex; gap:4px; flex-wrap:wrap; }
+.mes-chip {
+  padding:4px 9px; border-radius:6px; font-size:11px; font-weight:600;
+  cursor:pointer; color:var(--muted); transition:all .15s;
+}
+.mes-chip:hover  { color:var(--text); }
+.mes-chip.active { background:var(--accent); color:#fff; border-radius:20px; }
+
+/* ── Lançamento rápido ── */
+.lancamento-bar {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:12px 18px; margin-bottom:12px;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.lancamento-label { font-size:11px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:1px; display:flex; align-items:center; gap:6px; }
+.dia-input {
+  width:60px; padding:6px 8px; border-radius:7px; border:1px solid var(--border);
+  background:var(--surface2); color:var(--text); font-family:var(--font-body);
+  font-size:13px; text-align:center; outline:none;
+  transition:border-color .2s;
+}
+.dia-input:focus { border-color:var(--accent); }
+.arrow-label { font-size:12px; color:var(--muted); white-space:nowrap; }
+.status-btn {
+  display:inline-flex; align-items:center; gap:6px; padding:6px 12px;
+  border-radius:8px; border:1.5px solid transparent; font-family:var(--font-body);
+  font-size:12px; font-weight:700; cursor:pointer; transition:all .15s;
+}
+.status-btn:hover { transform:translateY(-1px); filter:brightness(1.1); }
+
+/* ── Legenda ── */
+.legenda-bar {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:10px; padding:8px 16px; margin-bottom:14px;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  font-size:11px; color:var(--muted);
+}
+.leg-item { display:flex; align-items:center; gap:5px; }
+.leg-dot  { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+
+/* ── Grade de Ponto ── */
+.grade-wrap {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:14px; overflow:hidden;
+}
+.grade-header {
+  padding:12px 16px; display:flex; align-items:center; gap:10px;
+  border-bottom:1px solid var(--border); background:var(--surface2);
+}
+.grade-title { font-family:var(--font-head); font-size:14px; font-weight:700; color:var(--text); }
+.grade-badge {
+  padding:2px 10px; border-radius:20px; font-size:11px; font-weight:600;
+  background:rgba(79,142,247,.15); color:var(--accent);
+}
+.grade-count { font-size:12px; color:var(--muted); margin-left:auto; }
+
+/* grade scroll */
+.grade-scroll { overflow-x:auto; }
+.grade-table  { border-collapse:collapse; width:100%; min-width:max-content; }
+
+/* cabeçalho fixo — coluna funcionário */
+.emp-col-header {
+  position:sticky; left:0; z-index:3;
+  background:var(--surface2); border-right:2px solid var(--border);
+  padding:8px 14px; font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:1px; color:var(--muted);
+  white-space:nowrap; min-width:160px;
+}
+/* cabeçalho dias */
+.day-col-header {
+  padding:6px 0; text-align:center; min-width:34px; max-width:34px;
+  border-bottom:2px solid var(--border);
+  font-size:10px; font-weight:600; color:var(--muted);
+  white-space:nowrap; cursor:default;
+}
+.day-num      { font-family:var(--font-head); font-size:12px; font-weight:800; line-height:1; }
+.day-dow      { font-size:9px; margin-top:1px; }
+.day-col-header.domingo { color:rgba(79,142,247,.7); }
+.day-col-header.sabado  { color:rgba(244,114,182,.7); }
+.day-col-header.hoje    { color:#fff; background:rgba(255,255,255,.08); border-radius:6px 6px 0 0; }
+.day-col-header.hoje .day-num { color:#fff; }
+.day-col-header.feriado { color:var(--yellow); cursor:help; }
+
+/* Tooltip global de feriado — posicionado via JS no body */
+#feriado-tooltip {
+  position:fixed; z-index:9999; pointer-events:none;
+  background:var(--surface); border:1px solid var(--yellow);
+  border-radius:8px; padding:6px 12px;
+  font-size:11px; font-weight:700; color:var(--yellow);
+  white-space:nowrap; box-shadow:0 4px 20px rgba(0,0,0,.6);
+  opacity:0; visibility:hidden; transition:opacity .15s;
+}
+#feriado-tooltip.show { opacity:1; visibility:visible; }
+#feriado-tooltip::after {
+  content:''; position:absolute; top:100%; left:50%;
+  transform:translateX(-50%);
+  border:5px solid transparent; border-top-color:var(--yellow);
+}
+
+/* coluna resumo */
+.resumo-col-header {
+  position:sticky; right:0; z-index:3;
+  background:var(--surface2); border-left:2px solid var(--border);
+  padding:8px 14px; font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:1px; color:var(--muted);
+  min-width:80px; text-align:center;
+}
+
+/* linhas de funcionários */
+.emp-row { border-bottom:1px solid rgba(42,47,69,.4); }
+.emp-row:last-child { border-bottom:none; }
+.emp-info-col {
+  position:sticky; left:0; z-index:2;
+  background:var(--surface); border-right:2px solid var(--border);
+  padding:8px 14px; min-width:160px; vertical-align:middle;
+}
+.emp-row:hover .emp-info-col { background:var(--surface2); }
+.emp-mini-wrap { display:flex; align-items:center; gap:8px; }
+.emp-mini-avatar {
+  width:28px; height:28px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:9px; font-weight:800; color:#fff;
+}
+.emp-name-g { font-size:12px; font-weight:700; color:var(--text); white-space:nowrap; }
+.emp-role-g { font-size:10px; color:var(--muted); }
+
+/* células de dia */
+.day-cell {
+  padding:4px 2px; text-align:center; vertical-align:middle;
+  min-width:34px; max-width:34px;
+}
+.day-cell.domingo-col { opacity:.75; }
+.day-cell.sabado-col  { opacity:.85; }
+
+/* bolinha de status */
+.status-dot {
+  width:26px; height:26px; border-radius:7px; margin:0 auto;
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; cursor:pointer; transition:transform .12s, box-shadow .12s;
+  border:1.5px solid transparent; position:relative;
+}
+.status-dot:hover { transform:scale(1.18); box-shadow:0 2px 10px rgba(0,0,0,.4); }
+.status-dot.bloqueado { cursor:not-allowed; opacity:.5; }
+.status-dot.bloqueado:hover { transform:none; box-shadow:none; }
+
+/* dot vazio */
+.status-dot.vazio      { background:var(--surface3); border-color:var(--border); }
+.status-dot.presente   { background:rgba(52,211,153,.25);  border-color:#34d399; color:#34d399; }
+.status-dot.falta      { background:rgba(248,113,113,.25); border-color:#f87171; color:#f87171; }
+.status-dot.feriado    { background:rgba(251,191,36,.25);  border-color:#fbbf24; color:#fbbf24; }
+.status-dot.atestado   { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.4); color:#fff; }
+.status-dot.ferias     { background:rgba(251,146,60,.25);  border-color:#fb923c; color:#fb923c; }
+.status-dot.folga      { background:rgba(34,211,238,.25);  border-color:#22d3ee; color:#22d3ee; }
+.status-dot.afastado   { background:rgba(244,114,182,.25); border-color:#f472b6; color:#f472b6; }
+/* domingo — azul clicável */
+.status-dot.domingo-auto { background:rgba(79,142,247,.15); border-color:rgba(79,142,247,.4); color:#4f8ef7; }
+/* sábado — rosa claro */
+.status-dot.sabado-auto  { background:rgba(244,114,182,.1); border-color:rgba(244,114,182,.35); color:#f9a8d4; }
+/* presente em domingo/feriado — destaque especial (bônus) */
+.status-dot.presente-bonus { background:rgba(52,211,153,.3); border-color:#34d399; color:#34d399; box-shadow:0 0 8px rgba(52,211,153,.35); }
+
+/* coluna resumo */
+.resumo-col {
+  position:sticky; right:0; z-index:2;
+  background:var(--surface); border-left:2px solid var(--border);
+  padding:4px 10px; text-align:center; vertical-align:middle;
+  font-size:11px; color:var(--muted); min-width:80px; white-space:nowrap;
+}
+.emp-row:hover .resumo-col { background:var(--surface2); }
+.resumo-inner { display:flex; flex-direction:column; gap:2px; align-items:center; }
+.res-item { display:flex; align-items:center; gap:3px; font-size:10px; font-weight:600; }
+
+/* ── Context menu ── */
+.ctx-menu {
+  position:fixed; background:var(--surface2); border:1px solid var(--border);
+  border-radius:10px; padding:6px; z-index:9999; min-width:160px;
+  box-shadow:0 8px 30px rgba(0,0,0,.5); display:none;
+  animation:fadeUp .15s ease;
+}
+.ctx-menu.open { display:block; }
+.ctx-item {
+  display:flex; align-items:center; gap:8px; padding:7px 12px;
+  border-radius:7px; cursor:pointer; font-size:12px; font-weight:600;
+  transition:background .12s; color:var(--text);
+}
+.ctx-item:hover { background:var(--surface3); }
+.ctx-dot { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+
+/* ── Toast ── */
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+.toast { padding:10px 18px; border-radius:10px; font-size:12px; font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4); animation:fadeUp .25s ease; max-width:320px; pointer-events:auto; }
+.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
+.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
+.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── Responsive ── */
+@media(max-width:1024px) {
+  :root { --sidebar-w:56px; }
+  
+  
+  
+  
+
+  .panels-row { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:768px) {
+  :root { --sidebar-w:0px; }
+  
+  .panels-row { grid-template-columns:1fr 1fr; }
+}
+
+}
+
+
+/* ── Botão salvar/atualizar ── */
+.btn-save {
+  display:inline-flex; align-items:center; gap:8px; padding:9px 20px;
+  border-radius:8px; border:none; background:var(--accent); color:#fff;
+  font-family:var(--font-body); font-size:12px; font-weight:700;
+  cursor:pointer; transition:all .2s;
+}
+.btn-save:hover { background:#3a7ae0; transform:translateY(-1px); box-shadow:0 4px 16px rgba(79,142,247,.4); }
+
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+<nav id="app-sidebar"></nav>
+
+<!-- Context menu -->
+<div class="ctx-menu" id="ctx-menu"></div>
+<div id="feriado-tooltip"></div>
+
+<div class="main">
+
+  <!-- Topbar mini -->
+  <div class="topbar-mini">
+    <div class="page-title">🗓️ Ponto Diário Coletivo</div>
+    <div class="top-hint" id="top-hint">Selecione um departamento · Clique em qualquer dia para registrar</div>
+  </div>
+
+  <div class="content">
+
+    <!-- Painéis dept + período -->
+    <div class="panels-row">
+
+      <!-- Filial -->
+      <div class="panel">
+        <div class="panel-label">🏭 Filial</div>
+        <div class="dept-chips" id="filial-chips"></div>
+      </div>
+
+      <!-- Departamento -->
+      <div class="panel">
+        <div class="panel-label">🏢 Departamento</div>
+        <div class="dept-chips" id="dept-chips"></div>
+      </div>
+
+      <!-- Período -->
+      <div class="panel">
+        <div class="panel-label">📅 Período</div>
+        <div class="periodo-header">
+          <button class="mes-nav-btn" onclick="navMes(-1)">‹</button>
+          <div class="mes-atual" id="mes-atual-label"></div>
+          <button class="mes-nav-btn" onclick="navMes(+1)">›</button>
+        </div>
+        <div class="mes-chips" id="mes-chips"></div>
+      </div>
+
+    </div>
+
+    <!-- Lançamento rápido -->
+    <div class="lancamento-bar">
+      <div class="lancamento-label">⚡ Lançamento Rápido</div>
+      <span style="font-size:12px;color:var(--muted)">DIA:</span>
+      <input class="dia-input" type="number" id="lancamento-dia" min="1" max="31" placeholder="—">
+      <span class="arrow-label">→ MARCAR TODOS COMO:</span>
+      <button class="status-btn" style="background:rgba(52,211,153,.15);color:#34d399;border-color:rgba(52,211,153,.4)"   onclick="lancamentoRapido('presente')">  ✅ Presente</button>
+      <button class="status-btn" style="background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.4)" onclick="lancamentoRapido('falta')">     ✕ Falta</button>
+      <button class="status-btn" style="background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.4)"  onclick="lancamentoRapido('feriado')">   🎉 Feriado</button>
+      <button class="status-btn" style="background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.35)"  onclick="lancamentoRapido('atestado')">  🏥 Atestado</button>
+      <button class="status-btn" style="background:rgba(251,146,60,.15);color:#fb923c;border-color:rgba(251,146,60,.4)"  onclick="lancamentoRapido('ferias')">    🏖️ Férias</button>
+      <button class="status-btn" style="background:rgba(34,211,238,.15);color:#22d3ee;border-color:rgba(34,211,238,.4)"  onclick="lancamentoRapido('folga')">     🌙 Folga</button>
+      <button class="status-btn" style="background:rgba(244,114,182,.15);color:#f472b6;border-color:rgba(244,114,182,.4)"onclick="lancamentoRapido('afastado')">  🚫 Afastado</button>
+    </div>
+
+    <!-- Legenda -->
+    <div class="legenda-bar">
+      <span style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.5px">Status:</span>
+      <div class="leg-item"><div class="leg-dot" style="background:#34d399"></div> Presente</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#f87171"></div> <span style="text-decoration:line-through;opacity:.7">✕</span> Falta</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#fbbf24"></div> 🎉 Feriado</div>
+      <div class="leg-item"><div class="leg-dot" style="background:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.4)"></div> 🏥 Atestado</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#fb923c"></div> 🏖️ Férias</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#22d3ee"></div> 🌙 Folga</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#f472b6"></div> 🚫 Afastado</div>
+      <div class="leg-item"><div class="leg-dot" style="background:rgba(79,142,247,.4)"></div> ☀️ Dom.</div>
+      <div class="leg-item"><div class="leg-dot" style="background:rgba(244,114,182,.35)"></div> Sáb.</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#34d399;box-shadow:0 0 6px rgba(52,211,153,.5)"></div> ⭐ Bônus</div>
+    </div>
+
+    <!-- Grade -->
+    <div class="grade-wrap">
+      <div class="grade-header">
+        <div class="grade-title">Grade de Ponto</div>
+        <div class="grade-badge" id="grade-badge-dept">—</div>
+        <div class="grade-count" id="grade-count">0 funcionário(s)</div>
+      </div>
+      <div class="grade-scroll">
+        <table class="grade-table" id="grade-table"></table>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+// ════════════════════════════════════════════════════════
+// CONSTANTES
+// ════════════════════════════════════════════════════════
+const MESES_PT  = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                   'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const MESES_SH  = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const DIAS_SEM  = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+const STATUS_META = {
+  presente: { emoji:'✅', label:'Presente',  cor:'#34d399', bg:'rgba(52,211,153,.25)',  border:'#34d399'  },
+  falta:    { emoji:'✕',  label:'Falta',     cor:'#f87171', bg:'rgba(248,113,113,.25)', border:'#f87171'  },
+  feriado:  { emoji:'🎉', label:'Feriado',   cor:'#fbbf24', bg:'rgba(251,191,36,.25)',  border:'#fbbf24'  },
+  atestado: { emoji:'🏥', label:'Atestado',  cor:'#ffffff', bg:'rgba(255,255,255,.06)', border:'rgba(255,255,255,.35)' },
+  ferias:   { emoji:'🏖️', label:'Férias',    cor:'#fb923c', bg:'rgba(251,146,60,.25)',  border:'#fb923c'  },
+  folga:    { emoji:'🌙', label:'Folga',     cor:'#22d3ee', bg:'rgba(34,211,238,.25)',  border:'#22d3ee'  },
+  afastado: { emoji:'🚫', label:'Afastado',  cor:'#f472b6', bg:'rgba(244,114,182,.25)', border:'#f472b6'  },
+  domingo:  { emoji:'☀️',  label:'Domingo',   cor:'#4f8ef7', bg:'rgba(79,142,247,.15)', border:'rgba(79,142,247,.4)' },
+  sabado:   { emoji:'',   label:'Sábado',    cor:'#f9a8d4', bg:'rgba(244,114,182,.1)', border:'rgba(244,114,182,.35)' },
+};
+
+// Chave do localStorage
+const PONTO_KEY = 'rh_ponto'; // { [empId_ano_mes]: { [dia]: status } }
+
+// ════════════════════════════════════════════════════════
+// ESTADO
+// ════════════════════════════════════════════════════════
+let currentUser  = null;
+const _abrev = n => { const p = n.trim().split(/\s+/); return p.length > 1 ? p[0] + ' ' + p[p.length-1] : p[0]; };
+const nomeAbrev = (emp, lista) => {
+  const ab = _abrev(emp.name);
+  const dup = lista.filter(e => e.id !== emp.id && _abrev(e.name) === ab).length > 0;
+  return dup && emp.matricula ? `${ab} · ${emp.matricula}` : ab;
+};
+let filialAtiva  = '';
+let deptAtivo    = '';
+let mesAtivo     = new Date().getMonth();      // 0–11
+let anoAtivo     = new Date().getFullYear();
+let podeEditar   = false;
+
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  currentUser = await requireSession();
+  if (!currentUser) return;
+
+  initTheme();
+  initSidebar('ponto', currentUser);
+
+  podeEditar = (typeof can === 'function')
+    ? can(currentUser, 'ponto', 'edit')
+    : true;
+
+  buildFilialChips();
+  buildDeptChips();
+  buildMesChips();
+  atualizarMesLabel();
+});
+
+// ════════════════════════════════════════════════════════
+// ESCOPO
+// ════════════════════════════════════════════════════════
+function getMyEmployees() {
+  const all   = (await getStore()).employees || [];
+  const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
+  if (scope.all) return all;
+  if (scope.sector) {
+    const depts = currentUser?.perfil?.depts||[];
+    const setor = currentUser?.setor||'';
+    return all.filter(e=>depts.includes(e.dept)||e.dept===setor);
+  }
+  return all.filter(e=>(e.owner_id||e.ownerId)===currentUser?.id);
+}
+
+function getEmpsDoDepto() {
+  if (!deptAtivo) return [];
+  let list = getMyEmployees();
+  if (filialAtiva) list = list.filter(e=>e.filial===filialAtiva);
+  return list.filter(e=>e.dept===deptAtivo);
+}
+
+
+// ════════════════════════════════════════════════════════
+// FILIAL CHIPS
+// ════════════════════════════════════════════════════════
+function buildFilialChips() {
+  const emps    = getMyEmployees();
+  const filiais = [...new Set(emps.map(e=>e.filial))].filter(Boolean).sort();
+  const wrap    = document.getElementById('filial-chips');
+  if (!wrap) return;
+
+  if (!filiais.length) {
+    wrap.innerHTML = `<span style="color:var(--muted);font-size:13px">—</span>`;
+    return;
+  }
+
+  // Adiciona opção "Todas"
+  const todasBtn = filiais.length > 1
+    ? `<button class="dept-btn ${!filialAtiva?'active':''}" onclick="selecionarFilial('')">🏭 Todas</button>`
+    : '';
+
+  wrap.innerHTML = todasBtn + filiais.map(f=>`
+    <button class="dept-btn ${f===filialAtiva?'active':''}" onclick="selecionarFilial('${f}')">
+      🏭 ${f}
+    </button>`).join('');
+
+  // Auto-seleciona se só uma filial
+  if (!filialAtiva && filiais.length === 1) selecionarFilial(filiais[0]);
+}
+
+function selecionarFilial(filial) {
+  filialAtiva = filial;
+  document.querySelectorAll('#filial-chips .dept-btn').forEach(b=>{
+    const label = b.textContent.trim().replace('🏭 ','');
+    b.classList.toggle('active', filial === '' ? label === 'Todas' : label === filial);
+  });
+  // Reconstrói chips de dept para refletir a filial selecionada
+  buildDeptChips();
+}
+
+// ════════════════════════════════════════════════════════
+// DEPT CHIPS
+// ════════════════════════════════════════════════════════
+function buildDeptChips() {
+  let emps = getMyEmployees();
+  if (filialAtiva) emps = emps.filter(e=>e.filial===filialAtiva);
+  const depts = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
+  const wrap  = document.getElementById('dept-chips');
+
+  if (!depts.length) {
+    wrap.innerHTML = `<span style="color:var(--muted);font-size:13px">Nenhum departamento disponível.</span>`;
+    return;
+  }
+
+  wrap.innerHTML = depts.map(d=>`
+    <button class="dept-btn ${d===deptAtivo?'active':''}" onclick="selecionarDept('${d}')">
+      🏢 ${d}
+    </button>`).join('');
+
+  if (!deptAtivo) selecionarDept(depts[0]);
+}
+
+function selecionarDept(dept) {
+  deptAtivo = dept;
+  document.querySelectorAll('.dept-btn').forEach(b=>{
+    b.classList.toggle('active', b.textContent.trim().endsWith(dept));
+  });
+  document.getElementById('grade-badge-dept').textContent = dept;
+  atualizarHint();
+  renderGrade();
+}
+
+// ════════════════════════════════════════════════════════
+// MÊS / ANO
+// ════════════════════════════════════════════════════════
+function buildMesChips() {
+  const wrap = document.getElementById('mes-chips');
+  wrap.innerHTML = MESES_SH.map((m,i)=>`
+    <div class="mes-chip ${i===mesAtivo?'active':''}" onclick="selecionarMes(${i})">${m}</div>
+  `).join('');
+}
+
+function selecionarMes(idx) {
+  mesAtivo = idx;
+  document.querySelectorAll('.mes-chip').forEach((c,i)=>c.classList.toggle('active',i===idx));
+  atualizarMesLabel();
+  atualizarHint();
+  renderGrade();
+}
+
+function navMes(dir) {
+  let m = mesAtivo + dir;
+  let a = anoAtivo;
+  if (m < 0)  { m = 11; a--; }
+  if (m > 11) { m = 0;  a++; }
+  mesAtivo = m; anoAtivo = a;
+  document.querySelectorAll('.mes-chip').forEach((c,i)=>c.classList.toggle('active',i===m));
+  atualizarMesLabel();
+  atualizarHint();
+  renderGrade();
+}
+
+function atualizarMesLabel() {
+  document.getElementById('mes-atual-label').textContent = `${MESES_PT[mesAtivo]} ${anoAtivo}`;
+}
+
+function atualizarHint() {
+  const h = document.getElementById('top-hint');
+  if (h) h.textContent = `${deptAtivo||'—'} · ${MESES_PT[mesAtivo]} ${anoAtivo} · Clique em qualquer dia para registrar`;
+}
+
+// ════════════════════════════════════════════════════════
+// PONTO DATA — localStorage
+// ════════════════════════════════════════════════════════
+function pontoKey(empId) {
+  return `${empId}_${anoAtivo}_${String(mesAtivo+1).padStart(2,'0')}`;
+}
+
+function getPontoEmp(empId) {
+  const all = await LS.get(PONTO_KEY, {});
+  return all[pontoKey(empId)] || {};
+}
+
+function setPontoEmp(empId, diaMap) {
+  const all = await LS.get(PONTO_KEY, {});
+  all[pontoKey(empId)] = diaMap;
+  await LS.set(PONTO_KEY, all);
+}
+
+function setStatus(empId, dia, status) {
+  const m        = getPontoEmp(empId);
+  const anterior = m[dia] || 'vazio';
+
+  // Sem mudança real — não salva nem loga
+  if (anterior === status) return;
+  if (status === 'vazio') delete m[dia];
+  else m[dia] = status;
+  setPontoEmp(empId, m);
+  syncAbsencesToStore(empId);
+}
+
+// Recalcula emp.absences[mes] com base no rh_ponto para o ano atual
+function syncAbsencesToStore(empId) {
+  const store = await getStore();
+  const idx   = (store.employees||[]).findIndex(e=>String(e.id)===String(empId));
+  if (idx < 0) return;
+
+  const ano      = anoAtivo;
+  const allPonto = await LS.get(PONTO_KEY, {});
+  const absences = Array.from({length:12}, (_, m) => {
+    const key  = `${empId}_${ano}_${String(m+1).padStart(2,'0')}`;
+    const dias = allPonto[key] || {};
+    let faltas = 0;
+    Object.values(dias).forEach(s => {
+      if (s === 'falta')   faltas += 1;
+      if (s === 'atestado') faltas += 0.5;
+    });
+    return faltas;
+  });
+
+  store.employees[idx].absences = absences;
+  await saveStore(store);
+}
+
+// ════════════════════════════════════════════════════════
+// FERIADOS — retorna nome ou null
+// ════════════════════════════════════════════════════════
+const FERIADOS_NACIONAIS = [
+  {d:1,  m:0,  nome:'Confraternização Universal'},
+  {d:21, m:3,  nome:'Tiradentes'},
+  {d:1,  m:4,  nome:'Dia do Trabalho'},
+  {d:7,  m:8,  nome:'Independência do Brasil'},
+  {d:12, m:9,  nome:'Nossa Sra. Aparecida'},
+  {d:2,  m:10, nome:'Finados'},
+  {d:15, m:10, nome:'Proclamação da República'},
+  {d:25, m:11, nome:'Natal'},
+];
+
+function getNomeFeriadoNacional(dia, mes) {
+  const f = FERIADOS_NACIONAIS.find(f => f.d===dia && f.m===mes);
+  return f ? f.nome : null;
+}
+
+function getNomeFeriadoRegional(dia, mes) {
+  const store = await getStore();
+  const lista = store.config?.feriadosCustom || [];
+  const mesStr = String(mes+1).padStart(2,'0');
+  const diaStr = String(dia).padStart(2,'0');
+  const chave  = `${mesStr}-${diaStr}`;
+  const f = lista.find(f => f.chave === chave);
+  return f ? (f.nome || 'Feriado Regional') : null;
+}
+
+function isFeriadoNacional(dia, mes) { return !!getNomeFeriadoNacional(dia, mes); }
+function isFeriadoRegional(dia, mes) { return !!getNomeFeriadoRegional(dia, mes); }
+
+function getNomeFeriado(dia, mes) {
+  return getNomeFeriadoNacional(dia, mes) || getNomeFeriadoRegional(dia, mes) || 'Feriado';
+}
+
+// ════════════════════════════════════════════════════════
+// BLOQUEIO AFASTADO/FÉRIAS — por dia específico
+// ════════════════════════════════════════════════════════
+function getStatusDiaBloqueado(emp, ano, mes, dia) {
+  // mes: 0-based
+  const dt  = new Date(ano, mes, dia); dt.setHours(0,0,0,0);
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+
+  // ── Afastado ──
+  // Marca do início do afastamento até HOJE — dias futuros ficam em branco
+  if (emp.afastado) {
+    const inicio = emp.data_afastamento
+      ? new Date(emp.data_afastamento + 'T00:00:00')
+      : new Date(0);
+    if (dt >= inicio && dt <= hoje) return 'afastado';
+  }
+
+  // ── Férias ──
+  // Intervalo fixo início/fim (pode incluir dias futuros pois férias são programadas)
+  if (emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {
+    const ini = new Date(emp.data_ferias_inicio + 'T00:00:00');
+    const fim = new Date(emp.data_ferias_fim    + 'T00:00:00');
+    if (dt >= ini && dt <= fim) return 'ferias';
+  }
+
+  return null;
+}
+
+// ════════════════════════════════════════════════════════
+// RENDER GRADE
+// ════════════════════════════════════════════════════════
+function renderGrade() {
+  const emps    = getEmpsDoDepto();
+  const hoje    = new Date();
+  const diasMes = new Date(anoAtivo, mesAtivo+1, 0).getDate();
+
+  document.getElementById('grade-count').textContent = `${emps.length} funcionário(s)`;
+
+  if (!emps.length) {
+    document.getElementById('grade-table').innerHTML = `
+      <tbody><tr><td style="padding:50px;text-align:center;color:var(--muted)">
+        Nenhum funcionário neste departamento.
+      </td></tr></tbody>`;
+    return;
+  }
+
+  // ── Cabeçalho ──
+  let thead = `<thead><tr>
+    <th class="emp-col-header">Funcionário</th>`;
+
+  const diasArr = [];
+  for (let d=1; d<=diasMes; d++) {
+    const dt      = new Date(anoAtivo, mesAtivo, d);
+    const dow     = dt.getDay(); // 0=dom, 6=sab
+    const isDom   = dow === 0;
+    const isSab   = dow === 6;
+    const isHoje  = (d===hoje.getDate() && mesAtivo===hoje.getMonth() && anoAtivo===hoje.getFullYear());
+    const isFerN  = isFeriadoNacional(d, mesAtivo);
+    const isFerR  = isFeriadoRegional(d, mesAtivo);
+    const isFer   = isFerN || isFerR;
+    const nomeFer = isFer ? getNomeFeriado(d, mesAtivo) : '';
+    diasArr.push({ d, dow, isDom, isSab, isHoje, isFer, nomeFer });
+
+    let cls = '';
+    if (isDom)  cls += ' domingo';
+    if (isSab)  cls += ' sabado';
+    if (isHoje) cls += ' hoje';
+    if (isFer)  cls += ' feriado';
+
+    thead += `<th class="day-col-header${cls}" ${isFer ? `data-feriado="${nomeFer}"` : ''}>
+      <div class="day-num">${d}</div>
+      <div class="day-dow">${DIAS_SEM[dow]}</div>
+    </th>`;
+  }
+
+  thead += `</tr></thead>`;
+
+  // ── Corpo ──
+  let tbody = '<tbody>';
+  emps.forEach(emp => {
+    const pontoMap = getPontoEmp(emp.id);
+    const ini      = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+    // Avatar usa status de HOJE (para indicar visualmente quem está afastado/férias agora)
+    const { bloqueado: bloqHoje, motivo: motivoHoje } = isEmpBloqueado(emp);
+
+    const avatarStyle = bloqHoje
+      ? motivoHoje==='afastado'
+        ? 'background:linear-gradient(135deg,#ef4444,#fb923c)'
+        : 'background:linear-gradient(135deg,#22d3ee,#4f8ef7)'
+      : '';
+
+    tbody += `<tr class="emp-row">
+      <td class="emp-info-col">
+        <div class="emp-mini-wrap">
+          <div class="emp-mini-avatar" style="${avatarStyle}">${ini}</div>
+          <div>
+            <div class="emp-name-g">${nomeAbrev(emp, emps)}</div>
+            <div class="emp-role-g">${emp.role||''}</div>
+          </div>
+        </div>
+      </td>`;
+
+    // Contadores para resumo
+    let cP=0, cF=0, cA=0, cAt=0, cFe=0, cBonus=0;
+
+    diasArr.forEach(({ d, dow, isDom, isSab, isHoje, isFer, nomeFer }) => {
+      const statusSalvo = pontoMap[d];
+
+      // Verifica bloqueio DESTE DIA específico (afastado/férias por período)
+      const bloqDia = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, d);
+      const canEdit = podeEditar && !bloqDia;
+
+      // ── DIA COM STATUS BLOQUEADO (afastado/férias) ──
+      // Só aplica se não há nada manualmente salvo neste dia
+      if (bloqDia && !statusSalvo) {
+        const sm = STATUS_META[bloqDia];
+        if (bloqDia === 'afastado') cAt++;
+        if (bloqDia === 'ferias')   cFe++;
+        const colCls = isDom ? 'domingo-col' : isSab ? 'sabado-col' : '';
+        tbody += `<td class="day-cell ${colCls}">
+          <div class="status-dot bloqueado ${bloqDia}"
+            style="background:${sm.bg};border-color:${sm.border};color:${sm.cor}"
+            title="${sm.label}${bloqDia==='ferias' ? ' — período de férias' : ' — em afastamento'}">
+            ${sm.emoji}
+          </div>
+        </td>`;
+        return;
+      }
+
+      // ── DOMINGO ──
+      if (isDom) {
+        if (statusSalvo === 'presente') {
+          cP++; cBonus++;
+          tbody += `<td class="day-cell domingo-col">
+            <div class="status-dot presente-bonus"
+              title="☀️ Presente no Domingo (+bônus)"
+              ${canEdit ? `onclick="showCtxMenu(event,${emp.id},${d},'presente')"` : ''}>✅</div>
+          </td>`;
+        } else if (statusSalvo && statusSalvo !== 'vazio') {
+          const sm = STATUS_META[statusSalvo] || STATUS_META.domingo;
+          tbody += `<td class="day-cell domingo-col">
+            <div class="status-dot ${statusSalvo}"
+              style="background:${sm.bg};border-color:${sm.border};color:${sm.cor}"
+              title="${sm.label}"
+              ${canEdit ? `onclick="showCtxMenu(event,${emp.id},${d},'${statusSalvo}')"` : ''}>
+              ${sm.emoji}
+            </div>
+          </td>`;
+        } else {
+          tbody += `<td class="day-cell domingo-col">
+            <div class="status-dot domingo-auto"
+              title="Domingo — clique para marcar presença/bônus"
+              ${canEdit ? `onclick="showCtxMenu(event,${emp.id},${d},'vazio')"` : ''}>☀️</div>
+          </td>`;
+        }
+        return;
+      }
+
+      // ── SÁBADO ──
+      if (isSab) {
+        if (statusSalvo === 'presente') {
+          cP++; cBonus++;
+          tbody += `<td class="day-cell sabado-col">
+            <div class="status-dot presente-bonus"
+              title="Presente no Sábado (+bônus)"
+              ${canEdit ? `onclick="showCtxMenu(event,${emp.id},${d},'presente')"` : ''}>✅</div>
+          </td>`;
+        } else if (statusSalvo && statusSalvo !== 'vazio') {
+          const sm = STATUS_META[statusSalvo] || {};
+          tbody += `<td class="day-cell sabado-col">
+            <div class="status-dot ${statusSalvo}"
+              style="background:${sm.bg};border-color:${sm.border};color:${sm.cor}"
+              title="${sm.label}"
+              ${canEdit ? `onclick="showCtxMenu(event,${emp.id},${d},'${statusSalvo}')"` : ''}>
+              ${sm.emoji}
+            </div>
+          </td>`;
+        } else {
+          tbody += `<td class="day-cell sabado-col">
+            <div class="status-dot sabado-auto"
+              title="Sábado — clique para marcar"
+              ${canEdit ? `onclick="showCtxMenu(event,${emp.id},${d},'vazio')"` : ''}></div>
+          </td>`;
+        }
+        return;
+      }
+
+      // ── FERIADO sem marcação manual ──
+      if (isFer && !statusSalvo) {
+        tbody += `<td class="day-cell">
+          <div class="status-dot feriado"
+            title="${nomeFer} — clique para marcar presença/bônus"
+            ${canEdit ? `onclick="showCtxMenu(event,${emp.id},${d},'feriado')"` : ''}>🎉</div>
+        </td>`;
+        return;
+      }
+
+      // ── FERIADO com presença marcada (bônus) ──
+      if (isFer && statusSalvo === 'presente') {
+        cP++; cBonus++;
+        tbody += `<td class="day-cell">
+          <div class="status-dot presente-bonus"
+            title="${nomeFer} — Presente (+bônus)"
+            ${canEdit ? `onclick="showCtxMenu(event,${emp.id},${d},'presente')"` : ''}>✅</div>
+        </td>`;
+        return;
+      }
+
+      // ── DIA NORMAL ──
+      const statusEfetivo = statusSalvo || 'vazio';
+      if (statusEfetivo==='presente') cP++;
+      if (statusEfetivo==='falta')    cF++;
+      if (statusEfetivo==='atestado') cAt++;
+      if (statusEfetivo==='ferias')   cFe++;
+
+      const sm       = statusEfetivo !== 'vazio' ? STATUS_META[statusEfetivo] : null;
+      const dotStyle = sm ? `background:${sm.bg};border-color:${sm.border};color:${sm.cor}` : '';
+      const dotTitle = sm ? sm.label : 'Clique para registrar';
+      const emoji    = sm ? sm.emoji : '';
+
+      tbody += `<td class="day-cell">
+        <div class="status-dot ${statusEfetivo}"
+          style="${dotStyle}"
+          title="${dotTitle}"
+          ${canEdit ? `onclick="showCtxMenu(event,${emp.id},${d},'${statusEfetivo}')"` : ''}>
+          ${emoji}
+        </div>
+      </td>`;
+    });
+
+    tbody += `</tr>`;
+  });
+
+  tbody += '</tbody>';
+  document.getElementById('grade-table').innerHTML = thead + tbody;
+}
+
+// ════════════════════════════════════════════════════════
+// CONTEXT MENU — clique numa célula
+// ════════════════════════════════════════════════════════
+let ctxEmpId   = null;
+let ctxDia     = null;
+let ctxAtual   = null;
+
+function showCtxMenu(e, empId, dia, statusAtual) {
+  e.preventDefault();
+  e.stopPropagation();
+  ctxEmpId = empId; ctxDia = dia; ctxAtual = statusAtual;
+
+  const menu   = document.getElementById('ctx-menu');
+  const options = ['presente','falta','feriado','atestado','ferias','folga','afastado'];
+
+  menu.innerHTML = options.map(s=>{
+    const sm   = STATUS_META[s];
+    const ativo = s === statusAtual;
+    return `<div class="ctx-item ${ativo?'':''}
+      style="${ativo?'background:var(--surface3)':''}"
+      onclick="setStatusCtx('${s}')">
+      <div class="ctx-dot" style="background:${sm.cor}"></div>
+      ${sm.emoji} ${sm.label}
+      ${ativo?'<span style="margin-left:auto;font-size:10px;color:var(--muted)">✓</span>':''}
+    </div>`;
+  }).join('') + `
+    <div style="height:1px;background:var(--border);margin:4px 0"></div>
+    <div class="ctx-item" onclick="setStatusCtx('vazio')"
+      style="color:var(--muted)">
+      <div class="ctx-dot" style="background:var(--surface3);border:1px solid var(--border)"></div>
+      Limpar
+    </div>`;
+
+  // Posiciona
+  const x = Math.min(e.clientX, window.innerWidth  - 180);
+  const y = Math.min(e.clientY, window.innerHeight - 260);
+  menu.style.left = x + 'px';
+  menu.style.top  = y + 'px';
+  menu.classList.add('open');
+}
+
+function setStatusCtx(status) {
+  if (ctxEmpId === null) return;
+  const store    = await getStore();
+  const emp      = (store.employees||[]).find(e=>String(e.id)===String(ctxEmpId));
+  const anterior = getPontoEmp(ctxEmpId)[ctxDia] || 'vazio';
+
+  // Sem mudança — apenas fecha o menu
+  if (anterior === status) { closeCtx(); return; }
+
+  const sm = STATUS_META[status];
+  setStatus(ctxEmpId, ctxDia, status);
+  await registrarLog('editou', 'Ponto', `<strong>${emp?.name||ctxEmpId}</strong> dia ${ctxDia} → ${sm?.emoji||''} ${sm?.label||status}`);
+  closeCtx();
+  renderGrade();
+}
+
+function closeCtx() {
+  document.getElementById('ctx-menu').classList.remove('open');
+  ctxEmpId = ctxDia = ctxAtual = null;
+}
+
+document.addEventListener('click', e=>{
+  if (!document.getElementById('ctx-menu').contains(e.target)) closeCtx();
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeCtx(); });
+
+// ── Tooltip global de feriado ─────────────────────────
+const _ferTip = document.getElementById('feriado-tooltip');
+document.addEventListener('mouseover', e => {
+  const th = e.target.closest('th[data-feriado]');
+  if (!th) return;
+  _ferTip.textContent = '🎉 ' + th.dataset.feriado;
+  _ferTip.classList.add('show');
+});
+document.addEventListener('mousemove', e => {
+  if (!_ferTip.classList.contains('show')) return;
+  const th = e.target.closest('th[data-feriado]');
+  if (!th) { _ferTip.classList.remove('show'); return; }
+  const rect = th.getBoundingClientRect();
+  _ferTip.style.left = (rect.left + rect.width/2 - _ferTip.offsetWidth/2) + 'px';
+  _ferTip.style.top  = (rect.top - _ferTip.offsetHeight - 10) + 'px';
+});
+document.addEventListener('mouseleave', () => _ferTip.classList.remove('show'), true);
+
+// ════════════════════════════════════════════════════════
+// LANÇAMENTO RÁPIDO — marca todos no dia selecionado
+// ════════════════════════════════════════════════════════
+function lancamentoRapido(status) {
+  if (!podeEditar) { showToast('⚠️ Sem permissão para editar ponto.','warn'); return; }
+  const diaInput = document.getElementById('lancamento-dia');
+  const dia      = parseInt(diaInput.value);
+  const diasMes  = new Date(anoAtivo, mesAtivo+1, 0).getDate();
+
+  if (!dia || dia < 1 || dia > diasMes) {
+    showToast(`⚠️ Informe um dia válido (1–${diasMes}).`, 'warn');
+    diaInput.focus(); return;
+  }
+
+  const emps = getEmpsDoDepto();
+  let marcados = 0;
+
+  // Faz um único get/set no localStorage para todos os funcionários
+  const allPonto = await LS.get(PONTO_KEY, {});
+  emps.forEach(emp => {
+    const bloqDia = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, dia);
+    if (bloqDia) return;
+    const key = pontoKey(emp.id);
+    const m   = allPonto[key] || {};
+    const anterior = m[dia] || 'vazio';
+    if (anterior === status) return;
+    if (status === 'vazio') delete m[dia];
+    else m[dia] = status;
+    allPonto[key] = m;
+    marcados++;
+  });
+  await LS.set(PONTO_KEY, allPonto);
+
+  // Sincroniza absences após salvar tudo
+  emps.forEach(emp => syncAbsencesToStore(emp.id));
+
+  const sm = STATUS_META[status];
+  const dept = document.getElementById('filter-dept')?.value || 'todos';
+  if (marcados > 0) {
+    await registrarLog('editou', 'Ponto', `Lançamento rápido: <strong>${sm.emoji} ${sm.label}</strong> — dia ${dia} — ${marcados} func. (${dept})`);
+    showToast(`✅ ${sm.emoji} ${sm.label} marcado para ${marcados} funcionário(s) no dia ${dia}.`);
+  } else {
+    showToast(`ℹ️ Nenhum funcionário alterado.`, 'warn');
+  }
+  renderGrade();
+}
+
+function atualizarGrade() {
+  renderGrade();
+  showToast('✅ Grade atualizada!');
+}
+
+</script>
+</body>
+</html>
