@@ -611,6 +611,8 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 // ════════════════════════════════════════════════════════
 let currentUser  = null;
 let activeFilter = '';
+let _store       = null;  // cache do store — carregado antes de renderCards()
+let _allPonto    = {};    // cache do ponto — carregado antes de renderCards()
 
 const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
 const MONTHS   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
@@ -634,15 +636,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     btnNovo.style.display = podeCreate ? '' : 'none';
   }
 
-  populateDeptSelect();
-  renderCards();
+  await renderCards();
 });
 
 // ════════════════════════════════════════════════════════
 // SCORE HELPERS
 // ════════════════════════════════════════════════════════
-async function getWeights() {
-  const cfg = (await getStore()).config || {};
+function getWeights() {
+  const cfg = _store?.config || {};
   const pw  = Math.min(100, Math.max(0, parseInt(cfg.perfWeight) || 40));
   const aw  = Math.min(100, Math.max(0, parseInt(cfg.aptWeight)  || 35));
   return { perf:pw, apt:aw, abs:Math.max(0,100-pw-aw) };
@@ -651,19 +652,19 @@ function calcAptMedia(emp) {
   const c = emp.competencies || {};
   return APT_KEYS.reduce((s,k) => s+(c[k]||0), 0) / APT_KEYS.length;
 }
-async function calcAssid(emp) {
+function calcAssid(emp) {
   if (emp.afastado) return 100;
   const total  = getTotalFaltasEmp(emp);
-  const maxAbs = (await getStore()).config?.maxAbs || 36;
+  const maxAbs = _store?.config?.maxAbs || 36;
   return Math.max(0, 100-(total/maxAbs)*100);
 }
-async function calcBonus(emp) {
+function calcBonus(emp) {
   const BONUS_POR_DIA = 0.5;
   const BONUS_MAX     = 5;
   try {
-    const allPonto = JSON.parse(localStorage.getItem('rh_ponto') || '{}');
+    const allPonto = _allPonto;
     const ano      = emp.year || new Date().getFullYear();
-    const feriadosCustom = (await getStore()).config?.feriadosCustom || [];
+    const feriadosCustom = _store?.config?.feriadosCustom || [];
     const ferNac = [
       {d:1,m:0},{d:21,m:3},{d:1,m:4},{d:7,m:8},
       {d:12,m:9},{d:2,m:10},{d:15,m:10},{d:25,m:11}
@@ -712,8 +713,8 @@ function getHeatColor(v) {
 // ════════════════════════════════════════════════════════
 // ESCOPO DE DADOS
 // ════════════════════════════════════════════════════════
-async function getMyEmployees() {
-  const all   = (await getStore()).employees || [];
+function getMyEmployees() {
+  const all   = _store?.employees || [];
   const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
   if (scope.all) return all;
   if (scope.sector) {
@@ -778,9 +779,8 @@ async function getLiderDoFuncionario(emp) {
 
 // ── Lê faltas reais do rh_ponto (mais atualizado que emp.absences) ──
 function getTotalFaltasEmp(emp) {
-  const PONTO_KEY = 'rh_ponto';
   try {
-    const allPonto = JSON.parse(localStorage.getItem(PONTO_KEY) || '{}');
+    const allPonto = _allPonto;
     const ano      = emp.year || new Date().getFullYear();
     let   total    = 0;
     for (let m = 1; m <= 12; m++) {
@@ -802,7 +802,7 @@ function getTotalFaltasEmp(emp) {
 // POPULAR SELECTS
 // ════════════════════════════════════════════════════════
 function populateFilialSelect() {
-  const emps    = getMyEmployees();
+  const emps    = getMyEmployees();  // sync - reads _store
   const filiais = [...new Set(emps.map(e=>e.filial))].filter(Boolean).sort();
   const sel     = document.getElementById('filial-select');
   const cur     = sel.value;
@@ -810,9 +810,8 @@ function populateFilialSelect() {
     filiais.map(f=>`<option value="${f}" ${f===cur?'selected':''}>${f}</option>`).join('');
 }
 
-async function populateDeptSelect() {
-  const store  = await getStore();
-  const emps   = getMyEmployees();
+function populateDeptSelect() {
+  const emps   = getMyEmployees();  // sync - reads _store
   const depts  = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
   const sel    = document.getElementById('dept-select');
   const cur    = sel.value;
@@ -848,7 +847,11 @@ function setFilter(el, val) {
 // ════════════════════════════════════════════════════════
 // RENDER CARDS
 // ════════════════════════════════════════════════════════
-function renderCards() {
+async function renderCards() {
+  // Carrega store e ponto uma vez — helpers usam cache sincronamente
+  _store    = await getStore();
+  _allPonto = await LS.get('rh_ponto', {});
+
   const search    = document.getElementById('search-input').value.toLowerCase();
   const filialSel = document.getElementById('filial-select').value;
   const deptSel   = document.getElementById('dept-select').value;
