@@ -309,6 +309,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel()
 // ════════════════════════════════════════════════════════
 let currentUser    = null;
 let chartInstances = {};
+let _store         = null;  // cache do store — carregado uma vez por render
 
 const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
 const MONTHS   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
@@ -327,7 +328,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   initTheme();
   initSidebar('dashboard', currentUser);
-  renderDashboard();
+  await renderDashboard();
 });
 
 // ── Sidebar do dashboard (raiz) ──────────────────────
@@ -343,10 +344,11 @@ function sair() {
 function doLogout() { sair(); }
 
 // ════════════════════════════════════════════════════════
-// SCORE HELPERS
+// SCORE HELPERS — leem do cache _store (síncrono)
+// _store é carregado uma vez no início de renderDashboard()
 // ════════════════════════════════════════════════════════
 function getWeights() {
-  const cfg = (await getStore()).config || {};
+  const cfg = _store?.config || {};
   const pw  = Math.min(100, Math.max(0, parseInt(cfg.perfWeight)||40));
   const aw  = Math.min(100, Math.max(0, parseInt(cfg.aptWeight) ||35));
   return { perf:pw, apt:aw, abs:Math.max(0,100-pw-aw) };
@@ -358,7 +360,7 @@ function calcAptMedia(emp) {
 function calcAssid(emp) {
   if (emp.afastado) return 100;
   const total  = (emp.absences||[]).reduce((a,b)=>a+b,0);
-  const maxAbs = (await getStore()).config?.maxAbs || 36;
+  const maxAbs = _store?.config?.maxAbs || 36;
   return Math.max(0, 100-(total/maxAbs)*100);
 }
 function calcScore(emp) {
@@ -374,7 +376,7 @@ function getStatus(score) {
   return               { tag:'risk',  label:'🔴 Risco',    cls:'tag-risk'  };
 }
 function getMyEmployees() {
-  const all   = (await getStore()).employees || [];
+  const all   = _store?.employees || [];
   const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
   if (scope.all) return all;
   if (scope.sector) {
@@ -388,11 +390,14 @@ function getMyEmployees() {
 // ════════════════════════════════════════════════════════
 // RENDER DASHBOARD
 // ════════════════════════════════════════════════════════
-function renderDashboard() {
+async function renderDashboard() {
   document.getElementById('dash-date').textContent =
     new Date().toLocaleDateString('pt-BR',{ weekday:'long', year:'numeric', month:'long', day:'numeric' });
 
-  const store   = await getStore();
+  // Carrega store uma única vez e guarda no cache global
+  _store = await getStore();
+  const store = _store;
+
   const pPonto  = (typeof can==='function') ? can(currentUser,'ponto','edit')      : true;
   const pApt    = (typeof can==='function') ? can(currentUser,'aptidoes','edit')   : true;
   const pReport = (typeof can==='function') ? canSee(currentUser,'report')         : true;
@@ -433,14 +438,14 @@ function renderDashboard() {
   if (filialFiltro) emps = emps.filter(e => e.filial === filialFiltro);
   if (turnoFiltro)  emps = emps.filter(e => e.turno  === turnoFiltro);
 
-  renderKPIs(emps);
+  await renderKPIs(emps);
   renderCharts(emps);
   renderTop5(emps);
 }
 
-function getPendentesCount() {
+async function getPendentesCount() {
   const filialFiltro = document.getElementById('dash-filter-filial')?.value || '';
-  const store = await getStore();
+  const store = _store || await getStore();
   let ocs = (await LS.get('rh_ocorrencias', [])).filter(o => o.status === 'pendente');
   if (filialFiltro) {
     const empsFilial = new Set(
@@ -452,7 +457,7 @@ function getPendentesCount() {
 }
 
 // ── KPIs ──────────────────────────────────────────────
-function renderKPIs(emps) {
+async function renderKPIs(emps) {
   const total    = emps.length;
   const avgPerf  = total ? Math.round(emps.reduce((s,e)=>s+e.perf,0)/total) : 0;
   const avgAssid = total ? Math.round(emps.reduce((s,e)=>s+calcAssid(e),0)/total) : 0;
@@ -465,6 +470,7 @@ function renderKPIs(emps) {
     if (e.data_afastamento) return new Date(e.data_afastamento+'T00:00:00') <= hoje;
     return true;
   });
+  const pendentes = await getPendentesCount();
   document.getElementById('kpi-grid').innerHTML = [
     { cls:'blue',   label:'Funcionários',      value:total,              sub:'equipe total'              },
     { cls:'green',  label:'Desempenho Médio',  value:avgPerf+'%',        sub:'geral da equipe'           },
@@ -474,7 +480,7 @@ function renderKPIs(emps) {
     { cls:'red',    label:'🚫 Afastados Hoje', value:afas.length,        sub:afas.length
         ? afas.slice(0,2).map(e=>e.name.split(' ')[0]).join(', ')+(afas.length>2?'…':'')
         : 'nenhum afastado' },
-    { cls:'orange', label:'📝 Ocorrências',    value:getPendentesCount(),sub:'pendentes de aprovação'    },
+    { cls:'orange', label:'📝 Ocorrências',    value:pendentes,          sub:'pendentes de aprovação'    },
   ].map(k=>`
     <div class="kpi-card ${k.cls}">
       <div class="kpi-label">${k.label}</div>
