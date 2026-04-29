@@ -641,7 +641,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ════════════════════════════════════════════════════════
 // SCORE HELPERS
 // ════════════════════════════════════════════════════════
-function getWeights() {
+async function getWeights() {
   const cfg = (await getStore()).config || {};
   const pw  = Math.min(100, Math.max(0, parseInt(cfg.perfWeight) || 40));
   const aw  = Math.min(100, Math.max(0, parseInt(cfg.aptWeight)  || 35));
@@ -651,13 +651,13 @@ function calcAptMedia(emp) {
   const c = emp.competencies || {};
   return APT_KEYS.reduce((s,k) => s+(c[k]||0), 0) / APT_KEYS.length;
 }
-function calcAssid(emp) {
+async function calcAssid(emp) {
   if (emp.afastado) return 100;
   const total  = getTotalFaltasEmp(emp);
   const maxAbs = (await getStore()).config?.maxAbs || 36;
   return Math.max(0, 100-(total/maxAbs)*100);
 }
-function calcBonus(emp) {
+async function calcBonus(emp) {
   const BONUS_POR_DIA = 0.5;
   const BONUS_MAX     = 5;
   try {
@@ -712,7 +712,7 @@ function getHeatColor(v) {
 // ════════════════════════════════════════════════════════
 // ESCOPO DE DADOS
 // ════════════════════════════════════════════════════════
-function getMyEmployees() {
+async function getMyEmployees() {
   const all   = (await getStore()).employees || [];
   const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
   if (scope.all) return all;
@@ -740,7 +740,7 @@ function canOcorrenciaEmp() {
 }
 
 // Retorna o líder/responsável direto do funcionário com base no dept e turno atuais
-function getLiderDoFuncionario(emp) {
+async function getLiderDoFuncionario(emp) {
   const store = await getStore();
   const users = Object.values(store.users || {});
   const dept  = emp.dept  || '';
@@ -810,7 +810,7 @@ function populateFilialSelect() {
     filiais.map(f=>`<option value="${f}" ${f===cur?'selected':''}>${f}</option>`).join('');
 }
 
-function populateDeptSelect() {
+async function populateDeptSelect() {
   const store  = await getStore();
   const emps   = getMyEmployees();
   const depts  = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
@@ -820,7 +820,7 @@ function populateDeptSelect() {
     depts.map(d=>`<option value="${d}" ${d===cur?'selected':''}>${d}</option>`).join('');
 }
 
-function populateModalSelects(emp) {
+async function populateModalSelects(emp) {
   const store = await getStore();
   const opt   = (list, val) =>
     `<option value="">— Selecione —</option>` +
@@ -1063,14 +1063,14 @@ function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
 }
 
-function editEmployee(id) {
+async function editEmployee(id) {
   const emp = ((await getStore()).employees||[]).find(e=>e.id===id);
   if (!emp) return;
   if (!canEditEmp(emp)) { showToast('⚠️ Sem permissão para editar este funcionário.','warn'); return; }
   openModal(emp);
 }
 
-function deleteEmployee(id) {
+async function deleteEmployee(id) {
   const store = await getStore();
   const emp   = (store.employees||[]).find(e=>e.id===id);
   if (!emp) return;
@@ -1086,7 +1086,7 @@ function deleteEmployee(id) {
 // ════════════════════════════════════════════════════════
 // SALVAR
 // ════════════════════════════════════════════════════════
-function saveEmployee() {
+async function saveEmployee() {
   const name = document.getElementById('f-name').value.trim();
   if (!name) { showToast('⚠️ Nome é obrigatório.','warn'); document.getElementById('f-name').focus(); return; }
 
@@ -1176,7 +1176,7 @@ function toggleFerias() {
 // ════════════════════════════════════════════════════════
 // TRANSFERIR FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
-function openTransferModal(id) {
+async function openTransferModal(id) {
   const store = await getStore();
   const emp   = (store.employees||[]).find(e=>e.id===id);
   if (!emp) return;
@@ -1206,7 +1206,7 @@ function closeTransferModal() {
   document.getElementById('modal-transfer').classList.remove('open');
 }
 
-function saveTransfer() {
+async function saveTransfer() {
   const id    = document.getElementById('tr-edit-id').value;
   const store = await getStore();
   const idx   = (store.employees||[]).findIndex(e=>String(e.id)===String(id));
@@ -1242,7 +1242,7 @@ document.getElementById('modal-transfer').addEventListener('click', e => {
 // ════════════════════════════════════════════════════════
 // OCORRÊNCIA DO FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
-function openOcorrenciaModal(id, tipo) {
+async function openOcorrenciaModal(id, tipo) {
   const store = await getStore();
   const emp   = (store.employees||[]).find(e=>e.id===id);
   if (!emp) return;
@@ -1261,7 +1261,7 @@ function closeOcorrenciaModal() {
   document.getElementById('modal-ocorrencia-emp').classList.remove('open');
 }
 
-function saveOcorrencia() {
+async function saveOcorrencia() {
   const refId = document.getElementById('oc-edit-id').value;
   const tipo  = document.getElementById('oc-tipo').value;
   const desc  = document.getElementById('oc-desc').value.trim();
@@ -1347,7 +1347,7 @@ function removerFoto() {
 
 
 // ── Verificação de nome duplicado ───────────────────
-function verificarNomeDuplicado() {
+async function verificarNomeDuplicado() {
   const nome    = document.getElementById('f-name').value.trim().toLowerCase();
   const editId  = document.getElementById('f-edit-id').value;
   const aviso   = document.getElementById('nome-duplicado-aviso');

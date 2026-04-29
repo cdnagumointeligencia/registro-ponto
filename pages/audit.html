@@ -314,7 +314,7 @@ function setTipo(el, val) {
 // ════════════════════════════════════════════════════════
 // RENDER LOG
 // ════════════════════════════════════════════════════════
-function renderLog() {
+async function renderLog() {
   const search  = document.getElementById('search-input').value.toLowerCase();
   const acao    = document.getElementById('filter-acao').value;
   const modulo  = document.getElementById('filter-modulo').value;
@@ -405,7 +405,7 @@ function buildRow(l) {
 // ════════════════════════════════════════════════════════
 // EXPORTAR CSV
 // ════════════════════════════════════════════════════════
-function exportarCSV() {
+async function exportarCSV() {
   const logs = await getLogs();
   if (!logs.length) { showToast('⚠️ Nenhum registro para exportar.','warn'); return; }
 

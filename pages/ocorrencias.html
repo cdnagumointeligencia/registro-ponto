@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // DADOS
 // ════════════════════════════════════════════════════════
 async function await getOcorrencias() { return await LS.get(OC_KEY, []); }
-function saveOcorrencias(list) { await LS.set(OC_KEY, list); }
+async function saveOcorrencias(list) { await LS.set(OC_KEY, list); }
 
 // ════════════════════════════════════════════════════════
 // FILTROS
@@ -417,7 +417,7 @@ function setStatus(el, val) {
 // ════════════════════════════════════════════════════════
 // RENDER TABELA
 // ════════════════════════════════════════════════════════
-function renderTabela() {
+async function renderTabela() {
   const search  = document.getElementById('search-input').value.toLowerCase();
   const tipo    = document.getElementById('filter-tipo').value;
   const periodo = parseInt(document.getElementById('filter-periodo').value);
@@ -498,7 +498,7 @@ function buildRow(o) {
 // ════════════════════════════════════════════════════════
 // MODAL NOVA / EDITAR
 // ════════════════════════════════════════════════════════
-function openFormModal(oc) {
+async function openFormModal(oc) {
   const store = await getStore();
   const emps  = store.employees || [];
 
@@ -533,13 +533,13 @@ function openFormModal(oc) {
   document.getElementById('modal-form').classList.add('open');
 }
 
-function editarOcorrencia(id) {
+async function editarOcorrencia(id) {
   const oc = await getOcorrencias().find(o=>o.id===id);
   if (!oc) return;
   openFormModal(oc);
 }
 
-function salvarOcorrencia() {
+async function salvarOcorrencia() {
   const empEl  = document.getElementById('f-emp');
   const empId  = empEl.value;
   const editId = document.getElementById('f-edit-id').value;
@@ -592,7 +592,7 @@ function salvarOcorrencia() {
 // ════════════════════════════════════════════════════════
 // MODAL DETALHE
 // ════════════════════════════════════════════════════════
-function verDetalhe(id) {
+async function verDetalhe(id) {
   const o = await getOcorrencias().find(x=>x.id===id);
   if (!o) return;
   const sm = STATUS_META[o.status]||STATUS_META.pendente;
@@ -637,7 +637,7 @@ function verDetalhe(id) {
   document.getElementById('modal-detail').classList.add('open');
 }
 
-function mudarStatus(id, novoStatus) {
+async function mudarStatus(id, novoStatus) {
   const list = await getOcorrencias();
   const idx  = list.findIndex(o=>o.id===id);
   if (idx<0) return;
@@ -652,7 +652,7 @@ function mudarStatus(id, novoStatus) {
   showToast(msgs[novoStatus]||'✅ Status atualizado!');
 }
 
-function excluirOcorrencia(id) {
+async function excluirOcorrencia(id) {
   const o = await getOcorrencias().find(x=>x.id===id);
   if (!confirm('Excluir esta ocorrência? Esta ação não pode ser desfeita.')) return;
   saveOcorrencias(await getOcorrencias().filter(x=>x.id!==id));

@@ -291,19 +291,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ════════════════════════════════════════════════════════
 // PERSISTÊNCIA
 // ════════════════════════════════════════════════════════
-function carregarQuadroData() {
+async function carregarQuadroData() {
   quadroData = await LS.get('rh_quadro', {});
 }
 
 
-function autoSalvarTotal(val) {
+async function autoSalvarTotal(val) {
   if (!filialAtiva) return;
   if (!quadroData[filialAtiva]) quadroData[filialAtiva] = { totalQuadro:0, vagas:{} };
   quadroData[filialAtiva].totalQuadro = parseInt(val) || 0;
   await LS.set('rh_quadro', quadroData);
 }
 
-function salvarQuadro() {
+async function salvarQuadro() {
   if (!podeEditar) { showToast('⚠️ Sem permissão para editar o quadro.', 'warn'); return; }
   if (!filialAtiva) { showToast('⚠️ Selecione uma filial primeiro.', 'warn'); return; }
 
@@ -342,7 +342,7 @@ function salvarQuadro() {
 // ════════════════════════════════════════════════════════
 // SELETOR DE FILIAIS
 // ════════════════════════════════════════════════════════
-function buildFilialRow() {
+async function buildFilialRow() {
   const store   = await getStore();
   const filiais = store.filiais || [];
   const row     = document.getElementById('filial-row');
@@ -379,7 +379,7 @@ function selecionarFilial(nome) {
 // ════════════════════════════════════════════════════════
 // CONTEÚDO PRINCIPAL
 // ════════════════════════════════════════════════════════
-function renderQuadroContent() {
+async function renderQuadroContent() {
   if (!filialAtiva) return;
 
   const store   = await getStore();
@@ -614,7 +614,7 @@ function renderQuadroContent() {
 }
 
 // ── Atualiza vagas a contratar em tempo real ao editar total ──
-function atualizarResumo() {
+async function atualizarResumo() {
   const store      = await getStore();
   const empsFilial = (store.employees||[]).filter(e =>
     e.filial === filialAtiva

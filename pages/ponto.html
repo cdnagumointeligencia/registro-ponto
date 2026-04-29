@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ════════════════════════════════════════════════════════
 // ESCOPO
 // ════════════════════════════════════════════════════════
-function getMyEmployees() {
+async function getMyEmployees() {
   const all   = (await getStore()).employees || [];
   const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
   if (scope.all) return all;
@@ -642,12 +642,12 @@ function pontoKey(empId) {
   return `${empId}_${anoAtivo}_${String(mesAtivo+1).padStart(2,'0')}`;
 }
 
-function getPontoEmp(empId) {
+async function getPontoEmp(empId) {
   const all = await LS.get(PONTO_KEY, {});
   return all[pontoKey(empId)] || {};
 }
 
-function setPontoEmp(empId, diaMap) {
+async function setPontoEmp(empId, diaMap) {
   const all = await LS.get(PONTO_KEY, {});
   all[pontoKey(empId)] = diaMap;
   await LS.set(PONTO_KEY, all);
@@ -666,7 +666,7 @@ function setStatus(empId, dia, status) {
 }
 
 // Recalcula emp.absences[mes] com base no rh_ponto para o ano atual
-function syncAbsencesToStore(empId) {
+async function syncAbsencesToStore(empId) {
   const store = await getStore();
   const idx   = (store.employees||[]).findIndex(e=>String(e.id)===String(empId));
   if (idx < 0) return;
@@ -707,7 +707,7 @@ function getNomeFeriadoNacional(dia, mes) {
   return f ? f.nome : null;
 }
 
-function getNomeFeriadoRegional(dia, mes) {
+async function getNomeFeriadoRegional(dia, mes) {
   const store = await getStore();
   const lista = store.config?.feriadosCustom || [];
   const mesStr = String(mes+1).padStart(2,'0');
@@ -1002,7 +1002,7 @@ function showCtxMenu(e, empId, dia, statusAtual) {
   menu.classList.add('open');
 }
 
-function setStatusCtx(status) {
+async function setStatusCtx(status) {
   if (ctxEmpId === null) return;
   const store    = await getStore();
   const emp      = (store.employees||[]).find(e=>String(e.id)===String(ctxEmpId));
@@ -1049,7 +1049,7 @@ document.addEventListener('mouseleave', () => _ferTip.classList.remove('show'), 
 // ════════════════════════════════════════════════════════
 // LANÇAMENTO RÁPIDO — marca todos no dia selecionado
 // ════════════════════════════════════════════════════════
-function lancamentoRapido(status) {
+async function lancamentoRapido(status) {
   if (!podeEditar) { showToast('⚠️ Sem permissão para editar ponto.','warn'); return; }
   const diaInput = document.getElementById('lancamento-dia');
   const dia      = parseInt(diaInput.value);

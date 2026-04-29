@@ -236,7 +236,7 @@ function showMsg(id, text, type) {
   el.className   = 'login-msg ' + type;
 }
 
-function doLogin() {
+async function doLogin() {
   const id   = document.getElementById('li-id').value.trim();
   const pass = document.getElementById('li-pass').value;
   if (!id || !pass) { showMsg('login-msg','⚠️ Preencha todos os campos.','error'); return; }
@@ -249,7 +249,7 @@ function doLogin() {
   window.location.href = 'index.html';
 }
 
-function doRegister() {
+async function doRegister() {
   const id    = document.getElementById('reg-id').value.trim();
   const name  = document.getElementById('reg-name').value.trim();
   const nivel = document.getElementById('reg-nivel').value;
@@ -273,7 +273,7 @@ function doRegister() {
   setTimeout(() => switchTab('login'), 2000);
 }
 
-function onNivelChange() {
+async function onNivelChange() {
   const nivel     = document.getElementById('reg-nivel').value;
   const setorWrap = document.getElementById('reg-setor-wrap');
   const gestorInf = document.getElementById('reg-gestor-info');

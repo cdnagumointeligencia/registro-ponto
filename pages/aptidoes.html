@@ -549,7 +549,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ════════════════════════════════════════════════════════
 // HELPERS
 // ════════════════════════════════════════════════════════
-function getMyEmployees() {
+async function getMyEmployees() {
   const all   = (await getStore()).employees || [];
   const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
   if (scope.all) return all;
@@ -565,13 +565,13 @@ function calcAptMedia(emp) {
   const c = emp.competencies || {};
   return APT_KEYS.reduce((s,k)=>s+(c[k]||0),0)/APT_KEYS.length;
 }
-function calcAssid(emp) {
+async function calcAssid(emp) {
   if (emp.afastado) return 100;
   const total  = (emp.absences||[]).reduce((a,b)=>a+b,0);
   const maxAbs = (await getStore()).config?.maxAbs||36;
   return Math.max(0,100-(total/maxAbs)*100);
 }
-function getWeights() {
+async function getWeights() {
   const cfg = (await getStore()).config||{};
   const pw  = Math.min(100,Math.max(0,parseInt(cfg.perfWeight)||40));
   const aw  = Math.min(100,Math.max(0,parseInt(cfg.aptWeight) ||35));
@@ -754,7 +754,7 @@ function buildRow(emp, lista) {
 // ════════════════════════════════════════════════════════
 // EDIÇÃO INLINE — clique na bubble
 // ════════════════════════════════════════════════════════
-function startEdit(empId, key, cell) {
+async function startEdit(empId, key, cell) {
   if (!podeEditar) return;
   if (cell.querySelector('.apt-input')) return;
 
@@ -808,7 +808,7 @@ async function commitEdit(empId, key, input) {
 // ════════════════════════════════════════════════════════
 // MODAL NOVA AVALIAÇÃO
 // ════════════════════════════════════════════════════════
-function openModal(empId) {
+async function openModal(empId) {
   const store = await getStore();
   const emps  = getMyEmployees();
   const emp   = empId ? emps.find(e=>e.id===empId) : null;
@@ -840,7 +840,7 @@ function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
 }
 
-function saveAvaliacao() {
+async function saveAvaliacao() {
   const editId = document.getElementById('f-edit-id').value;
   const empSel = document.getElementById('f-emp').value;
   const empId  = editId || empSel;

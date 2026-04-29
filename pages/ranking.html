@@ -431,7 +431,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ════════════════════════════════════════════════════════
 // HELPERS DE SCORE
 // ════════════════════════════════════════════════════════
-function getWeights() {
+async function getWeights() {
   const cfg = (await getStore()).config || {};
   const pw  = Math.min(100, Math.max(0, parseInt(cfg.perfWeight)||40));
   const aw  = Math.min(100, Math.max(0, parseInt(cfg.aptWeight) ||35));
@@ -461,14 +461,14 @@ function getTotalFaltasEmp(emp) {
   }
 }
 
-function calcAssid(emp) {
+async function calcAssid(emp) {
   // Afastado/férias: score congelado — usa histórico real (não infla com 100)
   const total  = getTotalFaltasEmp(emp);
   const maxAbs = (await getStore()).config?.maxAbs || 36;
   return Math.max(0, 100 - (total / maxAbs) * 100);
 }
 // ── Conta dias trabalhados em domingo/feriado (bônus) ────
-function calcBonus(emp) {
+async function calcBonus(emp) {
   const BONUS_POR_DIA = 0.5;
   const BONUS_MAX     = 5;
   try {
@@ -519,7 +519,7 @@ function getStatus(score) {
   return               { tag:'risk',  label:'🔴 Risco',    cls:'tag-risk'  };
 }
 
-function getMyEmployees() {
+async function getMyEmployees() {
   const all   = (await getStore()).employees || [];
   const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
   if (scope.all) return all;
