@@ -709,9 +709,8 @@ function getNomeFeriadoNacional(dia, mes) {
   return f ? f.nome : null;
 }
 
-async function getNomeFeriadoRegional(dia, mes) {
-  const store = _store || await getStore();
-  const lista = store.config?.feriadosCustom || [];
+function getNomeFeriadoRegional(dia, mes) {
+  const lista = _store?.config?.feriadosCustom || [];
   const mesStr = String(mes+1).padStart(2,'0');
   const diaStr = String(dia).padStart(2,'0');
   const chave  = `${mesStr}-${diaStr}`;
@@ -759,6 +758,7 @@ function getStatusDiaBloqueado(emp, ano, mes, dia) {
 // ════════════════════════════════════════════════════════
 async function renderGrade() {
   _store = await getStore();
+  const _allPonto = await LS.get(PONTO_KEY, {});  // pré-carrega todo o ponto
   const emps    = getEmpsDoDepto();
   const hoje    = new Date();
   const diasMes = new Date(anoAtivo, mesAtivo+1, 0).getDate();
@@ -807,7 +807,8 @@ async function renderGrade() {
   // ── Corpo ──
   let tbody = '<tbody>';
   emps.forEach(emp => {
-    const pontoMap = getPontoEmp(emp.id);
+    const _key     = pontoKey(emp.id);
+    const pontoMap = _allPonto[_key] || {};
     const ini      = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
     // Avatar usa status de HOJE (para indicar visualmente quem está afastado/férias agora)
     const { bloqueado: bloqHoje, motivo: motivoHoje } = isEmpBloqueado(emp);
