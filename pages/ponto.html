@@ -471,6 +471,7 @@ const PONTO_KEY = 'rh_ponto'; // { [empId_ano_mes]: { [dia]: status } }
 // ESTADO
 // ════════════════════════════════════════════════════════
 let currentUser  = null;
+let _store       = null;  // cache do store
 const _abrev = n => { const p = n.trim().split(/\s+/); return p.length > 1 ? p[0] + ' ' + p[p.length-1] : p[0]; };
 const nomeAbrev = (emp, lista) => {
   const ab = _abrev(emp.name);
@@ -497,7 +498,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     ? can(currentUser, 'ponto', 'edit')
     : true;
 
-  buildFilialChips();
+  await buildFilialChips();
   buildDeptChips();
   buildMesChips();
   atualizarMesLabel();
@@ -506,8 +507,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ════════════════════════════════════════════════════════
 // ESCOPO
 // ════════════════════════════════════════════════════════
-async function getMyEmployees() {
-  const all   = (await getStore()).employees || [];
+function getMyEmployees() {
+  const all   = _store?.employees || [];
   const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
   if (scope.all) return all;
   if (scope.sector) {
@@ -529,7 +530,8 @@ function getEmpsDoDepto() {
 // ════════════════════════════════════════════════════════
 // FILIAL CHIPS
 // ════════════════════════════════════════════════════════
-function buildFilialChips() {
+async function buildFilialChips() {
+  _store = await getStore();
   const emps    = getMyEmployees();
   const filiais = [...new Set(emps.map(e=>e.filial))].filter(Boolean).sort();
   const wrap    = document.getElementById('filial-chips');
@@ -568,7 +570,7 @@ function selecionarFilial(filial) {
 // DEPT CHIPS
 // ════════════════════════════════════════════════════════
 function buildDeptChips() {
-  let emps = getMyEmployees();
+  let emps = getMyEmployees();  // sync
   if (filialAtiva) emps = emps.filter(e=>e.filial===filialAtiva);
   const depts = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
   const wrap  = document.getElementById('dept-chips');
@@ -653,16 +655,16 @@ async function setPontoEmp(empId, diaMap) {
   await LS.set(PONTO_KEY, all);
 }
 
-function setStatus(empId, dia, status) {
-  const m        = getPontoEmp(empId);
+async function setStatus(empId, dia, status) {
+  const m        = await getPontoEmp(empId);
   const anterior = m[dia] || 'vazio';
 
   // Sem mudança real — não salva nem loga
   if (anterior === status) return;
   if (status === 'vazio') delete m[dia];
   else m[dia] = status;
-  setPontoEmp(empId, m);
-  syncAbsencesToStore(empId);
+  await setPontoEmp(empId, m);
+  await syncAbsencesToStore(empId);
 }
 
 // Recalcula emp.absences[mes] com base no rh_ponto para o ano atual
@@ -708,7 +710,7 @@ function getNomeFeriadoNacional(dia, mes) {
 }
 
 async function getNomeFeriadoRegional(dia, mes) {
-  const store = await getStore();
+  const store = _store || await getStore();
   const lista = store.config?.feriadosCustom || [];
   const mesStr = String(mes+1).padStart(2,'0');
   const diaStr = String(dia).padStart(2,'0');
@@ -755,7 +757,8 @@ function getStatusDiaBloqueado(emp, ano, mes, dia) {
 // ════════════════════════════════════════════════════════
 // RENDER GRADE
 // ════════════════════════════════════════════════════════
-function renderGrade() {
+async function renderGrade() {
+  _store = await getStore();
   const emps    = getEmpsDoDepto();
   const hoje    = new Date();
   const diasMes = new Date(anoAtivo, mesAtivo+1, 0).getDate();
