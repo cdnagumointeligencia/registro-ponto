@@ -382,19 +382,10 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
     <button class="btn btn-primary" id="btn-novo" onclick="openModal()">＋ Novo Líder</button>
   </div>
 
+  <!-- Filtros -->
   <div class="filter-bar">
-  <div id="dept-chips"></div>
-
-  <!-- NOVO FILTRO POR LÍDER -->
-  <div class="search-wrap">
-    <span class="search-icon">👤</span>
-    <select id="leader-filter" class="search-input" onchange="setLeaderFilter(this.value)">
-      <option value="">Todos os líderes</option>
-    </select>
+    <div id="dept-chips"></div>
   </div>
-</div>
-  
-  
 
   <!-- Grid -->
   <div class="leaders-grid" id="leaders-grid"></div>
@@ -435,12 +426,6 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
       </div>
       <div class="form-group">
         <label class="form-label">🏅 Nível</label>
-		<div class="form-group">
-  <label class="form-label">👆 Superior direto</label>
-  <select class="form-input" id="f-parent">
-    <option value="">— Nenhum (topo) —</option>
-  </select>
-</div>
         <select class="form-input" id="f-nivel">
           <option value="lider">👷 Líder Operacional</option>
           <option value="encarregado">🔰 Encarregado</option>
@@ -548,7 +533,6 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 // ════════════════════════════════════════════════════════
 let currentUser   = null;
 let activeDeptFilter = '';
-let activeLeaderFilter = '';
 let _store        = null;  // cache do store
 let _allPonto     = {};    // cache do rh_ponto
 
@@ -579,8 +563,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (btnNovo) btnNovo.style.display = perfil === 'admin_master' ? '' : 'none';
 
   buildDeptChips();
-await buildLeaderFilter();
-renderLeaders();
+  renderLeaders();
 });
 
 // ════════════════════════════════════════════════════════
@@ -722,29 +705,9 @@ async function buildDeptChips() {
   `).join('');
 }
 
-async function buildLeaderFilter() {
-  const store = _store || await getStore();
-
-  const leaders = Object.values(store.users || {})
-    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master')
-    .sort((a,b) => a.name.localeCompare(b.name));
-
-  const select = document.getElementById('leader-filter');
-
-  select.innerHTML = `
-    <option value="">Todos os líderes</option>
-    ${leaders.map(l => `<option value="${l.id}">${l.name}</option>`).join('')}
-  `;
-}
-
 function setDeptFilter(val) {
   activeDeptFilter = val;
   buildDeptChips();
-  renderLeaders();
-}
-
-function setLeaderFilter(id) {
-  activeLeaderFilter = id;
   renderLeaders();
 }
 
@@ -759,80 +722,132 @@ async function reloadLeaders() {
 // RENDER LEADERS — agrupado por hierarquia
 // ════════════════════════════════════════════════════════
 async function renderLeaders() {
-  const store = _store || await getStore();
-  _store = store;
+  // Só recarrega do Firestore se ainda não tiver cache (evita race condition ao digitar)
+  if (!_store) {
+    _store    = await getStore();
+    _allPonto = await LS.get('rh_ponto', {});
+  }
+  const store   = _store;
+  const perfil  = getUserPerfil(currentUser);
+  const isAdmin = perfil === 'admin_master';
 
-  const leaders = Object.values(store.users || {})
+  // Lista de usuários que são líderes (todos exceto admin master)
+  let leaders = Object.values(store.users || {})
     .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
+
+  // Busca
+
+  // Filtro por departamento
+  if (activeDeptFilter) {
+    leaders = leaders.filter(u => {
+      const teamEmps = getTeamEmps(u, store.employees||[]);
+      return teamEmps.some(e=>e.dept===activeDeptFilter);
+    });
+  }
 
   const grid = document.getElementById('leaders-grid');
 
-  // 👉 FILTRO POR LÍDER (organograma)
-  if (activeLeaderFilter) {
-    const leader = leaders.find(l => l.id === activeLeaderFilter);
-    if (!leader) return;
-
-    const { tree, emps } = getHierarquiaDoLider(leader, store);
-
-    function renderTree(node) {
-      let html = `
-        <div style="margin-bottom:12px">
-          ${buildCard(node.leader, store, true)}
-        </div>
-      `;
-
-      if (node.children.length) {
-        html += `
-          <div style="margin-left:40px;border-left:2px solid var(--border);padding-left:16px">
-            ${node.children.map(child => renderTree(child)).join('')}
-          </div>
-        `;
-      }
-
-      return html;
-    }
-
-    let html = `
-      <div class="hierarquia-secao">
-        <span class="hierarquia-label lider">🌳 Organograma</span>
-        <div class="hierarquia-linha"></div>
-      </div>
-    `;
-
-    html += renderTree(tree);
-
-    // funcionários
-    if (emps.length) {
-      html += `
-        <div class="hierarquia-secao">
-          <span class="hierarquia-label lider">👷 Equipe Direta</span>
-          <div class="hierarquia-linha"></div>
-        </div>
-      `;
-
-      emps.forEach(emp => {
-        html += `
-          <div class="leader-card nivel-lider">
-            <div class="card-header">
-              <div class="leader-avatar">
-                ${emp.name.split(' ').map(x=>x[0]).slice(0,2).join('')}
-              </div>
-              <div class="leader-info">
-                <div class="leader-name">${emp.name}</div>
-                <div class="leader-role">${emp.dept || ''}</div>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    grid.innerHTML = html;
+  if (!leaders.length) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🧑‍💼</div>
+        <p style="font-size:14px">Nenhum líder encontrado</p>
+        <p style="font-size:12px;margin-top:6px">Cadastre novos usuários pelo botão acima.</p>
+      </div>`;
     return;
   }
 
-  // 👉 LISTA NORMAL (sem filtro)
-  let html = leaders.map(l => buildCard(l, store, true)).join('');
+  // Ordem hierárquica — do mais alto para o mais baixo
+  const HIERARQUIA_ORDER = ['diretoria','gerencia','coordenacao','encarregado','lider'];
+  const HIERARQUIA_META  = {
+    diretoria:   { label:'🏢 Diretoria',    cls:'diretoria'   },
+    gerencia:    { label:'📊 Gerência',     cls:'gerencia'    },
+    coordenacao: { label:'📋 Coordenação',  cls:'coordenacao' },
+    encarregado: { label:'🔰 Encarregado',  cls:'encarregado' },
+    lider:       { label:'👷 Liderança Operacional', cls:'lider' },
+  };
+
+  // Agrupa por nível
+  const grupos = {};
+  HIERARQUIA_ORDER.forEach(n => grupos[n] = []);
+  leaders.forEach(u => {
+    const nivel = u.nivel || 'lider';
+    if (grupos[nivel]) grupos[nivel].push(u);
+    else grupos['lider'].push(u);
+  });
+
+  // Monta HTML por grupo
+  let html = '';
+  HIERARQUIA_ORDER.forEach(nivel => {
+    const lista = grupos[nivel];
+    if (!lista.length) return;
+
+    const meta = HIERARQUIA_META[nivel];
+    html += `
+      <div class="hierarquia-secao">
+        <span class="hierarquia-label ${meta.cls}">${meta.label}</span>
+        <div class="hierarquia-linha"></div>
+        <span style="font-size:11px;color:var(--muted);white-space:nowrap">${lista.length} ${lista.length===1?'pessoa':'pessoas'}</span>
+      </div>`;
+    lista.forEach(u => { html += buildCard(u, store, isAdmin); });
+  });
+
+  // ── Seção operacional — funcionários cadastrados ──
+  let emps = store.employees || [];
+  if (activeDeptFilter) emps = emps.filter(e => e.dept === activeDeptFilter);
+
+  if (emps.length) {
+    html += `
+      <div class="hierarquia-secao">
+        <span class="hierarquia-label" style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25)">
+          👥 Operacional
+        </span>
+        <div class="hierarquia-linha"></div>
+        <span style="font-size:11px;color:var(--muted);white-space:nowrap">${emps.length} ${emps.length===1?'funcionário':'funcionários'}</span>
+      </div>`;
+
+    emps.forEach(emp => {
+      const lider = getLiderDoFuncionario(emp, store);
+      const ini   = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+      const score = calcEmpScore(emp);
+      const st    = getEmpStatus(score);
+
+      html += `
+      <div class="leader-card nivel-lider" style="border-color:rgba(79,142,247,.35)">
+        <div style="height:3px;background:linear-gradient(90deg,rgba(79,142,247,.6),rgba(79,142,247,.2));flex-shrink:0"></div>
+        <div class="card-header">
+          <div class="leader-avatar" style="background:linear-gradient(135deg,#4f8ef7,#3b6fd4);font-size:13px">${ini}</div>
+          <div class="leader-info">
+            <div class="leader-name">${emp.name}</div>
+            <div class="leader-role">${[emp.role||'', emp.dept||''].filter(Boolean).join(' · ')}</div>
+          </div>
+          <div class="leader-badge" style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25)">
+            👤 Operacional
+          </div>
+        </div>
+        <div class="card-metrics">
+          <div class="metric-item">
+            <div class="metric-label">Desempenho</div>
+            <div class="metric-val" style="color:var(--accent)">${emp.perf||0}%</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-label">Score</div>
+            <div class="metric-val" style="color:${score>=85?'#34d399':score>=70?'#4f8ef7':score>=55?'#fbbf24':'#f87171'}">${score}</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-label">Líder</div>
+            <div class="metric-val" style="font-size:11px;color:var(--muted)">${lider ? lider.name.split(' ')[0] : '—'}</div>
+          </div>
+        </div>
+        ${emp.filial||emp.turno ? `
+        <div style="display:flex;gap:5px;flex-wrap:wrap;padding:0 18px 14px">
+          ${emp.filial?`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.2)">🏭 ${emp.filial}</span>`:''}
+          ${emp.turno ?`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(167,139,250,.12);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">🕐 ${emp.turno}</span>`:''}
+        </div>` : ''}
+      </div>`;
+    });
+  }
+
   grid.innerHTML = html;
 }
 
@@ -862,35 +877,6 @@ function getTeamEmps(leader, allEmps) {
     const turnoOk = turnos.length ? turnos.includes(e.turno) : true;
     return deptOk && turnoOk;
   });
-}
-
-function getHierarquiaDoLider(leader, store) {
-  const allUsers = Object.values(store.users || {});
-  const allEmps  = store.employees || [];
-
-  // filhos diretos
-  const filhos = allUsers.filter(u => u.parentId === leader.id);
-
-  // função recursiva
-  function montarNo(node) {
-    const children = allUsers.filter(u => u.parentId === node.id);
-
-    return {
-      leader: node,
-      children: children.map(c => montarNo(c))
-    };
-  }
-
-  // funcionários do líder
-  const emps = allEmps.filter(e => {
-    const lider = getLiderDoFuncionario(e, store);
-    return lider && lider.id === leader.id;
-  });
-
-  return {
-    tree: montarNo(leader),
-    emps
-  };
 }
 
 // Contagem total hierárquica
@@ -981,7 +967,7 @@ function buildCard(leader, store, isAdmin) {
     </div>` : '';
 
   return `
-  <div class="leader-card nivel-${nivel}" onclick="irParaHierarquia('${leader.id}')" style="cursor:pointer">
+  <div class="leader-card nivel-${nivel}">
     <!-- Header -->
     <div class="card-header">
       <div class="leader-avatar">${leader.foto ? `<img src="${leader.foto}" style="width:52px;height:52px;border-radius:50%;object-fit:cover">` : ini}</div>
@@ -1060,11 +1046,6 @@ function buildCard(leader, store, isAdmin) {
   </div>`;
 }
 
-function irParaHierarquia(id) {
-  activeLeaderFilter = id;
-  renderLeaders();
-}
-
 // ════════════════════════════════════════════════════════
 // MODAL
 // ════════════════════════════════════════════════════════
@@ -1089,22 +1070,6 @@ async function openModal(leader) {
   document.getElementById('f-role').value    = leader?.perfil?.funcao || '';
   document.getElementById('f-nivel').value   = leader?.nivel || 'lider';
   document.getElementById('f-pass').value    = '';
-  
-  // ── SUPERIOR ──
-const parentSelect = document.getElementById('f-parent');
-
-const leaders = Object.values(store.users || {})
-  .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master')
-  .filter(u => !leader || u.id !== leader.id); // não pode ser ele mesmo
-
-parentSelect.innerHTML = `
-  <option value="">— Nenhum (topo) —</option>
-  ${leaders.map(l => `
-    <option value="${l.id}" ${leader?.parentId === l.id ? 'selected' : ''}>
-      ${l.name}
-    </option>
-  `).join('')}
-`;
 
   // Bloqueia edição do ID se for edição
   const idInput = document.getElementById('f-id');
@@ -1171,8 +1136,6 @@ async function saveLeader() {
   const depts   = [...document.querySelectorAll('#f-depts-list input:checked')].map(c=>c.value);
   const filiais = [...document.querySelectorAll('#f-filiais-list input:checked')].map(c=>c.value);
   const turnos  = [...document.querySelectorAll('#f-turnos-list input:checked')].map(c=>c.value);
-  
-  const parentId = document.getElementById('f-parent').value || null;
 
   const perfil = {
     filiais,
@@ -1186,28 +1149,12 @@ async function saveLeader() {
   if (editId) {
     if (!store.users[editId]) { showToast('❌ Usuário não encontrado.','error'); return; }
     const fotoLider = document.getElementById('f-foto-lider').value || store.users[editId].foto || null;
-    store.users[editId] = {
-  ...store.users[editId],
-  name,
-  nivel,
-  perfil,
-  parentId,
-  foto: fotoLider
-};
+    store.users[editId] = { ...store.users[editId], name, nivel, perfil, foto: fotoLider };
     await registrarLog('editou', 'Líderes', `Editou: <strong>${name}</strong>`);
     showToast('✅ Líder atualizado!');
   } else {
     const fotoLiderNovo = document.getElementById('f-foto-lider').value || null;
-    store.users[id] = {
-  id,
-  name,
-  pass,
-  nivel,
-  parentId,
-  setor: depts[0] || '',
-  perfil,
-  foto: fotoLiderNovo
-};
+    store.users[id] = { id, name, pass, nivel, setor: depts[0] || '', perfil, foto: fotoLiderNovo };
     await registrarLog('criou', 'Líderes', `Novo líder: <strong>${name}</strong> (${nivel})`);
     showToast('✅ Líder cadastrado!');
   }
