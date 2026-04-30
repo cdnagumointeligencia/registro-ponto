@@ -297,6 +297,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 // ════════════════════════════════════════════════════════
 let currentUser  = null;
 let chartBarras  = null;
+let _store       = null;  // cache do store
 
 const MONTHS_FULL = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
                      'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
@@ -316,17 +317,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('abs-date').textContent =
     now.toLocaleDateString('pt-BR',{ weekday:'long', year:'numeric', month:'long', day:'numeric' });
 
+  await renderAll();
   buildMesSelect();
   buildFilialSelect();
   buildDeptSelect();
-  renderAll();
 });
 
 // ════════════════════════════════════════════════════════
 // HELPERS
 // ════════════════════════════════════════════════════════
-async function getMyEmployees() {
-  const all   = (await getStore()).employees || [];
+function getMyEmployees() {
+  const all   = _store?.employees || [];
   const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
   if (scope.all) return all;
   if (scope.sector) {
@@ -412,7 +413,8 @@ function buildDeptSelect() {
 // ════════════════════════════════════════════════════════
 // RENDER ALL
 // ════════════════════════════════════════════════════════
-function renderAll() {
+async function renderAll() {
+  _store = await getStore();
   const emps = getFilteredEmps();
   const mes  = getMesIndex();
 
