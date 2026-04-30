@@ -465,9 +465,9 @@ async function renderTabela() {
 function buildRow(o) {
   const sm    = STATUS_META[o.status] || STATUS_META.pendente;
   const tm    = TIPO_META[o.tipo]     || { emoji:'📝', label:o.tipo, cls:'tipo-ajuste' };
-  const dt    = new Date(o.ts);
+  const dt    = o.ts ? new Date(o.ts) : new Date();
   const data  = dt.toLocaleDateString('pt-BR');
-  const hora  = dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  const hora  = isNaN(dt) ? '--:--' : dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
   const ini   = (o.empName||'?').split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
   const [c1,c2] = userColor(o.empName||'?');
 
@@ -525,8 +525,14 @@ async function openFormModal(oc) {
   // Data/hora padrão = agora
   const agora = new Date();
   agora.setMinutes(agora.getMinutes()-agora.getTimezoneOffset());
+  // Converte para horário local no campo datetime-local
+  function toLocalDt(isoStr) {
+    const d = new Date(isoStr);
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0,16);
+  }
   document.getElementById('f-dt').value = oc?.ts
-    ? new Date(oc.ts).toISOString().slice(0,16)
+    ? toLocalDt(oc.ts)
     : agora.toISOString().slice(0,16);
 
   document.getElementById('f-emp').disabled = !!oc;
@@ -562,14 +568,23 @@ async function salvarOcorrencia() {
   if (editId) {
     const idx = list.findIndex(o=>o.id===editId);
     if (idx<0) { showToast('❌ Ocorrência não encontrada.','error'); return; }
-    list[idx] = { ...list[idx], tipo, desc, obs, ts: dtVal ? new Date(dtVal).toISOString() : list[idx].ts };
+    list[idx] = { ...list[idx], tipo, desc, obs, ts: (() => {
+      if (!dtVal) return list[idx].ts;
+      const d = new Date(dtVal);
+      return isNaN(d) ? list[idx].ts : d.toISOString();
+    })() };
     await registrarLog('editou', 'Ocorrências', `Editou ocorrência <strong>${tipo}</strong> de <strong>${list[idx].empName||'—'}</strong>`);
     showToast('✅ Ocorrência atualizada!');
   } else {
     const empData = emps.find(e=>String(e.id)===String(empId));
     list.unshift({
       id:        uid(),
-      ts:        dtVal ? new Date(dtVal).toISOString() : new Date().toISOString(),
+      ts:        (() => {
+        if (!dtVal) return new Date().toISOString();
+        // datetime-local value is local time — convert to UTC ISO correctly
+        const d = new Date(dtVal);
+        return isNaN(d) ? new Date().toISOString() : d.toISOString();
+      })(),
       empId:     empData?.id,
       empName:   empData?.name || '—',
       empDept:   empData?.dept || '—',
