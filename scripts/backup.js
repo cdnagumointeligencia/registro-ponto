@@ -20,7 +20,8 @@ const firebaseConfig = {
 // ── Configuração EmailJS ─────────────────────────────────
 const EMAILJS_SERVICE_ID  = process.env.EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID;
-const EMAILJS_PUBLIC_KEY  = process.env.EMAILJS_PUBLIC_KEY;
+const EMAILJS_PUBLIC_KEY   = process.env.EMAILJS_PUBLIC_KEY;
+const EMAILJS_PRIVATE_KEY  = process.env.EMAILJS_PRIVATE_KEY;
 
 async function main() {
   console.log('🔄 Iniciando backup semanal...');
@@ -83,6 +84,7 @@ async function main() {
     service_id:  EMAILJS_SERVICE_ID,
     template_id: EMAILJS_TEMPLATE_ID,
     user_id:     EMAILJS_PUBLIC_KEY,
+    accessToken: EMAILJS_PRIVATE_KEY,
     template_params: {
       name:               'Sistema CD Nagumo',
       email:              'cdnagumo.inteligencia@gmail.com',
