@@ -758,67 +758,82 @@ async function reloadLeaders() {
 // ════════════════════════════════════════════════════════
 // RENDER LEADERS — agrupado por hierarquia
 // ════════════════════════════════════════════════════════
-if (activeLeaderFilter) {
-  const leader = leaders.find(l => l.id === activeLeaderFilter);
-  if (!leader) return;
+async function renderLeaders() {
+  const store = _store || await getStore();
+  _store = store;
 
-  const { tree, emps } = getHierarquiaDoLider(leader, store);
+  const leaders = Object.values(store.users || {})
+    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
 
-  function renderTree(node) {
-    let html = `
-      <div style="margin-bottom:12px">
-        ${buildCard(node.leader, store, isAdmin)}
-      </div>
-    `;
+  const grid = document.getElementById('leaders-grid');
 
-    if (node.children.length) {
-      html += `
-        <div style="margin-left:40px;border-left:2px solid var(--border);padding-left:16px">
-          ${node.children.map(child => renderTree(child)).join('')}
+  // 👉 FILTRO POR LÍDER (organograma)
+  if (activeLeaderFilter) {
+    const leader = leaders.find(l => l.id === activeLeaderFilter);
+    if (!leader) return;
+
+    const { tree, emps } = getHierarquiaDoLider(leader, store);
+
+    function renderTree(node) {
+      let html = `
+        <div style="margin-bottom:12px">
+          ${buildCard(node.leader, store, true)}
         </div>
       `;
+
+      if (node.children.length) {
+        html += `
+          <div style="margin-left:40px;border-left:2px solid var(--border);padding-left:16px">
+            ${node.children.map(child => renderTree(child)).join('')}
+          </div>
+        `;
+      }
+
+      return html;
     }
 
-    return html;
-  }
-
-  let html = `
-    <div class="hierarquia-secao">
-      <span class="hierarquia-label lider">🌳 Organograma</span>
-      <div class="hierarquia-linha"></div>
-    </div>
-  `;
-
-  html += renderTree(tree);
-
-  // funcionários
-  if (emps.length) {
-    html += `
+    let html = `
       <div class="hierarquia-secao">
-        <span class="hierarquia-label lider">👷 Equipe Direta</span>
+        <span class="hierarquia-label lider">🌳 Organograma</span>
         <div class="hierarquia-linha"></div>
       </div>
     `;
 
-    emps.forEach(emp => {
+    html += renderTree(tree);
+
+    // funcionários
+    if (emps.length) {
       html += `
-        <div class="leader-card nivel-lider">
-          <div class="card-header">
-            <div class="leader-avatar">
-              ${emp.name.split(' ').map(x=>x[0]).slice(0,2).join('')}
-            </div>
-            <div class="leader-info">
-              <div class="leader-name">${emp.name}</div>
-              <div class="leader-role">${emp.dept || ''}</div>
-            </div>
-          </div>
+        <div class="hierarquia-secao">
+          <span class="hierarquia-label lider">👷 Equipe Direta</span>
+          <div class="hierarquia-linha"></div>
         </div>
       `;
-    });
+
+      emps.forEach(emp => {
+        html += `
+          <div class="leader-card nivel-lider">
+            <div class="card-header">
+              <div class="leader-avatar">
+                ${emp.name.split(' ').map(x=>x[0]).slice(0,2).join('')}
+              </div>
+              <div class="leader-info">
+                <div class="leader-name">${emp.name}</div>
+                <div class="leader-role">${emp.dept || ''}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    grid.innerHTML = html;
+    return;
   }
 
-  document.getElementById('leaders-grid').innerHTML = html;
-  return;
+  // 👉 LISTA NORMAL (sem filtro)
+  let html = leaders.map(l => buildCard(l, store, true)).join('');
+  grid.innerHTML = html;
 }
 
 // Helpers — retornam arrays de depts/filiais/turnos do líder
