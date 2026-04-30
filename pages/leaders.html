@@ -384,11 +384,6 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 
   <!-- Filtros -->
   <div class="filter-bar">
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input class="search-input" type="text" id="search-input"
-        placeholder="Buscar líder..." oninput="renderLeaders()">
-    </div>
     <div id="dept-chips"></div>
   </div>
 
@@ -733,7 +728,6 @@ async function renderLeaders() {
     _allPonto = await LS.get('rh_ponto', {});
   }
   const store   = _store;
-  const search  = document.getElementById('search-input').value.toLowerCase();
   const perfil  = getUserPerfil(currentUser);
   const isAdmin = perfil === 'admin_master';
 
@@ -742,7 +736,6 @@ async function renderLeaders() {
     .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
 
   // Busca
-  if (search) leaders = leaders.filter(u => (u.name||'').toLowerCase().includes(search));
 
   // Filtro por departamento
   if (activeDeptFilter) {
