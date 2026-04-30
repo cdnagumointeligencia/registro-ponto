@@ -794,7 +794,6 @@ async function renderLeaders() {
 
   // ── Seção operacional — funcionários cadastrados ──
   let emps = store.employees || [];
-  if (search) emps = emps.filter(e => e.name.toLowerCase().includes(search));
   if (activeDeptFilter) emps = emps.filter(e => e.dept === activeDeptFilter);
 
   if (emps.length) {
