@@ -318,8 +318,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('abs-date').textContent =
     now.toLocaleDateString('pt-BR',{ weekday:'long', year:'numeric', month:'long', day:'numeric' });
 
-  await renderAll();
+  // Constrói selects ANTES de renderizar (getMesIndex precisa do select)
   buildMesSelect();
+  // Carrega store e ponto, depois renderiza
+  await renderAll();
   buildFilialSelect();
   buildDeptSelect();
 });
@@ -349,7 +351,9 @@ function getFilteredEmps() {
 }
 
 function getMesIndex() {
-  return parseInt(document.getElementById('filter-mes').value);
+  const val = document.getElementById('filter-mes')?.value;
+  const idx = parseInt(val);
+  return isNaN(idx) ? new Date().getMonth() : idx;
 }
 
 // ════════════════════════════════════════════════════════
@@ -360,7 +364,7 @@ const PONTO_KEY = 'rh_ponto';
 // Retorna faltas do funcionário em um mês específico (0-based) lendo o rh_ponto
 function getFaltasMes(emp, mesIdx, ano) {
   try {
-    const allPonto = _allPonto;
+    const allPonto = _allPonto || {};
     const key  = `${emp.id}_${ano}_${String(mesIdx+1).padStart(2,'0')}`;
     const dias = allPonto[key] || {};
     let f = 0;
@@ -368,8 +372,9 @@ function getFaltasMes(emp, mesIdx, ano) {
       if (s === 'falta')    f += 1;
       if (s === 'atestado') f += 0.5;
     });
-    // Fallback para emp.absences se não houver nada no ponto
-    return f > 0 ? f : ((emp.absences||[])[mesIdx] || 0);
+    // Fallback: usa emp.absences se não houver dados no rh_ponto
+    if (f === 0) return (emp.absences||[])[mesIdx] || 0;
+    return f;
   } catch(e) {
     return (emp.absences||[])[mesIdx] || 0;
   }
