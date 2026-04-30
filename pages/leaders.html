@@ -382,10 +382,19 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
     <button class="btn btn-primary" id="btn-novo" onclick="openModal()">＋ Novo Líder</button>
   </div>
 
-  <!-- Filtros -->
   <div class="filter-bar">
-    <div id="dept-chips"></div>
+  <div id="dept-chips"></div>
+
+  <!-- NOVO FILTRO POR LÍDER -->
+  <div class="search-wrap">
+    <span class="search-icon">👤</span>
+    <select id="leader-filter" class="search-input" onchange="setLeaderFilter(this.value)">
+      <option value="">Todos os líderes</option>
+    </select>
   </div>
+</div>
+  
+  
 
   <!-- Grid -->
   <div class="leaders-grid" id="leaders-grid"></div>
@@ -533,6 +542,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 // ════════════════════════════════════════════════════════
 let currentUser   = null;
 let activeDeptFilter = '';
+let activeLeaderFilter = '';
 let _store        = null;  // cache do store
 let _allPonto     = {};    // cache do rh_ponto
 
@@ -563,7 +573,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (btnNovo) btnNovo.style.display = perfil === 'admin_master' ? '' : 'none';
 
   buildDeptChips();
-  renderLeaders();
+await buildLeaderFilter();
+renderLeaders();
 });
 
 // ════════════════════════════════════════════════════════
@@ -705,9 +716,29 @@ async function buildDeptChips() {
   `).join('');
 }
 
+async function buildLeaderFilter() {
+  const store = _store || await getStore();
+
+  const leaders = Object.values(store.users || {})
+    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master')
+    .sort((a,b) => a.name.localeCompare(b.name));
+
+  const select = document.getElementById('leader-filter');
+
+  select.innerHTML = `
+    <option value="">Todos os líderes</option>
+    ${leaders.map(l => `<option value="${l.id}">${l.name}</option>`).join('')}
+  `;
+}
+
 function setDeptFilter(val) {
   activeDeptFilter = val;
   buildDeptChips();
+  renderLeaders();
+}
+
+function setLeaderFilter(id) {
+  activeLeaderFilter = id;
   renderLeaders();
 }
 
@@ -733,8 +764,66 @@ async function renderLeaders() {
 
   // Lista de usuários que são líderes (todos exceto admin master)
   let leaders = Object.values(store.users || {})
-    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
+// FILTRO POR LÍDER (MOSTRA HIERARQUIA)
+if (activeLeaderFilter) {
+  const leader = leaders.find(l => l.id === activeLeaderFilter);
+  if (!leader) return;
 
+  const tree = getHierarquiaDoLider(leader, store);
+
+  let html = `
+    <div class="hierarquia-secao">
+      <span class="hierarquia-label lider">🌳 Hierarquia do Líder</span>
+      <div class="hierarquia-linha"></div>
+    </div>
+  `;
+
+  // Líder principal
+  html += buildCard(tree.leader, store, isAdmin);
+
+  // Subordinados
+  if (tree.subordinados.length) {
+    html += `
+      <div class="hierarquia-secao">
+        <span class="hierarquia-label coordenacao">👥 Subordinados</span>
+        <div class="hierarquia-linha"></div>
+      </div>
+    `;
+
+    tree.subordinados.forEach(u => {
+      html += buildCard(u, store, isAdmin);
+    });
+  }
+
+  // Funcionários
+  if (tree.emps.length) {
+    html += `
+      <div class="hierarquia-secao">
+        <span class="hierarquia-label lider">👷 Operacional</span>
+        <div class="hierarquia-linha"></div>
+      </div>
+    `;
+
+    tree.emps.forEach(emp => {
+      html += `
+        <div class="leader-card nivel-lider">
+          <div class="card-header">
+            <div class="leader-avatar">
+              ${emp.name.split(' ').map(x=>x[0]).slice(0,2).join('')}
+            </div>
+            <div class="leader-info">
+              <div class="leader-name">${emp.name}</div>
+              <div class="leader-role">${emp.dept || ''}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  document.getElementById('leaders-grid').innerHTML = html;
+  return;
+}
   // Busca
 
   // Filtro por departamento
@@ -877,6 +966,36 @@ function getTeamEmps(leader, allEmps) {
     const turnoOk = turnos.length ? turnos.includes(e.turno) : true;
     return deptOk && turnoOk;
   });
+}
+
+function getHierarquiaDoLider(leader, store) {
+  const allUsers = Object.values(store.users || {});
+  const allEmps  = store.employees || [];
+
+  const meusDepts  = getMeusDepts(leader);
+  const meusTurnos = getMeusTurnos(leader);
+
+  // Funcionários diretos
+  const emps = allEmps.filter(e => {
+    const deptOk  = meusDepts.length ? meusDepts.includes(e.dept) : true;
+    const turnoOk = meusTurnos.length ? meusTurnos.includes(e.turno) : true;
+    return deptOk && turnoOk;
+  });
+
+  // Líderes subordinados
+  const subordinados = allUsers.filter(u => {
+    if (u.id === leader.id) return false;
+
+    const uDepts = getMeusDepts(u);
+
+    return meusDepts.some(d => uDepts.includes(d));
+  });
+
+  return {
+    leader,
+    subordinados,
+    emps
+  };
 }
 
 // Contagem total hierárquica
