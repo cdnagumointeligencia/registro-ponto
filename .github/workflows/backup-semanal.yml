@@ -1,0 +1,33 @@
+name: Backup Semanal — CD Nagumo Performance
+
+on:
+  schedule:
+    # Todo domingo às 22h (horário de Brasília = segunda 01h UTC)
+    - cron: '0 1 * * 1'
+  
+  # Permite rodar manualmente pelo GitHub se precisar
+  workflow_dispatch:
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repositório
+        uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependências
+        run: npm install firebase@9 emailjs-com node-fetch
+
+      - name: Executar backup e enviar email
+        env:
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          EMAILJS_SERVICE_ID: ${{ secrets.EMAILJS_SERVICE_ID }}
+          EMAILJS_TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }}
+          EMAILJS_PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}
+        run: node scripts/backup.js
