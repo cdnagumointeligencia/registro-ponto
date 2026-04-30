@@ -510,7 +510,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
       </div>
       <div class="form-group">
         <label class="form-label">📅 Data</label>
-        <input class="form-input" type="date" id="loc-data">
+        <input class="form-input" type="datetime-local" id="loc-data">
       </div>
       <div class="form-group full">
         <label class="form-label">📝 Descrição</label>
@@ -1270,7 +1270,9 @@ async function openLeaderOcorrencia(id) {
   document.getElementById('loc-edit-id').value   = id;
   document.getElementById('loc-tipo').value      = '';
   document.getElementById('loc-desc').value      = '';
-  document.getElementById('loc-data').value      = new Date().toISOString().split('T')[0];
+  const _agora = new Date();
+  _agora.setMinutes(_agora.getMinutes() - _agora.getTimezoneOffset());
+  document.getElementById('loc-data').value = _agora.toISOString().slice(0,16);
 
   document.getElementById('modal-leader-ocorrencia').classList.add('open');
 }
@@ -1295,7 +1297,11 @@ async function saveLeaderOcorrencia() {
   const lista = await LS.get('rh_ocorrencias', []);
   lista.unshift({
     id:        uid(),
-    ts:        data ? new Date(data+'T00:00:00').toISOString() : new Date().toISOString(),
+    ts:        (() => {
+      if (!data) return new Date().toISOString();
+      const d = new Date(data);
+      return isNaN(d) ? new Date().toISOString() : d.toISOString();
+    })(),
     empId:     refId,
     empName:   leader?.name || '—',
     empDept:   leader?.setor || leader?.perfil?.depts?.[0] || '—',

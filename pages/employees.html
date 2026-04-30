@@ -589,7 +589,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
       </div>
       <div class="form-group">
         <label class="form-label">📅 Data</label>
-        <input class="form-input" type="date" id="oc-data">
+        <input class="form-input" type="datetime-local" id="oc-data">
       </div>
       <div class="form-group full">
         <label class="form-label">📝 Descrição</label>
@@ -848,8 +848,11 @@ function setFilter(el, val) {
 // ════════════════════════════════════════════════════════
 async function renderCards() {
   // Carrega store e ponto uma vez — helpers usam cache sincronamente
-  _store    = await getStore();
-  _allPonto = await LS.get('rh_ponto', {});
+  // Recarrega Firestore apenas se cache vazio
+  if (!_store) {
+    _store    = await getStore();
+    _allPonto = await LS.get('rh_ponto', {});
+  }
 
   const search    = document.getElementById('search-input').value.toLowerCase();
   const filialSel = document.getElementById('filial-select').value;
@@ -1080,6 +1083,7 @@ async function deleteEmployee(id) {
   if (!confirm(`Excluir "${emp.name}"?\nEsta ação não pode ser desfeita.`)) return;
   store.employees = store.employees.filter(e=>e.id!==id);
   await saveStore(store);
+  _store = null;
   renderCards();
   await registrarLog('excluiu', 'Funcionários', `Removeu: <strong>${emp.name}</strong>`);
   showToast('✅ Funcionário excluído.');
@@ -1254,7 +1258,9 @@ async function openOcorrenciaModal(id, tipo) {
   document.getElementById('oc-tipo-ref').value  = 'funcionario';
   document.getElementById('oc-tipo').value      = '';
   document.getElementById('oc-desc').value      = '';
-  document.getElementById('oc-data').value      = new Date().toISOString().split('T')[0];
+  const _agora = new Date();
+  _agora.setMinutes(_agora.getMinutes() - _agora.getTimezoneOffset());
+  document.getElementById('oc-data').value = _agora.toISOString().slice(0,16);
 
   document.getElementById('modal-ocorrencia-emp').classList.add('open');
 }
@@ -1279,7 +1285,11 @@ async function saveOcorrencia() {
   const lista = await LS.get('rh_ocorrencias', []);
   lista.unshift({
     id:        uid(),
-    ts:        data ? new Date(data+'T00:00:00').toISOString() : new Date().toISOString(),
+    ts:        (() => {
+      if (!data) return new Date().toISOString();
+      const d = new Date(data);
+      return isNaN(d) ? new Date().toISOString() : d.toISOString();
+    })(),
     empId:     emp?.id,
     empName:   emp?.name  || '—',
     empDept:   emp?.dept  || '—',
