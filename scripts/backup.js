@@ -20,8 +20,8 @@ const firebaseConfig = {
 // ── Configuração EmailJS ─────────────────────────────────
 const EMAILJS_SERVICE_ID  = process.env.EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID;
-const EMAILJS_PUBLIC_KEY   = process.env.EMAILJS_PUBLIC_KEY;
-const EMAILJS_PRIVATE_KEY  = process.env.EMAILJS_PRIVATE_KEY;
+const EMAILJS_PUBLIC_KEY  = process.env.EMAILJS_PUBLIC_KEY;
+const EMAILJS_PRIVATE_KEY = process.env.EMAILJS_PRIVATE_KEY;
 
 async function main() {
   console.log('🔄 Iniciando backup semanal...');
@@ -52,30 +52,28 @@ async function main() {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
 
-  const resumo = `
-📊 RESUMO DO SISTEMA
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-👥 Funcionários cadastrados : ${employees.length}
-🏢 Filiais                  : ${filiais.length}
-🗂️  Departamentos            : ${depts.length}
-👤 Usuários do sistema      : ${Object.keys(users).length}
-📝 Ocorrências registradas  : ${ocorrencias.length}
-🔍 Logs de auditoria        : ${auditLog.length}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  `.trim();
+  const resumo = [
+    '📊 RESUMO DO SISTEMA',
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    `👥 Funcionários cadastrados : ${employees.length}`,
+    `🏢 Filiais                  : ${filiais.length}`,
+    `🗂️  Departamentos            : ${depts.length}`,
+    `👤 Usuários do sistema      : ${Object.keys(users).length}`,
+    `📝 Ocorrências registradas  : ${ocorrencias.length}`,
+    `🔍 Logs de auditoria        : ${auditLog.length}`,
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+  ].join('\n');
 
-  // 4. Serializa dados completos (limitado para caber no email)
+  // 4. Serializa dados completos
   const backupCompleto = JSON.stringify(dados, null, 2);
-  
-  // EmailJS tem limite de tamanho — trunca se necessário
   const MAX_CHARS = 40000;
   const backupTexto = backupCompleto.length > MAX_CHARS
-    ? backupCompleto.slice(0, MAX_CHARS) + '\n\n... [TRUNCADO — use o backup pelo sistema para dados completos]'
+    ? backupCompleto.slice(0, MAX_CHARS) + '\n\n... [TRUNCADO]'
     : backupCompleto;
 
   console.log(`📝 Dados coletados: ${employees.length} funcionários, ${Object.keys(users).length} usuários`);
 
-  // 5. Envia email via EmailJS REST API
+  // 5. Envia email via EmailJS REST API (com Origin header para simular browser)
   console.log('📧 Enviando email...');
 
   const fetch = (await import('node-fetch')).default;
@@ -89,7 +87,7 @@ async function main() {
       name:               'Sistema CD Nagumo',
       email:              'cdnagumo.inteligencia@gmail.com',
       data:               hoje,
-      total_funcionarios: employees.length,
+      total_funcionarios: String(employees.length),
       backup_resumo:      resumo,
       backup_dados:       backupTexto,
     }
@@ -97,17 +95,21 @@ async function main() {
 
   const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
     method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body:    JSON.stringify(emailPayload)
+    headers: {
+      'Content-Type': 'application/json',
+      'Origin': 'https://marcosann-svg.github.io',
+    },
+    body: JSON.stringify(emailPayload)
   });
+
+  const resText = await response.text();
 
   if (response.ok) {
     console.log('✅ Backup enviado com sucesso!');
     console.log(`📅 Data: ${hoje}`);
     console.log(`👥 Funcionários: ${employees.length}`);
   } else {
-    const erro = await response.text();
-    console.error('❌ Erro ao enviar email:', erro);
+    console.error('❌ Erro ao enviar email:', resText);
     process.exit(1);
   }
 }
