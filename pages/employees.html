@@ -741,9 +741,8 @@ function canOcorrenciaEmp() {
 }
 
 // Retorna o líder/responsável direto do funcionário com base no dept e turno atuais
-async function getLiderDoFuncionario(emp) {
-  const store = await getStore();
-  const users = Object.values(store.users || {});
+function getLiderDoFuncionario(emp) {
+  const users = Object.values(_store?.users || {});
   const dept  = emp.dept  || '';
   const turno = emp.turno || '';
 
@@ -902,7 +901,7 @@ function buildCard(emp) {
   const totalAbs = getTotalFaltasEmp(emp);
 
   // Líder responsável pelo funcionário
-  const lider = getLiderDoFuncionario(emp);
+  const lider     = getLiderDoFuncionario(emp);  // sync - uses _store
   const liderNome = lider ? lider.name : null;
   const liderNivel = lider ? (lider.nivel || 'lider') : null;
   const NIVEL_COR = { diretoria:'#fb923c', gerencia:'#a78bfa', coordenacao:'#fbbf24', encarregado:'#34d399', lider:'rgba(255,255,255,0.5)' };
