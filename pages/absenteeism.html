@@ -298,6 +298,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 let currentUser  = null;
 let chartBarras  = null;
 let _store       = null;  // cache do store
+let _allPonto    = {};    // cache do rh_ponto (Firestore)
 
 const MONTHS_FULL = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
                      'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
@@ -359,7 +360,7 @@ const PONTO_KEY = 'rh_ponto';
 // Retorna faltas do funcionário em um mês específico (0-based) lendo o rh_ponto
 function getFaltasMes(emp, mesIdx, ano) {
   try {
-    const allPonto = JSON.parse(localStorage.getItem(PONTO_KEY) || '{}');
+    const allPonto = _allPonto;
     const key  = `${emp.id}_${ano}_${String(mesIdx+1).padStart(2,'0')}`;
     const dias = allPonto[key] || {};
     let f = 0;
@@ -414,7 +415,8 @@ function buildDeptSelect() {
 // RENDER ALL
 // ════════════════════════════════════════════════════════
 async function renderAll() {
-  _store = await getStore();
+  _store    = await getStore();
+  _allPonto = await LS.get(PONTO_KEY, {});
   const emps = getFilteredEmps();
   const mes  = getMesIndex();
 
