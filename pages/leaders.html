@@ -716,12 +716,22 @@ function setDeptFilter(val) {
   renderLeaders();
 }
 
+// Força recarga do Firestore (usar após salvar/excluir dados)
+async function reloadLeaders() {
+  _store    = await getStore();
+  _allPonto = await LS.get('rh_ponto', {});
+  await renderLeaders();
+}
+
 // ════════════════════════════════════════════════════════
 // RENDER LEADERS — agrupado por hierarquia
 // ════════════════════════════════════════════════════════
 async function renderLeaders() {
-  _store    = await getStore();
-  _allPonto = await LS.get('rh_ponto', {});
+  // Só recarrega do Firestore se ainda não tiver cache (evita race condition ao digitar)
+  if (!_store) {
+    _store    = await getStore();
+    _allPonto = await LS.get('rh_ponto', {});
+  }
   const store   = _store;
   const search  = document.getElementById('search-input').value.toLowerCase();
   const perfil  = getUserPerfil(currentUser);
@@ -732,7 +742,7 @@ async function renderLeaders() {
     .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
 
   // Busca
-  if (search) leaders = leaders.filter(u => u.name.toLowerCase().includes(search));
+  if (search) leaders = leaders.filter(u => (u.name||'').toLowerCase().includes(search));
 
   // Filtro por departamento
   if (activeDeptFilter) {
@@ -1184,6 +1194,7 @@ async function deleteLeader(id) {
   if (!confirm(`Remover o líder "${u.name}"?\nOs funcionários cadastrados por ele não serão removidos.`)) return;
   delete store.users[id];
   await saveStore(store);
+  _store = null; // invalida cache após salvar
   renderLeaders();
   await registrarLog('excluiu', 'Líderes', `Removeu: <strong>${u.name}</strong>`);
   showToast('✅ Líder removido.');
