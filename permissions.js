@@ -53,12 +53,14 @@ const PERMISSIONS = {
 
   // ── Funcionários ──────────────────────────────────────
   employees: {
-    view:       'lider',
-    create:     'lider',        // líder cria funcionários do seu setor
-    edit:       'lider',        // líder edita apenas os que cadastrou
-    delete:     'lider',        // idem
-    transfer:   'encarregado',  // mover de setor/filial/turno/função
-    ocorrencia: 'lider',        // registrar ocorrências do funcionário
+    view:            'lider',
+    create:          'lider',        // líder cria funcionários do seu setor
+    edit:            'lider',        // líder edita apenas os que cadastrou
+    delete:          'lider',        // idem
+    transfer:        'encarregado',  // mover de setor/filial/turno/função
+    ocorrencia:      'lider',        // registrar ocorrências do funcionário
+    demitir:         'encarregado',  // registrar demissão de funcionário
+    view_demitidos:  'coordenacao',  // ver seção de funcionários desligados
   },
 
   // ── Líderes ───────────────────────────────────────────
@@ -268,7 +270,7 @@ function getActivePermissions() {
 // ════════════════════════════════════════════════════════
 const PAGE_LABELS = {
   dashboard:    { label:'📊 Dashboard',            actions:['view'] },
-  employees:    { label:'👥 Funcionários',          actions:['view','create','edit','delete','transfer','ocorrencia'] },
+  employees:    { label:'👥 Funcionários',          actions:['view','create','edit','delete','transfer','ocorrencia','demitir','view_demitidos'] },
   leaders:      { label:'🧑‍💼 Líderes',               actions:['view','create','edit','delete','transfer','ocorrencia'] },
   absenteeism:  { label:'📅 Absenteísmo',           actions:['view'] },
   ranking:      { label:'🏆 Ranking',               actions:['view'] },
@@ -292,6 +294,8 @@ const ACTION_LABELS = {
   delete:             'Excluir',
   transfer:           'Transferir',
   ocorrencia:         'Registrar Ocorrência',
+  demitir:            'Registrar Desligamento',
+  view_demitidos:     'Ver Funcionários Desligados',
   edit_vagas:         'Editar vagas por função/turno',
   edit_total:         'Editar total quadro da filial',
   approve:            'Aprovar / Rejeitar ocorrências',
