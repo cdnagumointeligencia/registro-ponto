@@ -332,29 +332,31 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
    MODAL
 ════════════════════════════════════════════ */
 .overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,.75);
+  position:fixed; inset:0; background:rgba(0,0,0,.78);
   backdrop-filter:blur(4px); z-index:200;
-  display:none; align-items:center; justify-content:center;
+  display:none; align-items:flex-start; justify-content:center;
+  padding:24px 16px; overflow-y:auto;
 }
 .overlay.open { display:flex; }
 .modal {
   background:var(--surface); border:1px solid var(--border);
-  border-radius:16px; padding:28px 32px; width:700px;
-  max-width:97vw; max-height:90vh; overflow-y:auto; overflow-x:hidden;
-  animation:fadeUp .25s ease;
+  border-radius:16px; padding:28px 30px;
+  width:min(720px, 96vw); flex-shrink:0;
+  animation:fadeUp .25s ease; box-sizing:border-box;
 }
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 .modal-title { font-family:var(--font-head); font-size:18px; font-weight:800; margin-bottom:22px; color:var(--text); }
 .modal-footer { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
 
 .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.form-group { display:flex; flex-direction:column; gap:6px; }
+.form-group { display:flex; flex-direction:column; gap:6px; min-width:0; }
 .form-group.full { grid-column:1/-1; }
 .form-label { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
 .form-input {
   background:var(--surface2); border:1px solid var(--border);
   border-radius:8px; color:var(--text); font-family:var(--font-body);
   font-size:13px; padding:9px 11px; outline:none; transition:border-color .2s;
+  width:100%; box-sizing:border-box; min-width:0;
 }
 .form-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(79,142,247,.1); }
 .form-input option { background:var(--surface2); }
@@ -366,7 +368,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   border-bottom:1px solid var(--border);
 }
 .month-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; }
-.month-wrap { display:flex; flex-direction:column; gap:4px; align-items:center; }
+.month-wrap { display:flex; flex-direction:column; gap:4px; align-items:center; min-width:0; }
 .month-wrap .form-label { font-size:9px; }
 .month-wrap .form-input { width:100%; text-align:center; padding:7px 4px; }
 
@@ -374,10 +376,10 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 
 /* ── checkbox afastado/férias ── */
 .check-row { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); cursor:pointer; }
-.check-row input[type=checkbox] { width:16px; height:16px; cursor:pointer; }
+.check-row input[type=checkbox] { width:16px; height:16px; cursor:pointer; flex-shrink:0; }
 .check-row-label { font-size:13px; font-weight:500; color:var(--text); }
 .check-row-sub { font-size:11px; color:var(--muted); margin-top:1px; }
-.date-wrap { padding:10px 12px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); }
+.date-wrap { padding:10px 12px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); box-sizing:border-box; }
 
 /* ════════════════════════════════════════════
    TOAST
@@ -393,23 +395,17 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 ════════════════════════════════════════════ */
 @media(max-width:1024px) {
   :root { --sidebar-w:56px; }
-  
-  
-  
-  
-
-  .form-grid { grid-template-columns:1fr; }
+  .form-grid { grid-template-columns:1fr 1fr; }
+  .month-grid { grid-template-columns:repeat(4,1fr); }
 }
 @media(max-width:768px) {
   :root { --sidebar-w:0px; }
-  
   .main { margin-left:0; padding:16px; }
   .emp-grid { grid-template-columns:1fr; }
   .form-grid { grid-template-columns:1fr; }
-  .month-grid { grid-template-columns:repeat(4,1fr); }
+  .month-grid { grid-template-columns:repeat(3,1fr); }
   .apt-grid { grid-template-columns:repeat(2,1fr); }
-}
-
+  .modal { padding:20px 18px; border-radius:12px; }
 }
 
 
@@ -592,7 +588,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
       </label>
       <div id="afastado-date-wrap" class="date-wrap" style="display:none">
         <label class="form-label" style="margin-bottom:6px">📅 Início do Afastamento</label>
-        <input class="form-input" type="date" id="f-data-afastamento" style="border-color:#ef4444;width:220px">
+        <input class="form-input" type="date" id="f-data-afastamento" style="border-color:#ef4444">
       </div>
 
       <label class="check-row">
@@ -607,11 +603,11 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
         <div style="display:flex;gap:14px;flex-wrap:wrap">
           <div>
             <label class="form-label" style="margin-bottom:6px">📅 Início das Férias</label>
-            <input class="form-input" type="date" id="f-ferias-inicio" style="border-color:#22d3ee;width:200px">
+            <input class="form-input" type="date" id="f-ferias-inicio" style="border-color:#22d3ee">
           </div>
           <div>
             <label class="form-label" style="margin-bottom:6px">📅 Fim das Férias</label>
-            <input class="form-input" type="date" id="f-ferias-fim" style="border-color:#22d3ee;width:200px">
+            <input class="form-input" type="date" id="f-ferias-fim" style="border-color:#22d3ee">
           </div>
         </div>
       </div>
@@ -763,8 +759,9 @@ let currentUser  = null;
 let activeFilter = '';
 let _store       = null;  // cache do store
 let _allPonto    = {};    // cache do ponto
-let _resolvePromocao    = null; // Promise resolver para modal promoção
-let _admissaoVerificada = false; // flag para verificar admissões faltando uma vez por sessão
+let _resolvePromocao    = null;
+let _admissaoVerificada = false;
+let _modalLock   = false; // impede dois modais abrirem ao mesmo tempo
 
 const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
 const MONTHS   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
@@ -974,15 +971,15 @@ function populateDeptSelect() {
 }
 
 async function populateModalSelects(emp) {
-  const store = await getStore();
+  const store = _store || await getStore();
   const opt   = (list, val) =>
     `<option value="">— Selecione —</option>` +
     list.map(x=>`<option value="${x.nome||x.name}" ${(x.nome||x.name)===val?'selected':''}>${x.nome||x.name}</option>`).join('');
 
-  document.getElementById('f-dept').innerHTML   = opt(store.depts,   emp?.dept  || '');
-  document.getElementById('f-role').innerHTML   = opt(store.funcoes, emp?.role  || '');
-  document.getElementById('f-filial').innerHTML = opt(store.filiais, emp?.filial|| '');
-  document.getElementById('f-turno').innerHTML  = opt(store.turnos,  emp?.turno || '');
+  document.getElementById('f-dept').innerHTML   = opt(store.depts   || [], emp?.dept  || '');
+  document.getElementById('f-role').innerHTML   = opt(store.funcoes || [], emp?.role  || '');
+  document.getElementById('f-filial').innerHTML = opt(store.filiais || [], emp?.filial|| '');
+  document.getElementById('f-turno').innerHTML  = opt(store.turnos  || [], emp?.turno || '');
 }
 
 // ════════════════════════════════════════════════════════
@@ -1272,13 +1269,31 @@ function openModal(emp) {
 
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
+  _modalLock = false;
+}
+
+function closeTransferModal() {
+  document.getElementById('modal-transfer').classList.remove('open');
+  _modalLock = false;
+}
+
+function closeOcorrenciaModal() {
+  document.getElementById('modal-ocorrencia-emp').classList.remove('open');
+  _modalLock = false;
 }
 
 async function editEmployee(id) {
-  const emp = ((await getStore()).employees||[]).find(e=>e.id===id);
-  if (!emp) return;
-  if (!canEditEmp(emp)) { showToast('⚠️ Sem permissão para editar este funcionário.','warn'); return; }
-  openModal(emp);
+  if (_modalLock) return;
+  _modalLock = true;
+  try {
+    const store = _store || await getStore();
+    const emp   = (store.employees||[]).find(e=>String(e.id)===String(id));
+    if (!emp) return;
+    if (!canEditEmp(emp)) { showToast('⚠️ Sem permissão para editar este funcionário.','warn'); return; }
+    openModal(emp);
+  } finally {
+    _modalLock = false;
+  }
 }
 
 async function deleteEmployee(id) {
@@ -1815,35 +1830,36 @@ function toggleFerias() {
 // TRANSFERIR FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
 async function openTransferModal(id) {
-  // Usa cache para abertura instantânea (evita conflito de cliques com getStore async)
-  const store = _store || await getStore();
-  const emp   = (store.employees||[]).find(e=>String(e.id)===String(id));
-  if (!emp) return;
+  if (_modalLock) return;
+  _modalLock = true;
+  try {
+    const store = _store || await getStore();
+    const emp   = (store.employees||[]).find(e=>String(e.id)===String(id));
+    if (!emp) return;
 
-  const opt = (list, curVal) =>
-    `<option value="">— Manter atual (${curVal||'—'}) —</option>` +
-    list.map(x=>`<option value="${x.nome||x.name}">${x.nome||x.name}</option>`).join('');
+    const opt = (list, curVal) =>
+      `<option value="">— Manter atual (${curVal||'—'}) —</option>` +
+      list.map(x=>`<option value="${x.nome||x.name}">${x.nome||x.name}</option>`).join('');
 
-  document.getElementById('tr-emp-name').textContent = emp.name;
-  document.getElementById('tr-edit-id').value        = id;
-  document.getElementById('tr-role-original').value  = emp.role || '';
+    document.getElementById('tr-emp-name').textContent = emp.name;
+    document.getElementById('tr-edit-id').value        = id;
+    document.getElementById('tr-role-original').value  = emp.role || '';
 
-  const liderAtual = Object.values(store.users||{}).find(u=>String(u.id)===String(emp.owner_id||emp.ownerId));
-  const lideres = Object.values(store.users||{}).filter(u=>u.nivel && u.nivel !== 'admin_master');
-  document.getElementById('tr-lider').innerHTML =
-    `<option value="">— Manter líder atual (${liderAtual?.name||'—'}) —</option>` +
-    lideres.map(u=>`<option value="${u.id}">${u.name} · ${u.nivel||''}</option>`).join('');
+    const liderAtual = Object.values(store.users||{}).find(u=>String(u.id)===String(emp.owner_id||emp.ownerId));
+    const lideres = Object.values(store.users||{}).filter(u=>u.nivel && u.nivel !== 'admin_master');
+    document.getElementById('tr-lider').innerHTML =
+      `<option value="">— Manter líder atual (${liderAtual?.name||'—'}) —</option>` +
+      lideres.map(u=>`<option value="${u.id}">${u.name} · ${u.nivel||''}</option>`).join('');
 
-  document.getElementById('tr-dept').innerHTML   = opt(store.depts||[],   emp.dept);
-  document.getElementById('tr-role').innerHTML   = opt(store.funcoes||[], emp.role);
-  document.getElementById('tr-filial').innerHTML = opt(store.filiais||[], emp.filial);
-  document.getElementById('tr-turno').innerHTML  = opt(store.turnos||[],  emp.turno);
+    document.getElementById('tr-dept').innerHTML   = opt(store.depts||[],   emp.dept);
+    document.getElementById('tr-role').innerHTML   = opt(store.funcoes||[], emp.role);
+    document.getElementById('tr-filial').innerHTML = opt(store.filiais||[], emp.filial);
+    document.getElementById('tr-turno').innerHTML  = opt(store.turnos||[],  emp.turno);
 
-  document.getElementById('modal-transfer').classList.add('open');
-}
-
-function closeTransferModal() {
-  document.getElementById('modal-transfer').classList.remove('open');
+    document.getElementById('modal-transfer').classList.add('open');
+  } finally {
+    _modalLock = false;
+  }
 }
 
 async function saveTransfer() {
@@ -1901,25 +1917,26 @@ document.getElementById('modal-transfer').addEventListener('click', e => {
 // OCORRÊNCIA DO FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
 async function openOcorrenciaModal(id, tipo) {
-  // Usa cache para abertura instantânea (evita conflito de cliques com getStore async)
-  const store = _store || await getStore();
-  const emp   = (store.employees||[]).find(e=>String(e.id)===String(id));
-  if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
+  if (_modalLock) return;
+  _modalLock = true;
+  try {
+    const store = _store || await getStore();
+    const emp   = (store.employees||[]).find(e=>String(e.id)===String(id));
+    if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
 
-  document.getElementById('oc-target-name').textContent = emp.name;
-  document.getElementById('oc-edit-id').value   = id;
-  document.getElementById('oc-tipo-ref').value  = 'funcionario';
-  document.getElementById('oc-tipo').value      = '';
-  document.getElementById('oc-desc').value      = '';
-  const _agora = new Date();
-  _agora.setMinutes(_agora.getMinutes() - _agora.getTimezoneOffset());
-  document.getElementById('oc-data').value = _agora.toISOString().slice(0,16);
+    document.getElementById('oc-target-name').textContent = emp.name;
+    document.getElementById('oc-edit-id').value   = id;
+    document.getElementById('oc-tipo-ref').value  = 'funcionario';
+    document.getElementById('oc-tipo').value      = '';
+    document.getElementById('oc-desc').value      = '';
+    const _agora = new Date();
+    _agora.setMinutes(_agora.getMinutes() - _agora.getTimezoneOffset());
+    document.getElementById('oc-data').value = _agora.toISOString().slice(0,16);
 
-  document.getElementById('modal-ocorrencia-emp').classList.add('open');
-}
-
-function closeOcorrenciaModal() {
-  document.getElementById('modal-ocorrencia-emp').classList.remove('open');
+    document.getElementById('modal-ocorrencia-emp').classList.add('open');
+  } finally {
+    _modalLock = false;
+  }
 }
 
 async function saveOcorrencia() {
