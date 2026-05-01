@@ -262,8 +262,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .emp-btn.edit  { color:var(--muted); }
 .emp-btn.edit:hover  { background:rgba(79,142,247,.15); color:var(--accent); }
 .emp-btn.del   { color:var(--muted); }
-.emp-btn.del:hover   { background:rgba(248,113,113,.15); color:var(--red); }
-.emp-btn.transfer { color:var(--muted); }
+.emp-btn.del:hover   { background:rgba(248,113,113,.15); color:var(--red); }.emp-btn.transfer { color:var(--muted); }
 .emp-btn.transfer:hover { background:rgba(251,191,36,.15); color:var(--yellow); }
 .emp-btn.ocorr { color:var(--muted); }
 .emp-btn.ocorr:hover { background:rgba(167,139,250,.15); color:var(--accent2); }
@@ -340,8 +339,8 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .overlay.open { display:flex; }
 .modal {
   background:var(--surface); border:1px solid var(--border);
-  border-radius:16px; padding:28px; width:580px;
-  max-width:95vw; max-height:90vh; overflow-y:auto;
+  border-radius:16px; padding:28px 32px; width:700px;
+  max-width:97vw; max-height:90vh; overflow-y:auto; overflow-x:hidden;
   animation:fadeUp .25s ease;
 }
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
@@ -902,32 +901,29 @@ function canVerDemitidos() {
 // Retorna o líder/responsável direto do funcionário com base no dept e turno atuais
 function getLiderDoFuncionario(emp) {
   const users = Object.values(_store?.users || {});
+
+  // PRIORIDADE 1: responsável direto atribuído (owner_id), ignora admin_master
+  const ownerId = emp.owner_id || emp.ownerId;
+  if (ownerId) {
+    const owner = users.find(u => String(u.id) === String(ownerId) && u.nivel !== 'admin_master');
+    if (owner) return owner;
+  }
+
+  // PRIORIDADE 2: busca por setor/turno (lider → encarregado → ...)
   const dept  = emp.dept  || '';
   const turno = emp.turno || '';
-
-  // Prioridade: lider operacional → encarregado → coordenação → gerencia → diretoria
   const PRIORIDADE = ['lider','encarregado','coordenacao','gerencia','diretoria'];
 
   for (const nivel of PRIORIDADE) {
     const match = users.find(u => {
       if (u.id === ADMIN_ID || u.nivel === 'admin_master') return false;
       if ((u.nivel || 'lider') !== nivel) return false;
-
-      // Gerência/Diretoria: responsável por todos
       if (['gerencia','diretoria'].includes(nivel)) return true;
-
-      const depts     = u.perfil?.depts || [];
-      const setor     = u.setor || '';
+      const depts      = u.perfil?.depts || [];
+      const setor      = u.setor || '';
       const liderTurno = u.perfil?.turno || '';
-
-      // Verifica se o dept do funcionário está coberto pelo líder
-      const deptOk = depts.length || setor
-        ? depts.includes(dept) || setor === dept
-        : (emp.owner_id || emp.ownerId) === u.id;
-
-      // Se o líder tem turno definido, o funcionário precisa estar no mesmo turno
-      const turnoOk = liderTurno ? liderTurno === turno : true;
-
+      const deptOk     = depts.length || setor ? depts.includes(dept) || setor === dept : false;
+      const turnoOk    = liderTurno ? liderTurno === turno : true;
       return deptOk && turnoOk;
     });
     if (match) return match;
@@ -1154,8 +1150,10 @@ function buildCard(emp) {
     <div class="score-bar-wrap">
       <div class="score-bar-bg"><div class="score-bar-fill" style="width:${score}%;background:${barColor}"></div></div>
     </div>
+    ${totalAbs > 0 ? `
     <div class="sparkline">${spark}</div>
     <div class="sparkline-label" style="font-size:10px;color:var(--muted);text-align:right;margin-bottom:2px">${totalAbs} falta${totalAbs!==1?'s':''} no ano</div>
+    ` : ''}
 
     <div class="emp-card-footer">
       <div class="emp-score">${score}</div>
@@ -1542,6 +1540,7 @@ function buildCardDemitido(emp) {
     ${emp.motivo_demissao?`<div style="margin:6px 0;padding:7px 10px;border-radius:8px;background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.15);font-size:11px;color:var(--muted)"><strong style="color:#f87171">Motivo:</strong> ${emp.motivo_demissao.length>80?emp.motivo_demissao.slice(0,80)+'…':emp.motivo_demissao}</div>`:''}
     ${emp.matricula?`<div class="emp-matricula" style="opacity:.6">🪪 <strong>${emp.matricula}</strong></div>`:''}
     <div class="emp-actions-bottom">
+      ${canDeleteEmp(emp) ? `<button class="emp-btn del" onclick="deleteEmployee(${emp.id})" title="Excluir permanentemente" style="margin-right:auto">✕ Excluir</button>` : ''}
       <button class="emp-btn pdf" onclick="gerarRelatorioPDF(${emp.id})" style="width:auto;padding:0 12px;font-size:11px;font-weight:600;gap:5px" title="Relatório PDF">
         📋 Relatório PDF
       </button>
@@ -1816,8 +1815,9 @@ function toggleFerias() {
 // TRANSFERIR FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
 async function openTransferModal(id) {
-  const store = await getStore();
-  const emp   = (store.employees||[]).find(e=>e.id===id);
+  // Usa cache para abertura instantânea (evita conflito de cliques com getStore async)
+  const store = _store || await getStore();
+  const emp   = (store.employees||[]).find(e=>String(e.id)===String(id));
   if (!emp) return;
 
   const opt = (list, curVal) =>
@@ -1826,8 +1826,9 @@ async function openTransferModal(id) {
 
   document.getElementById('tr-emp-name').textContent = emp.name;
   document.getElementById('tr-edit-id').value        = id;
-  // Popula líderes
-  const liderAtual = Object.values(store.users||{}).find(u=>u.id===(emp.owner_id||emp.ownerId));
+  document.getElementById('tr-role-original').value  = emp.role || '';
+
+  const liderAtual = Object.values(store.users||{}).find(u=>String(u.id)===String(emp.owner_id||emp.ownerId));
   const lideres = Object.values(store.users||{}).filter(u=>u.nivel && u.nivel !== 'admin_master');
   document.getElementById('tr-lider').innerHTML =
     `<option value="">— Manter líder atual (${liderAtual?.name||'—'}) —</option>` +
@@ -1900,9 +1901,10 @@ document.getElementById('modal-transfer').addEventListener('click', e => {
 // OCORRÊNCIA DO FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
 async function openOcorrenciaModal(id, tipo) {
-  const store = await getStore();
-  const emp   = (store.employees||[]).find(e=>e.id===id);
-  if (!emp) return;
+  // Usa cache para abertura instantânea (evita conflito de cliques com getStore async)
+  const store = _store || await getStore();
+  const emp   = (store.employees||[]).find(e=>String(e.id)===String(id));
+  if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
 
   document.getElementById('oc-target-name').textContent = emp.name;
   document.getElementById('oc-edit-id').value   = id;
