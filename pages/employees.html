@@ -411,23 +411,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 </main>
 
 <!-- MODAIS FICAM AQUI NO FINAL DO BODY -->
-<div class="mini-overlay" id="modal-promocao">
-  <div class="mini-modal">
-    <div style="font-size:40px;margin-bottom:16px">🏆</div>
-    <div style="font-family:var(--font-head);font-size:16px;font-weight:800;color:var(--text);margin-bottom:8px">Mudança de Cargo Detectada</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.7">
-      <span class="mini-cargo-chip old">❌ <span id="prom-old-cargo"></span></span>
-      →
-      <span class="mini-cargo-chip new">✅ <span id="prom-new-cargo"></span></span>
-      <br><br>
-      Esta mudança deve ser registrada como <strong style="color:var(--green)">promoção</strong>?
-    </div>
-    <div style="display:flex;gap:10px;justify-content:center">
-      <button class="btn btn-ghost" onclick="responderPromocao(false)">🔀 Não — Transferência</button>
-      <button class="btn btn-primary" onclick="responderPromocao(true)">🏆 Sim — Promoção</button>
-    </div>
-  </div>
-</div>
+
 
 <div class="overlay" id="modal-overlay">
   <div class="modal">
@@ -647,6 +631,24 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeOcorrenciaModal()">Cancelar</button>
       <button class="btn btn-primary" onclick="saveOcorrencia()">📝 Salvar Ocorrência</button>
+    </div>
+  </div>
+</div>
+
+<div class="mini-overlay" id="modal-promocao">
+  <div class="mini-modal">
+    <div style="font-size:40px;margin-bottom:16px">🏆</div>
+    <div style="font-family:var(--font-head);font-size:16px;font-weight:800;color:var(--text);margin-bottom:8px">Mudança de Cargo Detectada</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.7">
+      <span class="mini-cargo-chip old">❌ <span id="prom-old-cargo"></span></span>
+      →
+      <span class="mini-cargo-chip new">✅ <span id="prom-new-cargo"></span></span>
+      <br><br>
+      Esta mudança deve ser registrada como <strong style="color:var(--green)">promoção</strong>?
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <button class="btn btn-ghost" onclick="responderPromocao(false)">🔀 Não — Transferência</button>
+      <button class="btn btn-primary" onclick="responderPromocao(true)">🏆 Sim — Promoção</button>
     </div>
   </div>
 </div>
