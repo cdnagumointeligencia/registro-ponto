@@ -1184,8 +1184,8 @@ function buildCard(emp) {
     <div class="emp-actions-bottom">
       ${podEdit     ? `<button class="emp-btn edit"     onclick="editEmployee(${emp.id})"      title="Editar">✏️</button>` : ''}
       ${podDel      ? `<button class="emp-btn del"      onclick="deleteEmployee(${emp.id})"    title="Excluir">✕</button>` : ''}
-      ${podTransfer ? `<button class="emp-btn transfer" onclick="openTransferModal(${emp.id})" title="Transferir">🔀</button>` : ''}
-      ${podOcorr    ? `<button class="emp-btn ocorr"    onclick="openOcorrenciaModal(${emp.id},'emp')" title="Ocorrência">📝</button>` : ''}
+${podTransfer ? `<button class="emp-btn transfer" onclick="event.stopPropagation(); openTransferModal(${emp.id})" title="Transferir">🔀</button>` : ''}
+${podOcorr    ? `<button class="emp-btn ocorr"    onclick="event.stopPropagation(); openOcorrenciaModal(${emp.id},'emp')" title="Ocorrência">📝</button>` : ''}
     </div>
 
   </div>`;
