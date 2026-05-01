@@ -1821,8 +1821,8 @@ function toggleFerias() {
 // TRANSFERIR FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
 // Síncrono — usa _store (sempre carregado após renderCards)
-function openTransferModal(id) {
-  const store = _store;
+async function openTransferModal(id) {
+  const store = _store || await getStore(); // usa cache ou busca
   if (!store) return;
   const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
   if (!emp) return;
@@ -1904,8 +1904,8 @@ document.getElementById('modal-transfer').addEventListener('click', e => {
 // OCORRÊNCIA DO FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
 // Síncrono — usa _store (sempre carregado após renderCards)
-function openOcorrenciaModal(id, tipo) {
-  const store = _store;
+async function openOcorrenciaModal(id, tipo) {
+  const store = _store || await getStore(); // usa cache ou busca
   if (!store) return;
   const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
   if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
