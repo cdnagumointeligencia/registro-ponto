@@ -520,7 +520,23 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 </div>
 
 <!-- ══ MODAL ══ -->
-
+<div class="overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Novo Funcionário</div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="form-label">📷 Foto do Funcionário</label>
+        <div class="foto-upload-wrap">
+          <div class="foto-preview" id="foto-preview-modal">
+            <span id="foto-ini-modal">?</span>
+          </div>
+          <div class="foto-btns">
+            <input type="file" id="foto-input" accept="image/*" style="display:none" onchange="processarFoto(this)">
+            <button type="button" class="btn-foto" onclick="document.getElementById('foto-input').click()">📷 Selecionar Foto</button>
+            <button type="button" class="btn-foto remove" onclick="removerFoto()">✕ Remover</button>
+          </div>
+        </div>
+      </div>
       <div class="form-group full">
         <label class="form-label">👤 Nome Completo</label>
         <input class="form-input" type="text" id="f-name" placeholder="Ex: João da Silva"
@@ -673,10 +689,67 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 </div>
 
 <!-- MODAL TRANSFERIR FUNCIONÁRIO -->
-
+<div class="overlay" id="modal-transfer">
+  <div class="modal" style="width:480px">
+    <div class="modal-title">🔀 Transferir Funcionário</div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:18px;font-size:13px;color:var(--text)">
+      👤 <strong id="tr-emp-name"></strong>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Selecione apenas os campos que deseja alterar. Campos em branco mantêm o valor atual.</p>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">🏢 Departamento</label><select class="form-input" id="tr-dept"></select></div>
+      <div class="form-group"><label class="form-label">💼 Função / Cargo</label><select class="form-input" id="tr-role"></select></div>
+      <div class="form-group"><label class="form-label">🏭 Filial</label><select class="form-input" id="tr-filial"></select></div>
+      <div class="form-group"><label class="form-label">🕐 Turno</label><select class="form-input" id="tr-turno"></select></div>
+      <div class="form-group full"><label class="form-label">👤 Transferir para o Líder</label><select class="form-input" id="tr-lider"></select></div>
+    </div>
+    <input type="hidden" id="tr-edit-id">
+    <input type="hidden" id="tr-role-original">
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeTransferModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveTransfer()">🔀 Confirmar Transferência</button>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL OCORRÊNCIA FUNCIONÁRIO -->
-
+<div class="overlay" id="modal-ocorrencia-emp">
+  <div class="modal" style="width:500px">
+    <div class="modal-title">📝 Registrar Ocorrência</div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:18px;font-size:13px;color:var(--text)">
+      👤 Funcionário: <strong id="oc-target-name"></strong>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">📋 Tipo de Ocorrência</label>
+        <select class="form-input" id="oc-tipo">
+          <option value="">— Selecione —</option>
+          <option value="Justificativa">📄 Justificativa</option>
+          <option value="Ajuste">🔧 Ajuste</option>
+          <option value="Ocorrência">⚠️ Ocorrência</option>
+          <option value="Entrada">🟢 Entrada</option>
+          <option value="Saída">🔴 Saída</option>
+          <option value="Advertência">🚨 Advertência</option>
+          <option value="Elogio">⭐ Elogio</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">📅 Data</label>
+        <input class="form-input" type="datetime-local" id="oc-data">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">📝 Descrição</label>
+        <textarea class="form-input" id="oc-desc" rows="4" placeholder="Descreva a ocorrência..." style="resize:vertical;min-height:90px"></textarea>
+      </div>
+    </div>
+    <input type="hidden" id="oc-edit-id">
+    <input type="hidden" id="oc-tipo-ref" value="funcionario">
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeOcorrenciaModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveOcorrencia()">📝 Salvar Ocorrência</button>
+    </div>
+  </div>
+</div>
 
 <script>
 // ════════════════════════════════════════════════════════
@@ -1111,8 +1184,8 @@ function buildCard(emp) {
     <div class="emp-actions-bottom">
       ${podEdit     ? `<button class="emp-btn edit"     onclick="editEmployee(${emp.id})"      title="Editar">✏️</button>` : ''}
       ${podDel      ? `<button class="emp-btn del"      onclick="deleteEmployee(${emp.id})"    title="Excluir">✕</button>` : ''}
-${podTransfer ? `<button class="emp-btn transfer" onclick="event.stopPropagation(); openTransferModal(${emp.id})" title="Transferir">🔀</button>` : ''}
-${podOcorr    ? `<button class="emp-btn ocorr"    onclick="event.stopPropagation(); openOcorrenciaModal(${emp.id},'emp')" title="Ocorrência">📝</button>` : ''}
+      ${podTransfer ? `<button class="emp-btn transfer" onclick="openTransferModal(${emp.id})" title="Transferir">🔀</button>` : ''}
+      ${podOcorr    ? `<button class="emp-btn ocorr"    onclick="openOcorrenciaModal(${emp.id},'emp')" title="Ocorrência">📝</button>` : ''}
     </div>
 
   </div>`;
@@ -1748,42 +1821,32 @@ function toggleFerias() {
 // TRANSFERIR FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
 // Síncrono — usa _store (sempre carregado após renderCards)
-async function openTransferModal(id) {
-  console.log('1. Entrou na função, id:', id);
-  try {
-    const store = _store || await getStore();
-    console.log('2. Store:', store);
-    if (!store) { alert('Store vazio'); return; }
+function openTransferModal(id) {
+  const store = _store;
+  if (!store) return;
+  const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
+  if (!emp) return;
 
-    const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
-    console.log('3. Emp encontrado:', emp);
-    if (!emp) { alert('Funcionario não encontrado'); return; }
+  const opt = (list, curVal) =>
+    `<option value="">— Manter atual (${curVal||'—'}) —</option>` +
+    list.map(x=>`<option value="${x.nome||x.name}">${x.nome||x.name}</option>`).join('');
 
-    const opt = (list, curVal) =>
-      `<option value="">— Manter atual (${curVal||'—'}) —</option>` +
-      list.map(x=>`<option value="${x.nome||x.name}">${x.nome||x.name}</option>`).join('');
+  document.getElementById('tr-emp-name').textContent = emp.name;
+  document.getElementById('tr-edit-id').value        = id;
+  document.getElementById('tr-role-original').value  = emp.role || '';
 
-    document.getElementById('tr-emp-name').textContent = emp.name;
-    document.getElementById('tr-edit-id').value = id;
-    document.getElementById('tr-role-original').value = emp.role || '';
+  const liderAtual = Object.values(store.users||{}).find(u=>String(u.id)===String(emp.owner_id||emp.ownerId));
+  const lideres = Object.values(store.users||{}).filter(u=>u.nivel && u.nivel !== 'admin_master');
+  document.getElementById('tr-lider').innerHTML =
+    `<option value="">— Manter líder atual (${liderAtual?.name||'—'}) —</option>` +
+    lideres.map(u=>`<option value="${u.id}">${u.name} · ${u.nivel||''}</option>`).join('');
 
-    const liderAtual = Object.values(store.users||{}).find(u=>String(u.id)===String(emp.owner_id||emp.ownerId));
-    const lideres = Object.values(store.users||{}).filter(u=>u.nivel && u.nivel!== 'admin_master');
-    document.getElementById('tr-lider').innerHTML =
-      `<option value="">— Manter líder atual (${liderAtual?.name||'—'}) —</option>` +
-      lideres.map(u=>`<option value="${u.id}">${u.name} · ${u.nivel||''}</option>`).join('');
+  document.getElementById('tr-dept').innerHTML   = opt(store.depts||[],   emp.dept);
+  document.getElementById('tr-role').innerHTML   = opt(store.funcoes||[], emp.role);
+  document.getElementById('tr-filial').innerHTML = opt(store.filiais||[], emp.filial);
+  document.getElementById('tr-turno').innerHTML  = opt(store.turnos||[],  emp.turno);
 
-    document.getElementById('tr-dept').innerHTML = opt(store.depts||[], emp.dept);
-    document.getElementById('tr-role').innerHTML = opt(store.funcoes||[], emp.role);
-    document.getElementById('tr-filial').innerHTML = opt(store.filiais||[], emp.filial);
-    document.getElementById('tr-turno').innerHTML = opt(store.turnos||[], emp.turno);
-
-    console.log('4. Abrindo modal');
-    document.getElementById('modal-transfer').classList.add('open');
-  } catch(e) {
-    console.error('ERRO no openTransferModal:', e);
-    alert('Erro: ' + e.message);
-  }
+  document.getElementById('modal-transfer').classList.add('open');
 }
 
 async function saveTransfer() {
@@ -1841,8 +1904,8 @@ document.getElementById('modal-transfer').addEventListener('click', e => {
 // OCORRÊNCIA DO FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
 // Síncrono — usa _store (sempre carregado após renderCards)
-async function openOcorrenciaModal(id, tipo) {
-  const store = _store || await getStore(); // usa cache ou busca
+function openOcorrenciaModal(id, tipo) {
+  const store = _store;
   if (!store) return;
   const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
   if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
@@ -1985,83 +2048,5 @@ async function verificarNomeDuplicado() {
 }
 
 </script>
-<div class="overlay" id="modal-overlay">
-  <div class="modal">
-    <div class="modal-title" id="modal-title">Novo Funcionário</div>
-    <div class="form-grid">
-      <div class="form-group full">
-        <label class="form-label">📷 Foto do Funcionário</label>
-        <div class="foto-upload-wrap">
-          <div class="foto-preview" id="foto-preview-modal">
-            <span id="foto-ini-modal">?</span>
-          </div>
-          <div class="foto-btns">
-            <input type="file" id="foto-input" accept="image/*" style="display:none" onchange="processarFoto(this)">
-            <button type="button" class="btn-foto" onclick="document.getElementById('foto-input').click()">📷 Selecionar Foto</button>
-            <button type="button" class="btn-foto remove" onclick="removerFoto()">✕ Remover</button>
-          </div>
-        </div>
-      </div>
-	  
-	  <div class="overlay" id="modal-transfer">
-  <div class="modal" style="width:480px">
-    <div class="modal-title">🔀 Transferir Funcionário</div>
-    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:18px;font-size:13px;color:var(--text)">
-      👤 <strong id="tr-emp-name"></strong>
-    </div>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Selecione apenas os campos que deseja alterar. Campos em branco mantêm o valor atual.</p>
-    <div class="form-grid">
-      <div class="form-group"><label class="form-label">🏢 Departamento</label><select class="form-input" id="tr-dept"></select></div>
-      <div class="form-group"><label class="form-label">💼 Função / Cargo</label><select class="form-input" id="tr-role"></select></div>
-      <div class="form-group"><label class="form-label">🏭 Filial</label><select class="form-input" id="tr-filial"></select></div>
-      <div class="form-group"><label class="form-label">🕐 Turno</label><select class="form-input" id="tr-turno"></select></div>
-      <div class="form-group full"><label class="form-label">👤 Transferir para o Líder</label><select class="form-input" id="tr-lider"></select></div>
-    </div>
-    <input type="hidden" id="tr-edit-id">
-    <input type="hidden" id="tr-role-original">
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeTransferModal()">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveTransfer()">🔀 Confirmar Transferência</button>
-    </div>
-  </div>
-</div>
-
-<div class="overlay" id="modal-ocorrencia-emp">
-  <div class="modal" style="width:500px">
-    <div class="modal-title">📝 Registrar Ocorrência</div>
-    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:18px;font-size:13px;color:var(--text)">
-      👤 Funcionário: <strong id="oc-target-name"></strong>
-    </div>
-    <div class="form-grid">
-      <div class="form-group">
-        <label class="form-label">📋 Tipo de Ocorrência</label>
-        <select class="form-input" id="oc-tipo">
-          <option value="">— Selecione —</option>
-          <option value="Justificativa">📄 Justificativa</option>
-          <option value="Ajuste">🔧 Ajuste</option>
-          <option value="Ocorrência">⚠️ Ocorrência</option>
-          <option value="Entrada">🟢 Entrada</option>
-          <option value="Saída">🔴 Saída</option>
-          <option value="Advertência">🚨 Advertência</option>
-          <option value="Elogio">⭐ Elogio</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">📅 Data</label>
-        <input class="form-input" type="datetime-local" id="oc-data">
-      </div>
-      <div class="form-group full">
-        <label class="form-label">📝 Descrição</label>
-        <textarea class="form-input" id="oc-desc" rows="4" placeholder="Descreva a ocorrência..." style="resize:vertical;min-height:90px"></textarea>
-      </div>
-    </div>
-    <input type="hidden" id="oc-edit-id">
-    <input type="hidden" id="oc-tipo-ref" value="funcionario">
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeOcorrenciaModal()">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveOcorrencia()">📝 Salvar Ocorrência</button>
-    </div>
-  </div>
-</div>
 </body>
 </html>
