@@ -1822,31 +1822,41 @@ function toggleFerias() {
 // ════════════════════════════════════════════════════════
 // Síncrono — usa _store (sempre carregado após renderCards)
 async function openTransferModal(id) {
-  const store = _store || await getStore(); // usa cache ou busca
-  if (!store) return;
-  const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
-  if (!emp) return;
+  console.log('1. Entrou na função, id:', id);
+  try {
+    const store = _store || await getStore();
+    console.log('2. Store:', store);
+    if (!store) { alert('Store vazio'); return; }
 
-  const opt = (list, curVal) =>
-    `<option value="">— Manter atual (${curVal||'—'}) —</option>` +
-    list.map(x=>`<option value="${x.nome||x.name}">${x.nome||x.name}</option>`).join('');
+    const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
+    console.log('3. Emp encontrado:', emp);
+    if (!emp) { alert('Funcionario não encontrado'); return; }
 
-  document.getElementById('tr-emp-name').textContent = emp.name;
-  document.getElementById('tr-edit-id').value        = id;
-  document.getElementById('tr-role-original').value  = emp.role || '';
+    const opt = (list, curVal) =>
+      `<option value="">— Manter atual (${curVal||'—'}) —</option>` +
+      list.map(x=>`<option value="${x.nome||x.name}">${x.nome||x.name}</option>`).join('');
 
-  const liderAtual = Object.values(store.users||{}).find(u=>String(u.id)===String(emp.owner_id||emp.ownerId));
-  const lideres = Object.values(store.users||{}).filter(u=>u.nivel && u.nivel !== 'admin_master');
-  document.getElementById('tr-lider').innerHTML =
-    `<option value="">— Manter líder atual (${liderAtual?.name||'—'}) —</option>` +
-    lideres.map(u=>`<option value="${u.id}">${u.name} · ${u.nivel||''}</option>`).join('');
+    document.getElementById('tr-emp-name').textContent = emp.name;
+    document.getElementById('tr-edit-id').value = id;
+    document.getElementById('tr-role-original').value = emp.role || '';
 
-  document.getElementById('tr-dept').innerHTML   = opt(store.depts||[],   emp.dept);
-  document.getElementById('tr-role').innerHTML   = opt(store.funcoes||[], emp.role);
-  document.getElementById('tr-filial').innerHTML = opt(store.filiais||[], emp.filial);
-  document.getElementById('tr-turno').innerHTML  = opt(store.turnos||[],  emp.turno);
+    const liderAtual = Object.values(store.users||{}).find(u=>String(u.id)===String(emp.owner_id||emp.ownerId));
+    const lideres = Object.values(store.users||{}).filter(u=>u.nivel && u.nivel!== 'admin_master');
+    document.getElementById('tr-lider').innerHTML =
+      `<option value="">— Manter líder atual (${liderAtual?.name||'—'}) —</option>` +
+      lideres.map(u=>`<option value="${u.id}">${u.name} · ${u.nivel||''}</option>`).join('');
 
-  document.getElementById('modal-transfer').classList.add('open');
+    document.getElementById('tr-dept').innerHTML = opt(store.depts||[], emp.dept);
+    document.getElementById('tr-role').innerHTML = opt(store.funcoes||[], emp.role);
+    document.getElementById('tr-filial').innerHTML = opt(store.filiais||[], emp.filial);
+    document.getElementById('tr-turno').innerHTML = opt(store.turnos||[], emp.turno);
+
+    console.log('4. Abrindo modal');
+    document.getElementById('modal-transfer').classList.add('open');
+  } catch(e) {
+    console.error('ERRO no openTransferModal:', e);
+    alert('Erro: ' + e.message);
+  }
 }
 
 async function saveTransfer() {
