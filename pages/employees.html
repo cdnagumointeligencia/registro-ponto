@@ -761,7 +761,7 @@ let _store       = null;  // cache do store
 let _allPonto    = {};    // cache do ponto
 let _resolvePromocao    = null;
 let _admissaoVerificada = false;
-let _modalLock   = false; // impede dois modais abrirem ao mesmo tempo
+
 
 const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
 const MONTHS   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
@@ -970,8 +970,8 @@ function populateDeptSelect() {
     depts.map(d=>`<option value="${d}" ${d===cur?'selected':''}>${d}</option>`).join('');
 }
 
-async function populateModalSelects(emp) {
-  const store = _store || await getStore();
+function populateModalSelects(emp) {
+  const store = _store || {};
   const opt   = (list, val) =>
     `<option value="">— Selecione —</option>` +
     list.map(x=>`<option value="${x.nome||x.name}" ${(x.nome||x.name)===val?'selected':''}>${x.nome||x.name}</option>`).join('');
@@ -1269,28 +1269,22 @@ function openModal(emp) {
 
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
-  _modalLock = false;
 }
 
 function closeTransferModal() {
   document.getElementById('modal-transfer').classList.remove('open');
-  _modalLock = false;
 }
 
 function closeOcorrenciaModal() {
   document.getElementById('modal-ocorrencia-emp').classList.remove('open');
-  _modalLock = false;
 }
 
-async function editEmployee(id) {
-  if (_modalLock) return;
-  _modalLock = true;
-  const store = _store || await getStore();
-  const emp   = (store.employees||[]).find(e=>String(e.id)===String(id));
-  if (!emp) { _modalLock = false; return; }
-  if (!canEditEmp(emp)) { showToast('⚠️ Sem permissão para editar este funcionário.','warn'); _modalLock = false; return; }
+// Usa _store diretamente (sempre carregado após renderCards) — sem async para evitar race condition
+function editEmployee(id) {
+  const emp = (_store?.employees||[]).find(e=>String(e.id)===String(id));
+  if (!emp) return;
+  if (!canEditEmp(emp)) { showToast('⚠️ Sem permissão para editar este funcionário.','warn'); return; }
   openModal(emp);
-  // lock permanece ativo — liberado apenas em closeModal()
 }
 
 async function deleteEmployee(id) {
@@ -1826,12 +1820,12 @@ function toggleFerias() {
 // ════════════════════════════════════════════════════════
 // TRANSFERIR FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
-async function openTransferModal(id) {
-  if (_modalLock) return;
-  _modalLock = true;
-  const store = _store || await getStore();
-  const emp   = (store.employees||[]).find(e=>String(e.id)===String(id));
-  if (!emp) { _modalLock = false; return; }
+// Síncrono — usa _store (sempre carregado após renderCards)
+function openTransferModal(id) {
+  const store = _store;
+  if (!store) return;
+  const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
+  if (!emp) return;
 
   const opt = (list, curVal) =>
     `<option value="">— Manter atual (${curVal||'—'}) —</option>` +
@@ -1853,7 +1847,6 @@ async function openTransferModal(id) {
   document.getElementById('tr-turno').innerHTML  = opt(store.turnos||[],  emp.turno);
 
   document.getElementById('modal-transfer').classList.add('open');
-  // lock permanece ativo — liberado apenas em closeTransferModal()
 }
 
 async function saveTransfer() {
@@ -1910,12 +1903,12 @@ document.getElementById('modal-transfer').addEventListener('click', e => {
 // ════════════════════════════════════════════════════════
 // OCORRÊNCIA DO FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
-async function openOcorrenciaModal(id, tipo) {
-  if (_modalLock) return;
-  _modalLock = true;
-  const store = _store || await getStore();
-  const emp   = (store.employees||[]).find(e=>String(e.id)===String(id));
-  if (!emp) { showToast('❌ Funcionário não encontrado.','error'); _modalLock = false; return; }
+// Síncrono — usa _store (sempre carregado após renderCards)
+function openOcorrenciaModal(id, tipo) {
+  const store = _store;
+  if (!store) return;
+  const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
+  if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
 
   document.getElementById('oc-target-name').textContent = emp.name;
   document.getElementById('oc-edit-id').value   = id;
@@ -1927,7 +1920,6 @@ async function openOcorrenciaModal(id, tipo) {
   document.getElementById('oc-data').value = _agora.toISOString().slice(0,16);
 
   document.getElementById('modal-ocorrencia-emp').classList.add('open');
-  // lock permanece ativo — liberado apenas em closeOcorrenciaModal()
 }
 
 async function saveOcorrencia() {
