@@ -26,41 +26,31 @@
   --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
   --sidebar-w:220px;
 }
-/* [light-theme.css] body.light-theme {
-  --bg:#EEF2F8; --surface:#fff; --surface2:#F4F7FB; --surface3:#E8EDF5;
-  --border:#D6DDE8; --accent:#2563eb; --accent2:#7c3aed; --green:#059669;
-  --yellow:#d97706; --red:#dc2626; --orange:#ea580c; --cyan:#0891b2;
-  --text:#0f172a; --muted:#64748b;
-} */
-/* [light-theme.css] body.light-theme 
-
-body.light-theme .main             { background:#EEF2F8; } */
-/* [light-theme.css] body.light-theme .page-title       { color:#0f172a; } */
-/* [light-theme.css] body.light-theme .search-input     { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
-/* [light-theme.css] body.light-theme .search-input::placeholder { color:#94a3b8; } */
-/* [light-theme.css] body.light-theme .dept-chip        { background:#fff; border-color:#CBD5E1; color:#64748b; } */
+/* [light-theme.css] body.light-theme { ... } */
+/* [light-theme.css] body.light-theme .main { background:#EEF2F8; } */
+/* [light-theme.css] body.light-theme .page-title { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .leader-card { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .leader-card:hover { border-color:#2563eb; } */
+/* [light-theme.css] body.light-theme .leader-name { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .leader-role { color:#64748b; } */
+/* [light-theme.css] body.light-theme .stat-box { background:#F4F7FB; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .stat-label { color:#94a3b8; } */
+/* [light-theme.css] body.light-theme .score-footer { background:#EEF4FF; border-color:#C7D8FB; } */
+/* [light-theme.css] body.light-theme .score-footer span { color:#1D4ED8; } */
+/* [light-theme.css] body.light-theme .avatar-bubble { background:#E2E8F0; color:#475569; } */
+/* [light-theme.css] body.light-theme .modal { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .modal input, body.light-theme .modal select { background:#F4F7FB; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .modal label { color:#475569; } */
+/* [light-theme.css] body.light-theme .overlay { background:rgba(15,23,42,.45); } */
+/* [light-theme.css] body.light-theme .search-input { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .dept-chip { background:#fff; border-color:#CBD5E1; color:#64748b; } */
 /* [light-theme.css] body.light-theme .dept-chip.active { background:rgba(37,99,235,.1); border-color:#2563eb; color:#2563eb; } */
-/* [light-theme.css] body.light-theme .leader-card      { background:#fff; border-color:#E2E8F0; } */
-/* [light-theme.css] body.light-theme .leader-card:hover{ border-color:#2563eb; box-shadow:0 4px 20px rgba(37,99,235,.12); } */
-/* [light-theme.css] body.light-theme .leader-name      { color:#0f172a; } */
-/* [light-theme.css] body.light-theme .leader-role      { color:#64748b; } */
-/* [light-theme.css] body.light-theme .stat-box         { background:#F4F7FB; border-color:#E2E8F0; } */
-/* [light-theme.css] body.light-theme .stat-label       { color:#94a3b8; } */
-/* [light-theme.css] body.light-theme .team-section     { color:#64748b; } */
-/* [light-theme.css] body.light-theme .score-footer     { background:#EEF4FF; border-color:#C7D8FB; } */
-/* [light-theme.css] body.light-theme .score-footer span{ color:#1D4ED8; } */
-/* [light-theme.css] body.light-theme .avatar-bubble    { background:#E2E8F0; color:#475569; } */
-/* [light-theme.css] body.light-theme ::-webkit-scrollbar-track { background:#F1F5F9; } */
-/* [light-theme.css] body.light-theme ::-webkit-scrollbar-thumb { background:#CBD5E1; } */
-/* [light-theme.css] body.light-theme .modal            { background:#fff; border-color:#E2E8F0; } */
-/* [light-theme.css] body.light-theme .modal input,
-body.light-theme .modal select     { background:#F4F7FB; border-color:#CBD5E1; color:#0f172a; } */
-/* [light-theme.css] body.light-theme .modal label      { color:#475569; } */
-/* [light-theme.css] body.light-theme .overlay          { background:rgba(15,23,42,.45); } */
+/* [light-theme.css] body.light-theme .hierarquia-label.lider { background:rgba(100,116,139,.08); color:#475569; border-color:rgba(100,116,139,.25); } */
+/* [light-theme.css] body.light-theme .leader-card.nivel-lider { border-color:rgba(100,116,139,.35); } */
+/* [light-theme.css] body.light-theme .leader-card.nivel-lider:hover { border-color:#64748b; } */
+/* [light-theme.css] body.light-theme .leader-card.nivel-lider::before { background:linear-gradient(90deg,#cbd5e1,#e2e8f0); } */
 
-/* ════════════════════════════════════════════
-   BASE
-════════════════════════════════════════════ */
+/* ── Base ── */
 * { box-sizing:border-box; margin:0; padding:0; }
 html { font-size:14px; }
 body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
@@ -68,20 +58,12 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 ::-webkit-scrollbar-track { background:var(--surface); }
 ::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
 
-/* ════════════════════════════════════════════
-   SIDEBAR
-════════════════════════════════════════════ */
-
-/* ════════════════════════════════════════════
-   MAIN
-════════════════════════════════════════════ */
+/* ── Main ── */
 .main { margin-left:var(--sidebar-w); padding:24px 28px; min-height:100vh; }
 .topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; flex-wrap:wrap; gap:12px; }
 .page-title { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; color:var(--text); }
 
-/* ════════════════════════════════════════════
-   BOTÕES
-════════════════════════════════════════════ */
+/* ── Botões ── */
 .btn {
   display:inline-flex; align-items:center; gap:7px; padding:9px 16px;
   border-radius:8px; border:none; font-family:var(--font-body);
@@ -96,19 +78,80 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .btn-sm { padding:5px 11px; font-size:11px; }
 
 /* ════════════════════════════════════════════
-   FILTROS
+   BARRA DE FILTROS + BUSCA
 ════════════════════════════════════════════ */
-.filter-bar { display:flex; align-items:center; gap:10px; margin-bottom:22px; flex-wrap:wrap; }
-.search-wrap { position:relative; }
-.search-icon { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:14px; pointer-events:none; }
-.search-input {
-  background:var(--surface); border:1px solid var(--border); border-radius:9px;
-  color:var(--text); font-family:var(--font-body); font-size:13px;
-  padding:8px 12px 8px 34px; outline:none; transition:border-color .2s; width:200px;
+.filter-bar {
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:22px; flex-wrap:wrap;
 }
-.search-input:focus { border-color:var(--accent); }
-.search-input::placeholder { color:var(--muted); }
 
+/* Campo de busca de líder */
+.search-leader-wrap {
+  position:relative; flex-shrink:0;
+}
+.search-leader-icon {
+  position:absolute; left:11px; top:50%;
+  transform:translateY(-50%);
+  color:var(--muted); font-size:14px; pointer-events:none;
+  z-index:1;
+}
+.search-leader-input {
+  background:var(--surface); border:1.5px solid var(--border);
+  border-radius:9px; color:var(--text); font-family:var(--font-body);
+  font-size:13px; padding:8px 36px 8px 34px;
+  outline:none; transition:border-color .2s, box-shadow .2s;
+  width:240px;
+}
+.search-leader-input:focus {
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(79,142,247,.12);
+}
+.search-leader-input::placeholder { color:var(--muted); }
+
+/* Botão limpar busca */
+.search-leader-clear {
+  position:absolute; right:10px; top:50%; transform:translateY(-50%);
+  background:var(--surface3); border:none; border-radius:50%;
+  width:18px; height:18px; display:none; align-items:center;
+  justify-content:center; cursor:pointer; font-size:9px;
+  color:var(--muted); transition:all .15s;
+}
+.search-leader-clear:hover { background:var(--accent); color:#fff; }
+.search-leader-clear.show { display:flex; }
+
+/* Dropdown de sugestões */
+.search-leader-dropdown {
+  position:absolute; top:calc(100% + 6px); left:0; right:0;
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.4);
+  z-index:500; overflow:hidden;
+  display:none; flex-direction:column;
+  max-height:260px; overflow-y:auto;
+}
+.search-leader-dropdown.open { display:flex; }
+.search-leader-option {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 14px; cursor:pointer;
+  transition:background .12s; border-bottom:1px solid rgba(42,47,69,.4);
+}
+.search-leader-option:last-child { border-bottom:none; }
+.search-leader-option:hover { background:var(--surface3); }
+.search-leader-option.selected { background:rgba(79,142,247,.1); }
+.slo-avatar {
+  width:30px; height:30px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:10px; font-weight:800; color:#fff;
+}
+.slo-info { flex:1; min-width:0; }
+.slo-name { font-size:13px; font-weight:600; color:var(--text); }
+.slo-role { font-size:11px; color:var(--muted); }
+.slo-badge {
+  font-size:10px; font-weight:700; padding:2px 8px;
+  border-radius:20px; white-space:nowrap;
+}
+
+/* Chips de departamento */
 .dept-chip {
   padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600;
   cursor:pointer; border:1px solid var(--border); background:var(--surface);
@@ -118,43 +161,53 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .dept-chip.active { background:rgba(79,142,247,.15); border-color:var(--accent); color:var(--accent); }
 
 /* ════════════════════════════════════════════
+   BANNER DE BUSCA ATIVA
+════════════════════════════════════════════ */
+.search-active-banner {
+  display:none; align-items:center; gap:12px;
+  background:rgba(79,142,247,.08); border:1px solid rgba(79,142,247,.25);
+  border-radius:10px; padding:10px 16px; margin-bottom:16px;
+}
+.search-active-banner.show { display:flex; }
+.sab-avatar {
+  width:36px; height:36px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:12px; font-weight:800; color:#fff;
+}
+.sab-text { flex:1; }
+.sab-title { font-size:13px; font-weight:700; color:var(--text); }
+.sab-sub   { font-size:11px; color:var(--muted); margin-top:2px; }
+.sab-close {
+  background:transparent; border:1px solid var(--border);
+  border-radius:7px; padding:4px 10px; color:var(--muted);
+  font-family:var(--font-body); font-size:11px; font-weight:600;
+  cursor:pointer; transition:all .15s; display:flex; align-items:center; gap:5px;
+}
+.sab-close:hover { border-color:var(--red); color:var(--red); }
+
+/* ════════════════════════════════════════════
    HIERARQUIA — SEÇÕES
 ════════════════════════════════════════════ */
 .hierarquia-secao {
   grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-top: 10px;
-  margin-bottom: 4px;
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 10px; margin-bottom: 4px;
 }
 .hierarquia-secao:first-child { margin-top: 0; }
 .hierarquia-label {
-  font-family: var(--font-head);
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  white-space: nowrap;
-  padding: 4px 14px;
-  border-radius: 20px;
+  font-family: var(--font-head); font-size: 11px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 2px; white-space: nowrap;
+  padding: 4px 14px; border-radius: 20px;
 }
 .hierarquia-linha {
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-  opacity: 0.6;
+  flex: 1; height: 1px; background: var(--border); opacity: 0.6;
 }
-
-/* Cores de label por nível */
 .hierarquia-label.diretoria  { background:rgba(251,146,60,.15);  color:#fb923c; border:1px solid rgba(251,146,60,.35); }
 .hierarquia-label.gerencia   { background:rgba(167,139,250,.15); color:#a78bfa; border:1px solid rgba(167,139,250,.35); }
 .hierarquia-label.coordenacao{ background:rgba(251,191,36,.15);  color:#fbbf24; border:1px solid rgba(251,191,36,.35); }
 .hierarquia-label.encarregado{ background:rgba(52,211,153,.15);  color:#34d399; border:1px solid rgba(52,211,153,.35); }
 .hierarquia-label.lider      { background:rgba(255,255,255,.08); color:#e2e8f0; border:1px solid rgba(255,255,255,.2); }
-
-/* Light theme */
-/* [light-theme.css] body.light-theme .hierarquia-label.lider { background:rgba(100,116,139,.08); color:#475569; border-color:rgba(100,116,139,.25); } */
 
 /* ════════════════════════════════════════════
    LEADERS GRID
@@ -172,39 +225,33 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   transition:border-color .2s, transform .2s, box-shadow .2s;
   display:flex; flex-direction:column;
 }
-
-/* Bordas coloridas por nível — estado normal */
 .leader-card.nivel-diretoria   { border-color:rgba(251,146,60,.6);  }
 .leader-card.nivel-gerencia    { border-color:rgba(167,139,250,.6); }
 .leader-card.nivel-coordenacao { border-color:rgba(251,191,36,.6);  }
 .leader-card.nivel-encarregado { border-color:rgba(52,211,153,.6);  }
 .leader-card.nivel-lider       { border-color:rgba(255,255,255,.25);}
 
-/* Hover — intensifica a cor do nível */
 .leader-card.nivel-diretoria:hover   { border-color:#fb923c; box-shadow:0 8px 28px rgba(251,146,60,.2);  transform:translateY(-3px); }
 .leader-card.nivel-gerencia:hover    { border-color:#a78bfa; box-shadow:0 8px 28px rgba(167,139,250,.2); transform:translateY(-3px); }
 .leader-card.nivel-coordenacao:hover { border-color:#fbbf24; box-shadow:0 8px 28px rgba(251,191,36,.2);  transform:translateY(-3px); }
 .leader-card.nivel-encarregado:hover { border-color:#34d399; box-shadow:0 8px 28px rgba(52,211,153,.2);  transform:translateY(-3px); }
 .leader-card.nivel-lider:hover       { border-color:rgba(255,255,255,.6); box-shadow:0 8px 28px rgba(255,255,255,.08); transform:translateY(-3px); }
 
-/* Light theme hover */
-/* [light-theme.css] body.light-theme .leader-card.nivel-lider       { border-color:rgba(100,116,139,.35); } */
-/* [light-theme.css] body.light-theme .leader-card.nivel-lider:hover { border-color:#64748b; box-shadow:0 8px 28px rgba(100,116,139,.15); } */
+/* Card destacado (resultado de busca) */
+.leader-card.highlight {
+  box-shadow:0 0 0 2px var(--accent), 0 8px 28px rgba(79,142,247,.3) !important;
+  border-color:var(--accent) !important;
+  transform:translateY(-2px) !important;
+}
 
-/* Faixa colorida no topo do card */
 .leader-card::before {
-  content:'';
-  display:block;
-  height:3px;
-  background:var(--border);
-  flex-shrink:0;
+  content:''; display:block; height:3px; background:var(--border); flex-shrink:0;
 }
 .leader-card.nivel-diretoria::before   { background:linear-gradient(90deg,#fb923c,#f97316); }
 .leader-card.nivel-gerencia::before    { background:linear-gradient(90deg,#a78bfa,#7c3aed); }
 .leader-card.nivel-coordenacao::before { background:linear-gradient(90deg,#fbbf24,#d97706); }
 .leader-card.nivel-encarregado::before { background:linear-gradient(90deg,#34d399,#059669); }
 .leader-card.nivel-lider::before       { background:linear-gradient(90deg,rgba(255,255,255,.4),rgba(255,255,255,.1)); }
-/* [light-theme.css] body.light-theme .leader-card.nivel-lider::before { background:linear-gradient(90deg,#cbd5e1,#e2e8f0); } */
 
 /* ── Card header ── */
 .card-header { padding:18px 18px 14px; display:flex; align-items:flex-start; gap:14px; }
@@ -219,16 +266,13 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .leader-role { font-size:12px; color:var(--muted); margin-top:3px; }
 .leader-badge {
   flex-shrink:0; display:inline-flex; align-items:center; gap:5px;
-  padding:4px 10px; border-radius:20px; font-size:10px; font-weight:700;
-  white-space:nowrap;
+  padding:4px 10px; border-radius:20px; font-size:10px; font-weight:700; white-space:nowrap;
 }
 
-/* ── Métricas principais ── */
+/* ── Métricas ── */
 .card-metrics { padding:0 18px 14px; display:flex; gap:20px; align-items:flex-end; }
 .metric-big { display:flex; flex-direction:column; gap:2px; }
-.metric-big-val {
-  font-family:var(--font-head); font-size:22px; font-weight:800; letter-spacing:-1px;
-}
+.metric-big-val { font-family:var(--font-head); font-size:22px; font-weight:800; letter-spacing:-1px; }
 .metric-big-val.time   { color:var(--text); }
 .metric-big-val.desemp { color:var(--green); }
 .metric-big-val.score  { color:var(--accent2); }
@@ -242,8 +286,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   width:30px; height:30px; border-radius:50%;
   background:var(--surface3); border:1.5px solid var(--border);
   display:flex; align-items:center; justify-content:center;
-  font-size:10px; font-weight:700; color:var(--muted);
-  font-family:var(--font-head);
+  font-size:10px; font-weight:700; color:var(--muted); font-family:var(--font-head);
 }
 .avatar-more {
   padding:0 8px; height:30px; border-radius:15px;
@@ -254,10 +297,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 
 /* ── Stat boxes ── */
 .card-stats { padding:0 18px 14px; display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-.stat-box {
-  background:var(--surface2); border:1px solid var(--border);
-  border-radius:10px; padding:10px 14px;
-}
+.stat-box { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:10px 14px; }
 .stat-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; color:var(--muted); margin-bottom:5px; }
 .stat-val { font-family:var(--font-head); font-size:20px; font-weight:800; letter-spacing:-1px; }
 .stat-val.assid  { color:var(--green); }
@@ -276,23 +316,19 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .score-footer span  { font-family:var(--font-head); font-size:18px; font-weight:800; color:var(--accent2); }
 
 /* ── Ações admin ── */
-.card-actions { padding:0 18px 16px; display:flex; gap:8px; }
+.card-actions { padding:0 18px 16px; display:flex; gap:8px; flex-wrap:wrap; }
 
 /* ════════════════════════════════════════════
-   EMPTY STATE
-════════════════════════════════════════════ */
-.empty-state { text-align:center; padding:60px 20px; color:var(--muted); grid-column:1/-1; }
-.empty-icon  { font-size:52px; margin-bottom:14px; }
-
-/* ════════════════════════════════════════════
-   MODAL
+   MODAL ÁRVORE HIERÁRQUICA
 ════════════════════════════════════════════ */
 .overlay {
   position:fixed; inset:0; background:rgba(0,0,0,.75);
   backdrop-filter:blur(4px); z-index:200;
-  display:none; align-items:center; justify-content:center;
+  display:none; align-items:center; justify-content:center; padding:20px;
 }
 .overlay.open { display:flex; }
+
+/* Modal padrão */
 .modal {
   background:var(--surface); border:1px solid var(--border);
   border-radius:16px; padding:28px; width:500px;
@@ -314,48 +350,174 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .form-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(79,142,247,.1); }
 .form-input option { background:var(--surface2); }
 
-/* ════════════════════════════════════════════
-   TOAST
-════════════════════════════════════════════ */
+/* Modal da árvore hierárquica — mais largo */
+.modal-tree {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; width:780px; max-width:96vw;
+  max-height:92vh; overflow:hidden;
+  display:flex; flex-direction:column;
+  animation:fadeUp .25s ease;
+}
+.modal-tree-header {
+  padding:20px 24px 16px; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:14px; flex-shrink:0;
+}
+.modal-tree-avatar {
+  width:46px; height:46px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:16px; font-weight:800; color:#fff;
+}
+.modal-tree-info { flex:1; }
+.modal-tree-name { font-family:var(--font-head); font-size:18px; font-weight:800; color:var(--text); }
+.modal-tree-sub  { font-size:12px; color:var(--muted); margin-top:3px; }
+.modal-tree-close {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; padding:6px 12px; color:var(--muted);
+  font-size:12px; font-weight:600; cursor:pointer;
+  transition:all .15s; display:flex; align-items:center; gap:5px;
+  font-family:var(--font-body);
+}
+.modal-tree-close:hover { border-color:var(--red); color:var(--red); }
+
+/* Breadcrumb de navegação */
+.tree-breadcrumb {
+  padding:10px 24px; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+  background:var(--surface2); flex-shrink:0; min-height:42px;
+}
+.tree-breadcrumb:empty { display:none; }
+.bc-item {
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:12px; font-weight:600; color:var(--accent);
+  cursor:pointer; padding:3px 8px; border-radius:6px;
+  transition:background .12s;
+}
+.bc-item:hover { background:rgba(79,142,247,.12); }
+.bc-item.current { color:var(--text); cursor:default; }
+.bc-item.current:hover { background:transparent; }
+.bc-sep { color:var(--muted); font-size:11px; }
+
+/* Corpo da árvore */
+.modal-tree-body { padding:20px 24px; overflow-y:auto; flex:1; }
+
+/* Nó raiz — o líder selecionado */
+.tree-root-card {
+  background:rgba(79,142,247,.06); border:1.5px solid rgba(79,142,247,.3);
+  border-radius:12px; padding:14px 18px; margin-bottom:20px;
+  display:flex; align-items:center; gap:14px;
+}
+.tree-root-avatar {
+  width:46px; height:46px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:15px; font-weight:800; color:#fff;
+}
+.tree-root-info { flex:1; }
+.tree-root-name { font-family:var(--font-head); font-size:16px; font-weight:800; color:var(--text); }
+.tree-root-meta { font-size:12px; color:var(--muted); margin-top:3px; }
+
+/* Linha conectora vertical */
+.tree-connector {
+  display:flex; flex-direction:column; gap:0;
+  padding-left:20px; margin-bottom:16px;
+  border-left:2px dashed rgba(79,142,247,.25);
+  margin-left:22px;
+}
+.tree-connector-label {
+  font-size:9px; font-weight:700; text-transform:uppercase;
+  letter-spacing:1.5px; color:var(--muted); margin-bottom:8px;
+  padding-left:14px; padding-top:8px;
+  display:flex; align-items:center; gap:6px;
+}
+.tree-connector-label::before {
+  content:''; display:inline-block; width:10px; height:2px;
+  background:rgba(79,142,247,.35); margin-left:-14px; margin-right:4px; flex-shrink:0;
+}
+
+/* Cards dos subordinados (líderes abaixo) */
+.tree-sub-card {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:10px; padding:12px 14px; margin-bottom:8px;
+  display:flex; align-items:center; gap:12px;
+  cursor:pointer; transition:all .15s; position:relative;
+}
+.tree-sub-card:hover { background:var(--surface3); border-color:var(--accent); transform:translateX(2px); }
+.tree-sub-card.clickable::after {
+  content:'›'; position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  color:var(--accent); font-size:18px; font-weight:800; opacity:.7;
+}
+.tree-sub-avatar {
+  width:34px; height:34px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:11px; font-weight:800; color:#fff;
+}
+.tree-sub-info { flex:1; min-width:0; }
+.tree-sub-name { font-size:13px; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.tree-sub-meta { font-size:11px; color:var(--muted); }
+.tree-sub-badge {
+  font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px;
+  white-space:nowrap; flex-shrink:0; margin-right:20px;
+}
+.tree-sub-stats {
+  display:flex; gap:10px; flex-shrink:0; margin-right:20px;
+}
+.tree-sub-stat { font-size:11px; font-weight:600; }
+
+/* Cards dos funcionários operacionais */
+.tree-emp-cards {
+  display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:4px;
+}
+.tree-emp-card {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:9px; padding:10px 12px;
+  display:flex; align-items:center; gap:10px;
+}
+.tree-emp-avatar {
+  width:28px; height:28px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,#4f8ef7,#3b6fd4);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:9px; font-weight:800; color:#fff;
+}
+.tree-emp-info { flex:1; min-width:0; }
+.tree-emp-name { font-size:12px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.tree-emp-meta { font-size:10px; color:var(--muted); }
+
+/* Estado vazio da árvore */
+.tree-empty {
+  text-align:center; padding:40px 20px; color:var(--muted);
+}
+.tree-empty-icon { font-size:36px; margin-bottom:10px; }
+
+/* Estatísticas resumidas no topo da árvore */
+.tree-stats-row {
+  display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;
+}
+.tree-stat-pill {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:5px 12px; border-radius:20px; font-size:11px; font-weight:600;
+  background:var(--surface2); border:1px solid var(--border);
+}
+
+/* ── Empty state ── */
+.empty-state { text-align:center; padding:60px 20px; color:var(--muted); grid-column:1/-1; }
+.empty-icon  { font-size:52px; margin-bottom:14px; }
+
+/* ── Toast ── */
 .toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
 .toast { padding:10px 18px; border-radius:10px; font-size:12px; font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4); animation:fadeUp .25s ease; max-width:320px; pointer-events:auto; }
 .toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
 .toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
 .toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
 
-/* ════════════════════════════════════════════
-   RESPONSIVE
-════════════════════════════════════════════ */
-@media(max-width:1024px) {
-  :root { --sidebar-w:56px; }
-  
-  
-  
-  
-
-}
-@media(max-width:768px) {
-  :root { --sidebar-w:0px; }
-  
-  .main { margin-left:0; padding:16px; }
-  .leaders-grid { grid-template-columns:1fr; }
-  .form-grid { grid-template-columns:1fr; }
-}
-
-}
-
-
 /* ── Foto do líder ── */
-.foto-upload-wrap {
-  display:flex; align-items:center; gap:14px; margin-bottom:4px;
-}
+.foto-upload-wrap { display:flex; align-items:center; gap:14px; margin-bottom:4px; }
 .foto-preview-lider {
   width:64px; height:64px; border-radius:50%; object-fit:cover;
   border:2px solid var(--border); flex-shrink:0;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-head); font-size:20px; font-weight:800; color:#fff;
-  overflow:hidden;
+  font-family:var(--font-head); font-size:20px; font-weight:800; color:#fff; overflow:hidden;
 }
 .foto-preview-lider img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
 .foto-btns { display:flex; flex-direction:column; gap:6px; }
@@ -367,6 +529,20 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .btn-foto:hover { border-color:var(--accent); color:var(--accent); }
 .btn-foto.remove:hover { border-color:var(--red); color:var(--red); }
 
+/* ── Responsive ── */
+@media(max-width:1024px) {
+  :root { --sidebar-w:56px; }
+  .tree-emp-cards { grid-template-columns:1fr; }
+}
+@media(max-width:768px) {
+  :root { --sidebar-w:0px; }
+  .main { margin-left:0; padding:16px; }
+  .leaders-grid { grid-template-columns:1fr; }
+  .form-grid { grid-template-columns:1fr; }
+  .search-leader-input { width:180px; }
+  .tree-emp-cards { grid-template-columns:1fr; }
+  .modal-tree { width:98vw; }
+}
 </style>
 </head>
 <body>
@@ -382,15 +558,57 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
     <button class="btn btn-primary" id="btn-novo" onclick="openModal()">＋ Novo Líder</button>
   </div>
 
-  <!-- Filtros -->
+  <!-- Filtros: Busca de líder + chips de dept -->
   <div class="filter-bar">
-    <div id="dept-chips"></div>
+
+    <!-- ★ NOVO: Campo de busca de líder -->
+    <div class="search-leader-wrap">
+      <span class="search-leader-icon">🔍</span>
+      <input class="search-leader-input" type="text" id="search-leader-input"
+        placeholder="Buscar líder por nome..."
+        oninput="onSearchLeaderInput(this.value)"
+        onkeydown="onSearchLeaderKey(event)"
+        autocomplete="off">
+      <button class="search-leader-clear" id="search-leader-clear"
+        onclick="clearLeaderSearch()" title="Limpar busca">✕</button>
+      <div class="search-leader-dropdown" id="search-leader-dropdown"></div>
+    </div>
+
+    <!-- Chips de departamento -->
+    <div id="dept-chips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+
   </div>
 
-  <!-- Grid -->
+  <!-- Banner do líder selecionado na busca -->
+  <div class="search-active-banner" id="search-active-banner">
+    <div class="sab-avatar" id="sab-avatar"></div>
+    <div class="sab-text">
+      <div class="sab-title" id="sab-title"></div>
+      <div class="sab-sub"  id="sab-sub"></div>
+    </div>
+    <button class="sab-close" onclick="clearLeaderSearch()">✕ Limpar filtro</button>
+  </div>
+
+  <!-- Grid de cards -->
   <div class="leaders-grid" id="leaders-grid"></div>
 
 </main>
+
+<!-- ══ MODAL ÁRVORE HIERÁRQUICA ══ -->
+<div class="overlay" id="modal-tree-overlay">
+  <div class="modal-tree">
+    <div class="modal-tree-header">
+      <div class="modal-tree-avatar" id="tree-root-avatar-header"></div>
+      <div class="modal-tree-info">
+        <div class="modal-tree-name" id="tree-modal-name">Hierarquia</div>
+        <div class="modal-tree-sub"  id="tree-modal-sub">Árvore de responsabilidades</div>
+      </div>
+      <button class="modal-tree-close" onclick="closeTreeModal()">✕ Fechar</button>
+    </div>
+    <div class="tree-breadcrumb" id="tree-breadcrumb"></div>
+    <div class="modal-tree-body" id="tree-modal-body"></div>
+  </div>
+</div>
 
 <!-- ══ MODAL NOVO/EDITAR LÍDER ══ -->
 <div class="overlay" id="modal-overlay">
@@ -531,10 +749,19 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 // ════════════════════════════════════════════════════════
 // ESTADO
 // ════════════════════════════════════════════════════════
-let currentUser   = null;
+let currentUser      = null;
 let activeDeptFilter = '';
-let _store        = null;  // cache do store
-let _allPonto     = {};    // cache do rh_ponto
+let _store           = null;
+let _allPonto        = {};
+
+// Estado da busca de líder
+let _searchLeaderId    = null;   // ID do líder selecionado pelo campo de busca
+let _searchLeaderQuery = '';     // Texto atual no campo de busca
+let _dropdownIdx       = -1;     // Índice de navegação no dropdown
+
+// Estado da árvore hierárquica
+let _treeRootId   = null;        // líder raiz do modal de árvore
+let _treePath     = [];          // trilha de navegação: [{ id, name }]
 
 const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
 
@@ -547,6 +774,9 @@ const NIVEL_META = {
   lider:        { label:'Líder',        emoji:'👷', cor:'#4f8ef7' },
 };
 
+const HIERARQUIA_ORDER = ['diretoria','gerencia','coordenacao','encarregado','lider'];
+const ORDEM_IDX        = ['lider','encarregado','coordenacao','gerencia','diretoria'];
+
 // ════════════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════════════
@@ -557,17 +787,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   initTheme();
   initSidebar('leaders', currentUser);
 
-  // Só Admin Master pode criar novos líderes via esta página
   const perfil  = getUserPerfil(currentUser);
   const btnNovo = document.getElementById('btn-novo');
   if (btnNovo) btnNovo.style.display = perfil === 'admin_master' ? '' : 'none';
+
+  // Fecha dropdown ao clicar fora
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.search-leader-wrap')) closeSearchDropdown();
+  });
 
   buildDeptChips();
   renderLeaders();
 });
 
 // ════════════════════════════════════════════════════════
-// SCORE HELPERS
+// SCORE HELPERS (síncronos, usam cache _store/_allPonto)
 // ════════════════════════════════════════════════════════
 function getWeights() {
   const cfg = _store?.config || {};
@@ -579,74 +813,53 @@ function calcAptMedia(emp) {
   const c = emp.competencies || {};
   return APT_KEYS.reduce((s,k)=>s+(c[k]||0),0)/APT_KEYS.length;
 }
-// ── Lê faltas reais do rh_ponto para um funcionário ──────
 function getTotalFaltasEmp(emp) {
   try {
-    const allPonto = _allPonto;
-    const ano      = emp.year || new Date().getFullYear();
-    let   total    = 0;
+    const ano = emp.year || new Date().getFullYear();
+    let total = 0;
     for (let m = 1; m <= 12; m++) {
       const key  = `${emp.id}_${ano}_${String(m).padStart(2,'0')}`;
-      const dias = allPonto[key] || {};
+      const dias = _allPonto[key] || {};
       Object.values(dias).forEach(s => {
         if (s === 'falta')    total += 1;
         if (s === 'atestado') total += 0.5;
       });
     }
     return total > 0 ? total : (emp.absences||[]).reduce((a,b)=>a+b, 0);
-  } catch(e) {
-    return (emp.absences||[]).reduce((a,b)=>a+b, 0);
-  }
+  } catch(e) { return (emp.absences||[]).reduce((a,b)=>a+b, 0); }
 }
-
 function calcAssid(emp) {
   if (emp.afastado) return 100;
   const total  = getTotalFaltasEmp(emp);
-  const maxAbs = _store?.config?.maxAbs||36;
-  return Math.max(0,100-(total/maxAbs)*100);
+  const maxAbs = _store?.config?.maxAbs || 36;
+  return Math.max(0, 100-(total/maxAbs)*100);
 }
 function calcBonus(emp) {
-  const BONUS_POR_DIA = 0.5;
-  const BONUS_MAX     = 5;
+  const BONUS_POR_DIA = 0.5, BONUS_MAX = 5;
   try {
-    const allPonto = _allPonto;
-    const ano      = emp.year || new Date().getFullYear();
+    const ano = emp.year || new Date().getFullYear();
     const feriadosCustom = _store?.config?.feriadosCustom || [];
-    const ferNac = [
-      {d:1,m:0},{d:21,m:3},{d:1,m:4},{d:7,m:8},
-      {d:12,m:9},{d:2,m:10},{d:15,m:10},{d:25,m:11}
-    ];
+    const ferNac = [{d:1,m:0},{d:21,m:3},{d:1,m:4},{d:7,m:8},{d:12,m:9},{d:2,m:10},{d:15,m:10},{d:25,m:11}];
     let diasBonus = 0;
     for (let m = 1; m <= 12; m++) {
       const key  = `${emp.id}_${ano}_${String(m).padStart(2,'0')}`;
-      const dias = allPonto[key] || {};
+      const dias = _allPonto[key] || {};
       Object.entries(dias).forEach(([dStr, status]) => {
         if (status !== 'presente') return;
-        const d   = parseInt(dStr);
-        const dow = new Date(ano, m-1, d).getDay();
+        const d = parseInt(dStr), dow = new Date(ano,m-1,d).getDay();
         if (dow === 0) { diasBonus++; return; }
-        if (ferNac.some(f => f.d===d && f.m===(m-1))) { diasBonus++; return; }
-        const mesStr = String(m).padStart(2,'0');
-        const diaStr = String(d).padStart(2,'0');
-        if (feriadosCustom.some(f => f.chave===`${mesStr}-${diaStr}`)) diasBonus++;
+        if (ferNac.some(f=>f.d===d&&f.m===(m-1))) { diasBonus++; return; }
+        const mesStr=String(m).padStart(2,'0'), diaStr=String(d).padStart(2,'0');
+        if (feriadosCustom.some(f=>f.chave===`${mesStr}-${diaStr}`)) diasBonus++;
       });
     }
     return Math.min(BONUS_MAX, diasBonus * BONUS_POR_DIA);
   } catch(e) { return 0; }
 }
 function calcScore(emp) {
-  const w     = getWeights();
-  const base  = emp.perf*(w.perf/100)+calcAptMedia(emp)*10*(w.apt/100)+calcAssid(emp)*(w.abs/100);
-  const bonus = calcBonus(emp);
-  return Math.min(100, Math.round(base + bonus));
-}
-
-// Score + status para card de funcionário operacional
-function calcEmpScore(emp) {
-  const w     = getWeights();
-  const base  = (emp.perf||0)*(w.perf/100) + calcAptMedia(emp)*10*(w.apt/100) + calcAssid(emp)*(w.abs/100);
-  const bonus = calcBonus(emp);
-  return Math.min(100, Math.round(base + bonus));
+  const w = getWeights();
+  const base = emp.perf*(w.perf/100)+calcAptMedia(emp)*10*(w.apt/100)+calcAssid(emp)*(w.abs/100);
+  return Math.min(100, Math.round(base + calcBonus(emp)));
 }
 function getEmpStatus(score) {
   if (score>=85) return { label:'🏆 Promoção', cls:'tag-promo' };
@@ -655,35 +868,233 @@ function getEmpStatus(score) {
   return               { label:'🔴 Risco',    cls:'tag-risk' };
 }
 
-// Retorna o líder responsável por um funcionário com base no dept+turno
-function getLiderDoFuncionario(emp, store) {
-  const users = Object.values(store.users || {});
-  const dept  = emp.dept  || '';
-  const turno = emp.turno || '';
-  const PRIORIDADE = ['lider','encarregado','coordenacao','gerencia','diretoria'];
+// ════════════════════════════════════════════════════════
+// HELPERS DE ESCOPO DO LÍDER
+// ════════════════════════════════════════════════════════
+function getMeusDepts(leader) {
+  const depts = leader.perfil?.depts || [];
+  const setor = leader.setor || '';
+  return [...new Set([...depts, ...(setor ? [setor] : [])])];
+}
+function getMeusFiliais(leader) {
+  return leader.perfil?.filiais || (leader.perfil?.filial ? [leader.perfil.filial] : []);
+}
+function getMeusTurnos(leader) {
+  return leader.perfil?.turnos || (leader.perfil?.turno ? [leader.perfil.turno] : []);
+}
+function getTeamEmps(leader, allEmps) {
+  const depts  = getMeusDepts(leader);
+  const turnos = getMeusTurnos(leader);
+  if (!depts.length) return allEmps.filter(e=>(e.owner_id||e.ownerId)===leader.id);
+  return allEmps.filter(e => {
+    const deptOk  = depts.includes(e.dept);
+    const turnoOk = turnos.length ? turnos.includes(e.turno) : true;
+    return deptOk && turnoOk;
+  });
+}
+function getSubordinados(leader, allUsers) {
+  const meuIdx    = ORDEM_IDX.indexOf(leader.nivel || 'lider');
+  const meusDepts = getMeusDepts(leader);
+  return allUsers.filter(u => {
+    if (u.id === ADMIN_ID || u.nivel === 'admin_master' || u.id === leader.id) return false;
+    const uIdx = ORDEM_IDX.indexOf(u.nivel || 'lider');
+    if (uIdx >= meuIdx) return false;
+    if (!meusDepts.length) return false;
+    return meusDepts.some(d => getMeusDepts(u).includes(d));
+  });
+}
+function getTeamTotal(leader, store) {
+  const allEmps  = store.employees || [];
+  const allUsers = Object.values(store.users||{}).filter(u=>u.id!==ADMIN_ID&&u.nivel!=='admin_master'&&u.id!==leader.id);
+  const meuIdx   = ORDEM_IDX.indexOf(leader.nivel||'lider');
+  const meusDepts= getMeusDepts(leader);
+  const meusTurnos=getMeusTurnos(leader);
 
-  for (const nivel of PRIORIDADE) {
+  let totalFuncionarios;
+  if (!meusDepts.length) {
+    totalFuncionarios = allEmps.filter(e=>(e.owner_id||e.ownerId)===leader.id).length;
+  } else {
+    totalFuncionarios = allEmps.filter(e => {
+      const deptOk  = meusDepts.includes(e.dept);
+      const turnoOk = meusTurnos.length ? meusTurnos.includes(e.turno) : true;
+      return deptOk && turnoOk;
+    }).length;
+  }
+  const subordinados = allUsers.filter(u => {
+    const uIdx = ORDEM_IDX.indexOf(u.nivel||'lider');
+    if (uIdx >= meuIdx) return false;
+    if (!meusDepts.length) return false;
+    return meusDepts.some(d=>getMeusDepts(u).includes(d));
+  });
+  return totalFuncionarios + subordinados.length;
+}
+function getLiderDoFuncionario(emp, store) {
+  const users = Object.values(store.users||{});
+  const dept = emp.dept||'', turno = emp.turno||'';
+  for (const nivel of HIERARQUIA_ORDER.slice().reverse()) {
     const match = users.find(u => {
-      if (u.id === ADMIN_ID || u.nivel === 'admin_master') return false;
-      if ((u.nivel || 'lider') !== nivel) return false;
+      if (u.id===ADMIN_ID||u.nivel==='admin_master') return false;
+      if ((u.nivel||'lider')!==nivel) return false;
       const depts      = getMeusDepts(u);
-      const liderTurno = u.perfil?.turno || '';
-      const deptOk     = depts.length
-        ? depts.includes(dept)
-        : (emp.owner_id || emp.ownerId) === u.id;
-      const turnoOk    = liderTurno ? liderTurno === turno : true;
+      const liderTurno = u.perfil?.turno||'';
+      const deptOk     = depts.length ? depts.includes(dept) : (emp.owner_id||emp.ownerId)===u.id;
+      const turnoOk    = liderTurno ? liderTurno===turno : true;
       return deptOk && turnoOk;
     });
     if (match) return match;
   }
   return null;
 }
-
-// Score de liderança = média das aptidões dos funcionários do líder
 function calcLeaderScore(teamEmps) {
   if (!teamEmps.length) return 0;
-  const avg = teamEmps.reduce((s,e)=>s+calcAptMedia(e),0)/teamEmps.length;
-  return +avg.toFixed(1);
+  return +(teamEmps.reduce((s,e)=>s+calcAptMedia(e),0)/teamEmps.length).toFixed(1);
+}
+
+// ════════════════════════════════════════════════════════
+// ★ BUSCA DE LÍDER — Campo de pesquisa com dropdown
+// ════════════════════════════════════════════════════════
+function onSearchLeaderInput(val) {
+  _searchLeaderQuery = val.trim();
+  _dropdownIdx       = -1;
+
+  // Botão de limpar
+  const clearBtn = document.getElementById('search-leader-clear');
+  if (clearBtn) clearBtn.classList.toggle('show', val.length > 0);
+
+  if (!_searchLeaderQuery) {
+    closeSearchDropdown();
+    // Se tinha um líder selecionado, limpa apenas se o campo ficou vazio
+    if (_searchLeaderId) clearLeaderSearch();
+    return;
+  }
+
+  // Filtra líderes pelo nome (case-insensitive, acento-insensitive)
+  const store   = _store;
+  if (!store) return;
+
+  const query   = _searchLeaderQuery.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'');
+  const leaders = Object.values(store.users||{})
+    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master')
+    .filter(u => {
+      const name = (u.name||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'');
+      return name.includes(query);
+    })
+    .sort((a,b)=>a.name.localeCompare(b.name))
+    .slice(0,8);
+
+  renderSearchDropdown(leaders);
+}
+
+function renderSearchDropdown(leaders) {
+  const dd = document.getElementById('search-leader-dropdown');
+  if (!leaders.length) {
+    dd.innerHTML = `<div style="padding:14px 16px;font-size:12px;color:var(--muted)">Nenhum líder encontrado.</div>`;
+    dd.classList.add('open');
+    return;
+  }
+  dd.innerHTML = leaders.map((u,i) => {
+    const ini    = u.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+    const meta   = NIVEL_META[u.nivel||'lider'] || NIVEL_META.lider;
+    const isSelected = u.id === _searchLeaderId;
+    return `
+    <div class="search-leader-option ${isSelected?'selected':''}" data-id="${u.id}" data-idx="${i}"
+      onclick="selectLeaderFromDropdown('${u.id}')">
+      <div class="slo-avatar">${u.foto?`<img src="${u.foto}" style="width:30px;height:30px;border-radius:50%;object-fit:cover">`:ini}</div>
+      <div class="slo-info">
+        <div class="slo-name">${u.name}</div>
+        <div class="slo-role">${u.perfil?.funcao||meta.label}</div>
+      </div>
+      <span class="slo-badge" style="background:${meta.cor}18;color:${meta.cor};border:1px solid ${meta.cor}33">
+        ${meta.emoji} ${meta.label}
+      </span>
+    </div>`;
+  }).join('');
+  dd.classList.add('open');
+}
+
+function onSearchLeaderKey(e) {
+  const dd    = document.getElementById('search-leader-dropdown');
+  const items = dd.querySelectorAll('.search-leader-option');
+  if (!dd.classList.contains('open') || !items.length) return;
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    _dropdownIdx = Math.min(_dropdownIdx+1, items.length-1);
+    updateDropdownHighlight(items);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    _dropdownIdx = Math.max(_dropdownIdx-1, 0);
+    updateDropdownHighlight(items);
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    if (_dropdownIdx >= 0 && items[_dropdownIdx]) {
+      selectLeaderFromDropdown(items[_dropdownIdx].dataset.id);
+    }
+  } else if (e.key === 'Escape') {
+    closeSearchDropdown();
+  }
+}
+
+function updateDropdownHighlight(items) {
+  items.forEach((el, i) => el.classList.toggle('selected', i === _dropdownIdx));
+}
+
+function closeSearchDropdown() {
+  const dd = document.getElementById('search-leader-dropdown');
+  dd.classList.remove('open');
+  _dropdownIdx = -1;
+}
+
+function selectLeaderFromDropdown(id) {
+  const store = _store;
+  if (!store) return;
+  const leader = store.users?.[id];
+  if (!leader) return;
+
+  _searchLeaderId    = id;
+  _searchLeaderQuery = leader.name;
+
+  // Preenche o campo de busca
+  const inp = document.getElementById('search-leader-input');
+  if (inp) inp.value = leader.name;
+
+  // Botão limpar
+  const clearBtn = document.getElementById('search-leader-clear');
+  if (clearBtn) clearBtn.classList.add('show');
+
+  closeSearchDropdown();
+  updateSearchBanner(leader);
+  renderLeaders();
+}
+
+function updateSearchBanner(leader) {
+  const banner = document.getElementById('search-active-banner');
+  const ini    = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const meta   = NIVEL_META[leader.nivel||'lider']||NIVEL_META.lider;
+  const team   = getTeamEmps(leader, _store?.employees||[]);
+  const total  = getTeamTotal(leader, _store||{users:{},employees:[]});
+
+  document.getElementById('sab-avatar').innerHTML = leader.foto
+    ? `<img src="${leader.foto}" style="width:36px;height:36px;border-radius:50%;object-fit:cover">`
+    : ini;
+  document.getElementById('sab-title').textContent = `Mostrando hierarquia de: ${leader.name}`;
+  document.getElementById('sab-sub').textContent   = `${meta.emoji} ${meta.label} · ${total} pessoa(s) sob responsabilidade`;
+  banner.classList.add('show');
+}
+
+function clearLeaderSearch() {
+  _searchLeaderId    = null;
+  _searchLeaderQuery = '';
+
+  const inp = document.getElementById('search-leader-input');
+  if (inp) inp.value = '';
+
+  const clearBtn = document.getElementById('search-leader-clear');
+  if (clearBtn) clearBtn.classList.remove('show');
+
+  document.getElementById('search-active-banner').classList.remove('show');
+  closeSearchDropdown();
+  renderLeaders();
 }
 
 // ════════════════════════════════════════════════════════
@@ -695,7 +1106,6 @@ async function buildDeptChips() {
   const depts = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
   const wrap  = document.getElementById('dept-chips');
 
-  wrap.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap';
   wrap.innerHTML = [
     { label:'Todos', val:'' },
     ...depts.map(d=>({ label:d, val:d }))
@@ -711,18 +1121,10 @@ function setDeptFilter(val) {
   renderLeaders();
 }
 
-// Força recarga do Firestore (usar após salvar/excluir dados)
-async function reloadLeaders() {
-  _store    = await getStore();
-  _allPonto = await LS.get('rh_ponto', {});
-  await renderLeaders();
-}
-
 // ════════════════════════════════════════════════════════
-// RENDER LEADERS — agrupado por hierarquia
+// RENDER LEADERS
 // ════════════════════════════════════════════════════════
 async function renderLeaders() {
-  // Só recarrega do Firestore se ainda não tiver cache (evita race condition ao digitar)
   if (!_store) {
     _store    = await getStore();
     _allPonto = await LS.get('rh_ponto', {});
@@ -731,11 +1133,23 @@ async function renderLeaders() {
   const perfil  = getUserPerfil(currentUser);
   const isAdmin = perfil === 'admin_master';
 
-  // Lista de usuários que são líderes (todos exceto admin master)
-  let leaders = Object.values(store.users || {})
+  // Todos os líderes (exceto admin_master)
+  let leaders = Object.values(store.users||{})
     .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
 
-  // Busca
+  // ── Filtra por busca de líder ──
+  // Se há um líder selecionado, mostra ele + toda a sua hierarquia descendente
+  let highlightId = null;
+  if (_searchLeaderId) {
+    highlightId = _searchLeaderId;
+    const rootLeader = store.users?.[_searchLeaderId];
+    if (rootLeader) {
+      // Inclui o próprio líder + todos os subordinados dele (recursivo)
+      const subIds = getSubordinadosRecursivo(_searchLeaderId, leaders);
+      const allowedIds = new Set([_searchLeaderId, ...subIds.map(u=>u.id)]);
+      leaders = leaders.filter(u => allowedIds.has(u.id));
+    }
+  }
 
   // Filtro por departamento
   if (activeDeptFilter) {
@@ -751,15 +1165,14 @@ async function renderLeaders() {
     grid.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">🧑‍💼</div>
-        <p style="font-size:14px">Nenhum líder encontrado</p>
-        <p style="font-size:12px;margin-top:6px">Cadastre novos usuários pelo botão acima.</p>
+        <p style="font-size:14px">${_searchLeaderId ? 'Nenhum resultado para esta busca' : 'Nenhum líder encontrado'}</p>
+        <p style="font-size:12px;margin-top:6px">${_searchLeaderId ? 'Tente limpar o filtro.' : 'Cadastre novos usuários pelo botão acima.'}</p>
       </div>`;
     return;
   }
 
-  // Ordem hierárquica — do mais alto para o mais baixo
-  const HIERARQUIA_ORDER = ['diretoria','gerencia','coordenacao','encarregado','lider'];
-  const HIERARQUIA_META  = {
+  // Agrupa por nível
+  const HIERARQUIA_META = {
     diretoria:   { label:'🏢 Diretoria',    cls:'diretoria'   },
     gerencia:    { label:'📊 Gerência',     cls:'gerencia'    },
     coordenacao: { label:'📋 Coordenação',  cls:'coordenacao' },
@@ -767,21 +1180,18 @@ async function renderLeaders() {
     lider:       { label:'👷 Liderança Operacional', cls:'lider' },
   };
 
-  // Agrupa por nível
   const grupos = {};
   HIERARQUIA_ORDER.forEach(n => grupos[n] = []);
   leaders.forEach(u => {
-    const nivel = u.nivel || 'lider';
+    const nivel = u.nivel||'lider';
     if (grupos[nivel]) grupos[nivel].push(u);
     else grupos['lider'].push(u);
   });
 
-  // Monta HTML por grupo
   let html = '';
   HIERARQUIA_ORDER.forEach(nivel => {
     const lista = grupos[nivel];
     if (!lista.length) return;
-
     const meta = HIERARQUIA_META[nivel];
     html += `
       <div class="hierarquia-secao">
@@ -789,12 +1199,19 @@ async function renderLeaders() {
         <div class="hierarquia-linha"></div>
         <span style="font-size:11px;color:var(--muted);white-space:nowrap">${lista.length} ${lista.length===1?'pessoa':'pessoas'}</span>
       </div>`;
-    lista.forEach(u => { html += buildCard(u, store, isAdmin); });
+    lista.forEach(u => { html += buildCard(u, store, isAdmin, u.id===highlightId); });
   });
 
-  // ── Seção operacional — funcionários cadastrados ──
+  // Seção operacional (só se não houver busca ativa ou se a busca incluir funcionários)
   let emps = store.employees || [];
-  if (activeDeptFilter) emps = emps.filter(e => e.dept === activeDeptFilter);
+  if (activeDeptFilter) emps = emps.filter(e=>e.dept===activeDeptFilter);
+
+  // Se busca ativa, filtra apenas funcionários da equipe do líder selecionado
+  if (_searchLeaderId && store.users?.[_searchLeaderId]) {
+    const rootLeader = store.users[_searchLeaderId];
+    const teamEmps   = getTeamEmps(rootLeader, store.employees||[]);
+    emps = activeDeptFilter ? teamEmps.filter(e=>e.dept===activeDeptFilter) : teamEmps;
+  }
 
   if (emps.length) {
     html += `
@@ -809,7 +1226,7 @@ async function renderLeaders() {
     emps.forEach(emp => {
       const lider = getLiderDoFuncionario(emp, store);
       const ini   = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-      const score = calcEmpScore(emp);
+      const score = calcScore(emp);
       const st    = getEmpStatus(score);
 
       html += `
@@ -819,31 +1236,21 @@ async function renderLeaders() {
           <div class="leader-avatar" style="background:linear-gradient(135deg,#4f8ef7,#3b6fd4);font-size:13px">${ini}</div>
           <div class="leader-info">
             <div class="leader-name">${emp.name}</div>
-            <div class="leader-role">${[emp.role||'', emp.dept||''].filter(Boolean).join(' · ')}</div>
+            <div class="leader-role">${[emp.role||'',emp.dept||''].filter(Boolean).join(' · ')}</div>
           </div>
           <div class="leader-badge" style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25)">
             👤 Operacional
           </div>
         </div>
         <div class="card-metrics">
-          <div class="metric-item">
-            <div class="metric-label">Desempenho</div>
-            <div class="metric-val" style="color:var(--accent)">${emp.perf||0}%</div>
-          </div>
-          <div class="metric-item">
-            <div class="metric-label">Score</div>
-            <div class="metric-val" style="color:${score>=85?'#34d399':score>=70?'#4f8ef7':score>=55?'#fbbf24':'#f87171'}">${score}</div>
-          </div>
-          <div class="metric-item">
-            <div class="metric-label">Líder</div>
-            <div class="metric-val" style="font-size:11px;color:var(--muted)">${lider ? lider.name.split(' ')[0] : '—'}</div>
-          </div>
+          <div class="metric-item"><div class="metric-label">Desempenho</div><div class="metric-val" style="color:var(--accent)">${emp.perf||0}%</div></div>
+          <div class="metric-item"><div class="metric-label">Score</div><div class="metric-val" style="color:${score>=85?'#34d399':score>=70?'#4f8ef7':score>=55?'#fbbf24':'#f87171'}">${score}</div></div>
+          <div class="metric-item"><div class="metric-label">Líder</div><div class="metric-val" style="font-size:11px;color:var(--muted)">${lider?lider.name.split(' ')[0]:'—'}</div></div>
         </div>
-        ${emp.filial||emp.turno ? `
-        <div style="display:flex;gap:5px;flex-wrap:wrap;padding:0 18px 14px">
+        ${emp.filial||emp.turno?`<div style="display:flex;gap:5px;flex-wrap:wrap;padding:0 18px 14px">
           ${emp.filial?`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.2)">🏭 ${emp.filial}</span>`:''}
-          ${emp.turno ?`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(167,139,250,.12);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">🕐 ${emp.turno}</span>`:''}
-        </div>` : ''}
+          ${emp.turno?`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(167,139,250,.12);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">🕐 ${emp.turno}</span>`:''}
+        </div>`:''}
       </div>`;
     });
   }
@@ -851,101 +1258,39 @@ async function renderLeaders() {
   grid.innerHTML = html;
 }
 
-// Helpers — retornam arrays de depts/filiais/turnos do líder
-function getMeusDepts(leader) {
-  const depts = leader.perfil?.depts || [];
-  const setor = leader.setor || '';
-  return [...new Set([...depts, ...(setor ? [setor] : [])])];
-}
-function getMeusFiliais(leader) {
-  return leader.perfil?.filiais || (leader.perfil?.filial ? [leader.perfil.filial] : []);
-}
-function getMeusTurnos(leader) {
-  return leader.perfil?.turnos || (leader.perfil?.turno ? [leader.perfil.turno] : []);
-}
-
-// Funcionários operacionais do líder — para métricas/médias
-function getTeamEmps(leader, allEmps) {
-  const depts  = getMeusDepts(leader);
-  const turnos = getMeusTurnos(leader);
-
-  if (!depts.length) {
-    return allEmps.filter(e => (e.owner_id||e.ownerId) === leader.id);
-  }
-  return allEmps.filter(e => {
-    const deptOk  = depts.includes(e.dept);
-    const turnoOk = turnos.length ? turnos.includes(e.turno) : true;
-    return deptOk && turnoOk;
+// Retorna todos os subordinados recursivamente
+function getSubordinadosRecursivo(leaderId, allLeaders) {
+  const leader = _store?.users?.[leaderId];
+  if (!leader) return [];
+  const diretos = getSubordinados(leader, allLeaders);
+  const result  = [...diretos];
+  diretos.forEach(sub => {
+    result.push(...getSubordinadosRecursivo(sub.id, allLeaders));
   });
-}
-
-// Contagem total hierárquica
-function getTeamTotal(leader, store) {
-  const nivel    = leader.nivel || 'lider';
-  const allEmps  = store.employees || [];
-  const allUsers = Object.values(store.users || {})
-    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master' && u.id !== leader.id);
-
-  const ORDEM     = ['lider','encarregado','coordenacao','gerencia','diretoria'];
-  const meuIdx    = ORDEM.indexOf(nivel);
-  const meusDepts = getMeusDepts(leader);
-  const meusTurnos = getMeusTurnos(leader);
-
-  // Funcionários nos depts (e turnos, se definidos) do líder
-  let totalFuncionarios;
-  if (!meusDepts.length) {
-    totalFuncionarios = allEmps.filter(e => (e.owner_id||e.ownerId) === leader.id).length;
-  } else {
-    totalFuncionarios = allEmps.filter(e => {
-      const deptOk  = meusDepts.includes(e.dept);
-      const turnoOk = meusTurnos.length ? meusTurnos.includes(e.turno) : true;
-      return deptOk && turnoOk;
-    }).length;
-  }
-
-  // Usuários subordinados (abaixo na hierarquia) com sobreposição de dept
-  const subordinados = allUsers.filter(u => {
-    const uIdx = ORDEM.indexOf(u.nivel || 'lider');
-    if (uIdx >= meuIdx) return false;
-    if (!meusDepts.length) return false;
-    const uDepts = getMeusDepts(u);
-    return meusDepts.some(d => uDepts.includes(d));
-  });
-
-  return totalFuncionarios + subordinados.length;
+  return result;
 }
 
 // ════════════════════════════════════════════════════════
 // BUILD CARD
 // ════════════════════════════════════════════════════════
-function buildCard(leader, store, isAdmin) {
+function buildCard(leader, store, isAdmin, isHighlight=false) {
   const allEmps = store.employees || [];
   const team    = getTeamEmps(leader, allEmps);
   const nivel   = leader.nivel || 'lider';
   const meta    = NIVEL_META[nivel] || NIVEL_META['lider'];
 
-  // Métricas da equipe (só funcionários operacionais para médias)
   const totalTime   = team.length;
   const avgDesemp   = totalTime ? Math.round(team.reduce((s,e)=>s+e.perf,0)/totalTime) : 0;
   const avgAssid    = totalTime ? Math.round(team.reduce((s,e)=>s+calcAssid(e),0)/totalTime) : 0;
-  const totalFaltas = team.reduce((s,e) => s + getTotalFaltasEmp(e), 0);
+  const totalFaltas = team.reduce((s,e)=>s+getTotalFaltasEmp(e),0);
   const promos      = team.filter(e=>calcScore(e)>=85).length;
   const riscos      = team.filter(e=>calcScore(e)<55).length;
   const leaderScore = calcLeaderScore(team);
-
-  // Total hierárquico (funcionários + subordinados líderes/encarregados/etc.)
   const totalHierarquico = getTeamTotal(leader, store);
 
-  // Avatar do líder
   const ini = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const roleParts = [leader.perfil?.funcao||'', leader.setor||(leader.perfil?.depts||[])[0]||''].filter(Boolean).join(' · ');
 
-  // Cargo e dept
-  const roleParts = [
-    leader.perfil?.funcao || '',
-    leader.setor || (leader.perfil?.depts||[])[0] || '',
-  ].filter(Boolean).join(' · ');
-
-  // Mini avatares da equipe (5 primeiros + "+N")
   const shown  = team.slice(0,5);
   const extras = team.length - shown.length;
   const avatarBubbles = shown.map(e => {
@@ -953,7 +1298,6 @@ function buildCard(leader, store, isAdmin) {
     return `<div class="avatar-bubble">${i}</div>`;
   }).join('') + (extras>0 ? `<div class="avatar-more">+${extras}</div>` : '');
 
-  // Ações admin
   const podTransfer = isAdmin || (typeof can==='function' && can(currentUser,'leaders','transfer'));
   const podOcorr    = typeof can==='function' && can(currentUser,'leaders','ocorrencia');
 
@@ -964,138 +1308,298 @@ function buildCard(leader, store, isAdmin) {
       ${isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteLeader('${leader.id}')">✕ Remover</button>` : ''}
       ${podTransfer ? `<button class="btn btn-sm" style="background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.3)" onclick="openLeaderTransferModal('${leader.id}')">🔀 Transferir</button>` : ''}
       ${podOcorr    ? `<button class="btn btn-sm" style="background:rgba(167,139,250,.1);color:var(--accent2);border:1px solid rgba(167,139,250,.3)" onclick="openLeaderOcorrencia('${leader.id}')">📝 Ocorrência</button>` : ''}
-    </div>` : '';
+      <button class="btn btn-sm" style="background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.3)"
+        onclick="openTreeModal('${leader.id}')">🌳 Hierarquia</button>
+    </div>` : `
+    <div class="card-actions">
+      <button class="btn btn-sm" style="background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.3)"
+        onclick="openTreeModal('${leader.id}')">🌳 Hierarquia</button>
+    </div>`;
 
   return `
-  <div class="leader-card nivel-${nivel}">
-    <!-- Header -->
+  <div class="leader-card nivel-${nivel}${isHighlight?' highlight':''}">
     <div class="card-header">
-      <div class="leader-avatar">${leader.foto ? `<img src="${leader.foto}" style="width:52px;height:52px;border-radius:50%;object-fit:cover">` : ini}</div>
+      <div class="leader-avatar">${leader.foto?`<img src="${leader.foto}" style="width:52px;height:52px;border-radius:50%;object-fit:cover">`:ini}</div>
       <div class="leader-info">
         <div class="leader-name">${leader.name}</div>
-        <div class="leader-role">${roleParts || nivel}</div>
+        <div class="leader-role">${roleParts||nivel}</div>
       </div>
-      <div class="leader-badge"
-        style="background:${meta.cor}18;color:${meta.cor};border:1px solid ${meta.cor}33">
+      <div class="leader-badge" style="background:${meta.cor}18;color:${meta.cor};border:1px solid ${meta.cor}33">
         ${meta.emoji} ${meta.label}
       </div>
     </div>
-
-    <!-- Métricas principais -->
     <div class="card-metrics">
-      <div class="metric-big">
-        <div class="metric-big-val time">${totalHierarquico}</div>
-        <div class="metric-big-label">Time</div>
-      </div>
-      <div class="metric-big">
-        <div class="metric-big-val desemp">${avgDesemp}%</div>
-        <div class="metric-big-label">Desemp. Médio</div>
-      </div>
-      <div class="metric-big">
-        <div class="metric-big-val score">${leaderScore}</div>
-        <div class="metric-big-label">Score</div>
-      </div>
+      <div class="metric-big"><div class="metric-big-val time">${totalHierarquico}</div><div class="metric-big-label">Time</div></div>
+      <div class="metric-big"><div class="metric-big-val desemp">${avgDesemp}%</div><div class="metric-big-label">Desemp. Médio</div></div>
+      <div class="metric-big"><div class="metric-big-val score">${leaderScore}</div><div class="metric-big-label">Score</div></div>
     </div>
-
-    <!-- Team avatares -->
     ${totalHierarquico > 0 ? `
     <div class="team-section">
-      <div class="team-label">
-        Equipe · ${totalHierarquico} ${totalHierarquico===1?'pessoa':'pessoas'}
-        ${totalHierarquico > totalTime && totalTime > 0 ? `<span style="font-weight:400;opacity:.6"> (${totalTime} operac.)</span>` : ''}
+      <div class="team-label">Equipe · ${totalHierarquico} ${totalHierarquico===1?'pessoa':'pessoas'}
+        ${totalHierarquico>totalTime&&totalTime>0?`<span style="font-weight:400;opacity:.6"> (${totalTime} operac.)</span>`:''}
       </div>
       <div class="team-avatars">${avatarBubbles}</div>
     </div>` : `
     <div class="team-section">
       <div class="team-label" style="color:var(--muted);font-style:italic">Sem funcionários cadastrados</div>
     </div>`}
-
-    <!-- Stat boxes -->
     <div class="card-stats">
-      <div class="stat-box">
-        <div class="stat-label">Assiduidade</div>
-        <div class="stat-val assid ${avgAssid<70?'low':''}">${totalTime ? avgAssid+'%' : '—'}</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-label">Faltas/Mês</div>
-        <div class="stat-val faltas">${totalFaltas}</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-label">Promoção</div>
-        <div class="stat-val promo">${promos}</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-label">Risco</div>
-        <div class="stat-val risco">${riscos}</div>
-      </div>
+      <div class="stat-box"><div class="stat-label">Assiduidade</div><div class="stat-val assid ${avgAssid<70?'low':''}">${totalTime?avgAssid+'%':'—'}</div></div>
+      <div class="stat-box"><div class="stat-label">Faltas/Mês</div><div class="stat-val faltas">${totalFaltas}</div></div>
+      <div class="stat-box"><div class="stat-label">Promoção</div><div class="stat-val promo">${promos}</div></div>
+      <div class="stat-box"><div class="stat-label">Risco</div><div class="stat-val risco">${riscos}</div></div>
     </div>
-
-    <!-- Score footer -->
     <div class="score-footer">
       <div class="score-footer-label">⭐ Score Liderança:</div>
       <span>${leaderScore}</span>
     </div>
-
-    ${!['gerencia','diretoria'].includes(nivel) && (getMeusFiliais(leader).length || getMeusTurnos(leader).length) ? `
+    ${!['gerencia','diretoria'].includes(nivel)&&(getMeusFiliais(leader).length||getMeusTurnos(leader).length)?`
     <div style="display:flex;gap:5px;flex-wrap:wrap;padding:0 18px 14px">
       ${getMeusFiliais(leader).map(f=>`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.2)">🏭 ${f}</span>`).join('')}
       ${getMeusTurnos(leader).map(t=>`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(167,139,250,.12);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">🕐 ${t}</span>`).join('')}
-    </div>` : ''}
-
+    </div>`:''}
     ${adminBtns}
   </div>`;
 }
 
 // ════════════════════════════════════════════════════════
-// MODAL
+// ★ MODAL ÁRVORE HIERÁRQUICA
+// ════════════════════════════════════════════════════════
+function openTreeModal(leaderId) {
+  _treeRootId = leaderId;
+  _treePath   = [];
+  renderTreeModal(leaderId);
+  document.getElementById('modal-tree-overlay').classList.add('open');
+}
+
+function closeTreeModal() {
+  document.getElementById('modal-tree-overlay').classList.remove('open');
+  _treeRootId = null;
+  _treePath   = [];
+}
+
+function renderTreeModal(leaderId) {
+  const store  = _store;
+  const leader = store?.users?.[leaderId];
+  if (!leader) return;
+
+  const meta = NIVEL_META[leader.nivel||'lider']||NIVEL_META.lider;
+  const ini  = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+
+  // Atualiza cabeçalho
+  document.getElementById('tree-modal-name').textContent = leader.name;
+  document.getElementById('tree-modal-sub').textContent  = `${meta.emoji} ${meta.label} · Árvore de responsabilidades`;
+  const headerAvatar = document.getElementById('tree-root-avatar-header');
+  headerAvatar.innerHTML = leader.foto
+    ? `<img src="${leader.foto}" style="width:46px;height:46px;border-radius:50%;object-fit:cover">`
+    : ini;
+  headerAvatar.style.background = leader.foto ? 'transparent' : `linear-gradient(135deg,${meta.cor},${meta.cor}99)`;
+
+  // Breadcrumb
+  renderTreeBreadcrumb(leaderId);
+
+  // Corpo da árvore
+  renderTreeBody(leaderId);
+}
+
+function renderTreeBreadcrumb(currentId) {
+  const bc = document.getElementById('tree-breadcrumb');
+  if (!_treePath.length) { bc.innerHTML = ''; return; }
+
+  const parts = _treePath.map((node, i) => {
+    const isLast = i === _treePath.length - 1;
+    if (isLast) return `<span class="bc-item current">${node.name}</span>`;
+    return `<span class="bc-item" onclick="navigateTreeTo('${node.id}', ${i})">${node.name}</span>
+            <span class="bc-sep">›</span>`;
+  });
+
+  // Adiciona a raiz no início se não estiver no path
+  const rootLeader = _store?.users?.[_treeRootId];
+  if (rootLeader && _treePath[0]?.id !== _treeRootId) {
+    bc.innerHTML = `<span class="bc-item" onclick="navigateTreeTo('${_treeRootId}', -1)">${rootLeader.name}</span>
+                    <span class="bc-sep">›</span>` + parts.join('');
+  } else {
+    bc.innerHTML = parts.join('');
+  }
+}
+
+function navigateTreeTo(id, pathIdx) {
+  if (pathIdx === -1) {
+    _treePath = [];
+  } else {
+    _treePath = _treePath.slice(0, pathIdx + 1);
+  }
+  renderTreeModal(id);
+}
+
+function navigateTreeDown(leaderId) {
+  const leader = _store?.users?.[leaderId];
+  if (!leader) return;
+  _treePath.push({ id: leaderId, name: leader.name });
+  renderTreeModal(leaderId);
+}
+
+function renderTreeBody(leaderId) {
+  const store  = _store;
+  const leader = store?.users?.[leaderId];
+  const body   = document.getElementById('tree-modal-body');
+  if (!leader) { body.innerHTML = '<div class="tree-empty"><div class="tree-empty-icon">🔍</div><p>Líder não encontrado.</p></div>'; return; }
+
+  const allLeaders = Object.values(store.users||{})
+    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
+  const allEmps    = store.employees || [];
+
+  const meta        = NIVEL_META[leader.nivel||'lider']||NIVEL_META.lider;
+  const ini         = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const team        = getTeamEmps(leader, allEmps);
+  const subordinados= getSubordinados(leader, allLeaders);
+  const totalTime   = getTeamTotal(leader, store);
+  const avgScore    = team.length ? Math.round(team.reduce((s,e)=>s+calcScore(e),0)/team.length) : 0;
+  const promos      = team.filter(e=>calcScore(e)>=85).length;
+  const riscos      = team.filter(e=>calcScore(e)<55).length;
+
+  let html = '';
+
+  // ── Nó raiz ──
+  html += `
+  <div class="tree-root-card">
+    <div class="tree-root-avatar" style="background:${leader.foto?'transparent':`linear-gradient(135deg,${meta.cor},${meta.cor}88)`}">
+      ${leader.foto?`<img src="${leader.foto}" style="width:46px;height:46px;border-radius:50%;object-fit:cover">`:ini}
+    </div>
+    <div class="tree-root-info">
+      <div class="tree-root-name">${leader.name}</div>
+      <div class="tree-root-meta">${meta.emoji} ${meta.label}${leader.perfil?.funcao?' · '+leader.perfil.funcao:''}</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-family:var(--font-head);font-size:22px;font-weight:800;color:var(--accent2)">${totalTime}</div>
+      <div style="font-size:10px;color:var(--muted)">sob responsabilidade</div>
+    </div>
+  </div>`;
+
+  // ── Pills de estatísticas ──
+  if (team.length) {
+    html += `
+    <div class="tree-stats-row">
+      <div class="tree-stat-pill">👥 ${team.length} operac.</div>
+      <div class="tree-stat-pill" style="color:var(--accent2)">⭐ Score médio: ${avgScore}</div>
+      ${promos ? `<div class="tree-stat-pill" style="color:var(--green)">🏆 ${promos} promoção</div>` : ''}
+      ${riscos ? `<div class="tree-stat-pill" style="color:var(--red)">🔴 ${riscos} em risco</div>` : ''}
+    </div>`;
+  }
+
+  // ── Subordinados líderes (clicáveis) ──
+  if (subordinados.length) {
+    html += `<div class="tree-connector">
+      <div class="tree-connector-label">👔 Líderes subordinados (${subordinados.length})</div>`;
+
+    subordinados.sort((a,b) => ORDEM_IDX.indexOf(b.nivel||'lider') - ORDEM_IDX.indexOf(a.nivel||'lider'))
+      .forEach(sub => {
+        const subMeta  = NIVEL_META[sub.nivel||'lider']||NIVEL_META.lider;
+        const subIni   = sub.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+        const subTeam  = getTeamEmps(sub, allEmps);
+        const subTotal = getTeamTotal(sub, store);
+
+        html += `
+        <div class="tree-sub-card clickable" onclick="navigateTreeDown('${sub.id}')">
+          <div class="tree-sub-avatar" style="background:${sub.foto?'transparent':`linear-gradient(135deg,${subMeta.cor},${subMeta.cor}88)`}">
+            ${sub.foto?`<img src="${sub.foto}" style="width:34px;height:34px;border-radius:50%;object-fit:cover">`:subIni}
+          </div>
+          <div class="tree-sub-info">
+            <div class="tree-sub-name">${sub.name}</div>
+            <div class="tree-sub-meta">${subMeta.emoji} ${subMeta.label}${sub.perfil?.funcao?' · '+sub.perfil.funcao:''}</div>
+          </div>
+          <div class="tree-sub-stats">
+            <span class="tree-sub-stat" style="color:var(--muted)">${subTotal} pessoas</span>
+          </div>
+          <span class="tree-sub-badge" style="background:${subMeta.cor}18;color:${subMeta.cor};border:1px solid ${subMeta.cor}33">
+            ${subMeta.emoji} ${subMeta.label}
+          </span>
+        </div>`;
+      });
+
+    html += `</div>`;
+  }
+
+  // ── Funcionários operacionais ──
+  if (team.length) {
+    html += `<div class="tree-connector">
+      <div class="tree-connector-label">👷 Funcionários operacionais (${team.length})</div>
+      <div class="tree-emp-cards">`;
+
+    team.forEach(emp => {
+      const empIni = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+      const score  = calcScore(emp);
+      const scoreColor = score>=85?'#34d399':score>=70?'#4f8ef7':score>=55?'#fbbf24':'#f87171';
+      html += `
+        <div class="tree-emp-card">
+          <div class="tree-emp-avatar">${emp.foto?`<img src="${emp.foto}" style="width:28px;height:28px;border-radius:50%;object-fit:cover">`:empIni}</div>
+          <div class="tree-emp-info">
+            <div class="tree-emp-name">${emp.name}</div>
+            <div class="tree-emp-meta">${emp.role||emp.dept||'—'}</div>
+          </div>
+          <span style="font-family:var(--font-head);font-size:14px;font-weight:800;color:${scoreColor};flex-shrink:0">${score}</span>
+        </div>`;
+    });
+
+    html += `</div></div>`;
+  }
+
+  // Estado vazio
+  if (!subordinados.length && !team.length) {
+    html += `
+    <div class="tree-empty">
+      <div class="tree-empty-icon">🏝️</div>
+      <p style="font-size:14px;margin-bottom:6px">Nenhuma equipe ainda</p>
+      <p style="font-size:12px;color:var(--muted)">Este líder ainda não tem subordinados ou funcionários associados.</p>
+    </div>`;
+  }
+
+  body.innerHTML = html;
+}
+
+// ════════════════════════════════════════════════════════
+// MODAL EDITAR/CRIAR LÍDER
 // ════════════════════════════════════════════════════════
 async function openModal(leader) {
   const store = await getStore();
   document.getElementById('modal-title').textContent = leader ? 'Editar Líder' : 'Novo Líder';
   document.getElementById('f-edit-id').value = leader?.id || '';
   if (!leader) { document.getElementById('f-foto-lider').value=''; document.getElementById('foto-preview-lider').innerHTML='<span id="foto-ini-lider">?</span>'; }
-  // Foto
   const fotoValLider = leader?.foto || '';
   document.getElementById('f-foto-lider').value = fotoValLider;
   const prevLider = document.getElementById('foto-preview-lider');
   if (fotoValLider) {
     prevLider.innerHTML = `<img src="${fotoValLider}" alt="foto">`;
   } else {
-    const nm  = leader?.name || '';
-    const ini = nm.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase() || '?';
+    const nm  = leader?.name||'';
+    const ini = nm.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase()||'?';
     prevLider.innerHTML = `<span id="foto-ini-lider">${ini}</span>`;
   }
-  document.getElementById('f-name').value    = leader?.name  || '';
-  document.getElementById('f-id').value      = leader?.id    || '';
-  document.getElementById('f-role').value    = leader?.perfil?.funcao || '';
-  document.getElementById('f-nivel').value   = leader?.nivel || 'lider';
-  document.getElementById('f-pass').value    = '';
+  document.getElementById('f-name').value  = leader?.name||'';
+  document.getElementById('f-id').value    = leader?.id||'';
+  document.getElementById('f-role').value  = leader?.perfil?.funcao||'';
+  document.getElementById('f-nivel').value = leader?.nivel||'lider';
+  document.getElementById('f-pass').value  = '';
 
-  // Bloqueia edição do ID se for edição
   const idInput = document.getElementById('f-id');
   idInput.disabled = !!leader;
-  idInput.style.opacity = leader ? '.5' : '1';
+  idInput.style.opacity = leader?'.5':'1';
+  document.getElementById('nova-senha-wrap').style.display = leader?'none':'';
 
-  // Wrap de senha — oculta na edição
-  document.getElementById('nova-senha-wrap').style.display = leader ? 'none' : '';
-
-  // Helper para gerar lista de checkboxes
   const checks = (listId, items, selectedArr, emoji) => {
     const el = document.getElementById(listId);
-    if (!items.length) { el.innerHTML = `<div style="color:var(--muted);font-size:12px">Nenhum cadastrado.</div>`; return; }
-    el.innerHTML = items.map(x => `
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;
-        color:var(--text);padding:6px 10px;border-radius:6px;background:var(--surface2);border:1px solid var(--border)">
+    if (!items.length) { el.innerHTML=`<div style="color:var(--muted);font-size:12px">Nenhum cadastrado.</div>`; return; }
+    el.innerHTML = items.map(x=>`
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--text);padding:6px 10px;border-radius:6px;background:var(--surface2);border:1px solid var(--border)">
         <input type="checkbox" value="${x.nome}" ${selectedArr.includes(x.nome)?'checked':''}
           style="accent-color:var(--accent);width:16px;height:16px">
         ${emoji} ${x.nome}
       </label>`).join('');
   };
 
-  // Filiais / Turnos / Depts — checkboxes múltiplos
-  const selFiliais = leader?.perfil?.filiais || (leader?.perfil?.filial ? [leader.perfil.filial] : []);
-  const selTurnos  = leader?.perfil?.turnos  || (leader?.perfil?.turno  ? [leader.perfil.turno]  : []);
-  const selDepts   = leader?.perfil?.depts   || [];
+  const selFiliais = leader?.perfil?.filiais||(leader?.perfil?.filial?[leader.perfil.filial]:[]);
+  const selTurnos  = leader?.perfil?.turnos ||(leader?.perfil?.turno ?[leader.perfil.turno] :[]);
+  const selDepts   = leader?.perfil?.depts  ||[];
 
   checks('f-filiais-list', store.filiais, selFiliais, '🏭');
   checks('f-turnos-list',  store.turnos,  selTurnos,  '🕐');
@@ -1105,9 +1609,7 @@ async function openModal(leader) {
   document.getElementById('f-name').focus();
 }
 
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
 
 async function editLeader(id) {
   const store  = await getStore();
@@ -1120,46 +1622,40 @@ async function editLeader(id) {
 // SALVAR LÍDER
 // ════════════════════════════════════════════════════════
 async function saveLeader() {
-  const name  = document.getElementById('f-name').value.trim();
-  const id    = document.getElementById('f-id').value.trim();
-  const nivel = document.getElementById('f-nivel').value;
-  const editId= document.getElementById('f-edit-id').value;
+  const name   = document.getElementById('f-name').value.trim();
+  const id     = document.getElementById('f-id').value.trim();
+  const nivel  = document.getElementById('f-nivel').value;
+  const editId = document.getElementById('f-edit-id').value;
 
-  if (!name) { showToast('⚠️ Nome é obrigatório.','warn'); return; }
-  if (!editId && !id) { showToast('⚠️ ID de acesso é obrigatório.','warn'); return; }
+  if (!name)             { showToast('⚠️ Nome é obrigatório.','warn'); return; }
+  if (!editId && !id)    { showToast('⚠️ ID de acesso é obrigatório.','warn'); return; }
 
   const store = await getStore();
   const pass  = document.getElementById('f-pass').value;
-  if (!editId && pass.length < 6) { showToast('⚠️ Senha com mínimo 6 caracteres.','warn'); return; }
+  if (!editId && pass.length<6) { showToast('⚠️ Senha com mínimo 6 caracteres.','warn'); return; }
   if (!editId && store.users[id]) { showToast('❌ Este ID já está cadastrado.','error'); return; }
 
   const depts   = [...document.querySelectorAll('#f-depts-list input:checked')].map(c=>c.value);
   const filiais = [...document.querySelectorAll('#f-filiais-list input:checked')].map(c=>c.value);
   const turnos  = [...document.querySelectorAll('#f-turnos-list input:checked')].map(c=>c.value);
 
-  const perfil = {
-    filiais,
-    turnos,
-    filial: filiais[0] || '',   // retrocompatibilidade
-    turno:  turnos[0]  || '',   // retrocompatibilidade
-    funcao: document.getElementById('f-role').value,
-    depts,
-  };
+  const perfil = { filiais, turnos, filial:filiais[0]||'', turno:turnos[0]||'', funcao:document.getElementById('f-role').value, depts };
 
   if (editId) {
     if (!store.users[editId]) { showToast('❌ Usuário não encontrado.','error'); return; }
-    const fotoLider = document.getElementById('f-foto-lider').value || store.users[editId].foto || null;
-    store.users[editId] = { ...store.users[editId], name, nivel, perfil, foto: fotoLider };
-    await registrarLog('editou', 'Líderes', `Editou: <strong>${name}</strong>`);
+    const fotoLider = document.getElementById('f-foto-lider').value||store.users[editId].foto||null;
+    store.users[editId] = { ...store.users[editId], name, nivel, perfil, foto:fotoLider };
+    await registrarLog('editou','Líderes',`Editou: <strong>${name}</strong>`);
     showToast('✅ Líder atualizado!');
   } else {
-    const fotoLiderNovo = document.getElementById('f-foto-lider').value || null;
-    store.users[id] = { id, name, pass, nivel, setor: depts[0] || '', perfil, foto: fotoLiderNovo };
-    await registrarLog('criou', 'Líderes', `Novo líder: <strong>${name}</strong> (${nivel})`);
+    const fotoLiderNovo = document.getElementById('f-foto-lider').value||null;
+    store.users[id] = { id, name, pass, nivel, setor:depts[0]||'', perfil, foto:fotoLiderNovo };
+    await registrarLog('criou','Líderes',`Novo líder: <strong>${name}</strong> (${nivel})`);
     showToast('✅ Líder cadastrado!');
   }
 
   await saveStore(store);
+  _store = null;
   closeModal();
   renderLeaders();
 }
@@ -1170,12 +1666,12 @@ async function saveLeader() {
 async function resetLeaderPass(id, nome) {
   const nova = prompt(`Nova senha para "${nome}" (mín. 6 caracteres):`);
   if (!nova) return;
-  if (nova.length < 6) { showToast('❌ Senha muito curta.','error'); return; }
+  if (nova.length<6) { showToast('❌ Senha muito curta.','error'); return; }
   const store = await getStore();
   if (!store.users[id]) { showToast('❌ Usuário não encontrado.','error'); return; }
   store.users[id].pass = nova;
   await saveStore(store);
-  await registrarLog('editou', 'Líderes', `Redefiniu senha de: <strong>${nome}</strong>`);
+  await registrarLog('editou','Líderes',`Redefiniu senha de: <strong>${nome}</strong>`);
   showToast('✅ Senha redefinida!');
 }
 
@@ -1183,17 +1679,17 @@ async function deleteLeader(id) {
   const store = await getStore();
   const u     = store.users[id];
   if (!u) return;
-  if (!confirm(`Remover o líder "${u.name}"?\nOs funcionários cadastrados por ele não serão removidos.`)) return;
+  if (!confirm(`Remover o líder "${u.name}"?\nOs funcionários não serão removidos.`)) return;
   delete store.users[id];
   await saveStore(store);
-  _store = null; // invalida cache após salvar
+  _store = null;
   renderLeaders();
-  await registrarLog('excluiu', 'Líderes', `Removeu: <strong>${u.name}</strong>`);
+  await registrarLog('excluiu','Líderes',`Removeu: <strong>${u.name}</strong>`);
   showToast('✅ Líder removido.');
 }
 
 // ════════════════════════════════════════════════════════
-// TRANSFERIR LÍDER (filial / turno / departamento)
+// TRANSFERIR LÍDER
 // ════════════════════════════════════════════════════════
 async function openLeaderTransferModal(id) {
   const store  = await getStore();
@@ -1202,19 +1698,18 @@ async function openLeaderTransferModal(id) {
 
   const checks = (listId, items, selectedArr, emoji) => {
     const el = document.getElementById(listId);
-    if (!items.length) { el.innerHTML = `<span style="color:var(--muted);font-size:12px">Nenhum cadastrado.</span>`; return; }
-    el.innerHTML = items.map(x => `
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;
-        color:var(--text);padding:5px 8px;border-radius:6px;background:var(--surface2);border:1px solid var(--border)">
+    if (!items.length) { el.innerHTML=`<span style="color:var(--muted);font-size:12px">Nenhum cadastrado.</span>`; return; }
+    el.innerHTML = items.map(x=>`
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--text);padding:5px 8px;border-radius:6px;background:var(--surface2);border:1px solid var(--border)">
         <input type="checkbox" value="${x.nome}" ${selectedArr.includes(x.nome)?'checked':''}
           style="accent-color:var(--accent);width:14px;height:14px">
         ${emoji} ${x.nome}
       </label>`).join('');
   };
 
-  const selFiliais = leader.perfil?.filiais || (leader.perfil?.filial ? [leader.perfil.filial] : []);
-  const selTurnos  = leader.perfil?.turnos  || (leader.perfil?.turno  ? [leader.perfil.turno]  : []);
-  const selDepts   = leader.perfil?.depts   || [];
+  const selFiliais = leader.perfil?.filiais||(leader.perfil?.filial?[leader.perfil.filial]:[]);
+  const selTurnos  = leader.perfil?.turnos ||(leader.perfil?.turno ?[leader.perfil.turno] :[]);
+  const selDepts   = leader.perfil?.depts  ||[];
 
   document.getElementById('ltr-leader-name').textContent = leader.name;
   document.getElementById('ltr-edit-id').value           = id;
@@ -1226,9 +1721,7 @@ async function openLeaderTransferModal(id) {
   document.getElementById('modal-leader-transfer').classList.add('open');
 }
 
-function closeLeaderTransferModal() {
-  document.getElementById('modal-leader-transfer').classList.remove('open');
-}
+function closeLeaderTransferModal() { document.getElementById('modal-leader-transfer').classList.remove('open'); }
 
 async function saveLeaderTransfer() {
   const id    = document.getElementById('ltr-edit-id').value;
@@ -1242,20 +1735,21 @@ async function saveLeaderTransfer() {
   if (!store.users[id].perfil) store.users[id].perfil = {};
   store.users[id].perfil.filiais = filiais;
   store.users[id].perfil.turnos  = turnos;
-  store.users[id].perfil.filial  = filiais[0] || ''; // retrocompatibilidade
-  store.users[id].perfil.turno   = turnos[0]  || ''; // retrocompatibilidade
+  store.users[id].perfil.filial  = filiais[0]||'';
+  store.users[id].perfil.turno   = turnos[0] ||'';
   store.users[id].perfil.depts   = depts;
-  store.users[id].setor          = depts[0]   || '';
+  store.users[id].setor          = depts[0]  ||'';
 
   await saveStore(store);
   closeLeaderTransferModal();
+  _store = null;
   renderLeaders();
-  await registrarLog('editou', 'Líderes', `Atualizou responsabilidades: <strong>${store.users[id]?.name||id}</strong>`);
+  await registrarLog('editou','Líderes',`Atualizou responsabilidades: <strong>${store.users[id]?.name||id}</strong>`);
   showToast('✅ Responsabilidades atualizadas!');
 }
 
-document.getElementById('modal-leader-transfer').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeLeaderTransferModal();
+document.getElementById('modal-leader-transfer').addEventListener('click', e=>{
+  if (e.target===e.currentTarget) closeLeaderTransferModal();
 });
 
 // ════════════════════════════════════════════════════════
@@ -1267,9 +1761,9 @@ async function openLeaderOcorrencia(id) {
   if (!leader) return;
 
   document.getElementById('loc-leader-name').textContent = leader.name;
-  document.getElementById('loc-edit-id').value   = id;
-  document.getElementById('loc-tipo').value      = '';
-  document.getElementById('loc-desc').value      = '';
+  document.getElementById('loc-edit-id').value = id;
+  document.getElementById('loc-tipo').value    = '';
+  document.getElementById('loc-desc').value    = '';
   const _agora = new Date();
   _agora.setMinutes(_agora.getMinutes() - _agora.getTimezoneOffset());
   document.getElementById('loc-data').value = _agora.toISOString().slice(0,16);
@@ -1277,9 +1771,7 @@ async function openLeaderOcorrencia(id) {
   document.getElementById('modal-leader-ocorrencia').classList.add('open');
 }
 
-function closeLeaderOcorrencia() {
-  document.getElementById('modal-leader-ocorrencia').classList.remove('open');
-}
+function closeLeaderOcorrencia() { document.getElementById('modal-leader-ocorrencia').classList.remove('open'); }
 
 async function saveLeaderOcorrencia() {
   const refId = document.getElementById('loc-edit-id').value;
@@ -1293,45 +1785,41 @@ async function saveLeaderOcorrencia() {
   const store  = await getStore();
   const leader = store.users?.[refId];
 
-  // Salva em rh_ocorrencias — mesma chave que ocorrencias.html lê
   const lista = await LS.get('rh_ocorrencias', []);
   lista.unshift({
     id:        uid(),
-    ts:        (() => {
-      if (!data) return new Date().toISOString();
-      const d = new Date(data);
-      return isNaN(d) ? new Date().toISOString() : d.toISOString();
-    })(),
+    ts:        (()=>{ if(!data) return new Date().toISOString(); const d=new Date(data); return isNaN(d)?new Date().toISOString():d.toISOString(); })(),
     empId:     refId,
-    empName:   leader?.name || '—',
-    empDept:   leader?.setor || leader?.perfil?.depts?.[0] || '—',
-    tipo,
-    desc,
-    obs:       '',
-    status:    'pendente',
-    respName:  currentUser.name,
-    respId:    currentUser.id,
-    createdAt: new Date().toISOString(),
-    _isLider:  true,   // flag para distinguir na página de ocorrências
+    empName:   leader?.name||'—',
+    empDept:   leader?.setor||leader?.perfil?.depts?.[0]||'—',
+    tipo, desc, obs:'', status:'pendente',
+    respName:  currentUser.name, respId: currentUser.id,
+    createdAt: new Date().toISOString(), _isLider: true,
   });
   await LS.set('rh_ocorrencias', lista);
-  await registrarLog('criou', 'Ocorrências', `Ocorrência <strong>${tipo}</strong> para líder <strong>${leader?.name||'—'}</strong>`);
+  await registrarLog('criou','Ocorrências',`Ocorrência <strong>${tipo}</strong> para líder <strong>${leader?.name||'—'}</strong>`);
   closeLeaderOcorrencia();
   showToast('✅ Ocorrência do líder registrada!');
 }
 
-document.getElementById('modal-leader-ocorrencia').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeLeaderOcorrencia();
+document.getElementById('modal-leader-ocorrencia').addEventListener('click', e=>{
+  if (e.target===e.currentTarget) closeLeaderOcorrencia();
 });
 
 // ════════════════════════════════════════════════════════
-// FECHAR MODAL
+// FECHAR MODAIS
 // ════════════════════════════════════════════════════════
-document.getElementById('modal-overlay').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeModal();
+document.getElementById('modal-overlay').addEventListener('click', e=>{
+  if (e.target===e.currentTarget) closeModal();
 });
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeModal();
+document.getElementById('modal-tree-overlay').addEventListener('click', e=>{
+  if (e.target===e.currentTarget) closeTreeModal();
+});
+document.addEventListener('keydown', e=>{
+  if (e.key==='Escape') {
+    closeModal(); closeTreeModal(); closeLeaderOcorrencia(); closeLeaderTransferModal();
+    closeSearchDropdown();
+  }
 });
 
 // ── Foto do líder ────────────────────────────────────
@@ -1344,15 +1832,13 @@ function processarFotoLider(input) {
     img.onload = function() {
       const canvas = document.createElement('canvas');
       canvas.width = 80; canvas.height = 80;
-      const ctx = canvas.getContext('2d');
-      const size = Math.min(img.width, img.height);
-      const sx = (img.width  - size) / 2;
-      const sy = (img.height - size) / 2;
+      const ctx  = canvas.getContext('2d');
+      const size = Math.min(img.width,img.height);
+      const sx   = (img.width-size)/2, sy=(img.height-size)/2;
       ctx.drawImage(img, sx, sy, size, size, 0, 0, 80, 80);
       const base64 = canvas.toDataURL('image/jpeg', 0.65);
       document.getElementById('f-foto-lider').value = base64;
-      document.getElementById('foto-preview-lider').innerHTML =
-        `<img src="${base64}" alt="foto">`;
+      document.getElementById('foto-preview-lider').innerHTML = `<img src="${base64}" alt="foto">`;
     };
     img.src = e.target.result;
   };
@@ -1363,11 +1849,9 @@ function processarFotoLider(input) {
 function removerFotoLider() {
   document.getElementById('f-foto-lider').value = '';
   const nm  = document.getElementById('f-name').value.trim();
-  const ini = nm.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase() || '?';
-  document.getElementById('foto-preview-lider').innerHTML =
-    `<span id="foto-ini-lider">${ini}</span>`;
+  const ini = nm.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase()||'?';
+  document.getElementById('foto-preview-lider').innerHTML = `<span id="foto-ini-lider">${ini}</span>`;
 }
-
 </script>
 </body>
 </html>
