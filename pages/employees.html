@@ -1814,181 +1814,407 @@ async function criarOcorrenciaAdmissaoFaltando(emp) {
 async function gerarRelatorioPDF(id) {
   if (!window.jspdf) { showToast('⚠️ Biblioteca PDF carregando. Tente novamente.','warn'); return; }
   showToast('📋 Gerando relatório PDF...','ok');
-  const store    = _store || await getStore();
-  const emp      = (store.employees||[]).find(e=>e.id===id);
+  const store = _store || await getStore();
+  const emp   = (store.employees||[]).find(e=>e.id===id);
   if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
 
   const todasOc  = await LS.get('rh_ocorrencias', []);
   const ocEmp    = todasOc.filter(o => String(o.empId) === String(id));
   const allPonto = await LS.get('rh_ponto', {});
-  const ano      = emp.year || new Date().getFullYear();
 
+  // ── Datas ────────────────────────────────────────────
   const dtAdm = emp.data_admissao ? new Date(emp.data_admissao+'T00:00:00') : null;
   const dtDem = emp.data_demissao ? new Date(emp.data_demissao+'T00:00:00') : new Date();
   let tempoEmpresa = '—';
   if (dtAdm) {
-    const dias=Math.max(0,Math.round((dtDem-dtAdm)/86400000));
-    const anos=Math.floor(dias/365), mesesR=Math.floor((dias%365)/30);
-    tempoEmpresa = anos>0 ? `${anos} ano${anos>1?'s':''} e ${mesesR} mês${mesesR!==1?'es':''}` : `${mesesR} mês${mesesR!==1?'es':''}`;
-  }
-  const faltasPorMes = Array.from({length:12}, (_, m) => {
-    const key=`${emp.id}_${ano}_${String(m+1).padStart(2,'0')}`;
-    const dias=allPonto[key]||{}; let faltas=0, atestados=0; const diasFalta=[];
-    Object.entries(dias).forEach(([d,s]) => { if(s==='falta'){faltas++;diasFalta.push(d.padStart(2,'0'));} if(s==='atestado')atestados++; });
-    return { mes:MONTHS[m], faltas, atestados, diasFalta };
-  });
-  const totalF=faltasPorMes.reduce((a,b)=>a+b.faltas,0);
-  const totalA=faltasPorMes.reduce((a,b)=>a+b.atestados,0);
-  const promos=(emp.historico_cargos||[]).filter(h=>h.tipo==='promocao').length;
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-  const C={dark:[11,13,20],surface:[18,21,31],red:[248,113,113],green:[52,211,153],accent:[79,142,247],accent2:[167,139,250],text:[220,230,245],muted:[100,116,139],border:[42,47,69]};
-  const lm=18, pw=174; let y=0;
-
-  doc.setFillColor(...C.dark); doc.rect(0,0,210,48,'F');
-  doc.setFillColor(...C.red);  doc.rect(0,48,210,2.5,'F');
-  doc.setFont('helvetica','bold'); doc.setFontSize(19); doc.setTextColor(255,255,255);
-  doc.text('RELATÓRIO DE DESLIGAMENTO', lm, 20);
-  doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(...C.muted);
-  doc.text(`Gerado em ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})} · RH Nagumo`, lm, 30);
-  doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(...C.accent);
-  doc.text('CD NAGUMO', 192, 20, {align:'right'});
-  doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(...C.muted);
-  doc.text('Departamento de Inteligência', 192, 27, {align:'right'});
-  y=60;
-
-  doc.setFont('helvetica','bold'); doc.setFontSize(17); doc.setTextColor(...C.text);
-  doc.text(emp.name, lm, y); y+=7;
-  doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(...C.muted);
-  const l1=[emp.role,emp.dept,emp.filial].filter(Boolean).join('  ·  ');
-  if (l1) { doc.text(l1, lm, y); y+=5; }
-  if (emp.matricula) { doc.text(`Matrícula: ${emp.matricula}`, lm, y); y+=5; }
-  y+=6;
-
-  const boxes=[
-    {label:'Admissão',  value:dtAdm?dtAdm.toLocaleDateString('pt-BR'):'—', cor:C.accent},
-    {label:'Demissão',  value:emp.data_demissao?new Date(emp.data_demissao+'T00:00:00').toLocaleDateString('pt-BR'):'—', cor:C.red},
-    {label:'Período',   value:tempoEmpresa, cor:C.accent2},
-    {label:'Faltas',    value:String(totalF), cor:totalF>10?C.red:C.muted},
-    {label:'Atestados', value:String(totalA), cor:C.muted},
-    {label:'Promoções', value:String(promos), cor:C.green},
-  ];
-  const bW=28, bH=18, bG=2.5;
-  boxes.forEach((b,i) => {
-    const bx=lm+i*(bW+bG);
-    doc.setFillColor(26,30,46); doc.roundedRect(bx,y,bW,bH,2,2,'F');
-    doc.setFont('helvetica','bold'); doc.setFontSize(b.value.length>8?7:10); doc.setTextColor(...b.cor);
-    doc.text(b.value, bx+bW/2, y+11, {align:'center'});
-    doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(...C.muted);
-    doc.text(b.label, bx+bW/2, y+16, {align:'center'});
-  });
-  y+=bH+10;
-
-  if (emp.motivo_demissao) {
-    _pdfSecTitle(doc,'■ Motivo do Desligamento',y,lm,C); y+=7;
-    doc.setFillColor(40,20,20);
-    const mLines=doc.splitTextToSize(emp.motivo_demissao,pw-8);
-    doc.roundedRect(lm,y,pw,mLines.length*5+8,2,2,'F');
-    doc.setFont('helvetica','italic'); doc.setFontSize(9.5); doc.setTextColor(...C.red);
-    doc.text(mLines,lm+4,y+6); y+=mLines.length*5+14;
+    const diasTotal = Math.max(0, Math.round((dtDem - dtAdm) / 86400000));
+    const anosT  = Math.floor(diasTotal / 365);
+    const mesesT = Math.floor((diasTotal % 365) / 30);
+    tempoEmpresa = anosT > 0
+      ? `${anosT}a ${mesesT}m`
+      : `${mesesT} mês${mesesT !== 1 ? 'es' : ''}`;
   }
 
-  const hist=emp.historico_cargos||[];
-  _pdfSecTitle(doc,'■ Histórico de Cargos e Promoções',y,lm,C); y+=8;
-  if (!hist.length) {
-    doc.setFont('helvetica','italic'); doc.setFontSize(9); doc.setTextColor(...C.muted);
-    doc.text('Nenhum histórico registrado.', lm, y); y+=10;
-  } else {
-    for (const h of hist) {
-      if (y>255) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
-      const tCor=h.tipo==='promocao'?C.green:h.tipo==='desligamento'?C.red:h.tipo==='admissao'?C.accent:C.muted;
-      const tLabel=h.tipo==='admissao'?'ADMISSÃO':h.tipo==='promocao'?'PROMOÇÃO':h.tipo==='transferencia'?'TRANSFERÊNCIA':h.tipo==='desligamento'?'DESLIGAMENTO':'REGISTRO';
-      const dH=h.data?new Date(h.data+'T00:00:00').toLocaleDateString('pt-BR'):'—';
-      doc.setFillColor(26,30,46); doc.roundedRect(lm,y,pw,10,1.5,1.5,'F');
-      doc.setFillColor(...tCor); doc.roundedRect(lm,y,2.5,10,1,1,'F');
-      doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(...tCor);
-      doc.text(tLabel, lm+5, y+6.5);
-      doc.setTextColor(...C.text); doc.text(h.cargo||'—', lm+38, y+6.5);
-      const infoH=[h.dept,h.filial,h.turno].filter(Boolean).join(' · ');
-      if (infoH) { doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(...C.muted); doc.text(infoH,lm+38,y+6.5,{maxWidth:85}); }
-      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(...C.muted);
-      doc.text(dH, lm+pw-2, y+6.5, {align:'right'}); y+=12;
+  // ── Faltas — todos os anos desde admissão até demissão ──
+  const anoInicio = dtAdm ? dtAdm.getFullYear() : (emp.year || new Date().getFullYear());
+  const anoFim    = dtDem.getFullYear();
+
+  // Estrutura: { ano: [ {mes, faltas, atestados, diasFalta}, ... ] }
+  const faltasPorAno = {};
+  let totalF = 0, totalA = 0;
+
+  for (let ano = anoInicio; ano <= anoFim; ano++) {
+    const meses = [];
+    for (let m = 0; m < 12; m++) {
+      const key  = `${emp.id}_${ano}_${String(m+1).padStart(2,'0')}`;
+      const dias = allPonto[key] || {};
+      let faltas = 0, atestados = 0;
+      const diasFalta = [];
+      Object.entries(dias).forEach(([d, s]) => {
+        if (s === 'falta')    { faltas++;    diasFalta.push(d.padStart(2,'0')); }
+        if (s === 'atestado') { atestados++; }
+      });
+      // Fallback para emp.absences se não houver dados no ponto e for o ano gravado
+      if (faltas === 0 && atestados === 0 && ano === (emp.year || new Date().getFullYear())) {
+        faltas = emp.absences?.[m] || 0;
+      }
+      meses.push({ mes: MONTHS[m], mesIdx: m, faltas, atestados, diasFalta });
+      totalF += faltas;
+      totalA += atestados;
     }
-    y+=4;
+    faltasPorAno[ano] = meses;
   }
 
-  if (y>230) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
-  _pdfSecTitle(doc,`■ Registro de Faltas — ${ano}`,y,lm,C); y+=8;
-  if (totalF===0 && totalA===0) {
-    doc.setFont('helvetica','italic'); doc.setFontSize(9); doc.setTextColor(...C.green);
-    doc.text('✓ Nenhuma falta ou atestado registrado.', lm, y); y+=10;
+  const promos       = (emp.historico_cargos||[]).filter(h => h.tipo === 'promocao').length;
+  const aptAvg       = (() => {
+    const c = emp.competencies || {};
+    const APT = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
+    return (APT.reduce((s,k) => s+(c[k]||0), 0) / APT.length).toFixed(1);
+  })();
+  const score = Math.min(100, Math.round(
+    (emp.perf||0) * 0.4 +
+    parseFloat(aptAvg) * 10 * 0.35 +
+    Math.max(0, 100 - (totalF / ((store.config?.maxAbs)||36)) * 100) * 0.25
+  ));
+
+  // ── jsPDF setup ──────────────────────────────────────
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
+
+  // Paleta idêntica ao app
+  const C = {
+    bg:      [11, 13, 20],
+    surface: [18, 21, 31],
+    surf2:   [26, 30, 46],
+    surf3:   [34, 38, 56],
+    border:  [42, 47, 69],
+    accent:  [79, 142, 247],
+    accent2: [167, 139, 250],
+    green:   [52, 211, 153],
+    yellow:  [251, 191, 36],
+    red:     [248, 113, 113],
+    orange:  [251, 146, 60],
+    text:    [220, 230, 245],
+    muted:   [100, 116, 139],
+    white:   [255, 255, 255],
+  };
+
+  const lm = 14, rm = 196, pw = rm - lm;
+  let y = 0;
+
+  // ════════════════════════════════════════════════════
+  // FUNÇÕES AUXILIARES
+  // ════════════════════════════════════════════════════
+  const setFont = (style, size, color) => {
+    doc.setFont('helvetica', style);
+    doc.setFontSize(size);
+    if (color) doc.setTextColor(...color);
+  };
+  const fill = (color) => doc.setFillColor(...color);
+  const secTitle = (title, yy) => {
+    setFont('bold', 8, C.accent2);
+    doc.text(title.toUpperCase(), lm, yy);
+    doc.setDrawColor(...C.accent2);
+    doc.setLineWidth(0.3);
+    doc.line(lm + doc.getTextWidth(title.toUpperCase()) + 3, yy - 0.5, rm, yy - 0.5);
+    doc.setLineWidth(0.2);
+  };
+  const pill = (x, yy, w, h, r, fillC, label, labelC, fontSize=7) => {
+    fill(fillC); doc.roundedRect(x, yy, w, h, r, r, 'F');
+    if (label) { setFont('bold', fontSize, labelC); doc.text(label, x+w/2, yy+h/2+fontSize*0.18, {align:'center'}); }
+  };
+  const addPageCheck = (needed=18) => {
+    if (y + needed > 272) { doc.addPage(); _pdfPageBg(doc, C); y = 18; }
+  };
+
+  // ════════════════════════════════════════════════════
+  // PÁG 1 — CAPA / HERO
+  // ════════════════════════════════════════════════════
+  _pdfPageBg(doc, C);
+
+  // Barra lateral esquerda colorida
+  fill(C.accent); doc.rect(0, 0, 4, 297, 'F');
+  // Linha decorativa accent2 fina
+  fill(C.accent2); doc.rect(4, 0, 1.2, 297, 'F');
+
+  // Cabeçalho escuro
+  fill(C.bg); doc.rect(0, 0, 210, 52, 'F');
+  // Linha separadora
+  fill(C.accent); doc.rect(0, 52, 210, 1.5, 'F');
+
+  // Logo / empresa (canto direito)
+  setFont('bold', 11, C.accent);
+  doc.text('RH NAGUMO', rm, 16, {align:'right'});
+  setFont('normal', 7.5, C.muted);
+  doc.text('Departamento de Recursos Humanos', rm, 22, {align:'right'});
+  // Tipo de doc
+  fill(C.surf3); doc.roundedRect(rm - 52, 27, 52, 11, 2, 2, 'F');
+  setFont('bold', 7, C.red);
+  doc.text('RELATÓRIO DE DESLIGAMENTO', rm - 26, 34, {align:'center'});
+
+  // Foto do funcionário (círculo à esquerda do hero)
+  const fotoX = lm + 2, fotoY = 8, fotoR = 18;
+  if (emp.foto && emp.foto.startsWith('data:image')) {
+    try {
+      // Círculo de fundo
+      fill(C.surf2); doc.circle(fotoX + fotoR, fotoY + fotoR, fotoR + 1, 'F');
+      // Borda accent
+      doc.setDrawColor(...C.accent);
+      doc.setLineWidth(0.8);
+      doc.circle(fotoX + fotoR, fotoY + fotoR, fotoR + 1);
+      // Imagem circular (jsPDF não suporta clip circular nativo, usamos quadrado arredondado)
+      doc.addImage(emp.foto, 'JPEG', fotoX, fotoY, fotoR*2, fotoR*2, '', 'FAST');
+    } catch(e) { _pdfFotoPlaceholder(doc, emp, fotoX, fotoY, fotoR, C); }
   } else {
-    doc.setFillColor(26,30,46); doc.rect(lm,y,pw,8,'F');
-    doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(...C.muted);
-    const tc=[lm+3,lm+28,lm+50,lm+72,lm+100];
-    ['Mês','Faltas','Atestados','Total','Dias'].forEach((h,i)=>doc.text(h,tc[i],y+5.5));
-    y+=9;
-    faltasPorMes.forEach((fm,i) => {
-      if (fm.faltas===0 && fm.atestados===0) return;
-      if (y>270) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
-      if (i%2===0) { doc.setFillColor(20,24,36); doc.rect(lm,y,pw,7,'F'); }
-      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(180,190,210);
-      doc.text(`${fm.mes}/${ano}`, tc[0], y+5);
-      doc.setTextColor(...(fm.faltas>0?C.red:C.muted)); doc.text(String(fm.faltas),tc[1],y+5);
-      doc.setTextColor(...C.muted); doc.text(String(fm.atestados),tc[2],y+5);
-      doc.setTextColor(180,190,210); doc.text(String(fm.faltas+fm.atestados),tc[3],y+5);
-      const ds=fm.diasFalta.sort((a,b)=>+a-+b).join(', ');
-      if (ds) { doc.setFontSize(7); doc.setTextColor(...C.muted); doc.text(ds,tc[4],y+5,{maxWidth:66}); }
-      y+=8;
-    });
-    y+=4;
+    _pdfFotoPlaceholder(doc, emp, fotoX, fotoY, fotoR, C);
   }
 
-  if (y>230) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
-  _pdfSecTitle(doc,'■ Ocorrências Registradas',y,lm,C); y+=8;
+  // Nome e cargo (ao lado da foto)
+  const nomeX = fotoX + fotoR * 2 + 6;
+  setFont('bold', 18, C.white);
+  doc.text(emp.name || '—', nomeX, 22);
+  setFont('normal', 9.5, C.accent2);
+  doc.text(emp.role || '', nomeX, 30);
+  setFont('normal', 8, C.muted);
+  const linha1 = [emp.dept, emp.filial, emp.turno].filter(Boolean).join('   ·   ');
+  if (linha1) doc.text(linha1, nomeX, 38);
+  if (emp.matricula) { setFont('normal', 7.5, C.muted); doc.text(`Matrícula: ${emp.matricula}`, nomeX, 44); }
+
+  y = 62;
+
+  // ── 6 KPIs ──────────────────────────────────────────
+  const kpis = [
+    { label:'Admissão',   value: dtAdm ? dtAdm.toLocaleDateString('pt-BR') : '—',            cor: C.accent  },
+    { label:'Demissão',   value: emp.data_demissao ? new Date(emp.data_demissao+'T00:00:00').toLocaleDateString('pt-BR') : '—', cor: C.red },
+    { label:'Tempo',      value: tempoEmpresa,   cor: C.accent2 },
+    { label:'Score',      value: String(score),  cor: score>=85?C.green:score>=70?C.accent:score>=55?C.yellow:C.red },
+    { label:'Faltas',     value: String(totalF), cor: totalF>10?C.red:C.muted },
+    { label:'Promoções',  value: String(promos), cor: promos>0?C.green:C.muted },
+  ];
+  const kW = pw / 6 - 1.5;
+  kpis.forEach((k, i) => {
+    const kx = lm + i * (kW + 1.8);
+    fill(C.surf2); doc.roundedRect(kx, y, kW, 20, 2, 2, 'F');
+    // linha cor topo
+    fill(k.cor); doc.roundedRect(kx, y, kW, 1.5, 1, 1, 'F');
+    setFont('bold', k.value.length > 7 ? 7.5 : 11, k.cor);
+    doc.text(k.value, kx + kW/2, y + 12, {align:'center'});
+    setFont('normal', 6.5, C.muted);
+    doc.text(k.label, kx + kW/2, y + 17.5, {align:'center'});
+  });
+  y += 28;
+
+  // ── Competências (radar visual simplificado em barras) ─
+  secTitle('Competências & Desempenho', y); y += 7;
+  const APT_LABELS = {qual:'Qualidade',prio:'Proatividade',know:'Conhecimento',comm:'Comunicação',prod:'Produtividade',assid:'Assiduidade',org:'Organização',equip:'Trabalho em Equipe',cria:'Criatividade',motv:'Motivação'};
+  const APT_KEYS2  = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
+  const colW = pw / 2 - 3;
+  APT_KEYS2.forEach((k, i) => {
+    const val   = emp.competencies?.[k] ?? 5;
+    const col   = i % 2;
+    const row   = Math.floor(i / 2);
+    const bx    = lm + col * (colW + 6);
+    const by    = y + row * 9;
+    addPageCheck(10);
+    // Label
+    setFont('normal', 7, C.muted);
+    doc.text(APT_LABELS[k], bx, by + 4.5);
+    // Valor
+    setFont('bold', 7, val>=8?C.green:val>=5?C.accent:C.red);
+    doc.text(`${val}/10`, bx + colW, by + 4.5, {align:'right'});
+    // Barra fundo
+    fill(C.surf3); doc.roundedRect(bx, by + 5.5, colW, 2.5, 1, 1, 'F');
+    // Barra valor
+    const barColor = val>=8?C.green:val>=5?C.accent:C.red;
+    fill(barColor); doc.roundedRect(bx, by + 5.5, (val/10)*colW, 2.5, 1, 1, 'F');
+  });
+  y += Math.ceil(APT_KEYS2.length / 2) * 9 + 4;
+
+  // Desempenho e Aptidão geral
+  addPageCheck(16);
+  const metaBoxes = [
+    { label:'Desempenho Geral', value:`${emp.perf||0}%`, cor: (emp.perf||0)>=80?C.green:(emp.perf||0)>=60?C.accent:C.red },
+    { label:'Apt. Média',       value:`${aptAvg}/10`,   cor: parseFloat(aptAvg)>=7?C.green:parseFloat(aptAvg)>=5?C.accent:C.red },
+    { label:'Atestados',        value:String(totalA),   cor: C.muted },
+  ];
+  const mW = pw/3 - 2;
+  metaBoxes.forEach((b,i) => {
+    const mx = lm + i*(mW+3);
+    fill(C.surf2); doc.roundedRect(mx, y, mW, 12, 2, 2, 'F');
+    setFont('bold', 10, b.cor); doc.text(b.value, mx+mW/2, y+7.5, {align:'center'});
+    setFont('normal', 6.5, C.muted); doc.text(b.label, mx+mW/2, y+11, {align:'center'});
+  });
+  y += 18;
+
+  // ── Motivo do Desligamento ───────────────────────────
+  if (emp.motivo_demissao) {
+    addPageCheck(20);
+    secTitle('Motivo do Desligamento', y); y += 7;
+    const mLines = doc.splitTextToSize(emp.motivo_demissao, pw - 10);
+    const boxH   = mLines.length * 5 + 8;
+    fill(C.surf2); doc.roundedRect(lm, y, pw, boxH, 2, 2, 'F');
+    fill(C.red);   doc.roundedRect(lm, y, 2, boxH, 1, 1, 'F');
+    setFont('italic', 8.5, C.text);
+    doc.text(mLines, lm + 6, y + 6);
+    y += boxH + 8;
+  }
+
+  // ── Histórico de Cargos ─────────────────────────────
+  const hist = emp.historico_cargos || [];
+  addPageCheck(20);
+  secTitle('Histórico de Cargos e Movimentações', y); y += 7;
+
+  if (!hist.length) {
+    setFont('italic', 8, C.muted);
+    doc.text('Nenhum histórico registrado.', lm, y); y += 10;
+  } else {
+    const TIPO_CFG = {
+      admissao:      { label:'ADMISSÃO',      cor: C.accent  },
+      promocao:      { label:'PROMOÇÃO',      cor: C.green   },
+      transferencia: { label:'TRANSFERÊNCIA', cor: C.yellow  },
+      desligamento:  { label:'DESLIGAMENTO',  cor: C.red     },
+    };
+    for (const h of hist) {
+      addPageCheck(14);
+      const tc    = TIPO_CFG[h.tipo] || { label: 'REGISTRO', cor: C.muted };
+      const dH    = h.data ? new Date(h.data+'T00:00:00').toLocaleDateString('pt-BR') : '—';
+      const infoH = [h.dept, h.filial, h.turno].filter(Boolean).join(' · ');
+
+      fill(C.surf2); doc.roundedRect(lm, y, pw, 11, 1.5, 1.5, 'F');
+      // Pill tipo
+      const pillW = doc.getTextWidth(tc.label) / (8/2.835) + 6;
+      fill([...tc.cor.map(v=>Math.round(v*0.25))]); doc.roundedRect(lm+3, y+2, pillW, 7, 1.5, 1.5, 'F');
+      setFont('bold', 6.5, tc.cor); doc.text(tc.label, lm+3+pillW/2, y+6.3, {align:'center'});
+      // Cargo
+      setFont('bold', 8.5, C.text); doc.text(h.cargo||'—', lm + pillW + 8, y + 7);
+      // Info
+      if (infoH) { setFont('normal', 7, C.muted); doc.text(infoH, lm + pillW + 8, y + 10.5); }
+      // Data
+      setFont('normal', 7.5, C.muted); doc.text(dH, rm, y + 7, {align:'right'});
+      y += 13;
+    }
+    y += 2;
+  }
+
+  // ── Faltas por ano/mês ───────────────────────────────
+  addPageCheck(20);
+  const anosComDados = Object.keys(faltasPorAno).map(Number).sort();
+  secTitle(`Registro de Ausências (${anoInicio}${anoFim!==anoInicio?'–'+anoFim:''})`, y); y += 7;
+
+  if (totalF === 0 && totalA === 0) {
+    setFont('italic', 8.5, C.green);
+    doc.text('✓ Nenhuma falta ou atestado registrado em todo o período.', lm, y); y += 10;
+  } else {
+    for (const ano of anosComDados) {
+      const meses = faltasPorAno[ano];
+      const comDados = meses.filter(m => m.faltas > 0 || m.atestados > 0);
+      if (!comDados.length) continue;
+
+      addPageCheck(12);
+      // Cabeçalho do ano
+      fill(C.surf3); doc.roundedRect(lm, y, pw, 7, 1.5, 1.5, 'F');
+      setFont('bold', 8, C.accent2); doc.text(String(ano), lm + 4, y + 5);
+      const anoF = meses.reduce((a,b)=>a+b.faltas,0);
+      const anoA = meses.reduce((a,b)=>a+b.atestados,0);
+      setFont('normal', 7, C.muted);
+      doc.text(`${anoF} falta${anoF!==1?'s':''} · ${anoA} atestado${anoA!==1?'s':''}`, rm, y+5, {align:'right'});
+      y += 9;
+
+      // Linhas dos meses
+      comDados.forEach((fm, i) => {
+        addPageCheck(8);
+        if (i % 2 === 0) { fill(C.surf2); doc.roundedRect(lm, y, pw, 7, 1, 1, 'F'); }
+        setFont('normal', 8, C.text);
+        doc.text(`${fm.mes}/${ano}`, lm+4, y+5);
+        // Faltas
+        setFont('bold', 8, fm.faltas>0?C.red:C.muted);
+        doc.text(`${fm.faltas}F`, lm+34, y+5);
+        // Atestados
+        setFont('bold', 8, fm.atestados>0?C.yellow:C.muted);
+        doc.text(`${fm.atestados}A`, lm+50, y+5);
+        // Dias da falta
+        if (fm.diasFalta.length) {
+          const dsStr = 'Dias: ' + fm.diasFalta.sort((a,b)=>+a-+b).join(', ');
+          setFont('normal', 6.5, C.muted);
+          doc.text(dsStr, lm+68, y+5, {maxWidth:pw-60});
+        }
+        y += 8;
+      });
+      y += 4;
+    }
+  }
+
+  // ── Ocorrências ──────────────────────────────────────
+  addPageCheck(20);
+  secTitle('Ocorrências Registradas', y); y += 7;
+
+  const TIPO_OC_COR = {
+    Justificativa: C.accent, Ajuste: C.yellow, 'Ocorrência': C.orange,
+    Entrada: C.green, Saída: C.red, Advertência: C.red, Elogio: C.green,
+  };
+
   if (!ocEmp.length) {
-    doc.setFont('helvetica','italic'); doc.setFontSize(9); doc.setTextColor(...C.muted);
-    doc.text('Nenhuma ocorrência registrada.', lm, y); y+=10;
+    setFont('italic', 8, C.muted);
+    doc.text('Nenhuma ocorrência registrada.', lm, y); y += 10;
   } else {
     for (const oc of ocEmp) {
-      if (y>258) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
-      const ocDt=oc.ts?new Date(oc.ts).toLocaleDateString('pt-BR'):'—';
-      doc.setFillColor(26,30,46); doc.roundedRect(lm,y,pw,7,1.5,1.5,'F');
-      doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(180,190,210);
-      doc.text(`${ocDt}  ·  ${oc.tipo||'—'}`, lm+3, y+5);
-      doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(...C.muted);
-      doc.text(`Por: ${oc.respName||'—'}`, 192, y+5, {align:'right'}); y+=9;
-      if (oc.desc) {
-        const dL=doc.splitTextToSize(oc.desc,pw-4);
-        doc.setFontSize(7.5); doc.setTextColor(140,155,175);
-        doc.text(dL,lm+2,y); y+=dL.length*4+5;
-      } else y+=3;
+      const ocDt  = oc.ts ? new Date(oc.ts).toLocaleDateString('pt-BR') : '—';
+      const ocCor = TIPO_OC_COR[oc.tipo] || C.muted;
+      const dL    = oc.desc ? doc.splitTextToSize(oc.desc, pw - 10) : [];
+      const boxH  = 9 + (dL.length > 0 ? dL.length * 4 + 3 : 0);
+      addPageCheck(boxH + 4);
+
+      fill(C.surf2); doc.roundedRect(lm, y, pw, boxH, 1.5, 1.5, 'F');
+      fill(ocCor);   doc.roundedRect(lm, y, 2, boxH, 1, 1, 'F');
+      setFont('bold', 8, C.text);
+      doc.text(`${ocDt}  ·  ${oc.tipo||'—'}`, lm+5, y+6);
+      setFont('normal', 6.5, C.muted);
+      doc.text(`Por: ${oc.respName||'—'}`, rm, y+6, {align:'right'});
+      if (dL.length) {
+        setFont('normal', 7.5, [160,170,190]);
+        doc.text(dL, lm+5, y+11);
+      }
+      y += boxH + 4;
     }
   }
 
-  const total=doc.internal.getNumberOfPages();
-  for (let p=1; p<=total; p++) {
+  // ── Rodapé em todas as páginas ───────────────────────
+  const totalPags = doc.internal.getNumberOfPages();
+  for (let p = 1; p <= totalPags; p++) {
     doc.setPage(p);
-    doc.setFillColor(...C.dark); doc.rect(0,284,210,14,'F');
-    doc.setFillColor(...C.red);  doc.rect(0,284,210,0.8,'F');
-    doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(...C.muted);
-    doc.text(`RH Nagumo · Relatório de Desligamento · ${emp.name}`, lm, 291);
-    doc.text(`Pág. ${p} / ${total}`, 192, 291, {align:'right'});
+    fill(C.bg); doc.rect(0, 282, 210, 15, 'F');
+    fill(C.accent); doc.rect(0, 282, 210, 0.6, 'F');
+    setFont('normal', 6.5, C.muted);
+    doc.text(`RH Nagumo  ·  Relatório de Desligamento  ·  ${emp.name}`, lm, 289);
+    doc.text(`${new Date().toLocaleDateString('pt-BR')}  ·  Pág. ${p} / ${totalPags}`, rm, 289, {align:'right'});
   }
 
-  const arq=`relatorio_desligamento_${emp.name.replace(/\s+/g,'_')}_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.pdf`;
+  const arq = `relatorio_desligamento_${emp.name.replace(/\s+/g,'_')}_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.pdf`;
   doc.save(arq);
   showToast('✅ Relatório PDF gerado!','ok');
 }
-function _pdfSecTitle(doc, title, y, lm, C) {
-  doc.setFont('helvetica','bold'); doc.setFontSize(10.5); doc.setTextColor(...C.accent2);
-  doc.text(title, lm, y); doc.setDrawColor(...C.border); doc.line(lm,y+2,192,y+2);
+
+// Fundo escuro de cada página
+function _pdfPageBg(doc, C) {
+  doc.setFillColor(...C.bg);
+  doc.rect(0, 0, 210, 297, 'F');
 }
+
+// Placeholder circular quando não há foto
+function _pdfFotoPlaceholder(doc, emp, x, y, r, C) {
+  doc.setFillColor(...C.surf2);
+  doc.circle(x + r, y + r, r + 1, 'F');
+  doc.setDrawColor(...C.accent);
+  doc.setLineWidth(0.8);
+  doc.circle(x + r, y + r, r + 1);
+  const ini = (emp.name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(...C.accent2);
+  doc.text(ini, x + r, y + r + 5, {align:'center'});
+}
+
 function _pdfPageHeader(doc, C) {
-  doc.setFillColor(20,24,36); doc.rect(0,0,210,10,'F');
-  doc.setFont('helvetica','bold'); doc.setFontSize(7); doc.setTextColor(...C.muted);
-  doc.text('RH NAGUMO · RELATÓRIO DE DESLIGAMENTO (continuação)', 105, 7, {align:'center'});
+  // mantido para compatibilidade, usa _pdfPageBg
+  _pdfPageBg(doc, C);
 }
 
 </script>
