@@ -1903,33 +1903,20 @@ document.getElementById('modal-transfer').addEventListener('click', e => {
 // ════════════════════════════════════════════════════════
 // OCORRÊNCIA DO FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
-async function openOcorrenciaModal(id, tipo) {
-  // Fecha qualquer outro modal aberto primeiro
-  document.getElementById('modal-overlay').classList.remove('open');
-  document.getElementById('modal-transfer').classList.remove('open');
+function openOcorrenciaModal(id, tipo) {
+  const emp = (_store?.employees||[]).find(e=>String(e.id)===String(id));
+  if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
 
-  // Preenche campos com dados disponíveis imediatamente
-  document.getElementById('oc-edit-id').value  = id;
-  document.getElementById('oc-tipo-ref').value = 'funcionario';
-  document.getElementById('oc-tipo').value     = '';
-  document.getElementById('oc-desc').value     = '';
-  document.getElementById('oc-target-name').textContent = '...';
+  document.getElementById('oc-target-name').textContent = emp.name;
+  document.getElementById('oc-edit-id').value   = id;
+  document.getElementById('oc-tipo-ref').value  = 'funcionario';
+  document.getElementById('oc-tipo').value      = '';
+  document.getElementById('oc-desc').value      = '';
   const _agora = new Date();
   _agora.setMinutes(_agora.getMinutes() - _agora.getTimezoneOffset());
   document.getElementById('oc-data').value = _agora.toISOString().slice(0,16);
 
-  // Abre o modal IMEDIATAMENTE (antes de qualquer await)
   document.getElementById('modal-ocorrencia-emp').classList.add('open');
-
-  // Carrega dados do funcionário em segundo plano
-  if (!_store) _store = await getStore();
-  const emp = (_store.employees||[]).find(e=>String(e.id)===String(id));
-  if (!emp) {
-    document.getElementById('modal-ocorrencia-emp').classList.remove('open');
-    showToast('❌ Funcionário não encontrado.','error');
-    return;
-  }
-  document.getElementById('oc-target-name').textContent = emp.name;
 }
 
 async function saveOcorrencia() {
@@ -1941,8 +1928,7 @@ async function saveOcorrencia() {
   if (!tipo) { showToast('⚠️ Selecione o tipo de ocorrência.','warn'); return; }
   if (!desc) { showToast('⚠️ Descreva a ocorrência.','warn'); document.getElementById('oc-desc').focus(); return; }
 
-  const store  = await getStore();
-  const emp    = (store.employees||[]).find(e=>String(e.id)===String(refId));
+  const emp    = (_store?.employees||[]).find(e=>String(e.id)===String(refId));
 
   // Salva em rh_ocorrencias — mesma chave que ocorrencias.html lê
   const lista = await LS.get('rh_ocorrencias', []);
