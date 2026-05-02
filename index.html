@@ -471,11 +471,22 @@ async function renderKPIs(emps) {
     return true;
   });
   const pendentes = await getPendentesCount();
+
+  // Conta funcionários sem avaliação de aptidões neste mês
+  const mesAtualKey = (() => {
+    const n = new Date();
+    return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+  })();
+  const aptPendentes = emps.filter(e => !e.afastado && !(e.competencies_history||{})[mesAtualKey]).length;
+  const aptSubText = aptPendentes > 0
+    ? `⚠️ ${aptPendentes} pendente${aptPendentes > 1 ? 's' : ''} este mês`
+    : '✅ todos avaliados';
+
   document.getElementById('kpi-grid').innerHTML = [
     { cls:'blue',   label:'Funcionários',      value:total,              sub:'equipe total'              },
     { cls:'green',  label:'Desempenho Médio',  value:avgPerf+'%',        sub:'geral da equipe'           },
     { cls:'cyan',   label:'Assiduidade Média', value:avgAssid+'%',       sub:`${totalAbs} faltas no ano` },
-    { cls:'purple', label:'Aptidões Médias',   value:avgApt+'/10',       sub:'todas competências'        },
+    { cls:'purple', label:'Aptidões Médias',   value:avgApt+'/10',       sub:aptSubText                  },
     { cls:'yellow', label:'Candidatos Promoção',value:promos,            sub:'score ≥ 85'                },
     { cls:'red',    label:'🚫 Afastados Hoje', value:afas.length,        sub:afas.length
         ? afas.slice(0,2).map(e=>e.name.split(' ')[0]).join(', ')+(afas.length>2?'…':'')

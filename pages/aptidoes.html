@@ -637,7 +637,6 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
             <th>Méd.</th>
             <th>Assid.</th>
             <th>Score</th>
-            <th title="Histórico de avaliações">📈</th>
           </tr>
         </thead>
         <tbody id="apt-tbody"></tbody>
@@ -876,7 +875,7 @@ async function renderTabela() {
 
   const tbody = document.getElementById('apt-tbody');
   if (!list.length) {
-    tbody.innerHTML = `<tr><td colspan="17" style="text-align:center;padding:50px;color:var(--muted)">
+    tbody.innerHTML = `<tr><td colspan="16" style="text-align:center;padding:50px;color:var(--muted)">
       Nenhum funcionário encontrado com esses filtros.
     </td></tr>`;
     return;
@@ -950,6 +949,11 @@ function buildRow(emp, lista) {
 
   // ── Quantidade de meses com histórico ──
   const histCount = Object.keys(emp.competencies_history||{}).length;
+  const btnHistorico = `<button class="btn-historico" onclick="openHistorico(${emp.id})"
+    title="${histCount > 0 ? histCount + ' mês(es) de histórico' : 'Sem histórico ainda'}"
+    style="width:22px;height:22px;flex-shrink:0">
+    📈${histCount > 0 ? `<span style="font-size:7px;margin-left:1px;color:var(--muted)">${histCount}</span>` : ''}
+  </button>`;
 
   return `
   <tr style="${bloqueado?'opacity:.75':''}">
@@ -959,8 +963,11 @@ function buildRow(emp, lista) {
           style="${motivo==='afastado'?'background:linear-gradient(135deg,#ef4444,#fb923c)':
                   motivo==='ferias'  ?'background:linear-gradient(135deg,#22d3ee,#4f8ef7)':''}">
           ${ini}</div>
-        <div>
-          <div class="emp-name-text">${nomeAbrev(emp, lista)}${bloqueioBadge}</div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:6px">
+            <div class="emp-name-text">${nomeAbrev(emp, lista)}${bloqueioBadge}</div>
+            ${btnHistorico}
+          </div>
           <div class="emp-role-text">${emp.role||''}</div>
         </div>
       </div>
@@ -978,12 +985,6 @@ function buildRow(emp, lista) {
       <span class="score-tag" style="${scoreTagStyle(score)};${bloqueado?'opacity:.65':''}">
         ${score}${scoreCongelado}
       </span>
-    </td>
-    <td style="text-align:center;padding:6px 8px">
-      <button class="btn-historico" onclick="openHistorico(${emp.id})"
-        title="${histCount > 0 ? histCount + ' mês(es) de histórico' : 'Sem histórico ainda'}">
-        📈${histCount > 0 ? `<span style="font-size:8px;margin-left:2px;color:var(--muted)">${histCount}</span>` : ''}
-      </button>
     </td>
   </tr>`;
 }
