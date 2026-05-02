@@ -550,7 +550,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // HELPERS
 // ════════════════════════════════════════════════════════
 function getMyEmployees() {
-  const all   = (_store?.employees || []).filter(e => !e.demitido); // oculta demitidos
+  const all   = _store?.employees || [];
   const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
   if (scope.all) return all;
   if (scope.sector) {
