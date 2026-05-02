@@ -1181,11 +1181,11 @@ function buildCard(emp) {
       <span style="width:8px;height:8px;border-radius:50%;background:${NIVEL_COR[liderNivel]||'var(--muted)'};flex-shrink:0"></span>
       <span>Resp.: <strong style="color:var(--text)">${liderNome}</strong></span>
     </div>` : ''}
-    <div class="emp-actions-bottom">
-      ${podEdit     ? `<button class="emp-btn edit"     onclick="editEmployee(${emp.id})"      title="Editar">✏️</button>` : ''}
-      ${podDel      ? `<button class="emp-btn del"      onclick="deleteEmployee(${emp.id})"    title="Excluir">✕</button>` : ''}
-      ${podTransfer ? `<button class="emp-btn transfer" onclick="openTransferModal(${emp.id})" title="Transferir">🔀</button>` : ''}
-      ${podOcorr    ? `<button class="emp-btn ocorr"    onclick="openOcorrenciaModal(${emp.id},'emp')" title="Ocorrência">📝</button>` : ''}
+    <div class="emp-actions-bottom" onclick="event.stopPropagation()">
+      ${podEdit     ? `<button class="emp-btn edit"     onclick="event.stopPropagation();editEmployee(${emp.id})"      title="Editar">✏&#65039;</button>` : ''}
+      ${podDel      ? `<button class="emp-btn del"      onclick="event.stopPropagation();deleteEmployee(${emp.id})"    title="Excluir">&#x2715;</button>` : ''}
+      ${podTransfer ? `<button class="emp-btn transfer" onclick="event.stopPropagation();openTransferModal(${emp.id})" title="Transferir">&#x1F500;</button>` : ''}
+      ${podOcorr    ? `<button class="emp-btn ocorr"    onclick="event.stopPropagation();openOcorrenciaModal(${emp.id},'emp')" title="Ocorr&#234;ncia">&#x1F4DD;</button>` : ''}
     </div>
 
   </div>`;
@@ -1903,23 +1903,33 @@ document.getElementById('modal-transfer').addEventListener('click', e => {
 // ════════════════════════════════════════════════════════
 // OCORRÊNCIA DO FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
-// Async — carrega _store se necessário
 async function openOcorrenciaModal(id, tipo) {
-  if (!_store) _store = await getStore();
-  const store = _store;
-  const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
-  if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
+  // Fecha qualquer outro modal aberto primeiro
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.getElementById('modal-transfer').classList.remove('open');
 
-  document.getElementById('oc-target-name').textContent = emp.name;
-  document.getElementById('oc-edit-id').value   = id;
-  document.getElementById('oc-tipo-ref').value  = 'funcionario';
-  document.getElementById('oc-tipo').value      = '';
-  document.getElementById('oc-desc').value      = '';
+  // Preenche campos com dados disponíveis imediatamente
+  document.getElementById('oc-edit-id').value  = id;
+  document.getElementById('oc-tipo-ref').value = 'funcionario';
+  document.getElementById('oc-tipo').value     = '';
+  document.getElementById('oc-desc').value     = '';
+  document.getElementById('oc-target-name').textContent = '...';
   const _agora = new Date();
   _agora.setMinutes(_agora.getMinutes() - _agora.getTimezoneOffset());
   document.getElementById('oc-data').value = _agora.toISOString().slice(0,16);
 
+  // Abre o modal IMEDIATAMENTE (antes de qualquer await)
   document.getElementById('modal-ocorrencia-emp').classList.add('open');
+
+  // Carrega dados do funcionário em segundo plano
+  if (!_store) _store = await getStore();
+  const emp = (_store.employees||[]).find(e=>String(e.id)===String(id));
+  if (!emp) {
+    document.getElementById('modal-ocorrencia-emp').classList.remove('open');
+    showToast('❌ Funcionário não encontrado.','error');
+    return;
+  }
+  document.getElementById('oc-target-name').textContent = emp.name;
 }
 
 async function saveOcorrencia() {
