@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../sidebar.css">
 <link rel="stylesheet" href="../light-theme.css">
 <link rel="stylesheet" href="../responsive.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <!-- Firebase Compat SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -321,6 +322,177 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 
 }
 
+/* ══ INDICADOR DE STATUS DE AVALIAÇÃO ══════════════════ */
+.avaliacao-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  cursor: help;
+  transition: transform .15s;
+  box-shadow: 0 0 0 0 transparent;
+}
+.avaliacao-status:hover { transform: scale(1.3); }
+.avaliacao-status.este-mes {
+  background: #34d399;
+  box-shadow: 0 0 6px rgba(52,211,153,.5);
+}
+.avaliacao-status.mes-passado {
+  background: #fbbf24;
+  box-shadow: 0 0 6px rgba(251,191,36,.4);
+}
+.avaliacao-status.sem-avaliacao {
+  background: #f87171;
+  box-shadow: 0 0 6px rgba(248,113,113,.4);
+}
+/* célula do indicador */
+.th-status-avaliacao {
+  width: 28px;
+  min-width: 28px;
+  text-align: center;
+}
+.td-status-avaliacao {
+  width: 28px;
+  text-align: center;
+  padding: 10px 4px;
+}
+
+/* ── Botão histórico ── */
+.btn-historico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  border: 1px solid rgba(167,139,250,.3);
+  background: rgba(167,139,250,.1);
+  color: var(--accent2);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all .15s;
+}
+.btn-historico:hover {
+  background: rgba(167,139,250,.25);
+  border-color: var(--accent2);
+  transform: scale(1.1);
+}
+
+/* ══ MODAL HISTÓRICO ══════════════════════════════════ */
+#modal-historico .modal {
+  width: 720px;
+  max-width: 96vw;
+}
+.hist-emp-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.hist-emp-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-head);
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+.hist-emp-info { flex: 1; }
+.hist-emp-name { font-family: var(--font-head); font-size: 16px; font-weight: 800; color: var(--text); }
+.hist-emp-role { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.hist-meses-count {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(167,139,250,.12);
+  color: var(--accent2);
+  border: 1px solid rgba(167,139,250,.25);
+}
+.hist-chart-wrap {
+  position: relative;
+  height: 280px;
+  margin-bottom: 16px;
+}
+.hist-legend {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.hist-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.hist-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+/* Sem histórico */
+.hist-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted);
+}
+.hist-empty-icon { font-size: 36px; margin-bottom: 10px; }
+
+/* Tabela de histórico mensal */
+.hist-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  max-height: 160px;
+  overflow-y: auto;
+  display: block;
+}
+.hist-table thead th {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--muted);
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+  text-align: center;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+}
+.hist-table thead th:first-child { text-align: left; }
+.hist-table tbody td {
+  padding: 5px 8px;
+  border-bottom: 1px solid rgba(42,47,69,.3);
+  text-align: center;
+  vertical-align: middle;
+}
+.hist-table tbody td:first-child { text-align: left; font-weight: 600; color: var(--text); }
+.hist-table tbody tr:last-child td { border-bottom: none; }
+.hist-table tbody tr:hover td { background: var(--surface2); }
+.hist-val {
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 700;
+}
+/* [light-theme.css] body.light-theme .hist-table thead th { background: #F4F7FB; } */
+
+
 </style>
 </head>
 <body>
@@ -370,6 +542,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
           <tr>
             <th class="th-emp">Funcionário</th>
             <th class="th-dept">Departamento</th>
+            <th class="th-status-avaliacao" title="Status da avaliação neste mês">📋</th>
 
             <th class="th-apt">
               <span class="th-icon">✨</span><span class="th-label">Qualidade</span>
@@ -464,6 +637,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
             <th>Méd.</th>
             <th>Assid.</th>
             <th>Score</th>
+            <th title="Histórico de avaliações">📈</th>
           </tr>
         </thead>
         <tbody id="apt-tbody"></tbody>
@@ -472,6 +646,18 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   </div>
 
 </main>
+
+<!-- ══ MODAL HISTÓRICO DE AVALIAÇÕES ══ -->
+<div class="overlay" id="modal-historico">
+  <div class="modal" style="width:720px;max-width:96vw">
+    <div class="modal-title">📈 Histórico de Avaliações</div>
+    <div class="hist-emp-header" id="hist-emp-header"></div>
+    <div id="hist-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeHistorico()">Fechar</button>
+    </div>
+  </div>
+</div>
 
 <!-- ══ MODAL NOVA AVALIAÇÃO ══ -->
 <div class="overlay" id="modal-overlay">
@@ -517,6 +703,33 @@ const APT_META = {
   motv:  { emoji:'🔥', label:'Motivação'   },
 };
 
+// ── Chave mês atual e mês passado ────────────────────
+function currentMonthKey() {
+  const n = new Date();
+  return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+}
+function prevMonthKey() {
+  const n = new Date();
+  n.setDate(1);
+  n.setMonth(n.getMonth()-1);
+  return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+}
+
+// Retorna status de avaliação: 'este-mes' | 'mes-passado' | 'sem-avaliacao'
+function getAvaliacaoStatus(emp) {
+  const hist = emp.competencies_history || {};
+  if (hist[currentMonthKey()]) return 'este-mes';
+  if (hist[prevMonthKey()])    return 'mes-passado';
+  return 'sem-avaliacao';
+}
+
+// Cores por competência para o gráfico
+const APT_COLORS = [
+  '#34d399','#4f8ef7','#f472b6','#fb923c',
+  '#a78bfa','#22d3ee','#fbbf24','#f87171',
+  '#60a5fa','#4ade80'
+];
+
 // ════════════════════════════════════════════════════════
 // ESTADO
 // ════════════════════════════════════════════════════════
@@ -524,6 +737,7 @@ let currentUser  = null;
 let filtroAtivo  = 'todos';
 let podeEditar   = false;
 let _store       = null;  // cache
+let _histChart   = null;  // instância Chart.js do modal histórico
 
 // ════════════════════════════════════════════════════════
 // INIT
@@ -662,7 +876,7 @@ async function renderTabela() {
 
   const tbody = document.getElementById('apt-tbody');
   if (!list.length) {
-    tbody.innerHTML = `<tr><td colspan="15" style="text-align:center;padding:50px;color:var(--muted)">
+    tbody.innerHTML = `<tr><td colspan="17" style="text-align:center;padding:50px;color:var(--muted)">
       Nenhum funcionário encontrado com esses filtros.
     </td></tr>`;
     return;
@@ -700,6 +914,18 @@ function buildRow(emp, lista) {
         style="font-size:10px;margin-left:3px;opacity:.7">❄️</span>`
     : '';
 
+  // ── Status de avaliação (círculo colorido) ──
+  const avalStatus = getAvaliacaoStatus(emp);
+  const avalTitles = {
+    'este-mes':     'Avaliado neste mês ✅',
+    'mes-passado':  'Avaliado no mês passado ⚠️ — pendente atualização',
+    'sem-avaliacao':'Nunca avaliado ou há mais de 2 meses 🔴',
+  };
+  const statusIndicator = `
+    <td class="td-status-avaliacao">
+      <div class="avaliacao-status ${avalStatus}" title="${avalTitles[avalStatus]}"></div>
+    </td>`;
+
   const cells = APT_KEYS.map(k => {
     const v = c[k]!=null ? c[k] : 5;
     const { bg, color } = bubbleColor(v);
@@ -722,6 +948,9 @@ function buildRow(emp, lista) {
     </td>`;
   }).join('');
 
+  // ── Quantidade de meses com histórico ──
+  const histCount = Object.keys(emp.competencies_history||{}).length;
+
   return `
   <tr style="${bloqueado?'opacity:.75':''}">
     <td class="td-emp">
@@ -737,6 +966,7 @@ function buildRow(emp, lista) {
       </div>
     </td>
     <td class="dept-text">${emp.dept||'—'}</td>
+    ${statusIndicator}
     ${cells}
     <td>
       <span class="med-val" style="color:${avgColor};${bloqueado?'opacity:.6':''}">${avg}</span>
@@ -748,6 +978,12 @@ function buildRow(emp, lista) {
       <span class="score-tag" style="${scoreTagStyle(score)};${bloqueado?'opacity:.65':''}">
         ${score}${scoreCongelado}
       </span>
+    </td>
+    <td style="text-align:center;padding:6px 8px">
+      <button class="btn-historico" onclick="openHistorico(${emp.id})"
+        title="${histCount > 0 ? histCount + ' mês(es) de histórico' : 'Sem histórico ainda'}">
+        📈${histCount > 0 ? `<span style="font-size:8px;margin-left:2px;color:var(--muted)">${histCount}</span>` : ''}
+      </button>
     </td>
   </tr>`;
 }
@@ -799,6 +1035,11 @@ async function commitEdit(empId, key, input) {
   if (anterior === v) { renderTabela(); return; }
 
   emps[idx].competencies[key] = v;
+
+  // ── Salva snapshot no histórico do mês atual ──
+  if (!emps[idx].competencies_history) emps[idx].competencies_history = {};
+  emps[idx].competencies_history[currentMonthKey()] = { ...emps[idx].competencies };
+
   store.employees = emps;
   await saveStore(store);
   renderTabela();
@@ -870,12 +1111,201 @@ async function saveAvaliacao() {
   });
 
   store.employees[idx].competencies = competencies;
+
+  // ── Salva snapshot no histórico do mês atual ──
+  if (!store.employees[idx].competencies_history) store.employees[idx].competencies_history = {};
+  store.employees[idx].competencies_history[currentMonthKey()] = { ...competencies };
+
   await saveStore(store);
   closeModal();
   renderTabela();
   await registrarLog('editou', 'Aptidões', `Avaliação completa de <strong>${store.employees[idx]?.name||empId}</strong>`);
   showToast('✅ Avaliação salva com sucesso!');
 }
+
+// ════════════════════════════════════════════════════════
+// MODAL HISTÓRICO DE AVALIAÇÕES
+// ════════════════════════════════════════════════════════
+async function openHistorico(empId) {
+  const store = await getStore();
+  const emp   = (store.employees||[]).find(e=>e.id===empId);
+  if (!emp) return;
+
+  // Header do modal
+  const ini = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const hist = emp.competencies_history || {};
+  const meses = Object.keys(hist).sort();
+
+  document.getElementById('hist-emp-header').innerHTML = `
+    <div class="hist-emp-avatar">${ini}</div>
+    <div class="hist-emp-info">
+      <div class="hist-emp-name">${emp.name}</div>
+      <div class="hist-emp-role">${emp.role||''}${emp.dept?' · '+emp.dept:''}</div>
+    </div>
+    <div class="hist-meses-count">${meses.length} mês${meses.length!==1?'es':''} de histórico</div>`;
+
+  const body = document.getElementById('hist-body');
+
+  if (!meses.length) {
+    body.innerHTML = `
+      <div class="hist-empty">
+        <div class="hist-empty-icon">📊</div>
+        <p style="font-size:14px;margin-bottom:6px">Nenhum histórico disponível</p>
+        <p style="font-size:12px;color:var(--muted)">As avaliações ficam registradas aqui após a primeira edição.</p>
+      </div>`;
+    document.getElementById('modal-historico').classList.add('open');
+    return;
+  }
+
+  // Monta datasets para o Chart.js
+  // Últimos 12 meses com histórico
+  const mesesVisiveis = meses.slice(-12);
+  const labels = mesesVisiveis.map(mk => {
+    const [y, m] = mk.split('-');
+    const MESES_SH = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    return `${MESES_SH[parseInt(m)-1]}/${y.slice(2)}`;
+  });
+
+  const datasets = APT_KEYS.map((k, i) => ({
+    label: APT_META[k].emoji + ' ' + APT_META[k].label,
+    data: mesesVisiveis.map(mk => hist[mk]?.[k] ?? null),
+    borderColor: APT_COLORS[i],
+    backgroundColor: APT_COLORS[i] + '22',
+    borderWidth: 2,
+    pointRadius: 4,
+    pointHoverRadius: 7,
+    tension: 0.3,
+    spanGaps: true,
+  }));
+
+  // Também adiciona linha de média geral
+  const avgDataset = {
+    label: '⭐ Média Geral',
+    data: mesesVisiveis.map(mk => {
+      if (!hist[mk]) return null;
+      const vals = APT_KEYS.map(k => hist[mk][k] ?? 5);
+      return +(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1);
+    }),
+    borderColor: '#ffffff',
+    backgroundColor: 'rgba(255,255,255,.08)',
+    borderWidth: 3,
+    pointRadius: 5,
+    pointHoverRadius: 8,
+    tension: 0.3,
+    spanGaps: true,
+    borderDash: [5,3],
+  };
+
+  body.innerHTML = `
+    <div class="hist-chart-wrap">
+      <canvas id="hist-chart-canvas"></canvas>
+    </div>
+    <div class="hist-legend" id="hist-legend"></div>
+    <div style="overflow-x:auto;max-height:160px;border-radius:8px;border:1px solid var(--border)">
+      <table class="hist-table">
+        <thead>
+          <tr>
+            <th>Competência</th>
+            ${mesesVisiveis.map(mk => {
+              const [y,m] = mk.split('-');
+              const MESES_SH = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+              return `<th>${MESES_SH[parseInt(m)-1]}/${y.slice(2)}</th>`;
+            }).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${APT_KEYS.map((k,i) => `
+            <tr>
+              <td>${APT_META[k].emoji} ${APT_META[k].label}</td>
+              ${mesesVisiveis.map(mk => {
+                const val = hist[mk]?.[k];
+                if (val == null) return `<td style="color:var(--muted)">—</td>`;
+                const { color } = bubbleColor(val);
+                return `<td><span class="hist-val" style="color:${color}">${val}</span></td>`;
+              }).join('')}
+            </tr>`).join('')}
+          <tr style="border-top:2px solid var(--border)">
+            <td style="font-weight:800;color:var(--text)">⭐ Média</td>
+            ${mesesVisiveis.map(mk => {
+              if (!hist[mk]) return `<td style="color:var(--muted)">—</td>`;
+              const vals = APT_KEYS.map(k => hist[mk][k] ?? 5);
+              const avg = (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1);
+              const { color } = bubbleColor(parseFloat(avg));
+              return `<td><span class="hist-val" style="color:${color};font-size:13px">${avg}</span></td>`;
+            }).join('')}
+          </tr>
+        </tbody>
+      </table>
+    </div>`;
+
+  document.getElementById('modal-historico').classList.add('open');
+
+  // Aguarda renderização do DOM antes de criar o chart
+  requestAnimationFrame(() => {
+    if (_histChart) { _histChart.destroy(); _histChart = null; }
+
+    const ctx = document.getElementById('hist-chart-canvas');
+    if (!ctx) return;
+
+    const isDark = !document.body.classList.contains('light-theme');
+    const gridColor = isDark ? 'rgba(42,47,69,.6)' : 'rgba(200,214,227,.7)';
+    const tickColor = isDark ? '#64748b' : '#7A9AB5';
+
+    _histChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels, datasets: [...datasets, avgDataset] },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: isDark ? '#1a1e2e' : '#fff',
+            borderColor: isDark ? '#2a2f45' : '#C8D6E3',
+            borderWidth: 1,
+            titleColor: isDark ? '#e2e8f0' : '#04152E',
+            bodyColor: isDark ? '#94a3b8' : '#4D6680',
+            callbacks: {
+              label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y != null ? ctx.parsed.y : '—'}`
+            }
+          },
+        },
+        scales: {
+          x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10 } } },
+          y: {
+            min: 0, max: 10,
+            grid: { color: gridColor },
+            ticks: { color: tickColor, font: { size: 10 }, stepSize: 1 },
+          },
+        },
+      },
+    });
+
+    // Legenda customizada
+    const legEl = document.getElementById('hist-legend');
+    if (legEl) {
+      legEl.innerHTML = APT_KEYS.map((k,i) => `
+        <div class="hist-legend-item">
+          <div class="hist-legend-dot" style="background:${APT_COLORS[i]}"></div>
+          ${APT_META[k].emoji} ${APT_META[k].label}
+        </div>`).join('') + `
+        <div class="hist-legend-item">
+          <div class="hist-legend-dot" style="background:#fff"></div>
+          ⭐ Média
+        </div>`;
+    }
+  });
+}
+
+function closeHistorico() {
+  document.getElementById('modal-historico').classList.remove('open');
+  if (_histChart) { _histChart.destroy(); _histChart = null; }
+}
+
+document.getElementById('modal-historico').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeHistorico();
+});
 
 // ════════════════════════════════════════════════════════
 // FECHAR MODAL
