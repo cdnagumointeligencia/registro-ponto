@@ -212,25 +212,6 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .hist-tipo-badge.transferencia { background:rgba(251,191,36,.15);  color:var(--yellow);  border:1px solid rgba(251,191,36,.2);  }
 .hist-tipo-badge.desligamento  { background:rgba(248,113,113,.15); color:var(--red);     border:1px solid rgba(248,113,113,.2); }
 
-/* ── Mini modal promoção ── */
-.mini-overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,.85);
-  backdrop-filter:blur(8px); z-index:400;
-  display:none; align-items:center; justify-content:center;
-}
-.mini-overlay.open { display:flex; }
-.mini-modal {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:16px; padding:32px; width:430px; max-width:95vw;
-  animation:fadeUp .25s ease; text-align:center;
-}
-.mini-cargo-chip {
-  display:inline-flex; align-items:center; gap:6px;
-  padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; margin:4px;
-}
-.mini-cargo-chip.old { background:var(--surface3); color:var(--muted); border:1px solid var(--border); }
-.mini-cargo-chip.new { background:rgba(52,211,153,.15); color:var(--green); border:1px solid rgba(52,211,153,.3); }
-
 /* ── Seção demissão no modal ── */
 .demissao-section-header {
   margin:16px 0 10px; padding-bottom:6px;
@@ -238,7 +219,6 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   font-size:10px; font-weight:700; color:rgba(248,113,113,.85);
   text-transform:uppercase; letter-spacing:1px;
 }
-.emp-banner.ferias   { background:rgba(34,211,238,.14); color:#22d3ee; border-bottom:1px solid rgba(34,211,238,.3); }
 
 /* cabeçalho do card */
 .emp-card-header { display:flex; align-items:flex-start; gap:12px; margin-bottom:12px; }
@@ -262,7 +242,8 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .emp-btn.edit  { color:var(--muted); }
 .emp-btn.edit:hover  { background:rgba(79,142,247,.15); color:var(--accent); }
 .emp-btn.del   { color:var(--muted); }
-.emp-btn.del:hover   { background:rgba(248,113,113,.15); color:var(--red); }.emp-btn.transfer { color:var(--muted); }
+.emp-btn.del:hover   { background:rgba(248,113,113,.15); color:var(--red); }
+.emp-btn.transfer { color:var(--muted); }
 .emp-btn.transfer:hover { background:rgba(251,191,36,.15); color:var(--yellow); }
 .emp-btn.ocorr { color:var(--muted); }
 .emp-btn.ocorr:hover { background:rgba(167,139,250,.15); color:var(--accent2); }
@@ -332,31 +313,29 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
    MODAL
 ════════════════════════════════════════════ */
 .overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,.78);
+  position:fixed; inset:0; background:rgba(0,0,0,.75);
   backdrop-filter:blur(4px); z-index:200;
-  display:none; align-items:flex-start; justify-content:center;
-  padding:24px 16px; overflow-y:auto;
+  display:none; align-items:center; justify-content:center;
 }
 .overlay.open { display:flex; }
 .modal {
   background:var(--surface); border:1px solid var(--border);
-  border-radius:16px; padding:28px 30px;
-  width:min(720px, 96vw); flex-shrink:0;
-  animation:fadeUp .25s ease; box-sizing:border-box;
+  border-radius:16px; padding:28px; width:580px;
+  max-width:95vw; max-height:90vh; overflow-y:auto;
+  animation:fadeUp .25s ease;
 }
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 .modal-title { font-family:var(--font-head); font-size:18px; font-weight:800; margin-bottom:22px; color:var(--text); }
 .modal-footer { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
 
 .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.form-group { display:flex; flex-direction:column; gap:6px; min-width:0; }
+.form-group { display:flex; flex-direction:column; gap:6px; }
 .form-group.full { grid-column:1/-1; }
 .form-label { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
 .form-input {
   background:var(--surface2); border:1px solid var(--border);
   border-radius:8px; color:var(--text); font-family:var(--font-body);
   font-size:13px; padding:9px 11px; outline:none; transition:border-color .2s;
-  width:100%; box-sizing:border-box; min-width:0;
 }
 .form-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(79,142,247,.1); }
 .form-input option { background:var(--surface2); }
@@ -368,7 +347,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   border-bottom:1px solid var(--border);
 }
 .month-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; }
-.month-wrap { display:flex; flex-direction:column; gap:4px; align-items:center; min-width:0; }
+.month-wrap { display:flex; flex-direction:column; gap:4px; align-items:center; }
 .month-wrap .form-label { font-size:9px; }
 .month-wrap .form-input { width:100%; text-align:center; padding:7px 4px; }
 
@@ -376,10 +355,10 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 
 /* ── checkbox afastado/férias ── */
 .check-row { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); cursor:pointer; }
-.check-row input[type=checkbox] { width:16px; height:16px; cursor:pointer; flex-shrink:0; }
+.check-row input[type=checkbox] { width:16px; height:16px; cursor:pointer; }
 .check-row-label { font-size:13px; font-weight:500; color:var(--text); }
 .check-row-sub { font-size:11px; color:var(--muted); margin-top:1px; }
-.date-wrap { padding:10px 12px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); box-sizing:border-box; }
+.date-wrap { padding:10px 12px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); }
 
 /* ════════════════════════════════════════════
    TOAST
@@ -395,17 +374,23 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 ════════════════════════════════════════════ */
 @media(max-width:1024px) {
   :root { --sidebar-w:56px; }
-  .form-grid { grid-template-columns:1fr 1fr; }
-  .month-grid { grid-template-columns:repeat(4,1fr); }
+  
+  
+  
+  
+
+  .form-grid { grid-template-columns:1fr; }
 }
 @media(max-width:768px) {
   :root { --sidebar-w:0px; }
+  
   .main { margin-left:0; padding:16px; }
   .emp-grid { grid-template-columns:1fr; }
   .form-grid { grid-template-columns:1fr; }
-  .month-grid { grid-template-columns:repeat(3,1fr); }
+  .month-grid { grid-template-columns:repeat(4,1fr); }
   .apt-grid { grid-template-columns:repeat(2,1fr); }
-  .modal { padding:20px 18px; border-radius:12px; }
+}
+
 }
 
 
@@ -501,14 +486,14 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 </main>
 
 <!-- MINI MODAL — PROMOÇÃO OU TRANSFERÊNCIA? -->
-<div class="mini-overlay" id="modal-promocao">
-  <div class="mini-modal">
+<div class="mini-overlay" id="modal-promocao" style="position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:400;display:none;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;width:430px;max-width:95vw;animation:fadeUp .25s ease;text-align:center;">
     <div style="font-size:40px;margin-bottom:16px">🏆</div>
     <div style="font-family:var(--font-head);font-size:16px;font-weight:800;color:var(--text);margin-bottom:8px">Mudança de Cargo Detectada</div>
     <div style="font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.7">
-      <span class="mini-cargo-chip old">❌ <span id="prom-old-cargo"></span></span>
+      <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;margin:4px;background:var(--surface3);color:var(--muted);border:1px solid var(--border)">❌ <span id="prom-old-cargo"></span></span>
       →
-      <span class="mini-cargo-chip new">✅ <span id="prom-new-cargo"></span></span>
+      <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;margin:4px;background:rgba(52,211,153,.15);color:var(--green);border:1px solid rgba(52,211,153,.3)">✅ <span id="prom-new-cargo"></span></span>
       <br><br>
       Esta mudança deve ser registrada como <strong style="color:var(--green)">promoção</strong>?
     </div>
@@ -575,6 +560,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
       <div class="form-group" style="align-self:flex-end">
         <div style="font-size:11px;color:var(--muted);padding:9px 0">⚠️ Necessário para o relatório de desligamento</div>
       </div>
+    </div>
 
     <!-- Afastado -->
     <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
@@ -588,7 +574,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
       </label>
       <div id="afastado-date-wrap" class="date-wrap" style="display:none">
         <label class="form-label" style="margin-bottom:6px">📅 Início do Afastamento</label>
-        <input class="form-input" type="date" id="f-data-afastamento" style="border-color:#ef4444">
+        <input class="form-input" type="date" id="f-data-afastamento" style="border-color:#ef4444;width:220px">
       </div>
 
       <label class="check-row">
@@ -603,11 +589,11 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
         <div style="display:flex;gap:14px;flex-wrap:wrap">
           <div>
             <label class="form-label" style="margin-bottom:6px">📅 Início das Férias</label>
-            <input class="form-input" type="date" id="f-ferias-inicio" style="border-color:#22d3ee">
+            <input class="form-input" type="date" id="f-ferias-inicio" style="border-color:#22d3ee;width:200px">
           </div>
           <div>
             <label class="form-label" style="margin-bottom:6px">📅 Fim das Férias</label>
-            <input class="form-input" type="date" id="f-ferias-fim" style="border-color:#22d3ee">
+            <input class="form-input" type="date" id="f-ferias-fim" style="border-color:#22d3ee;width:200px">
           </div>
         </div>
       </div>
@@ -704,7 +690,6 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
       <div class="form-group full"><label class="form-label">👤 Transferir para o Líder</label><select class="form-input" id="tr-lider"></select></div>
     </div>
     <input type="hidden" id="tr-edit-id">
-    <input type="hidden" id="tr-role-original">
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeTransferModal()">Cancelar</button>
       <button class="btn btn-primary" onclick="saveTransfer()">🔀 Confirmar Transferência</button>
@@ -757,11 +742,10 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 // ════════════════════════════════════════════════════════
 let currentUser  = null;
 let activeFilter = '';
-let _store       = null;  // cache do store
-let _allPonto    = {};    // cache do ponto
+let _store       = null;  // cache do store — carregado antes de renderCards()
+let _allPonto    = {};    // cache do ponto — carregado antes de renderCards()
 let _resolvePromocao    = null;
 let _admissaoVerificada = false;
-
 
 const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
 const MONTHS   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
@@ -898,29 +882,32 @@ function canVerDemitidos() {
 // Retorna o líder/responsável direto do funcionário com base no dept e turno atuais
 function getLiderDoFuncionario(emp) {
   const users = Object.values(_store?.users || {});
-
-  // PRIORIDADE 1: responsável direto atribuído (owner_id), ignora admin_master
-  const ownerId = emp.owner_id || emp.ownerId;
-  if (ownerId) {
-    const owner = users.find(u => String(u.id) === String(ownerId) && u.nivel !== 'admin_master');
-    if (owner) return owner;
-  }
-
-  // PRIORIDADE 2: busca por setor/turno (lider → encarregado → ...)
   const dept  = emp.dept  || '';
   const turno = emp.turno || '';
+
+  // Prioridade: lider operacional → encarregado → coordenação → gerencia → diretoria
   const PRIORIDADE = ['lider','encarregado','coordenacao','gerencia','diretoria'];
 
   for (const nivel of PRIORIDADE) {
     const match = users.find(u => {
       if (u.id === ADMIN_ID || u.nivel === 'admin_master') return false;
       if ((u.nivel || 'lider') !== nivel) return false;
+
+      // Gerência/Diretoria: responsável por todos
       if (['gerencia','diretoria'].includes(nivel)) return true;
-      const depts      = u.perfil?.depts || [];
-      const setor      = u.setor || '';
+
+      const depts     = u.perfil?.depts || [];
+      const setor     = u.setor || '';
       const liderTurno = u.perfil?.turno || '';
-      const deptOk     = depts.length || setor ? depts.includes(dept) || setor === dept : false;
-      const turnoOk    = liderTurno ? liderTurno === turno : true;
+
+      // Verifica se o dept do funcionário está coberto pelo líder
+      const deptOk = depts.length || setor
+        ? depts.includes(dept) || setor === dept
+        : (emp.owner_id || emp.ownerId) === u.id;
+
+      // Se o líder tem turno definido, o funcionário precisa estar no mesmo turno
+      const turnoOk = liderTurno ? liderTurno === turno : true;
+
       return deptOk && turnoOk;
     });
     if (match) return match;
@@ -953,7 +940,7 @@ function getTotalFaltasEmp(emp) {
 // POPULAR SELECTS
 // ════════════════════════════════════════════════════════
 function populateFilialSelect() {
-  const emps    = getMyEmployees().filter(e=>!e.demitido);
+  const emps    = getMyEmployees();  // sync - reads _store
   const filiais = [...new Set(emps.map(e=>e.filial))].filter(Boolean).sort();
   const sel     = document.getElementById('filial-select');
   const cur     = sel.value;
@@ -962,7 +949,7 @@ function populateFilialSelect() {
 }
 
 function populateDeptSelect() {
-  const emps   = getMyEmployees().filter(e=>!e.demitido);
+  const emps   = getMyEmployees();  // sync - reads _store
   const depts  = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
   const sel    = document.getElementById('dept-select');
   const cur    = sel.value;
@@ -970,16 +957,16 @@ function populateDeptSelect() {
     depts.map(d=>`<option value="${d}" ${d===cur?'selected':''}>${d}</option>`).join('');
 }
 
-function populateModalSelects(emp) {
-  const store = _store || {};
+async function populateModalSelects(emp) {
+  const store = await getStore();
   const opt   = (list, val) =>
     `<option value="">— Selecione —</option>` +
     list.map(x=>`<option value="${x.nome||x.name}" ${(x.nome||x.name)===val?'selected':''}>${x.nome||x.name}</option>`).join('');
 
-  document.getElementById('f-dept').innerHTML   = opt(store.depts   || [], emp?.dept  || '');
-  document.getElementById('f-role').innerHTML   = opt(store.funcoes || [], emp?.role  || '');
-  document.getElementById('f-filial').innerHTML = opt(store.filiais || [], emp?.filial|| '');
-  document.getElementById('f-turno').innerHTML  = opt(store.turnos  || [], emp?.turno || '');
+  document.getElementById('f-dept').innerHTML   = opt(store.depts,   emp?.dept  || '');
+  document.getElementById('f-role').innerHTML   = opt(store.funcoes, emp?.role  || '');
+  document.getElementById('f-filial').innerHTML = opt(store.filiais, emp?.filial|| '');
+  document.getElementById('f-turno').innerHTML  = opt(store.turnos,  emp?.turno || '');
 }
 
 // ════════════════════════════════════════════════════════
@@ -999,6 +986,7 @@ function setFilter(el, val) {
 // RENDER CARDS
 // ════════════════════════════════════════════════════════
 async function renderCards() {
+  // Carrega store e ponto uma vez — helpers usam cache sincronamente
   if (!_store) {
     _store    = await getStore();
     _allPonto = await LS.get('rh_ponto', {});
@@ -1018,15 +1006,15 @@ async function renderCards() {
   let   ativos   = todos.filter(e => !e.demitido);
   const demitidos = todos.filter(e => !!e.demitido);
 
-  // Selects usam apenas ativos
+  // Atualiza selects (usa apenas ativos)
   populateFilialSelect();
   if (filialSel) document.getElementById('filial-select').value = filialSel;
   populateDeptSelect();
   if (deptSel) document.getElementById('dept-select').value = deptSel;
 
-  // Filtros sobre ativos
+  // Aplica filtros sobre ativos
   ativos = ativos.filter(e => {
-    const matchName   = (e.name||'').toLowerCase().includes(search);
+    const matchName   = e.name.toLowerCase().includes(search);
     const matchFilial = !filialSel || e.filial === filialSel;
     const matchDept   = !deptSel   || e.dept   === deptSel;
     const matchStatus = !activeFilter || getStatus(calcScore(e)).tag === activeFilter;
@@ -1034,15 +1022,18 @@ async function renderCards() {
   });
 
   const grid = document.getElementById('emp-grid');
-  grid.innerHTML = ativos.length
-    ? ativos.map(emp => buildCard(emp)).join('')
-    : `<div class="empty-state">
+  if (!ativos.length) {
+    grid.innerHTML = `
+      <div class="empty-state">
         <div class="empty-icon">🔍</div>
         <p style="font-size:14px">Nenhum funcionário encontrado</p>
         <p style="font-size:12px;margin-top:6px">Tente mudar os filtros ou cadastre um novo funcionário.</p>
-       </div>`;
+      </div>`;
+  } else {
+    grid.innerHTML = ativos.map(emp => buildCard(emp)).join('');
+  }
 
-  // Seção de demitidos — somente para coordenação+
+  // Seção de demitidos — somente para quem tem permissão
   const secDemitidos  = document.getElementById('demitidos-section');
   const podeDemitidos = canVerDemitidos();
   if (podeDemitidos && demitidos.length) {
@@ -1075,7 +1066,7 @@ function buildCard(emp) {
   const liderNivel = lider ? (lider.nivel || 'lider') : null;
   const NIVEL_COR = { diretoria:'#fb923c', gerencia:'#a78bfa', coordenacao:'#fbbf24', encarregado:'#34d399', lider:'rgba(255,255,255,0.5)' };
 
-  // Sparkline — usa cache _allPonto (fonte real do Firestore)
+  // Sparkline — lê faltas mês a mês direto do rh_ponto
   const sparkData = (() => {
     try {
       const allPonto  = _allPonto;
@@ -1144,14 +1135,6 @@ function buildCard(emp) {
       </div>
     </div>
 
-    <div class="score-bar-wrap">
-      <div class="score-bar-bg"><div class="score-bar-fill" style="width:${score}%;background:${barColor}"></div></div>
-    </div>
-    ${totalAbs > 0 ? `
-    <div class="sparkline">${spark}</div>
-    <div class="sparkline-label" style="font-size:10px;color:var(--muted);text-align:right;margin-bottom:2px">${totalAbs} falta${totalAbs!==1?'s':''} no ano</div>
-    ` : ''}
-
     <div class="emp-card-footer">
       <div class="emp-score">${score}</div>
       <span class="tag ${st.cls}">${st.label}</span>
@@ -1175,17 +1158,17 @@ function buildCard(emp) {
     </div>` : ''}
 
     ${liderNome ? `
-    <div class="emp-lider" style="margin:6px 0 0;padding:7px 12px;border-radius:8px;
+    <div class="emp-lider" style="margin:0 12px 12px;padding:7px 12px;border-radius:8px;
       background:var(--surface2);border:1px solid var(--border);
       display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)">
       <span style="width:8px;height:8px;border-radius:50%;background:${NIVEL_COR[liderNivel]||'var(--muted)'};flex-shrink:0"></span>
       <span>Resp.: <strong style="color:var(--text)">${liderNome}</strong></span>
     </div>` : ''}
     <div class="emp-actions-bottom">
-      ${podEdit     ? `<button class="emp-btn edit"     onclick="event.stopPropagation();editEmployee(${emp.id})"      title="Editar">✏️</button>` : ''}
-      ${podDel      ? `<button class="emp-btn del"      onclick="event.stopPropagation();deleteEmployee(${emp.id})"    title="Excluir">✕</button>` : ''}
-      ${podTransfer ? `<button class="emp-btn transfer" onclick="event.stopPropagation();openTransferModal(${emp.id})" title="Transferir">🔀</button>` : ''}
-      ${podOcorr    ? `<button class="emp-btn ocorr"    onclick="event.stopPropagation();openOcorrenciaModal(${emp.id},'emp')" title="Ocorrência">📝</button>` : ''}
+      ${podEdit     ? `<button class="emp-btn edit"     onclick="editEmployee(${emp.id})"     title="Editar">✏️</button>` : ''}
+      ${podDel      ? `<button class="emp-btn del"      onclick="deleteEmployee(${emp.id})"   title="Excluir">✕</button>` : ''}
+      ${podTransfer ? `<button class="emp-btn transfer" onclick="openTransferModal(${emp.id})" title="Transferir">🔀</button>` : ''}
+      ${podOcorr    ? `<button class="emp-btn ocorr"    onclick="openOcorrenciaModal(${emp.id},'emp')" title="Ocorrência">📝</button>` : ''}
     </div>
 
   </div>`;
@@ -1271,17 +1254,8 @@ function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
 }
 
-function closeTransferModal() {
-  document.getElementById('modal-transfer').classList.remove('open');
-}
-
-function closeOcorrenciaModal() {
-  document.getElementById('modal-ocorrencia-emp').classList.remove('open');
-}
-
-// Usa _store diretamente (sempre carregado após renderCards) — sem async para evitar race condition
-function editEmployee(id) {
-  const emp = (_store?.employees||[]).find(e=>String(e.id)===String(id));
+async function editEmployee(id) {
+  const emp = ((await getStore()).employees||[]).find(e=>e.id===id);
   if (!emp) return;
   if (!canEditEmp(emp)) { showToast('⚠️ Sem permissão para editar este funcionário.','warn'); return; }
   openModal(emp);
@@ -1433,6 +1407,244 @@ async function saveEmployee() {
 }
 
 // ════════════════════════════════════════════════════════
+// TOGGLE AFASTADO / FÉRIAS
+// ════════════════════════════════════════════════════════
+function toggleAfastado() {
+  const checked = document.getElementById('f-afastado').checked;
+  document.getElementById('afastado-date-wrap').style.display = checked ? 'block' : 'none';
+  if (checked && !document.getElementById('f-data-afastamento').value) {
+    document.getElementById('f-data-afastamento').value = new Date().toISOString().split('T')[0];
+  }
+}
+
+function toggleFerias() {
+  const checked = document.getElementById('f-ferias').checked;
+  document.getElementById('ferias-date-wrap').style.display = checked ? 'block' : 'none';
+  if (checked) {
+    const hoje = new Date();
+    if (!document.getElementById('f-ferias-inicio').value)
+      document.getElementById('f-ferias-inicio').value = hoje.toISOString().split('T')[0];
+    if (!document.getElementById('f-ferias-fim').value) {
+      const fim = new Date(); fim.setDate(fim.getDate()+29);
+      document.getElementById('f-ferias-fim').value = fim.toISOString().split('T')[0];
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// TRANSFERIR FUNCIONÁRIO
+// ════════════════════════════════════════════════════════
+async function openTransferModal(id) {
+  const store = await getStore();
+  const emp   = (store.employees||[]).find(e=>e.id===id);
+  if (!emp) return;
+
+  const opt = (list, curVal) =>
+    `<option value="">— Manter atual (${curVal||'—'}) —</option>` +
+    list.map(x=>`<option value="${x.nome||x.name}">${x.nome||x.name}</option>`).join('');
+
+  document.getElementById('tr-emp-name').textContent = emp.name;
+  document.getElementById('tr-edit-id').value        = id;
+  // Popula líderes
+  const liderAtual = Object.values(store.users||{}).find(u=>u.id===(emp.owner_id||emp.ownerId));
+  const lideres = Object.values(store.users||{}).filter(u=>u.nivel && u.nivel !== 'admin_master');
+  document.getElementById('tr-lider').innerHTML =
+    `<option value="">— Manter líder atual (${liderAtual?.name||'—'}) —</option>` +
+    lideres.map(u=>`<option value="${u.id}">${u.name} · ${u.nivel||''}</option>`).join('');
+
+  document.getElementById('tr-dept').innerHTML   = opt(store.depts||[],   emp.dept);
+  document.getElementById('tr-role').innerHTML   = opt(store.funcoes||[], emp.role);
+  document.getElementById('tr-filial').innerHTML = opt(store.filiais||[], emp.filial);
+  document.getElementById('tr-turno').innerHTML  = opt(store.turnos||[],  emp.turno);
+
+  document.getElementById('modal-transfer').classList.add('open');
+}
+
+function closeTransferModal() {
+  document.getElementById('modal-transfer').classList.remove('open');
+}
+
+async function saveTransfer() {
+  const id    = document.getElementById('tr-edit-id').value;
+  const store = await getStore();
+  const idx   = (store.employees||[]).findIndex(e=>String(e.id)===String(id));
+  if (idx < 0) { showToast('❌ Funcionário não encontrado.','error'); return; }
+
+  const dept   = document.getElementById('tr-dept').value;
+  const role   = document.getElementById('tr-role').value;
+  const filial = document.getElementById('tr-filial').value;
+  const turno  = document.getElementById('tr-turno').value;
+
+  if (dept)   store.employees[idx].dept   = dept;
+  if (role)   store.employees[idx].role   = role;
+  if (filial) store.employees[idx].filial = filial;
+  if (turno)  store.employees[idx].turno  = turno;
+
+  const novoLider = document.getElementById('tr-lider').value;
+  if (novoLider) {
+    store.employees[idx].owner_id = novoLider;
+    store.employees[idx].ownerId  = novoLider;
+  }
+
+  await saveStore(store);
+  closeTransferModal();
+  renderCards();
+  await registrarLog('editou', 'Funcionários', `Transferiu: <strong>${store.employees[idx]?.name||''}</strong>`);
+  showToast('✅ Funcionário transferido!');
+}
+
+document.getElementById('modal-transfer').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeTransferModal();
+});
+
+// ════════════════════════════════════════════════════════
+// OCORRÊNCIA DO FUNCIONÁRIO
+// ════════════════════════════════════════════════════════
+async function openOcorrenciaModal(id, tipo) {
+  const store = await getStore();
+  const emp   = (store.employees||[]).find(e=>e.id===id);
+  if (!emp) return;
+
+  document.getElementById('oc-target-name').textContent = emp.name;
+  document.getElementById('oc-edit-id').value   = id;
+  document.getElementById('oc-tipo-ref').value  = 'funcionario';
+  document.getElementById('oc-tipo').value      = '';
+  document.getElementById('oc-desc').value      = '';
+  const _agora = new Date();
+  _agora.setMinutes(_agora.getMinutes() - _agora.getTimezoneOffset());
+  document.getElementById('oc-data').value = _agora.toISOString().slice(0,16);
+
+  document.getElementById('modal-ocorrencia-emp').classList.add('open');
+}
+
+function closeOcorrenciaModal() {
+  document.getElementById('modal-ocorrencia-emp').classList.remove('open');
+}
+
+async function saveOcorrencia() {
+  const refId = document.getElementById('oc-edit-id').value;
+  const tipo  = document.getElementById('oc-tipo').value;
+  const desc  = document.getElementById('oc-desc').value.trim();
+  const data  = document.getElementById('oc-data').value;
+
+  if (!tipo) { showToast('⚠️ Selecione o tipo de ocorrência.','warn'); return; }
+  if (!desc) { showToast('⚠️ Descreva a ocorrência.','warn'); document.getElementById('oc-desc').focus(); return; }
+
+  const store  = await getStore();
+  const emp    = (store.employees||[]).find(e=>String(e.id)===String(refId));
+
+  // Salva em rh_ocorrencias — mesma chave que ocorrencias.html lê
+  const lista = await LS.get('rh_ocorrencias', []);
+  lista.unshift({
+    id:        uid(),
+    ts:        (() => {
+      if (!data) return new Date().toISOString();
+      const d = new Date(data);
+      return isNaN(d) ? new Date().toISOString() : d.toISOString();
+    })(),
+    empId:     emp?.id,
+    empName:   emp?.name  || '—',
+    empDept:   emp?.dept  || '—',
+    tipo,
+    desc,
+    obs:       '',
+    status:    'pendente',
+    respName:  currentUser.name,
+    respId:    currentUser.id,
+    createdAt: new Date().toISOString(),
+  });
+  await LS.set('rh_ocorrencias', lista);
+  await registrarLog('criou', 'Ocorrências', `Ocorrência <strong>${tipo}</strong> para <strong>${emp?.name||'—'}</strong>`);
+  closeOcorrenciaModal();
+  showToast('✅ Ocorrência registrada!');
+}
+
+document.getElementById('modal-ocorrencia-emp').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeOcorrenciaModal();
+});
+
+// ════════════════════════════════════════════════════════
+// FECHAR MODAL AO CLICAR FORA
+// ════════════════════════════════════════════════════════
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ── Foto do funcionário ──────────────────────────────
+function processarFoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      canvas.width  = 80;
+      canvas.height = 80;
+      const ctx = canvas.getContext('2d');
+      // Crop centralizado
+      const size = Math.min(img.width, img.height);
+      const sx = (img.width  - size) / 2;
+      const sy = (img.height - size) / 2;
+      ctx.drawImage(img, sx, sy, size, size, 0, 0, 80, 80);
+      const base64 = canvas.toDataURL('image/jpeg', 0.65);
+      document.getElementById('f-foto').value = base64;
+      document.getElementById('foto-preview-modal').innerHTML =
+        `<img src="${base64}" alt="foto">`;
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = ''; // reset para permitir reselecionar
+}
+
+function removerFoto() {
+  document.getElementById('f-foto').value = '';
+  const nm  = document.getElementById('f-name').value.trim();
+  const ini = nm.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase() || '?';
+  document.getElementById('foto-preview-modal').innerHTML =
+    `<span id="foto-ini-modal">${ini}</span>`;
+}
+
+
+// ── Verificação de nome duplicado ───────────────────
+async function verificarNomeDuplicado() {
+  const nome    = document.getElementById('f-name').value.trim().toLowerCase();
+  const editId  = document.getElementById('f-edit-id').value;
+  const aviso   = document.getElementById('nome-duplicado-aviso');
+  aviso.style.display = 'none';
+  aviso.innerHTML = '';
+
+  if (!nome || nome.length < 3) return;
+
+  const store = await getStore();
+  const dups  = (store.employees || []).filter(e =>
+    e.name.toLowerCase() === nome &&
+    String(e.id) !== String(editId)
+  );
+
+  if (!dups.length) return;
+
+  const itens = dups.map(e => {
+    const lider = Object.values(store.users || {}).find(u => u.id === (e.owner_id || e.ownerId));
+    return `<div class="dup-item">
+      👤 <strong>${e.name}</strong>
+      ${e.dept   ? ` · 🏢 ${e.dept}`   : ''}
+      ${e.filial ? ` · 🏭 ${e.filial}` : ''}
+      ${e.turno  ? ` · 🕐 ${e.turno}`  : ''}
+      ${e.role   ? ` · 💼 ${e.role}`   : ''}
+      ${e.matricula ? ` · 🪪 ${e.matricula}` : ''}
+      ${lider    ? ` · 👷 ${lider.name}` : ''}
+    </div>`;
+  }).join('');
+
+  aviso.innerHTML = `⚠️ <strong>Atenção!</strong> Já existe ${dups.length > 1 ? dups.length + ' funcionários' : 'um funcionário'} com este nome:${itens}`;
+  aviso.style.display = 'block';
+}
+// ════════════════════════════════════════════════════════
 // PROMOÇÃO — mini modal com Promise
 // ════════════════════════════════════════════════════════
 function perguntarPromocao(oldCargo, newCargo) {
@@ -1440,11 +1652,12 @@ function perguntarPromocao(oldCargo, newCargo) {
     _resolvePromocao = resolve;
     document.getElementById('prom-old-cargo').textContent = oldCargo || '—';
     document.getElementById('prom-new-cargo').textContent = newCargo || '—';
-    document.getElementById('modal-promocao').classList.add('open');
+    const el = document.getElementById('modal-promocao');
+    el.style.display = 'flex';
   });
 }
 function responderPromocao(isPromocao) {
-  document.getElementById('modal-promocao').classList.remove('open');
+  document.getElementById('modal-promocao').style.display = 'none';
   if (_resolvePromocao) { _resolvePromocao(isPromocao); _resolvePromocao = null; }
 }
 
@@ -1546,8 +1759,8 @@ function buildCardDemitido(emp) {
     ${emp.motivo_demissao?`<div style="margin:6px 0;padding:7px 10px;border-radius:8px;background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.15);font-size:11px;color:var(--muted)"><strong style="color:#f87171">Motivo:</strong> ${emp.motivo_demissao.length>80?emp.motivo_demissao.slice(0,80)+'…':emp.motivo_demissao}</div>`:''}
     ${emp.matricula?`<div class="emp-matricula" style="opacity:.6">🪪 <strong>${emp.matricula}</strong></div>`:''}
     <div class="emp-actions-bottom">
-      ${canDeleteEmp(emp) ? `<button class="emp-btn del" onclick="event.stopPropagation();deleteEmployee(${emp.id})" title="Excluir permanentemente" style="margin-right:auto">✕ Excluir</button>` : ''}
-      <button class="emp-btn pdf" onclick="event.stopPropagation();gerarRelatorioPDF(${emp.id})" style="width:auto;padding:0 12px;font-size:11px;font-weight:600;gap:5px" title="Relatório PDF">
+      ${canDeleteEmp(emp) ? `<button class="emp-btn del" onclick="deleteEmployee(${emp.id})" title="Excluir permanentemente" style="margin-right:auto">✕ Excluir</button>` : ''}
+      <button class="emp-btn pdf" onclick="gerarRelatorioPDF(${emp.id})" style="width:auto;padding:0 12px;font-size:11px;font-weight:600;gap:5px" title="Relatório PDF">
         📋 Relatório PDF
       </button>
     </div>
@@ -1633,7 +1846,6 @@ async function gerarRelatorioPDF(id) {
   const C={dark:[11,13,20],surface:[18,21,31],red:[248,113,113],green:[52,211,153],accent:[79,142,247],accent2:[167,139,250],text:[220,230,245],muted:[100,116,139],border:[42,47,69]};
   const lm=18, pw=174; let y=0;
 
-  // Cabeçalho
   doc.setFillColor(...C.dark); doc.rect(0,0,210,48,'F');
   doc.setFillColor(...C.red);  doc.rect(0,48,210,2.5,'F');
   doc.setFont('helvetica','bold'); doc.setFontSize(19); doc.setTextColor(255,255,255);
@@ -1646,7 +1858,6 @@ async function gerarRelatorioPDF(id) {
   doc.text('Departamento de Inteligência', 192, 27, {align:'right'});
   y=60;
 
-  // Dados do funcionário
   doc.setFont('helvetica','bold'); doc.setFontSize(17); doc.setTextColor(...C.text);
   doc.text(emp.name, lm, y); y+=7;
   doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(...C.muted);
@@ -1655,7 +1866,6 @@ async function gerarRelatorioPDF(id) {
   if (emp.matricula) { doc.text(`Matrícula: ${emp.matricula}`, lm, y); y+=5; }
   y+=6;
 
-  // Caixas de resumo
   const boxes=[
     {label:'Admissão',  value:dtAdm?dtAdm.toLocaleDateString('pt-BR'):'—', cor:C.accent},
     {label:'Demissão',  value:emp.data_demissao?new Date(emp.data_demissao+'T00:00:00').toLocaleDateString('pt-BR'):'—', cor:C.red},
@@ -1675,7 +1885,6 @@ async function gerarRelatorioPDF(id) {
   });
   y+=bH+10;
 
-  // Motivo
   if (emp.motivo_demissao) {
     _pdfSecTitle(doc,'■ Motivo do Desligamento',y,lm,C); y+=7;
     doc.setFillColor(40,20,20);
@@ -1685,7 +1894,6 @@ async function gerarRelatorioPDF(id) {
     doc.text(mLines,lm+4,y+6); y+=mLines.length*5+14;
   }
 
-  // Histórico
   const hist=emp.historico_cargos||[];
   _pdfSecTitle(doc,'■ Histórico de Cargos e Promoções',y,lm,C); y+=8;
   if (!hist.length) {
@@ -1706,17 +1914,10 @@ async function gerarRelatorioPDF(id) {
       if (infoH) { doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(...C.muted); doc.text(infoH,lm+38,y+6.5,{maxWidth:85}); }
       doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(...C.muted);
       doc.text(dH, lm+pw-2, y+6.5, {align:'right'}); y+=12;
-      if (h.motivo) {
-        if (y>260) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
-        const mL=doc.splitTextToSize(`"${h.motivo}"`,pw-10);
-        doc.setFont('helvetica','italic'); doc.setFontSize(8); doc.setTextColor(...C.muted);
-        doc.text(mL,lm+4,y); y+=mL.length*4+4;
-      }
     }
     y+=4;
   }
 
-  // Faltas por mês
   if (y>230) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
   _pdfSecTitle(doc,`■ Registro de Faltas — ${ano}`,y,lm,C); y+=8;
   if (totalF===0 && totalA===0) {
@@ -1744,7 +1945,6 @@ async function gerarRelatorioPDF(id) {
     y+=4;
   }
 
-  // Ocorrências
   if (y>230) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
   _pdfSecTitle(doc,'■ Ocorrências Registradas',y,lm,C); y+=8;
   if (!ocEmp.length) {
@@ -1767,7 +1967,6 @@ async function gerarRelatorioPDF(id) {
     }
   }
 
-  // Rodapé em todas as páginas
   const total=doc.internal.getNumberOfPages();
   for (let p=1; p<=total; p++) {
     doc.setPage(p);
@@ -1790,261 +1989,6 @@ function _pdfPageHeader(doc, C) {
   doc.setFillColor(20,24,36); doc.rect(0,0,210,10,'F');
   doc.setFont('helvetica','bold'); doc.setFontSize(7); doc.setTextColor(...C.muted);
   doc.text('RH NAGUMO · RELATÓRIO DE DESLIGAMENTO (continuação)', 105, 7, {align:'center'});
-}
-
-// ════════════════════════════════════════════════════════
-// TOGGLE AFASTADO / FÉRIAS
-// ════════════════════════════════════════════════════════
-function toggleAfastado() {
-  const checked = document.getElementById('f-afastado').checked;
-  document.getElementById('afastado-date-wrap').style.display = checked ? 'block' : 'none';
-  if (checked && !document.getElementById('f-data-afastamento').value) {
-    document.getElementById('f-data-afastamento').value = new Date().toISOString().split('T')[0];
-  }
-}
-
-function toggleFerias() {
-  const checked = document.getElementById('f-ferias').checked;
-  document.getElementById('ferias-date-wrap').style.display = checked ? 'block' : 'none';
-  if (checked) {
-    const hoje = new Date();
-    if (!document.getElementById('f-ferias-inicio').value)
-      document.getElementById('f-ferias-inicio').value = hoje.toISOString().split('T')[0];
-    if (!document.getElementById('f-ferias-fim').value) {
-      const fim = new Date(); fim.setDate(fim.getDate()+29);
-      document.getElementById('f-ferias-fim').value = fim.toISOString().split('T')[0];
-    }
-  }
-}
-
-// ════════════════════════════════════════════════════════
-// TRANSFERIR FUNCIONÁRIO
-// ════════════════════════════════════════════════════════
-// Síncrono — usa _store (sempre carregado após renderCards)
-function openTransferModal(id) {
-  const store = _store;
-  if (!store) return;
-  const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
-  if (!emp) return;
-
-  const opt = (list, curVal) =>
-    `<option value="">— Manter atual (${curVal||'—'}) —</option>` +
-    list.map(x=>`<option value="${x.nome||x.name}">${x.nome||x.name}</option>`).join('');
-
-  document.getElementById('tr-emp-name').textContent = emp.name;
-  document.getElementById('tr-edit-id').value        = id;
-  document.getElementById('tr-role-original').value  = emp.role || '';
-
-  const liderAtual = Object.values(store.users||{}).find(u=>String(u.id)===String(emp.owner_id||emp.ownerId));
-  const lideres = Object.values(store.users||{}).filter(u=>u.nivel && u.nivel !== 'admin_master');
-  document.getElementById('tr-lider').innerHTML =
-    `<option value="">— Manter líder atual (${liderAtual?.name||'—'}) —</option>` +
-    lideres.map(u=>`<option value="${u.id}">${u.name} · ${u.nivel||''}</option>`).join('');
-
-  document.getElementById('tr-dept').innerHTML   = opt(store.depts||[],   emp.dept);
-  document.getElementById('tr-role').innerHTML   = opt(store.funcoes||[], emp.role);
-  document.getElementById('tr-filial').innerHTML = opt(store.filiais||[], emp.filial);
-  document.getElementById('tr-turno').innerHTML  = opt(store.turnos||[],  emp.turno);
-
-  document.getElementById('modal-transfer').classList.add('open');
-}
-
-async function saveTransfer() {
-  const id    = document.getElementById('tr-edit-id').value;
-  const store = await getStore();
-  const idx   = (store.employees||[]).findIndex(e=>String(e.id)===String(id));
-  if (idx < 0) { showToast('❌ Funcionário não encontrado.','error'); return; }
-
-  const emp      = store.employees[idx];
-  const oldRole  = document.getElementById('tr-role-original').value || emp.role;
-  const dept     = document.getElementById('tr-dept').value;
-  const newRole  = document.getElementById('tr-role').value;
-  const filial   = document.getElementById('tr-filial').value;
-  const turno    = document.getElementById('tr-turno').value;
-
-  if (dept)    store.employees[idx].dept   = dept;
-  if (newRole) store.employees[idx].role   = newRole;
-  if (filial)  store.employees[idx].filial = filial;
-  if (turno)   store.employees[idx].turno  = turno;
-
-  const novoLider = document.getElementById('tr-lider').value;
-  if (novoLider) {
-    store.employees[idx].owner_id = novoLider;
-    store.employees[idx].ownerId  = novoLider;
-  }
-
-  // Detectar mudança de cargo → promoção ou transferência
-  if (oldRole && newRole && oldRole !== newRole) {
-    const isPromocao = await perguntarPromocao(oldRole, newRole);
-    const hist = store.employees[idx].historico_cargos || [];
-    hist.push({
-      cargo:  newRole,
-      dept:   dept    || emp.dept   || '',
-      filial: filial  || emp.filial || '',
-      turno:  turno   || emp.turno  || '',
-      data:   new Date().toISOString().split('T')[0],
-      tipo:   isPromocao ? 'promocao' : 'transferencia',
-    });
-    store.employees[idx].historico_cargos = hist;
-  }
-
-  await saveStore(store);
-  closeTransferModal();
-  _store = null;
-  await renderCards();
-  await registrarLog('editou', 'Funcionários', `Transferiu: <strong>${emp.name||''}</strong>`);
-  showToast('✅ Funcionário transferido!');
-}
-
-document.getElementById('modal-transfer').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeTransferModal();
-});
-
-// ════════════════════════════════════════════════════════
-// OCORRÊNCIA DO FUNCIONÁRIO
-// ════════════════════════════════════════════════════════
-// Síncrono — usa _store (sempre carregado após renderCards)
-function openOcorrenciaModal(id, tipo) {
-  const store = _store;
-  if (!store) return;
-  const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
-  if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
-
-  document.getElementById('oc-target-name').textContent = emp.name;
-  document.getElementById('oc-edit-id').value   = id;
-  document.getElementById('oc-tipo-ref').value  = 'funcionario';
-  document.getElementById('oc-tipo').value      = '';
-  document.getElementById('oc-desc').value      = '';
-  const _agora = new Date();
-  _agora.setMinutes(_agora.getMinutes() - _agora.getTimezoneOffset());
-  document.getElementById('oc-data').value = _agora.toISOString().slice(0,16);
-
-  document.getElementById('modal-ocorrencia-emp').classList.add('open');
-}
-
-async function saveOcorrencia() {
-  const refId = document.getElementById('oc-edit-id').value;
-  const tipo  = document.getElementById('oc-tipo').value;
-  const desc  = document.getElementById('oc-desc').value.trim();
-  const data  = document.getElementById('oc-data').value;
-
-  if (!tipo) { showToast('⚠️ Selecione o tipo de ocorrência.','warn'); return; }
-  if (!desc) { showToast('⚠️ Descreva a ocorrência.','warn'); document.getElementById('oc-desc').focus(); return; }
-
-  const store  = await getStore();
-  const emp    = (store.employees||[]).find(e=>String(e.id)===String(refId));
-
-  // Salva em rh_ocorrencias — mesma chave que ocorrencias.html lê
-  const lista = await LS.get('rh_ocorrencias', []);
-  lista.unshift({
-    id:        uid(),
-    ts:        (() => {
-      if (!data) return new Date().toISOString();
-      const d = new Date(data);
-      return isNaN(d) ? new Date().toISOString() : d.toISOString();
-    })(),
-    empId:     emp?.id,
-    empName:   emp?.name  || '—',
-    empDept:   emp?.dept  || '—',
-    tipo,
-    desc,
-    obs:       '',
-    status:    'pendente',
-    respName:  currentUser.name,
-    respId:    currentUser.id,
-    createdAt: new Date().toISOString(),
-  });
-  await LS.set('rh_ocorrencias', lista);
-  await registrarLog('criou', 'Ocorrências', `Ocorrência <strong>${tipo}</strong> para <strong>${emp?.name||'—'}</strong>`);
-  closeOcorrenciaModal();
-  showToast('✅ Ocorrência registrada!');
-}
-
-document.getElementById('modal-ocorrencia-emp').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeOcorrenciaModal();
-});
-
-// ════════════════════════════════════════════════════════
-// FECHAR MODAL AO CLICAR FORA
-// ════════════════════════════════════════════════════════
-document.getElementById('modal-overlay').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeModal();
-});
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeTransferModal(); closeOcorrenciaModal(); }
-});
-
-// ── Foto do funcionário ──────────────────────────────
-function processarFoto(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const img = new Image();
-    img.onload = function() {
-      const canvas = document.createElement('canvas');
-      canvas.width  = 80;
-      canvas.height = 80;
-      const ctx = canvas.getContext('2d');
-      // Crop centralizado
-      const size = Math.min(img.width, img.height);
-      const sx = (img.width  - size) / 2;
-      const sy = (img.height - size) / 2;
-      ctx.drawImage(img, sx, sy, size, size, 0, 0, 80, 80);
-      const base64 = canvas.toDataURL('image/jpeg', 0.65);
-      document.getElementById('f-foto').value = base64;
-      document.getElementById('foto-preview-modal').innerHTML =
-        `<img src="${base64}" alt="foto">`;
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-  input.value = ''; // reset para permitir reselecionar
-}
-
-function removerFoto() {
-  document.getElementById('f-foto').value = '';
-  const nm  = document.getElementById('f-name').value.trim();
-  const ini = nm.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase() || '?';
-  document.getElementById('foto-preview-modal').innerHTML =
-    `<span id="foto-ini-modal">${ini}</span>`;
-}
-
-
-// ── Verificação de nome duplicado ───────────────────
-async function verificarNomeDuplicado() {
-  const nome    = document.getElementById('f-name').value.trim().toLowerCase();
-  const editId  = document.getElementById('f-edit-id').value;
-  const aviso   = document.getElementById('nome-duplicado-aviso');
-  aviso.style.display = 'none';
-  aviso.innerHTML = '';
-
-  if (!nome || nome.length < 3) return;
-
-  const store = await getStore();
-  const dups  = (store.employees || []).filter(e =>
-    e.name.toLowerCase() === nome &&
-    String(e.id) !== String(editId)
-  );
-
-  if (!dups.length) return;
-
-  const itens = dups.map(e => {
-    const lider = Object.values(store.users || {}).find(u => u.id === (e.owner_id || e.ownerId));
-    return `<div class="dup-item">
-      👤 <strong>${e.name}</strong>
-      ${e.dept   ? ` · 🏢 ${e.dept}`   : ''}
-      ${e.filial ? ` · 🏭 ${e.filial}` : ''}
-      ${e.turno  ? ` · 🕐 ${e.turno}`  : ''}
-      ${e.role   ? ` · 💼 ${e.role}`   : ''}
-      ${e.matricula ? ` · 🪪 ${e.matricula}` : ''}
-      ${lider    ? ` · 👷 ${lider.name}` : ''}
-      ${e.demitido ? ` · <span style="color:#f87171">🔴 DESLIGADO</span>` : ''}
-    </div>`;
-  }).join('');
-
-  aviso.innerHTML = `⚠️ <strong>Atenção!</strong> Já existe ${dups.length > 1 ? dups.length + ' funcionários' : 'um funcionário'} com este nome:${itens}`;
-  aviso.style.display = 'block';
 }
 
 </script>
