@@ -1820,10 +1820,10 @@ function toggleFerias() {
 // ════════════════════════════════════════════════════════
 // TRANSFERIR FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
-// Síncrono — usa _store (sempre carregado após renderCards)
-function openTransferModal(id) {
+// Async — carrega _store se necessário
+async function openTransferModal(id) {
+  if (!_store) _store = await getStore();
   const store = _store;
-  if (!store) return;
   const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
   if (!emp) return;
 
@@ -1903,10 +1903,10 @@ document.getElementById('modal-transfer').addEventListener('click', e => {
 // ════════════════════════════════════════════════════════
 // OCORRÊNCIA DO FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
-// Síncrono — usa _store (sempre carregado após renderCards)
-function openOcorrenciaModal(id, tipo) {
+// Async — carrega _store se necessário
+async function openOcorrenciaModal(id, tipo) {
+  if (!_store) _store = await getStore();
   const store = _store;
-  if (!store) return;
   const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
   if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
 
