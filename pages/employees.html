@@ -14,8 +14,6 @@
 <script src="../firebase.js"></script>
 <script src="../permissions.js"></script>
 <script src="../shared.js"></script>
-<!-- jsPDF para geração de relatórios PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 /* ════════════════════════════════════════════
    VARIÁVEIS
@@ -67,7 +65,7 @@ body.light-theme .modal select     { background:#F4F7FB; border-color:#CBD5E1; c
 ════════════════════════════════════════════ */
 * { box-sizing:border-box; margin:0; padding:0; }
 html { font-size:14px; }
-body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; }
+body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
 ::-webkit-scrollbar { width:6px; height:6px; }
 ::-webkit-scrollbar-track { background:var(--surface); }
 ::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
@@ -164,81 +162,6 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 }
 .emp-banner.afastado { background:rgba(239,68,68,.18); color:#ef4444; border-bottom:1px solid rgba(239,68,68,.3); }
 .emp-banner.ferias   { background:rgba(34,211,238,.14); color:#22d3ee; border-bottom:1px solid rgba(34,211,238,.3); }
-.emp-banner.demitido { background:rgba(248,113,113,.22); color:#f87171; border-bottom:1px solid rgba(248,113,113,.4); }
-
-/* ── Card demitido ── */
-.demitido-card {
-  background:linear-gradient(160deg, rgba(248,113,113,.06) 0%, var(--surface) 60%);
-  border-color:rgba(248,113,113,.4) !important;
-  opacity:.88;
-}
-.demitido-card:hover {
-  border-color:rgba(248,113,113,.7) !important;
-  transform:translateY(-1px);
-  box-shadow:0 4px 20px rgba(248,113,113,.12);
-}
-
-/* ── Divisor seção demitidos ── */
-.demitidos-divider { display:flex; align-items:center; gap:14px; margin:40px 0 20px; }
-.demitidos-divider-line { flex:1; height:1px; background:rgba(248,113,113,.2); }
-.demitidos-divider-label {
-  font-family:var(--font-head); font-size:11px; font-weight:700;
-  color:var(--red); opacity:.75; text-transform:uppercase; letter-spacing:2px;
-  display:flex; align-items:center; gap:8px;
-}
-.demitidos-count {
-  display:inline-flex; align-items:center; justify-content:center;
-  width:20px; height:20px; border-radius:50%;
-  background:rgba(248,113,113,.15); color:var(--red); font-size:10px; font-weight:800;
-  border:1px solid rgba(248,113,113,.3);
-}
-
-/* ── Botão PDF ── */
-.emp-btn.pdf { color:var(--muted); }
-.emp-btn.pdf:hover { background:rgba(248,113,113,.15); color:var(--red); }
-
-/* ── Histórico de cargos no modal ── */
-.historico-item {
-  padding:10px 12px; border-radius:8px; background:var(--surface2);
-  border:1px solid var(--border); margin-bottom:6px;
-}
-.historico-item:last-child { margin-bottom:0; }
-.hist-tipo-badge {
-  display:inline-flex; align-items:center; gap:4px;
-  padding:2px 8px; border-radius:12px; font-size:10px; font-weight:700;
-}
-.hist-tipo-badge.admissao      { background:rgba(79,142,247,.15);  color:var(--accent);  border:1px solid rgba(79,142,247,.2);  }
-.hist-tipo-badge.promocao      { background:rgba(52,211,153,.15);  color:var(--green);   border:1px solid rgba(52,211,153,.2);  }
-.hist-tipo-badge.transferencia { background:rgba(251,191,36,.15);  color:var(--yellow);  border:1px solid rgba(251,191,36,.2);  }
-.hist-tipo-badge.desligamento  { background:rgba(248,113,113,.15); color:var(--red);     border:1px solid rgba(248,113,113,.2); }
-
-/* ── Mini modal promoção ── */
-.mini-overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,.85);
-  backdrop-filter:blur(8px); z-index:400;
-  display:none; align-items:center; justify-content:center;
-}
-.mini-overlay.open { display:flex; }
-.mini-modal {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:16px; padding:32px; width:430px; max-width:95vw;
-  animation:fadeUp .25s ease; text-align:center;
-}
-.mini-cargo-chip {
-  display:inline-flex; align-items:center; gap:6px;
-  padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; margin:4px;
-}
-.mini-cargo-chip.old { background:var(--surface3); color:var(--muted); border:1px solid var(--border); }
-.mini-cargo-chip.new { background:rgba(52,211,153,.15); color:var(--green); border:1px solid rgba(52,211,153,.3); }
-
-/* ── Seção demissão no modal ── */
-.demissao-section-header {
-  margin:16px 0 10px; padding-bottom:6px;
-  border-bottom:1px solid rgba(248,113,113,.3);
-  font-size:10px; font-weight:700; color:rgba(248,113,113,.85);
-  text-transform:uppercase; letter-spacing:1px;
-}
-.emp-banner.ferias   { background:rgba(34,211,238,.14); color:#22d3ee; border-bottom:1px solid rgba(34,211,238,.3); }
 
 /* cabeçalho do card */
 .emp-card-header { display:flex; align-items:flex-start; gap:12px; margin-bottom:12px; }
@@ -262,7 +185,8 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .emp-btn.edit  { color:var(--muted); }
 .emp-btn.edit:hover  { background:rgba(79,142,247,.15); color:var(--accent); }
 .emp-btn.del   { color:var(--muted); }
-.emp-btn.del:hover   { background:rgba(248,113,113,.15); color:var(--red); }.emp-btn.transfer { color:var(--muted); }
+.emp-btn.del:hover   { background:rgba(248,113,113,.15); color:var(--red); }
+.emp-btn.transfer { color:var(--muted); }
 .emp-btn.transfer:hover { background:rgba(251,191,36,.15); color:var(--yellow); }
 .emp-btn.ocorr { color:var(--muted); }
 .emp-btn.ocorr:hover { background:rgba(167,139,250,.15); color:var(--accent2); }
@@ -332,31 +256,29 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
    MODAL
 ════════════════════════════════════════════ */
 .overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,.78);
+  position:fixed; inset:0; background:rgba(0,0,0,.75);
   backdrop-filter:blur(4px); z-index:200;
-  display:none; align-items:flex-start; justify-content:center;
-  padding:24px 16px; overflow-y:auto;
+  display:none; align-items:center; justify-content:center;
 }
 .overlay.open { display:flex; }
 .modal {
   background:var(--surface); border:1px solid var(--border);
-  border-radius:16px; padding:28px 30px;
-  width:min(720px, 96vw); flex-shrink:0;
-  animation:fadeUp .25s ease; box-sizing:border-box;
+  border-radius:16px; padding:28px; width:580px;
+  max-width:95vw; max-height:90vh; overflow-y:auto;
+  animation:fadeUp .25s ease;
 }
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 .modal-title { font-family:var(--font-head); font-size:18px; font-weight:800; margin-bottom:22px; color:var(--text); }
 .modal-footer { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
 
 .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.form-group { display:flex; flex-direction:column; gap:6px; min-width:0; }
+.form-group { display:flex; flex-direction:column; gap:6px; }
 .form-group.full { grid-column:1/-1; }
 .form-label { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
 .form-input {
   background:var(--surface2); border:1px solid var(--border);
   border-radius:8px; color:var(--text); font-family:var(--font-body);
   font-size:13px; padding:9px 11px; outline:none; transition:border-color .2s;
-  width:100%; box-sizing:border-box; min-width:0;
 }
 .form-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(79,142,247,.1); }
 .form-input option { background:var(--surface2); }
@@ -368,7 +290,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   border-bottom:1px solid var(--border);
 }
 .month-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; }
-.month-wrap { display:flex; flex-direction:column; gap:4px; align-items:center; min-width:0; }
+.month-wrap { display:flex; flex-direction:column; gap:4px; align-items:center; }
 .month-wrap .form-label { font-size:9px; }
 .month-wrap .form-input { width:100%; text-align:center; padding:7px 4px; }
 
@@ -376,10 +298,10 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 
 /* ── checkbox afastado/férias ── */
 .check-row { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); cursor:pointer; }
-.check-row input[type=checkbox] { width:16px; height:16px; cursor:pointer; flex-shrink:0; }
+.check-row input[type=checkbox] { width:16px; height:16px; cursor:pointer; }
 .check-row-label { font-size:13px; font-weight:500; color:var(--text); }
 .check-row-sub { font-size:11px; color:var(--muted); margin-top:1px; }
-.date-wrap { padding:10px 12px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); box-sizing:border-box; }
+.date-wrap { padding:10px 12px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); }
 
 /* ════════════════════════════════════════════
    TOAST
@@ -395,17 +317,23 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 ════════════════════════════════════════════ */
 @media(max-width:1024px) {
   :root { --sidebar-w:56px; }
-  .form-grid { grid-template-columns:1fr 1fr; }
-  .month-grid { grid-template-columns:repeat(4,1fr); }
+  
+  
+  
+  
+
+  .form-grid { grid-template-columns:1fr; }
 }
 @media(max-width:768px) {
   :root { --sidebar-w:0px; }
+  
   .main { margin-left:0; padding:16px; }
   .emp-grid { grid-template-columns:1fr; }
   .form-grid { grid-template-columns:1fr; }
-  .month-grid { grid-template-columns:repeat(3,1fr); }
+  .month-grid { grid-template-columns:repeat(4,1fr); }
   .apt-grid { grid-template-columns:repeat(2,1fr); }
-  .modal { padding:20px 18px; border-radius:12px; }
+}
+
 }
 
 
@@ -485,39 +413,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   <!-- Grid de cards -->
   <div class="emp-grid" id="emp-grid"></div>
 
-  <!-- Seção funcionários desligados (visível apenas para coordenação e acima) -->
-  <div id="demitidos-section" style="display:none">
-    <div class="demitidos-divider">
-      <div class="demitidos-divider-line"></div>
-      <div class="demitidos-divider-label">
-        🔴 Funcionários Desligados
-        <span class="demitidos-count" id="demitidos-count">0</span>
-      </div>
-      <div class="demitidos-divider-line"></div>
-    </div>
-    <div class="emp-grid" id="demitidos-grid"></div>
-  </div>
-
 </main>
-
-<!-- MINI MODAL — PROMOÇÃO OU TRANSFERÊNCIA? -->
-<div class="mini-overlay" id="modal-promocao">
-  <div class="mini-modal">
-    <div style="font-size:40px;margin-bottom:16px">🏆</div>
-    <div style="font-family:var(--font-head);font-size:16px;font-weight:800;color:var(--text);margin-bottom:8px">Mudança de Cargo Detectada</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.7">
-      <span class="mini-cargo-chip old">❌ <span id="prom-old-cargo"></span></span>
-      →
-      <span class="mini-cargo-chip new">✅ <span id="prom-new-cargo"></span></span>
-      <br><br>
-      Esta mudança deve ser registrada como <strong style="color:var(--green)">promoção</strong>?
-    </div>
-    <div style="display:flex;gap:10px;justify-content:center">
-      <button class="btn btn-ghost" onclick="responderPromocao(false)">🔀 Não — Transferência</button>
-      <button class="btn btn-primary" onclick="responderPromocao(true)">🏆 Sim — Promoção</button>
-    </div>
-  </div>
-</div>
 
 <!-- ══ MODAL ══ -->
 <div class="overlay" id="modal-overlay">
@@ -567,14 +463,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
         <label class="form-label">🎯 Desempenho (0–100)</label>
         <input class="form-input" type="number" id="f-perf" min="0" max="100" placeholder="70">
       </div>
-      <!-- Data de Admissão -->
-      <div class="form-group">
-        <label class="form-label">📅 Data de Admissão</label>
-        <input class="form-input" type="date" id="f-data-admissao">
-      </div>
-      <div class="form-group" style="align-self:flex-end">
-        <div style="font-size:11px;color:var(--muted);padding:9px 0">⚠️ Necessário para o relatório de desligamento</div>
-      </div>
+    </div>
 
     <!-- Afastado -->
     <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
@@ -588,7 +477,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
       </label>
       <div id="afastado-date-wrap" class="date-wrap" style="display:none">
         <label class="form-label" style="margin-bottom:6px">📅 Início do Afastamento</label>
-        <input class="form-input" type="date" id="f-data-afastamento" style="border-color:#ef4444">
+        <input class="form-input" type="date" id="f-data-afastamento" style="border-color:#ef4444;width:220px">
       </div>
 
       <label class="check-row">
@@ -603,11 +492,11 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
         <div style="display:flex;gap:14px;flex-wrap:wrap">
           <div>
             <label class="form-label" style="margin-bottom:6px">📅 Início das Férias</label>
-            <input class="form-input" type="date" id="f-ferias-inicio" style="border-color:#22d3ee">
+            <input class="form-input" type="date" id="f-ferias-inicio" style="border-color:#22d3ee;width:200px">
           </div>
           <div>
             <label class="form-label" style="margin-bottom:6px">📅 Fim das Férias</label>
-            <input class="form-input" type="date" id="f-ferias-fim" style="border-color:#22d3ee">
+            <input class="form-input" type="date" id="f-ferias-fim" style="border-color:#22d3ee;width:200px">
           </div>
         </div>
       </div>
@@ -645,46 +534,12 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
       <div class="form-group"><label class="form-label">🔥 Motivação</label>    <input class="form-input" type="number" id="c-motv"  min="0" max="10" placeholder="5"></div>
     </div>
 
-    <!-- Histórico de cargos (somente em edição) -->
-    <div class="section-label" id="historico-section-label" style="display:none">📋 Histórico de Cargos e Promoções</div>
-    <div id="historico-cargos-list" style="display:none;margin-bottom:12px"></div>
-
-    <!-- Seção Demissão — visível somente para quem tem permissão demitir, em edição -->
-    <div id="demissao-section" style="display:none;margin-top:4px">
-      <div class="demissao-section-header">🔴 Desligamento</div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <label class="check-row">
-          <input type="checkbox" id="f-demitido" onchange="toggleDemitido()" style="accent-color:#f87171">
-          <div>
-            <div class="check-row-label">🔴 Funcionário <strong style="color:#f87171">Demitido</strong></div>
-            <div class="check-row-sub">Registra o desligamento e move o card para a seção de desligados</div>
-          </div>
-        </label>
-        <div id="demitido-date-wrap" class="date-wrap" style="display:none;border-color:rgba(248,113,113,.4)">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-            <div>
-              <label class="form-label" style="margin-bottom:6px">📅 Data de Demissão</label>
-              <input class="form-input" type="date" id="f-data-demissao" style="border-color:#f87171">
-            </div>
-            <div style="align-self:flex-end;font-size:11px;color:var(--muted);padding-bottom:9px">
-              ⚠️ Obrigatório para o relatório PDF
-            </div>
-          </div>
-          <label class="form-label" style="margin-bottom:6px">📝 Motivo do Desligamento</label>
-          <textarea class="form-input" id="f-motivo-demissao" rows="3"
-            placeholder="Descreva o motivo do desligamento..."
-            style="resize:vertical;min-height:70px;border-color:#f87171"></textarea>
-        </div>
-      </div>
-    </div>
-
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
       <button class="btn btn-primary" onclick="saveEmployee()">💾 Salvar Funcionário</button>
     </div>
     <input type="hidden" id="f-edit-id" value="">
     <input type="hidden" id="f-foto" value="">
-    <input type="hidden" id="f-role-original" value="">
   </div>
 </div>
 
@@ -704,7 +559,6 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
       <div class="form-group full"><label class="form-label">👤 Transferir para o Líder</label><select class="form-input" id="tr-lider"></select></div>
     </div>
     <input type="hidden" id="tr-edit-id">
-    <input type="hidden" id="tr-role-original">
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeTransferModal()">Cancelar</button>
       <button class="btn btn-primary" onclick="saveTransfer()">🔀 Confirmar Transferência</button>
@@ -757,11 +611,8 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 // ════════════════════════════════════════════════════════
 let currentUser  = null;
 let activeFilter = '';
-let _store       = null;  // cache do store
-let _allPonto    = {};    // cache do ponto
-let _resolvePromocao    = null;
-let _admissaoVerificada = false;
-
+let _store       = null;  // cache do store — carregado antes de renderCards()
+let _allPonto    = {};    // cache do ponto — carregado antes de renderCards()
 
 const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
 const MONTHS   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
@@ -888,39 +739,36 @@ function canTransferEmp() {
 function canOcorrenciaEmp() {
   return (typeof can==='function') ? can(currentUser,'employees','ocorrencia') : true;
 }
-function canDemitirEmp() {
-  return (typeof can==='function') ? can(currentUser,'employees','demitir') : false;
-}
-function canVerDemitidos() {
-  return (typeof can==='function') ? can(currentUser,'employees','view_demitidos') : false;
-}
 
 // Retorna o líder/responsável direto do funcionário com base no dept e turno atuais
 function getLiderDoFuncionario(emp) {
   const users = Object.values(_store?.users || {});
-
-  // PRIORIDADE 1: responsável direto atribuído (owner_id), ignora admin_master
-  const ownerId = emp.owner_id || emp.ownerId;
-  if (ownerId) {
-    const owner = users.find(u => String(u.id) === String(ownerId) && u.nivel !== 'admin_master');
-    if (owner) return owner;
-  }
-
-  // PRIORIDADE 2: busca por setor/turno (lider → encarregado → ...)
   const dept  = emp.dept  || '';
   const turno = emp.turno || '';
+
+  // Prioridade: lider operacional → encarregado → coordenação → gerencia → diretoria
   const PRIORIDADE = ['lider','encarregado','coordenacao','gerencia','diretoria'];
 
   for (const nivel of PRIORIDADE) {
     const match = users.find(u => {
       if (u.id === ADMIN_ID || u.nivel === 'admin_master') return false;
       if ((u.nivel || 'lider') !== nivel) return false;
+
+      // Gerência/Diretoria: responsável por todos
       if (['gerencia','diretoria'].includes(nivel)) return true;
-      const depts      = u.perfil?.depts || [];
-      const setor      = u.setor || '';
+
+      const depts     = u.perfil?.depts || [];
+      const setor     = u.setor || '';
       const liderTurno = u.perfil?.turno || '';
-      const deptOk     = depts.length || setor ? depts.includes(dept) || setor === dept : false;
-      const turnoOk    = liderTurno ? liderTurno === turno : true;
+
+      // Verifica se o dept do funcionário está coberto pelo líder
+      const deptOk = depts.length || setor
+        ? depts.includes(dept) || setor === dept
+        : (emp.owner_id || emp.ownerId) === u.id;
+
+      // Se o líder tem turno definido, o funcionário precisa estar no mesmo turno
+      const turnoOk = liderTurno ? liderTurno === turno : true;
+
       return deptOk && turnoOk;
     });
     if (match) return match;
@@ -953,7 +801,7 @@ function getTotalFaltasEmp(emp) {
 // POPULAR SELECTS
 // ════════════════════════════════════════════════════════
 function populateFilialSelect() {
-  const emps    = getMyEmployees().filter(e=>!e.demitido);
+  const emps    = getMyEmployees();  // sync - reads _store
   const filiais = [...new Set(emps.map(e=>e.filial))].filter(Boolean).sort();
   const sel     = document.getElementById('filial-select');
   const cur     = sel.value;
@@ -962,7 +810,7 @@ function populateFilialSelect() {
 }
 
 function populateDeptSelect() {
-  const emps   = getMyEmployees().filter(e=>!e.demitido);
+  const emps   = getMyEmployees();  // sync - reads _store
   const depts  = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
   const sel    = document.getElementById('dept-select');
   const cur    = sel.value;
@@ -970,16 +818,16 @@ function populateDeptSelect() {
     depts.map(d=>`<option value="${d}" ${d===cur?'selected':''}>${d}</option>`).join('');
 }
 
-function populateModalSelects(emp) {
-  const store = _store || {};
+async function populateModalSelects(emp) {
+  const store = await getStore();
   const opt   = (list, val) =>
     `<option value="">— Selecione —</option>` +
     list.map(x=>`<option value="${x.nome||x.name}" ${(x.nome||x.name)===val?'selected':''}>${x.nome||x.name}</option>`).join('');
 
-  document.getElementById('f-dept').innerHTML   = opt(store.depts   || [], emp?.dept  || '');
-  document.getElementById('f-role').innerHTML   = opt(store.funcoes || [], emp?.role  || '');
-  document.getElementById('f-filial').innerHTML = opt(store.filiais || [], emp?.filial|| '');
-  document.getElementById('f-turno').innerHTML  = opt(store.turnos  || [], emp?.turno || '');
+  document.getElementById('f-dept').innerHTML   = opt(store.depts,   emp?.dept  || '');
+  document.getElementById('f-role').innerHTML   = opt(store.funcoes, emp?.role  || '');
+  document.getElementById('f-filial').innerHTML = opt(store.filiais, emp?.filial|| '');
+  document.getElementById('f-turno').innerHTML  = opt(store.turnos,  emp?.turno || '');
 }
 
 // ════════════════════════════════════════════════════════
@@ -999,34 +847,27 @@ function setFilter(el, val) {
 // RENDER CARDS
 // ════════════════════════════════════════════════════════
 async function renderCards() {
+  // Carrega store e ponto uma vez — helpers usam cache sincronamente
+  // Recarrega Firestore apenas se cache vazio
   if (!_store) {
     _store    = await getStore();
     _allPonto = await LS.get('rh_ponto', {});
   }
 
-  // Verificar admissões faltando — apenas uma vez por sessão
-  if (!_admissaoVerificada) {
-    _admissaoVerificada = true;
-    await verificarAdmissaoFaltando();
-  }
-
   const search    = document.getElementById('search-input').value.toLowerCase();
   const filialSel = document.getElementById('filial-select').value;
   const deptSel   = document.getElementById('dept-select').value;
+  let   list      = getMyEmployees();
 
-  const todos    = getMyEmployees();
-  let   ativos   = todos.filter(e => !e.demitido);
-  const demitidos = todos.filter(e => !!e.demitido);
-
-  // Selects usam apenas ativos
+  // Atualiza selects
   populateFilialSelect();
   if (filialSel) document.getElementById('filial-select').value = filialSel;
   populateDeptSelect();
   if (deptSel) document.getElementById('dept-select').value = deptSel;
 
-  // Filtros sobre ativos
-  ativos = ativos.filter(e => {
-    const matchName   = (e.name||'').toLowerCase().includes(search);
+  // Aplica filtros
+  list = list.filter(e => {
+    const matchName   = e.name.toLowerCase().includes(search);
     const matchFilial = !filialSel || e.filial === filialSel;
     const matchDept   = !deptSel   || e.dept   === deptSel;
     const matchStatus = !activeFilter || getStatus(calcScore(e)).tag === activeFilter;
@@ -1034,24 +875,17 @@ async function renderCards() {
   });
 
   const grid = document.getElementById('emp-grid');
-  grid.innerHTML = ativos.length
-    ? ativos.map(emp => buildCard(emp)).join('')
-    : `<div class="empty-state">
+  if (!list.length) {
+    grid.innerHTML = `
+      <div class="empty-state">
         <div class="empty-icon">🔍</div>
         <p style="font-size:14px">Nenhum funcionário encontrado</p>
         <p style="font-size:12px;margin-top:6px">Tente mudar os filtros ou cadastre um novo funcionário.</p>
-       </div>`;
-
-  // Seção de demitidos — somente para coordenação+
-  const secDemitidos  = document.getElementById('demitidos-section');
-  const podeDemitidos = canVerDemitidos();
-  if (podeDemitidos && demitidos.length) {
-    document.getElementById('demitidos-count').textContent = demitidos.length;
-    document.getElementById('demitidos-grid').innerHTML = demitidos.map(emp => buildCardDemitido(emp)).join('');
-    secDemitidos.style.display = '';
-  } else {
-    secDemitidos.style.display = 'none';
+      </div>`;
+    return;
   }
+
+  grid.innerHTML = list.map(emp => buildCard(emp)).join('');
 }
 
 function buildCard(emp) {
@@ -1075,10 +909,11 @@ function buildCard(emp) {
   const liderNivel = lider ? (lider.nivel || 'lider') : null;
   const NIVEL_COR = { diretoria:'#fb923c', gerencia:'#a78bfa', coordenacao:'#fbbf24', encarregado:'#34d399', lider:'rgba(255,255,255,0.5)' };
 
-  // Sparkline — usa cache _allPonto (fonte real do Firestore)
+  // Sparkline — lê faltas mês a mês direto do rh_ponto
   const sparkData = (() => {
     try {
-      const allPonto  = _allPonto;
+      const PONTO_KEY = 'rh_ponto';
+      const allPonto  = JSON.parse(localStorage.getItem(PONTO_KEY) || '{}');
       const ano       = emp.year || new Date().getFullYear();
       return Array.from({length:12}, (_, m) => {
         const key  = `${emp.id}_${ano}_${String(m+1).padStart(2,'0')}`;
@@ -1144,14 +979,6 @@ function buildCard(emp) {
       </div>
     </div>
 
-    <div class="score-bar-wrap">
-      <div class="score-bar-bg"><div class="score-bar-fill" style="width:${score}%;background:${barColor}"></div></div>
-    </div>
-    ${totalAbs > 0 ? `
-    <div class="sparkline">${spark}</div>
-    <div class="sparkline-label" style="font-size:10px;color:var(--muted);text-align:right;margin-bottom:2px">${totalAbs} falta${totalAbs!==1?'s':''} no ano</div>
-    ` : ''}
-
     <div class="emp-card-footer">
       <div class="emp-score">${score}</div>
       <span class="tag ${st.cls}">${st.label}</span>
@@ -1169,21 +996,16 @@ function buildCard(emp) {
       🪪 Matrícula: <strong>${emp.matricula}</strong>
     </div>` : ''}
 
-    ${emp.data_admissao ? `
-    <div style="font-size:10px;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:4px">
-      📅 Desde ${new Date(emp.data_admissao+'T00:00:00').toLocaleDateString('pt-BR')}
-    </div>` : ''}
-
     ${liderNome ? `
-    <div class="emp-lider" style="margin:6px 0 0;padding:7px 12px;border-radius:8px;
+    <div class="emp-lider" style="margin:0 12px 12px;padding:7px 12px;border-radius:8px;
       background:var(--surface2);border:1px solid var(--border);
       display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)">
       <span style="width:8px;height:8px;border-radius:50%;background:${NIVEL_COR[liderNivel]||'var(--muted)'};flex-shrink:0"></span>
       <span>Resp.: <strong style="color:var(--text)">${liderNome}</strong></span>
     </div>` : ''}
     <div class="emp-actions-bottom">
-      ${podEdit     ? `<button class="emp-btn edit"     onclick="editEmployee(${emp.id})"      title="Editar">✏️</button>` : ''}
-      ${podDel      ? `<button class="emp-btn del"      onclick="deleteEmployee(${emp.id})"    title="Excluir">✕</button>` : ''}
+      ${podEdit     ? `<button class="emp-btn edit"     onclick="editEmployee(${emp.id})"     title="Editar">✏️</button>` : ''}
+      ${podDel      ? `<button class="emp-btn del"      onclick="deleteEmployee(${emp.id})"   title="Excluir">✕</button>` : ''}
       ${podTransfer ? `<button class="emp-btn transfer" onclick="openTransferModal(${emp.id})" title="Transferir">🔀</button>` : ''}
       ${podOcorr    ? `<button class="emp-btn ocorr"    onclick="openOcorrenciaModal(${emp.id},'emp')" title="Ocorrência">📝</button>` : ''}
     </div>
@@ -1200,8 +1022,6 @@ function openModal(emp) {
   document.getElementById('f-name').value            = emp?.name       || '';
   document.getElementById('f-perf').value            = emp?.perf       || '';
   document.getElementById('f-matricula').value       = emp?.matricula  || '';
-  document.getElementById('f-data-admissao').value   = emp?.data_admissao || '';
-  document.getElementById('f-role-original').value   = emp?.role || '';
 
   // Afastado
   document.getElementById('f-afastado').checked           = !!emp?.afastado;
@@ -1213,17 +1033,6 @@ function openModal(emp) {
   document.getElementById('f-ferias-inicio').value        = emp?.data_ferias_inicio || '';
   document.getElementById('f-ferias-fim').value           = emp?.data_ferias_fim    || '';
   document.getElementById('ferias-date-wrap').style.display = emp?.ferias ? 'block' : 'none';
-
-  // Demissão — só exibe em edição e com permissão
-  const podeDemitir = canDemitirEmp();
-  const demissaoSec = document.getElementById('demissao-section');
-  demissaoSec.style.display = (podeDemitir && !!emp?.id) ? '' : 'none';
-  if (podeDemitir && emp?.id) {
-    document.getElementById('f-demitido').checked          = !!emp?.demitido;
-    document.getElementById('f-data-demissao').value       = emp?.data_demissao   || '';
-    document.getElementById('f-motivo-demissao').value     = emp?.motivo_demissao || '';
-    document.getElementById('demitido-date-wrap').style.display = emp?.demitido ? 'block' : 'none';
-  }
 
   // Absences
   for (let i=0; i<12; i++) {
@@ -1237,7 +1046,9 @@ function openModal(emp) {
     if (el) el.value = emp?.competencies?.[k] ?? 5;
   });
 
-  // Foto
+  populateModalSelects(emp);
+
+  // Foto — preserva ao editar
   const fotoVal = emp?.foto || '';
   document.getElementById('f-foto').value = fotoVal;
   const prevEl = document.getElementById('foto-preview-modal');
@@ -1249,20 +1060,6 @@ function openModal(emp) {
     prevEl.innerHTML = `<span id="foto-ini-modal">${ini}</span>`;
   }
 
-  // Histórico de cargos (somente em edição)
-  const histLabel = document.getElementById('historico-section-label');
-  const histList  = document.getElementById('historico-cargos-list');
-  if (emp?.id && emp?.historico_cargos?.length) {
-    histLabel.style.display = '';
-    histList.style.display  = '';
-    renderHistoricoCargos(emp.historico_cargos);
-  } else {
-    histLabel.style.display = 'none';
-    histList.style.display  = 'none';
-  }
-
-  populateModalSelects(emp);
-
   document.getElementById('modal-overlay').classList.add('open');
   document.getElementById('f-name').focus();
 }
@@ -1271,17 +1068,8 @@ function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
 }
 
-function closeTransferModal() {
-  document.getElementById('modal-transfer').classList.remove('open');
-}
-
-function closeOcorrenciaModal() {
-  document.getElementById('modal-ocorrencia-emp').classList.remove('open');
-}
-
-// Usa _store diretamente (sempre carregado após renderCards) — sem async para evitar race condition
-function editEmployee(id) {
-  const emp = (_store?.employees||[]).find(e=>String(e.id)===String(id));
+async function editEmployee(id) {
+  const emp = ((await getStore()).employees||[]).find(e=>e.id===id);
   if (!emp) return;
   if (!canEditEmp(emp)) { showToast('⚠️ Sem permissão para editar este funcionário.','warn'); return; }
   openModal(emp);
@@ -1308,28 +1096,8 @@ async function saveEmployee() {
   const name = document.getElementById('f-name').value.trim();
   if (!name) { showToast('⚠️ Nome é obrigatório.','warn'); document.getElementById('f-name').focus(); return; }
 
-  const editId     = document.getElementById('f-edit-id').value;
-  const newRole    = document.getElementById('f-role').value;
-  const newDept    = document.getElementById('f-dept').value;
-  const newFilial  = document.getElementById('f-filial').value;
-  const newTurno   = document.getElementById('f-turno').value;
-  const dataAdmissao = document.getElementById('f-data-admissao').value || null;
-
-  const podeDemitir  = canDemitirEmp();
-  const novoDemitido = podeDemitir ? document.getElementById('f-demitido').checked : false;
-  const dataDemissao   = novoDemitido ? (document.getElementById('f-data-demissao').value || null)  : null;
-  const motivoDemissao = novoDemitido ? (document.getElementById('f-motivo-demissao').value.trim() || '') : '';
-
-  if (novoDemitido && !dataDemissao) {
-    showToast('⚠️ Informe a data de demissão.','warn');
-    document.getElementById('f-data-demissao').focus(); return;
-  }
-  if (novoDemitido && !motivoDemissao) {
-    showToast('⚠️ Informe o motivo da demissão.','warn');
-    document.getElementById('f-motivo-demissao').focus(); return;
-  }
-
-  const store = await getStore();
+  const editId = document.getElementById('f-edit-id').value;
+  const store  = await getStore();
   if (!store.employees) store.employees = [];
 
   const competencies = {};
@@ -1343,453 +1111,47 @@ async function saveEmployee() {
     return el ? parseInt(el.value)||0 : 0;
   });
 
-  const afastado           = document.getElementById('f-afastado').checked;
-  const ferias             = document.getElementById('f-ferias').checked;
-  const data_afastamento   = afastado ? (document.getElementById('f-data-afastamento').value||null)   : null;
-  const data_ferias_inicio = ferias   ? (document.getElementById('f-ferias-inicio').value||null)      : null;
-  const data_ferias_fim    = ferias   ? (document.getElementById('f-ferias-fim').value||null)         : null;
+  const afastado        = document.getElementById('f-afastado').checked;
+  const ferias          = document.getElementById('f-ferias').checked;
+  const data_afastamento = afastado  ? (document.getElementById('f-data-afastamento').value||null) : null;
+  const data_ferias_inicio = ferias  ? (document.getElementById('f-ferias-inicio').value||null) : null;
+  const data_ferias_fim    = ferias  ? (document.getElementById('f-ferias-fim').value||null) : null;
 
-  const dataFields = {
+  const data = {
     name,
-    dept: newDept, role: newRole, filial: newFilial, turno: newTurno,
+    dept:      document.getElementById('f-dept').value,
+    role:      document.getElementById('f-role').value,
+    filial:    document.getElementById('f-filial').value,
+    turno:     document.getElementById('f-turno').value,
     matricula: document.getElementById('f-matricula').value.trim(),
     perf:      parseInt(document.getElementById('f-perf').value)||70,
     year:      new Date().getFullYear(),
     absences, competencies,
     afastado, data_afastamento,
     ferias, data_ferias_inicio, data_ferias_fim,
-    foto:            document.getElementById('f-foto').value || null,
-    data_admissao:   dataAdmissao,
-    demitido:        novoDemitido,
-    data_demissao:   dataDemissao,
-    motivo_demissao: motivoDemissao,
+    foto: document.getElementById('f-foto').value || null,
   };
 
   if (editId) {
-    const idx = store.employees.findIndex(e => String(e.id) === String(editId));
-    if (idx < 0) { showToast('❌ Funcionário não encontrado.','error'); return; }
-
-    const old          = store.employees[idx];
-    let historico_cargos = old.historico_cargos ? [...old.historico_cargos] : [];
-    const oldRole      = old.role;
-    const eraDemitido  = !!old.demitido;
-
-    // Detectar mudança de cargo → promoção ou transferência
-    if (oldRole && newRole && oldRole !== newRole && !novoDemitido) {
-      const isPromocao = await perguntarPromocao(oldRole, newRole);
-      historico_cargos.push({
-        cargo: newRole, dept: newDept, filial: newFilial, turno: newTurno,
-        data:  new Date().toISOString().split('T')[0],
-        tipo:  isPromocao ? 'promocao' : 'transferencia',
-      });
+    const idx = store.employees.findIndex(e=>String(e.id)===String(editId));
+    if (idx >= 0) {
+      store.employees[idx] = { ...store.employees[idx], ...data };
     }
-
-    // Novo desligamento
-    if (novoDemitido && !eraDemitido) {
-      historico_cargos.push({
-        cargo:  old.role   || '—',
-        dept:   old.dept   || '',
-        filial: old.filial || '',
-        turno:  old.turno  || '',
-        data:   dataDemissao,
-        tipo:   'desligamento',
-        motivo: motivoDemissao,
-      });
-    }
-
-    store.employees[idx] = { ...old, ...dataFields, historico_cargos };
-
-    if (novoDemitido && !eraDemitido) {
-      await registrarLog('desligou', 'Funcionários', `Desligamento de <strong>${name}</strong>`);
-      showToast('🔴 Funcionário desligado e movido para desligados.');
-    } else {
-      await registrarLog('editou', 'Funcionários', `Editou: <strong>${name}</strong>`);
-      showToast('✅ Funcionário atualizado!');
-    }
+    await registrarLog('editou', 'Funcionários', `Editou: <strong>${name}</strong>`);
+    showToast('✅ Funcionário atualizado!');
   } else {
-    // Novo funcionário
     const newId = Date.now();
-    const historico_cargos = [];
-    if (newRole) {
-      historico_cargos.push({
-        cargo: newRole, dept: newDept, filial: newFilial, turno: newTurno,
-        data:  dataAdmissao || new Date().toISOString().split('T')[0],
-        tipo:  'admissao',
-      });
-    }
-    const novoEmp = { id: newId, ...dataFields, historico_cargos, owner_id: currentUser.id };
-    store.employees.push(novoEmp);
-
-    if (!dataAdmissao) await criarOcorrenciaAdmissaoFaltando(novoEmp);
-
-    await registrarLog('criou', 'Funcionários', `Novo registro: <strong>${name}</strong> — ${newDept||''}`);
+    store.employees.push({
+      id: newId, ...data,
+      owner_id: currentUser.id,
+    });
+    await registrarLog('criou', 'Funcionários', `Novo registro: <strong>${name}</strong> — ${data.dept||''}`);
     showToast('✅ Funcionário cadastrado!');
   }
 
   await saveStore(store);
   closeModal();
-  _store = null;
-  await renderCards();
-}
-
-// ════════════════════════════════════════════════════════
-// PROMOÇÃO — mini modal com Promise
-// ════════════════════════════════════════════════════════
-function perguntarPromocao(oldCargo, newCargo) {
-  return new Promise(resolve => {
-    _resolvePromocao = resolve;
-    document.getElementById('prom-old-cargo').textContent = oldCargo || '—';
-    document.getElementById('prom-new-cargo').textContent = newCargo || '—';
-    document.getElementById('modal-promocao').classList.add('open');
-  });
-}
-function responderPromocao(isPromocao) {
-  document.getElementById('modal-promocao').classList.remove('open');
-  if (_resolvePromocao) { _resolvePromocao(isPromocao); _resolvePromocao = null; }
-}
-
-// ════════════════════════════════════════════════════════
-// TOGGLE DEMITIDO
-// ════════════════════════════════════════════════════════
-function toggleDemitido() {
-  const checked = document.getElementById('f-demitido').checked;
-  document.getElementById('demitido-date-wrap').style.display = checked ? 'block' : 'none';
-  if (checked && !document.getElementById('f-data-demissao').value)
-    document.getElementById('f-data-demissao').value = new Date().toISOString().split('T')[0];
-}
-
-// ════════════════════════════════════════════════════════
-// HISTÓRICO DE CARGOS — render no modal
-// ════════════════════════════════════════════════════════
-function renderHistoricoCargos(historico) {
-  const el = document.getElementById('historico-cargos-list');
-  if (!historico || !historico.length) {
-    el.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:8px 0">Nenhum histórico registrado.</div>'; return;
-  }
-  const CFG = {
-    admissao:      { icon:'🏁', label:'Admissão',      cls:'admissao'      },
-    promocao:      { icon:'🏆', label:'Promoção',      cls:'promocao'      },
-    transferencia: { icon:'🔀', label:'Transferência', cls:'transferencia' },
-    desligamento:  { icon:'🔴', label:'Desligamento',  cls:'desligamento'  },
-  };
-  el.innerHTML = [...historico].reverse().map(h => {
-    const c    = CFG[h.tipo] || { icon:'📋', label:'Registro', cls:'admissao' };
-    const data = h.data ? new Date(h.data+'T00:00:00').toLocaleDateString('pt-BR') : '—';
-    const info = [h.dept, h.filial, h.turno].filter(Boolean).join(' · ');
-    return `<div class="historico-item">
-      <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:17px;flex-shrink:0">${c.icon}</span>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:13px;font-weight:700;color:var(--text)">${h.cargo||'—'}</div>
-          ${info?`<div style="font-size:11px;color:var(--muted);margin-top:2px">${info}</div>`:''}
-        </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div><span class="hist-tipo-badge ${c.cls}">${c.label}</span></div>
-          <div style="font-size:10px;color:var(--muted);margin-top:4px">${data}</div>
-        </div>
-      </div>
-      ${h.motivo?`<div style="margin-top:6px;font-size:11px;color:var(--muted);padding-left:27px;font-style:italic">"${h.motivo}"</div>`:''}
-    </div>`;
-  }).join('');
-}
-
-// ════════════════════════════════════════════════════════
-// CARD DEMITIDO
-// ════════════════════════════════════════════════════════
-function buildCardDemitido(emp) {
-  const ini      = (emp.name||'?').split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-  const totalAbs = getTotalFaltasEmp(emp);
-  const aptAvg   = calcAptMedia(emp).toFixed(1);
-  const score    = calcScore(emp);
-  const dtAdm    = emp.data_admissao ? new Date(emp.data_admissao+'T00:00:00').toLocaleDateString('pt-BR') : '—';
-  const dtDem    = emp.data_demissao ? new Date(emp.data_demissao+'T00:00:00').toLocaleDateString('pt-BR') : '—';
-  const promos   = (emp.historico_cargos||[]).filter(h=>h.tipo==='promocao').length;
-  let tempoStr = '';
-  if (emp.data_admissao && emp.data_demissao) {
-    const ms   = new Date(emp.data_demissao+'T00:00:00') - new Date(emp.data_admissao+'T00:00:00');
-    const dias = Math.max(0, Math.round(ms/86400000));
-    const anos = Math.floor(dias/365);
-    const meses = Math.floor((dias%365)/30);
-    tempoStr = anos>0 ? `${anos}a ${meses}m` : `${meses} mês${meses!==1?'es':''}`;
-  }
-  return `<div class="emp-card demitido-card">
-    <div class="emp-banner demitido">🔴 DESLIGADO</div>
-    <div class="emp-card-header" style="margin-top:26px;opacity:.75">
-      <div class="emp-avatar" style="background:linear-gradient(135deg,#f87171,#fb923c)">
-        ${emp.foto?`<img src="${emp.foto}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;filter:grayscale(.4)">`:ini}
-      </div>
-      <div class="emp-info">
-        <div class="emp-name" style="color:var(--muted)">${emp.name}</div>
-        <div class="emp-role">${emp.role||''}${emp.dept?' · '+emp.dept:''}</div>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;opacity:.85">
-      <div style="text-align:center;padding:6px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)">
-        <div style="font-family:var(--font-head);font-size:11px;font-weight:800;color:var(--muted)">${dtAdm}</div>
-        <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Admissão</div>
-      </div>
-      <div style="text-align:center;padding:6px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)">
-        <div style="font-family:var(--font-head);font-size:11px;font-weight:800;color:#f87171">${dtDem}</div>
-        <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Demissão</div>
-      </div>
-      <div style="text-align:center;padding:6px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)">
-        <div style="font-family:var(--font-head);font-size:11px;font-weight:800;color:var(--accent)">${tempoStr||'—'}</div>
-        <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Período</div>
-      </div>
-    </div>
-    <div class="emp-metrics" style="opacity:.7">
-      <div class="emp-metric"><div class="emp-metric-val apt">${aptAvg}</div><div class="emp-metric-label">Apt./10</div></div>
-      <div class="emp-metric"><div class="emp-metric-val faltas">${totalAbs}</div><div class="emp-metric-label">Faltas</div></div>
-      <div class="emp-metric"><div class="emp-metric-val" style="color:var(--green)">${promos}</div><div class="emp-metric-label">Promoções</div></div>
-      <div class="emp-metric"><div class="emp-metric-val" style="color:var(--accent2)">${score}</div><div class="emp-metric-label">Score</div></div>
-    </div>
-    ${emp.motivo_demissao?`<div style="margin:6px 0;padding:7px 10px;border-radius:8px;background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.15);font-size:11px;color:var(--muted)"><strong style="color:#f87171">Motivo:</strong> ${emp.motivo_demissao.length>80?emp.motivo_demissao.slice(0,80)+'…':emp.motivo_demissao}</div>`:''}
-    ${emp.matricula?`<div class="emp-matricula" style="opacity:.6">🪪 <strong>${emp.matricula}</strong></div>`:''}
-    <div class="emp-actions-bottom">
-      ${canDeleteEmp(emp) ? `<button class="emp-btn del" onclick="deleteEmployee(${emp.id})" title="Excluir permanentemente" style="margin-right:auto">✕ Excluir</button>` : ''}
-      <button class="emp-btn pdf" onclick="gerarRelatorioPDF(${emp.id})" style="width:auto;padding:0 12px;font-size:11px;font-weight:600;gap:5px" title="Relatório PDF">
-        📋 Relatório PDF
-      </button>
-    </div>
-  </div>`;
-}
-
-// ════════════════════════════════════════════════════════
-// VERIFICAR ADMISSÃO FALTANDO
-// ════════════════════════════════════════════════════════
-async function verificarAdmissaoFaltando() {
-  try {
-    const emps = getMyEmployees().filter(e => !e.demitido && !e.data_admissao);
-    if (!emps.length) return;
-    const lista = await LS.get('rh_ocorrencias', []);
-    const agora = new Date().toISOString();
-    let novas = 0;
-    for (const emp of emps) {
-      const jaExiste = lista.some(o =>
-        String(o.empId) === String(emp.id) && o.tipo === 'Ajuste' && (o.desc||'').includes('data de admissão')
-      );
-      if (jaExiste) continue;
-      lista.unshift({
-        id: uid(), ts: agora, empId: emp.id, empName: emp.name||'—', empDept: emp.dept||'—',
-        tipo: 'Ajuste',
-        desc: `⚠️ Preencher a data de admissão de ${emp.name}. Campo obrigatório para relatórios e controle de tempo na empresa.`,
-        obs: '', status: 'pendente', respName: 'Sistema', respId: 'sistema', createdAt: agora,
-      });
-      novas++;
-    }
-    if (novas > 0) await LS.set('rh_ocorrencias', lista);
-  } catch(e) { console.error('[verificarAdmissaoFaltando]', e); }
-}
-
-async function criarOcorrenciaAdmissaoFaltando(emp) {
-  try {
-    const lista = await LS.get('rh_ocorrencias', []);
-    const agora = new Date().toISOString();
-    lista.unshift({
-      id: uid(), ts: agora, empId: emp.id, empName: emp.name||'—', empDept: emp.dept||'—',
-      tipo: 'Ajuste',
-      desc: `⚠️ Preencher a data de admissão de ${emp.name}. Campo obrigatório para relatórios e controle de tempo na empresa.`,
-      obs: '', status: 'pendente', respName: currentUser?.name||'Sistema', respId: currentUser?.id||'sistema', createdAt: agora,
-    });
-    await LS.set('rh_ocorrencias', lista);
-  } catch(e) { console.error('[criarOcorrenciaAdmissaoFaltando]', e); }
-}
-
-// ════════════════════════════════════════════════════════
-// GERAR RELATÓRIO PDF DE DESLIGAMENTO
-// ════════════════════════════════════════════════════════
-async function gerarRelatorioPDF(id) {
-  if (!window.jspdf) { showToast('⚠️ Biblioteca PDF carregando. Tente novamente.','warn'); return; }
-  showToast('📋 Gerando relatório PDF...','ok');
-  const store    = _store || await getStore();
-  const emp      = (store.employees||[]).find(e=>e.id===id);
-  if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
-
-  const todasOc  = await LS.get('rh_ocorrencias', []);
-  const ocEmp    = todasOc.filter(o => String(o.empId) === String(id));
-  const allPonto = await LS.get('rh_ponto', {});
-  const ano      = emp.year || new Date().getFullYear();
-
-  const dtAdm = emp.data_admissao ? new Date(emp.data_admissao+'T00:00:00') : null;
-  const dtDem = emp.data_demissao ? new Date(emp.data_demissao+'T00:00:00') : new Date();
-  let tempoEmpresa = '—';
-  if (dtAdm) {
-    const dias=Math.max(0,Math.round((dtDem-dtAdm)/86400000));
-    const anos=Math.floor(dias/365), mesesR=Math.floor((dias%365)/30);
-    tempoEmpresa = anos>0 ? `${anos} ano${anos>1?'s':''} e ${mesesR} mês${mesesR!==1?'es':''}` : `${mesesR} mês${mesesR!==1?'es':''}`;
-  }
-  const faltasPorMes = Array.from({length:12}, (_, m) => {
-    const key=`${emp.id}_${ano}_${String(m+1).padStart(2,'0')}`;
-    const dias=allPonto[key]||{}; let faltas=0, atestados=0; const diasFalta=[];
-    Object.entries(dias).forEach(([d,s]) => { if(s==='falta'){faltas++;diasFalta.push(d.padStart(2,'0'));} if(s==='atestado')atestados++; });
-    return { mes:MONTHS[m], faltas, atestados, diasFalta };
-  });
-  const totalF=faltasPorMes.reduce((a,b)=>a+b.faltas,0);
-  const totalA=faltasPorMes.reduce((a,b)=>a+b.atestados,0);
-  const promos=(emp.historico_cargos||[]).filter(h=>h.tipo==='promocao').length;
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-  const C={dark:[11,13,20],surface:[18,21,31],red:[248,113,113],green:[52,211,153],accent:[79,142,247],accent2:[167,139,250],text:[220,230,245],muted:[100,116,139],border:[42,47,69]};
-  const lm=18, pw=174; let y=0;
-
-  // Cabeçalho
-  doc.setFillColor(...C.dark); doc.rect(0,0,210,48,'F');
-  doc.setFillColor(...C.red);  doc.rect(0,48,210,2.5,'F');
-  doc.setFont('helvetica','bold'); doc.setFontSize(19); doc.setTextColor(255,255,255);
-  doc.text('RELATÓRIO DE DESLIGAMENTO', lm, 20);
-  doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(...C.muted);
-  doc.text(`Gerado em ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})} · RH Nagumo`, lm, 30);
-  doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(...C.accent);
-  doc.text('CD NAGUMO', 192, 20, {align:'right'});
-  doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(...C.muted);
-  doc.text('Departamento de Inteligência', 192, 27, {align:'right'});
-  y=60;
-
-  // Dados do funcionário
-  doc.setFont('helvetica','bold'); doc.setFontSize(17); doc.setTextColor(...C.text);
-  doc.text(emp.name, lm, y); y+=7;
-  doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(...C.muted);
-  const l1=[emp.role,emp.dept,emp.filial].filter(Boolean).join('  ·  ');
-  if (l1) { doc.text(l1, lm, y); y+=5; }
-  if (emp.matricula) { doc.text(`Matrícula: ${emp.matricula}`, lm, y); y+=5; }
-  y+=6;
-
-  // Caixas de resumo
-  const boxes=[
-    {label:'Admissão',  value:dtAdm?dtAdm.toLocaleDateString('pt-BR'):'—', cor:C.accent},
-    {label:'Demissão',  value:emp.data_demissao?new Date(emp.data_demissao+'T00:00:00').toLocaleDateString('pt-BR'):'—', cor:C.red},
-    {label:'Período',   value:tempoEmpresa, cor:C.accent2},
-    {label:'Faltas',    value:String(totalF), cor:totalF>10?C.red:C.muted},
-    {label:'Atestados', value:String(totalA), cor:C.muted},
-    {label:'Promoções', value:String(promos), cor:C.green},
-  ];
-  const bW=28, bH=18, bG=2.5;
-  boxes.forEach((b,i) => {
-    const bx=lm+i*(bW+bG);
-    doc.setFillColor(26,30,46); doc.roundedRect(bx,y,bW,bH,2,2,'F');
-    doc.setFont('helvetica','bold'); doc.setFontSize(b.value.length>8?7:10); doc.setTextColor(...b.cor);
-    doc.text(b.value, bx+bW/2, y+11, {align:'center'});
-    doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(...C.muted);
-    doc.text(b.label, bx+bW/2, y+16, {align:'center'});
-  });
-  y+=bH+10;
-
-  // Motivo
-  if (emp.motivo_demissao) {
-    _pdfSecTitle(doc,'■ Motivo do Desligamento',y,lm,C); y+=7;
-    doc.setFillColor(40,20,20);
-    const mLines=doc.splitTextToSize(emp.motivo_demissao,pw-8);
-    doc.roundedRect(lm,y,pw,mLines.length*5+8,2,2,'F');
-    doc.setFont('helvetica','italic'); doc.setFontSize(9.5); doc.setTextColor(...C.red);
-    doc.text(mLines,lm+4,y+6); y+=mLines.length*5+14;
-  }
-
-  // Histórico
-  const hist=emp.historico_cargos||[];
-  _pdfSecTitle(doc,'■ Histórico de Cargos e Promoções',y,lm,C); y+=8;
-  if (!hist.length) {
-    doc.setFont('helvetica','italic'); doc.setFontSize(9); doc.setTextColor(...C.muted);
-    doc.text('Nenhum histórico registrado.', lm, y); y+=10;
-  } else {
-    for (const h of hist) {
-      if (y>255) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
-      const tCor=h.tipo==='promocao'?C.green:h.tipo==='desligamento'?C.red:h.tipo==='admissao'?C.accent:C.muted;
-      const tLabel=h.tipo==='admissao'?'ADMISSÃO':h.tipo==='promocao'?'PROMOÇÃO':h.tipo==='transferencia'?'TRANSFERÊNCIA':h.tipo==='desligamento'?'DESLIGAMENTO':'REGISTRO';
-      const dH=h.data?new Date(h.data+'T00:00:00').toLocaleDateString('pt-BR'):'—';
-      doc.setFillColor(26,30,46); doc.roundedRect(lm,y,pw,10,1.5,1.5,'F');
-      doc.setFillColor(...tCor); doc.roundedRect(lm,y,2.5,10,1,1,'F');
-      doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(...tCor);
-      doc.text(tLabel, lm+5, y+6.5);
-      doc.setTextColor(...C.text); doc.text(h.cargo||'—', lm+38, y+6.5);
-      const infoH=[h.dept,h.filial,h.turno].filter(Boolean).join(' · ');
-      if (infoH) { doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(...C.muted); doc.text(infoH,lm+38,y+6.5,{maxWidth:85}); }
-      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(...C.muted);
-      doc.text(dH, lm+pw-2, y+6.5, {align:'right'}); y+=12;
-      if (h.motivo) {
-        if (y>260) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
-        const mL=doc.splitTextToSize(`"${h.motivo}"`,pw-10);
-        doc.setFont('helvetica','italic'); doc.setFontSize(8); doc.setTextColor(...C.muted);
-        doc.text(mL,lm+4,y); y+=mL.length*4+4;
-      }
-    }
-    y+=4;
-  }
-
-  // Faltas por mês
-  if (y>230) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
-  _pdfSecTitle(doc,`■ Registro de Faltas — ${ano}`,y,lm,C); y+=8;
-  if (totalF===0 && totalA===0) {
-    doc.setFont('helvetica','italic'); doc.setFontSize(9); doc.setTextColor(...C.green);
-    doc.text('✓ Nenhuma falta ou atestado registrado.', lm, y); y+=10;
-  } else {
-    doc.setFillColor(26,30,46); doc.rect(lm,y,pw,8,'F');
-    doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(...C.muted);
-    const tc=[lm+3,lm+28,lm+50,lm+72,lm+100];
-    ['Mês','Faltas','Atestados','Total','Dias'].forEach((h,i)=>doc.text(h,tc[i],y+5.5));
-    y+=9;
-    faltasPorMes.forEach((fm,i) => {
-      if (fm.faltas===0 && fm.atestados===0) return;
-      if (y>270) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
-      if (i%2===0) { doc.setFillColor(20,24,36); doc.rect(lm,y,pw,7,'F'); }
-      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(180,190,210);
-      doc.text(`${fm.mes}/${ano}`, tc[0], y+5);
-      doc.setTextColor(...(fm.faltas>0?C.red:C.muted)); doc.text(String(fm.faltas),tc[1],y+5);
-      doc.setTextColor(...C.muted); doc.text(String(fm.atestados),tc[2],y+5);
-      doc.setTextColor(180,190,210); doc.text(String(fm.faltas+fm.atestados),tc[3],y+5);
-      const ds=fm.diasFalta.sort((a,b)=>+a-+b).join(', ');
-      if (ds) { doc.setFontSize(7); doc.setTextColor(...C.muted); doc.text(ds,tc[4],y+5,{maxWidth:66}); }
-      y+=8;
-    });
-    y+=4;
-  }
-
-  // Ocorrências
-  if (y>230) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
-  _pdfSecTitle(doc,'■ Ocorrências Registradas',y,lm,C); y+=8;
-  if (!ocEmp.length) {
-    doc.setFont('helvetica','italic'); doc.setFontSize(9); doc.setTextColor(...C.muted);
-    doc.text('Nenhuma ocorrência registrada.', lm, y); y+=10;
-  } else {
-    for (const oc of ocEmp) {
-      if (y>258) { doc.addPage(); _pdfPageHeader(doc,C); y=20; }
-      const ocDt=oc.ts?new Date(oc.ts).toLocaleDateString('pt-BR'):'—';
-      doc.setFillColor(26,30,46); doc.roundedRect(lm,y,pw,7,1.5,1.5,'F');
-      doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(180,190,210);
-      doc.text(`${ocDt}  ·  ${oc.tipo||'—'}`, lm+3, y+5);
-      doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(...C.muted);
-      doc.text(`Por: ${oc.respName||'—'}`, 192, y+5, {align:'right'}); y+=9;
-      if (oc.desc) {
-        const dL=doc.splitTextToSize(oc.desc,pw-4);
-        doc.setFontSize(7.5); doc.setTextColor(140,155,175);
-        doc.text(dL,lm+2,y); y+=dL.length*4+5;
-      } else y+=3;
-    }
-  }
-
-  // Rodapé em todas as páginas
-  const total=doc.internal.getNumberOfPages();
-  for (let p=1; p<=total; p++) {
-    doc.setPage(p);
-    doc.setFillColor(...C.dark); doc.rect(0,284,210,14,'F');
-    doc.setFillColor(...C.red);  doc.rect(0,284,210,0.8,'F');
-    doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(...C.muted);
-    doc.text(`RH Nagumo · Relatório de Desligamento · ${emp.name}`, lm, 291);
-    doc.text(`Pág. ${p} / ${total}`, 192, 291, {align:'right'});
-  }
-
-  const arq=`relatorio_desligamento_${emp.name.replace(/\s+/g,'_')}_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.pdf`;
-  doc.save(arq);
-  showToast('✅ Relatório PDF gerado!','ok');
-}
-function _pdfSecTitle(doc, title, y, lm, C) {
-  doc.setFont('helvetica','bold'); doc.setFontSize(10.5); doc.setTextColor(...C.accent2);
-  doc.text(title, lm, y); doc.setDrawColor(...C.border); doc.line(lm,y+2,192,y+2);
-}
-function _pdfPageHeader(doc, C) {
-  doc.setFillColor(20,24,36); doc.rect(0,0,210,10,'F');
-  doc.setFont('helvetica','bold'); doc.setFontSize(7); doc.setTextColor(...C.muted);
-  doc.text('RH NAGUMO · RELATÓRIO DE DESLIGAMENTO (continuação)', 105, 7, {align:'center'});
+  renderCards();
 }
 
 // ════════════════════════════════════════════════════════
@@ -1820,11 +1182,9 @@ function toggleFerias() {
 // ════════════════════════════════════════════════════════
 // TRANSFERIR FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
-// Async — carrega _store se necessário
 async function openTransferModal(id) {
-  if (!_store) _store = await getStore();
-  const store = _store;
-  const emp = (store.employees||[]).find(e=>String(e.id)===String(id));
+  const store = await getStore();
+  const emp   = (store.employees||[]).find(e=>e.id===id);
   if (!emp) return;
 
   const opt = (list, curVal) =>
@@ -1833,9 +1193,8 @@ async function openTransferModal(id) {
 
   document.getElementById('tr-emp-name').textContent = emp.name;
   document.getElementById('tr-edit-id').value        = id;
-  document.getElementById('tr-role-original').value  = emp.role || '';
-
-  const liderAtual = Object.values(store.users||{}).find(u=>String(u.id)===String(emp.owner_id||emp.ownerId));
+  // Popula líderes
+  const liderAtual = Object.values(store.users||{}).find(u=>u.id===(emp.owner_id||emp.ownerId));
   const lideres = Object.values(store.users||{}).filter(u=>u.nivel && u.nivel !== 'admin_master');
   document.getElementById('tr-lider').innerHTML =
     `<option value="">— Manter líder atual (${liderAtual?.name||'—'}) —</option>` +
@@ -1849,23 +1208,25 @@ async function openTransferModal(id) {
   document.getElementById('modal-transfer').classList.add('open');
 }
 
+function closeTransferModal() {
+  document.getElementById('modal-transfer').classList.remove('open');
+}
+
 async function saveTransfer() {
   const id    = document.getElementById('tr-edit-id').value;
   const store = await getStore();
   const idx   = (store.employees||[]).findIndex(e=>String(e.id)===String(id));
   if (idx < 0) { showToast('❌ Funcionário não encontrado.','error'); return; }
 
-  const emp      = store.employees[idx];
-  const oldRole  = document.getElementById('tr-role-original').value || emp.role;
-  const dept     = document.getElementById('tr-dept').value;
-  const newRole  = document.getElementById('tr-role').value;
-  const filial   = document.getElementById('tr-filial').value;
-  const turno    = document.getElementById('tr-turno').value;
+  const dept   = document.getElementById('tr-dept').value;
+  const role   = document.getElementById('tr-role').value;
+  const filial = document.getElementById('tr-filial').value;
+  const turno  = document.getElementById('tr-turno').value;
 
-  if (dept)    store.employees[idx].dept   = dept;
-  if (newRole) store.employees[idx].role   = newRole;
-  if (filial)  store.employees[idx].filial = filial;
-  if (turno)   store.employees[idx].turno  = turno;
+  if (dept)   store.employees[idx].dept   = dept;
+  if (role)   store.employees[idx].role   = role;
+  if (filial) store.employees[idx].filial = filial;
+  if (turno)  store.employees[idx].turno  = turno;
 
   const novoLider = document.getElementById('tr-lider').value;
   if (novoLider) {
@@ -1873,26 +1234,10 @@ async function saveTransfer() {
     store.employees[idx].ownerId  = novoLider;
   }
 
-  // Detectar mudança de cargo → promoção ou transferência
-  if (oldRole && newRole && oldRole !== newRole) {
-    const isPromocao = await perguntarPromocao(oldRole, newRole);
-    const hist = store.employees[idx].historico_cargos || [];
-    hist.push({
-      cargo:  newRole,
-      dept:   dept    || emp.dept   || '',
-      filial: filial  || emp.filial || '',
-      turno:  turno   || emp.turno  || '',
-      data:   new Date().toISOString().split('T')[0],
-      tipo:   isPromocao ? 'promocao' : 'transferencia',
-    });
-    store.employees[idx].historico_cargos = hist;
-  }
-
   await saveStore(store);
   closeTransferModal();
-  _store = null;
-  await renderCards();
-  await registrarLog('editou', 'Funcionários', `Transferiu: <strong>${emp.name||''}</strong>`);
+  renderCards();
+  await registrarLog('editou', 'Funcionários', `Transferiu: <strong>${store.employees[idx]?.name||''}</strong>`);
   showToast('✅ Funcionário transferido!');
 }
 
@@ -1903,9 +1248,10 @@ document.getElementById('modal-transfer').addEventListener('click', e => {
 // ════════════════════════════════════════════════════════
 // OCORRÊNCIA DO FUNCIONÁRIO
 // ════════════════════════════════════════════════════════
-function openOcorrenciaModal(id, tipo) {
-  const emp = (_store?.employees||[]).find(e=>String(e.id)===String(id));
-  if (!emp) { showToast('❌ Funcionário não encontrado.','error'); return; }
+async function openOcorrenciaModal(id, tipo) {
+  const store = await getStore();
+  const emp   = (store.employees||[]).find(e=>e.id===id);
+  if (!emp) return;
 
   document.getElementById('oc-target-name').textContent = emp.name;
   document.getElementById('oc-edit-id').value   = id;
@@ -1919,6 +1265,10 @@ function openOcorrenciaModal(id, tipo) {
   document.getElementById('modal-ocorrencia-emp').classList.add('open');
 }
 
+function closeOcorrenciaModal() {
+  document.getElementById('modal-ocorrencia-emp').classList.remove('open');
+}
+
 async function saveOcorrencia() {
   const refId = document.getElementById('oc-edit-id').value;
   const tipo  = document.getElementById('oc-tipo').value;
@@ -1928,7 +1278,8 @@ async function saveOcorrencia() {
   if (!tipo) { showToast('⚠️ Selecione o tipo de ocorrência.','warn'); return; }
   if (!desc) { showToast('⚠️ Descreva a ocorrência.','warn'); document.getElementById('oc-desc').focus(); return; }
 
-  const emp    = (_store?.employees||[]).find(e=>String(e.id)===String(refId));
+  const store  = await getStore();
+  const emp    = (store.employees||[]).find(e=>String(e.id)===String(refId));
 
   // Salva em rh_ocorrencias — mesma chave que ocorrencias.html lê
   const lista = await LS.get('rh_ocorrencias', []);
@@ -1967,7 +1318,7 @@ document.getElementById('modal-overlay').addEventListener('click', e => {
   if (e.target === e.currentTarget) closeModal();
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeTransferModal(); closeOcorrenciaModal(); }
+  if (e.key === 'Escape') closeModal();
 });
 
 // ── Foto do funcionário ──────────────────────────────
@@ -2035,7 +1386,6 @@ async function verificarNomeDuplicado() {
       ${e.role   ? ` · 💼 ${e.role}`   : ''}
       ${e.matricula ? ` · 🪪 ${e.matricula}` : ''}
       ${lider    ? ` · 👷 ${lider.name}` : ''}
-      ${e.demitido ? ` · <span style="color:#f87171">🔴 DESLIGADO</span>` : ''}
     </div>`;
   }).join('');
 
