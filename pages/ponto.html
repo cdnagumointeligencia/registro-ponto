@@ -1010,7 +1010,7 @@ async function setStatusCtx(status) {
   if (ctxEmpId === null) return;
   const store    = await getStore();
   const emp      = (store.employees||[]).find(e=>String(e.id)===String(ctxEmpId));
-  const anterior = getPontoEmp(ctxEmpId)[ctxDia] || 'vazio';
+  const anterior = (await getPontoEmp(ctxEmpId))[ctxDia] || 'vazio';
 
   // Sem mudança — apenas fecha o menu
   if (anterior === status) { closeCtx(); return; }
