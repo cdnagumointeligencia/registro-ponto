@@ -504,6 +504,59 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   </div>
 </div>
 
+<!-- MINI MODAL — CONFIRMAÇÃO DE DESLIGAMENTO -->
+<div id="modal-demissao-confirm" style="position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(10px);z-index:450;display:none;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--surface);border:2px solid rgba(248,113,113,.5);border-radius:18px;padding:36px 32px;width:480px;max-width:95vw;animation:fadeUp .25s ease;text-align:center;box-shadow:0 24px 80px rgba(248,113,113,.2);">
+
+    <!-- Ícone pulsante -->
+    <div style="width:72px;height:72px;border-radius:50%;background:rgba(248,113,113,.15);border:2px solid rgba(248,113,113,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:34px;">
+      🔴
+    </div>
+
+    <!-- Título -->
+    <div style="font-family:var(--font-head);font-size:20px;font-weight:800;color:#f87171;margin-bottom:6px;letter-spacing:-.5px;">
+      Ação Irreversível
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">
+      Você está prestes a registrar o desligamento de:
+    </div>
+
+    <!-- Nome do funcionário em destaque -->
+    <div id="demissao-confirm-name" style="background:rgba(248,113,113,.1);border:1.5px solid rgba(248,113,113,.35);border-radius:10px;padding:12px 20px;margin-bottom:18px;font-family:var(--font-head);font-size:18px;font-weight:800;color:#f87171;letter-spacing:-.3px;"></div>
+
+    <!-- Aviso -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:20px;text-align:left;font-size:12px;line-height:1.75;color:var(--muted);">
+      <div style="display:flex;gap:8px;margin-bottom:6px;">
+        <span style="flex-shrink:0;font-size:14px;">⚠️</span>
+        <span><strong style="color:var(--text)">Esta ação não pode ser desfeita automaticamente.</strong></span>
+      </div>
+      <div style="padding-left:22px;">
+        • O funcionário será movido para a lista de <strong style="color:#f87171">desligados</strong><br>
+        • Não aparecerá mais em rankings, ponto e avaliações ativas<br>
+        • O histórico e relatório de desligamento serão preservados<br>
+        • Para reverter, será necessário editar o registro manualmente
+      </div>
+    </div>
+
+    <!-- Botões -->
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button class="btn btn-ghost"
+        onclick="responderDemissao(false)"
+        style="flex:1;justify-content:center;padding:11px 16px;">
+        ✕ Cancelar
+      </button>
+      <button
+        onclick="responderDemissao(true)"
+        style="flex:1;justify-content:center;padding:11px 16px;border-radius:8px;border:none;background:#dc2626;color:#fff;font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;"
+        onmouseover="this.style.background='#b91c1c';this.style.transform='translateY(-1px)'"
+        onmouseout="this.style.background='#dc2626';this.style.transform='none'">
+        🔴 Confirmar Desligamento
+      </button>
+    </div>
+
+  </div>
+</div>
+
 <!-- ══ MODAL ══ -->
 <div class="overlay" id="modal-overlay">
   <div class="modal">
@@ -1358,7 +1411,13 @@ async function saveEmployee() {
       });
     }
 
-    // Novo desligamento
+    // Novo desligamento — exige confirmação explícita (ação irreversível)
+    if (novoDemitido && !eraDemitido) {
+      const confirmado = await perguntarDemissao(name);
+      if (!confirmado) return; // usuário cancelou — não salva nada
+    }
+
+    // Registra no histórico de cargos
     if (novoDemitido && !eraDemitido) {
       historico_cargos.push({
         cargo:  old.role   || '—',
@@ -1659,6 +1718,24 @@ function perguntarPromocao(oldCargo, newCargo) {
 function responderPromocao(isPromocao) {
   document.getElementById('modal-promocao').style.display = 'none';
   if (_resolvePromocao) { _resolvePromocao(isPromocao); _resolvePromocao = null; }
+}
+
+// ════════════════════════════════════════════════════════
+// DEMISSÃO — confirmação obrigatória (ação irreversível)
+// ════════════════════════════════════════════════════════
+let _resolveDemissao = null;
+
+function perguntarDemissao(nomeEmp) {
+  return new Promise(resolve => {
+    _resolveDemissao = resolve;
+    document.getElementById('demissao-confirm-name').textContent = nomeEmp || '—';
+    document.getElementById('modal-demissao-confirm').style.display = 'flex';
+  });
+}
+
+function responderDemissao(confirmado) {
+  document.getElementById('modal-demissao-confirm').style.display = 'none';
+  if (_resolveDemissao) { _resolveDemissao(confirmado); _resolveDemissao = null; }
 }
 
 // ════════════════════════════════════════════════════════
