@@ -1826,20 +1826,21 @@ async function gerarRelatorioPDF(id) {
   const dtAdm = emp.data_admissao ? new Date(emp.data_admissao+'T00:00:00') : null;
   const dtDem = emp.data_demissao ? new Date(emp.data_demissao+'T00:00:00') : new Date();
   let tempoEmpresa = '—';
+  let diasTotais = 0;
   if (dtAdm) {
-    const diasTotal = Math.max(0, Math.round((dtDem - dtAdm) / 86400000));
-    const anosT  = Math.floor(diasTotal / 365);
-    const mesesT = Math.floor((diasTotal % 365) / 30);
-    tempoEmpresa = anosT > 0
-      ? `${anosT}a ${mesesT}m`
-      : `${mesesT} mês${mesesT !== 1 ? 'es' : ''}`;
+    diasTotais = Math.max(0, Math.round((dtDem - dtAdm) / 86400000));
+    const anosT  = Math.floor(diasTotais / 365);
+    const mesesT = Math.floor((diasTotais % 365) / 30);
+    const diasR  = diasTotais - anosT*365 - mesesT*30;
+    if (anosT > 0 && mesesT > 0) tempoEmpresa = `${anosT} ano${anosT>1?'s':''} e ${mesesT} mês${mesesT>1?'es':''}`;
+    else if (anosT > 0) tempoEmpresa = `${anosT} ano${anosT>1?'s':''}`;
+    else if (mesesT > 0) tempoEmpresa = `${mesesT} mês${mesesT>1?'es':''}`;
+    else tempoEmpresa = `${diasTotais} dia${diasTotais>1?'s':''}`;
   }
 
-  // ── Faltas — todos os anos desde admissão até demissão ──
+  // ── Faltas — todos os anos ──
   const anoInicio = dtAdm ? dtAdm.getFullYear() : (emp.year || new Date().getFullYear());
   const anoFim    = dtDem.getFullYear();
-
-  // Estrutura: { ano: [ {mes, faltas, atestados, diasFalta}, ... ] }
   const faltasPorAno = {};
   let totalF = 0, totalA = 0;
 
@@ -1854,7 +1855,6 @@ async function gerarRelatorioPDF(id) {
         if (s === 'falta')    { faltas++;    diasFalta.push(d.padStart(2,'0')); }
         if (s === 'atestado') { atestados++; }
       });
-      // Fallback para emp.absences se não houver dados no ponto e for o ano gravado
       if (faltas === 0 && atestados === 0 && ano === (emp.year || new Date().getFullYear())) {
         faltas = emp.absences?.[m] || 0;
       }
@@ -1865,357 +1865,530 @@ async function gerarRelatorioPDF(id) {
     faltasPorAno[ano] = meses;
   }
 
-  const promos       = (emp.historico_cargos||[]).filter(h => h.tipo === 'promocao').length;
-  const aptAvg       = (() => {
+  const promos  = (emp.historico_cargos||[]).filter(h => h.tipo === 'promocao').length;
+  const APT_KEYS_PDF = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
+  const aptAvg  = (() => {
     const c = emp.competencies || {};
-    const APT = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
-    return (APT.reduce((s,k) => s+(c[k]||0), 0) / APT.length).toFixed(1);
+    return (APT_KEYS_PDF.reduce((s,k) => s+(c[k]||0), 0) / APT_KEYS_PDF.length).toFixed(1);
   })();
   const score = Math.min(100, Math.round(
     (emp.perf||0) * 0.4 +
     parseFloat(aptAvg) * 10 * 0.35 +
     Math.max(0, 100 - (totalF / ((store.config?.maxAbs)||36)) * 100) * 0.25
   ));
+  const maxAbsVal = store.config?.maxAbs || 36;
+  const assidPct  = Math.max(0, Math.round(100 - (totalF / maxAbsVal) * 100));
 
-  // ── jsPDF setup ──────────────────────────────────────
+  // ════════════════════════════════════════════════════
+  // PALETA — Branco elegante, corporativo premium
+  // ════════════════════════════════════════════════════
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
 
-  // Paleta idêntica ao app
-  const C = {
-    bg:      [11, 13, 20],
-    surface: [18, 21, 31],
-    surf2:   [26, 30, 46],
-    surf3:   [34, 38, 56],
-    border:  [42, 47, 69],
-    accent:  [79, 142, 247],
-    accent2: [167, 139, 250],
-    green:   [52, 211, 153],
-    yellow:  [251, 191, 36],
-    red:     [248, 113, 113],
-    orange:  [251, 146, 60],
-    text:    [220, 230, 245],
-    muted:   [100, 116, 139],
-    white:   [255, 255, 255],
-  };
+  // Cores — tema claro institucional
+  const W = [255,255,255];          // branco
+  const BG= [246,248,251];          // cinza levíssimo
+  const BG2=[237,242,248];          // cinza médio
+  const NAVY  = [4, 21, 46];        // azul escuro (quase preto)
+  const NAVY2 = [12, 40, 80];       // azul médio
+  const RED   = [212, 1, 56];       // vermelho Nagumo
+  const BLUE  = [2, 54, 101];       // azul Nagumo
+  const CYAN  = [60, 203, 219];     // ciano Nagumo
+  const GREEN = [10, 124, 78];
+  const YELLOW= [180, 83, 9];
+  const MUTED = [100, 120, 145];
+  const BORDER= [210, 220, 232];
+  const TEXT  = [15, 30, 55];
+  const GRAY  = [145, 160, 180];
 
   const lm = 14, rm = 196, pw = rm - lm;
   let y = 0;
 
-  // ════════════════════════════════════════════════════
-  // FUNÇÕES AUXILIARES
-  // ════════════════════════════════════════════════════
-  const setFont = (style, size, color) => {
+  // ── Helpers ──────────────────────────────────────────
+  const sf = (style, size, color) => {
     doc.setFont('helvetica', style);
     doc.setFontSize(size);
     if (color) doc.setTextColor(...color);
   };
-  const fill = (color) => doc.setFillColor(...color);
-  const secTitle = (title, yy) => {
-    setFont('bold', 8, C.accent2);
-    doc.text(title.toUpperCase(), lm, yy);
-    doc.setDrawColor(...C.accent2);
-    doc.setLineWidth(0.3);
-    doc.line(lm + doc.getTextWidth(title.toUpperCase()) + 3, yy - 0.5, rm, yy - 0.5);
-    doc.setLineWidth(0.2);
+  const fl = (color) => doc.setFillColor(...color);
+  const dr = (color, w=0.3) => { doc.setDrawColor(...color); doc.setLineWidth(w); };
+  const addPage = (need=18) => {
+    if (y + need > 268) {
+      doc.addPage();
+      _pdfDrawPageBg(doc, W, BG, lm, rm, pw);
+      y = 22;
+    }
   };
-  const pill = (x, yy, w, h, r, fillC, label, labelC, fontSize=7) => {
-    fill(fillC); doc.roundedRect(x, yy, w, h, r, r, 'F');
-    if (label) { setFont('bold', fontSize, labelC); doc.text(label, x+w/2, yy+h/2+fontSize*0.18, {align:'center'}); }
+
+  // ── Seção título premium ──────────────────────────────
+  const sectionHeader = (title, icon, yy) => {
+    // linha esquerda colorida
+    fl(RED); doc.rect(lm, yy - 1, 3, 6, 'F');
+    sf('bold', 9, NAVY);
+    doc.text(icon + ' ' + title.toUpperCase(), lm + 6, yy + 3.5);
+    // linha fina abaixo
+    dr(BORDER, 0.3);
+    doc.line(lm, yy + 6.5, rm, yy + 6.5);
+    return yy + 10;
   };
-  const addPageCheck = (needed=18) => {
-    if (y + needed > 272) { doc.addPage(); _pdfPageBg(doc, C); y = 18; }
+
+  // ── score ring (círculo de progresso visual) ──────────
+  const scoreRing = (cx, cy, r, value, max, colorFill, colorBg) => {
+    fl(colorBg); doc.circle(cx, cy, r, 'F');
+    fl(colorFill);
+    // Aproximação: preenchimento parcial com arcos — usando retângulo clipado
+    const pct = value / max;
+    // Desenha um círculo menor branco para criar efeito de anel
+    fl(W); doc.circle(cx, cy, r * 0.65, 'F');
   };
 
   // ════════════════════════════════════════════════════
-  // PÁG 1 — CAPA / HERO
+  // PÁGINA 1 — CAPA ELEGANTE
   // ════════════════════════════════════════════════════
-  _pdfPageBg(doc, C);
+  // Fundo branco total
+  fl(W); doc.rect(0, 0, 210, 297, 'F');
 
-  // Barra lateral esquerda colorida
-  fill(C.accent); doc.rect(0, 0, 4, 297, 'F');
-  // Linha decorativa accent2 fina
-  fill(C.accent2); doc.rect(4, 0, 1.2, 297, 'F');
+  // ── Barra superior Navy — cabeçalho institucional ──
+  fl(NAVY); doc.rect(0, 0, 210, 48, 'F');
 
-  // Cabeçalho escuro
-  fill(C.bg); doc.rect(0, 0, 210, 52, 'F');
-  // Linha separadora
-  fill(C.accent); doc.rect(0, 52, 210, 1.5, 'F');
+  // Detalhe vermelho lateral esquerdo (marca Nagumo)
+  fl(RED); doc.rect(0, 0, 5, 48, 'F');
+  // Micro linha ciano
+  fl(CYAN); doc.rect(5, 0, 1.5, 48, 'F');
 
-  // Logo / empresa (canto direito)
-  setFont('bold', 11, C.accent);
-  doc.text('RH NAGUMO', rm, 16, {align:'right'});
-  setFont('normal', 7.5, C.muted);
-  doc.text('Departamento de Recursos Humanos', rm, 22, {align:'right'});
-  // Tipo de doc
-  fill(C.surf3); doc.roundedRect(rm - 52, 27, 52, 11, 2, 2, 'F');
-  setFont('bold', 7, C.red);
-  doc.text('RELATÓRIO DE DESLIGAMENTO', rm - 26, 34, {align:'center'});
+  // Texto do cabeçalho
+  sf('bold', 18, W);
+  doc.text('CD NAGUMO', lm + 10, 16);
+  sf('normal', 8.5, [180, 200, 225]);
+  doc.text('Departamento de Recursos Humanos', lm + 10, 23);
+  sf('normal', 7, [120, 150, 185]);
+  doc.text('Sistema Integrado de Gestão de Pessoas', lm + 10, 30);
 
-  // Foto do funcionário (círculo à esquerda do hero)
-  const fotoX = lm + 2, fotoY = 8, fotoR = 18;
+  // Badge tipo doc — canto direito
+  fl(RED); doc.roundedRect(rm - 58, 12, 58, 14, 2, 2, 'F');
+  sf('bold', 7.5, W);
+  doc.text('TERMO DE DESLIGAMENTO', rm - 58 + 29, 17, {align:'center'});
+  sf('normal', 6.5, [255,200,210]);
+  doc.text('Documento Oficial', rm - 58 + 29, 22.5, {align:'center'});
+
+  // Data geração — canto inferior direito do header
+  sf('normal', 6.5, [150, 175, 210]);
+  doc.text('Gerado em ' + new Date().toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'}), rm, 40, {align:'right'});
+
+  // ── Área hero — foto + nome ────────────────────────
+  // Card cinza levíssimo abaixo do header
+  fl(BG); doc.rect(0, 48, 210, 52, 'F');
+  fl(BORDER); doc.rect(0, 99.5, 210, 0.5, 'F');
+
+  // Foto / Avatar
+  const avX = lm + 4, avY = 53, avR = 18;
   if (emp.foto && emp.foto.startsWith('data:image')) {
     try {
-      // Círculo de fundo
-      fill(C.surf2); doc.circle(fotoX + fotoR, fotoY + fotoR, fotoR + 1, 'F');
-      // Borda accent
-      doc.setDrawColor(...C.accent);
-      doc.setLineWidth(0.8);
-      doc.circle(fotoX + fotoR, fotoY + fotoR, fotoR + 1);
-      // Imagem circular (jsPDF não suporta clip circular nativo, usamos quadrado arredondado)
-      doc.addImage(emp.foto, 'JPEG', fotoX, fotoY, fotoR*2, fotoR*2, '', 'FAST');
-    } catch(e) { _pdfFotoPlaceholder(doc, emp, fotoX, fotoY, fotoR, C); }
+      fl(W); doc.circle(avX + avR, avY + avR, avR + 2, 'F');
+      dr(RED, 1);  doc.circle(avX + avR, avY + avR, avR + 2);
+      doc.addImage(emp.foto, 'JPEG', avX, avY, avR*2, avR*2, '', 'FAST');
+    } catch(e) { _pdfAvatarBg(doc, emp, avX, avY, avR, NAVY, BLUE, W); }
   } else {
-    _pdfFotoPlaceholder(doc, emp, fotoX, fotoY, fotoR, C);
+    _pdfAvatarBg(doc, emp, avX, avY, avR, NAVY, BLUE, W);
   }
 
-  // Nome e cargo (ao lado da foto)
-  const nomeX = fotoX + fotoR * 2 + 6;
-  setFont('bold', 18, C.white);
-  doc.text(emp.name || '—', nomeX, 22);
-  setFont('normal', 9.5, C.accent2);
-  doc.text(emp.role || '', nomeX, 30);
-  setFont('normal', 8, C.muted);
-  const linha1 = [emp.dept, emp.filial, emp.turno].filter(Boolean).join('   ·   ');
-  if (linha1) doc.text(linha1, nomeX, 38);
-  if (emp.matricula) { setFont('normal', 7.5, C.muted); doc.text(`Matrícula: ${emp.matricula}`, nomeX, 44); }
+  // Nome e informações
+  const nx = avX + avR*2 + 10;
+  sf('bold', 22, NAVY);
+  doc.text(emp.name || '—', nx, 66);
+  sf('bold', 10, RED);
+  doc.text(emp.role || 'Cargo não informado', nx, 74);
+  sf('normal', 8.5, MUTED);
+  const infoStr = [emp.dept, emp.filial, emp.turno].filter(Boolean).join('  ·  ');
+  if (infoStr) doc.text(infoStr, nx, 81);
+  if (emp.matricula) {
+    sf('normal', 7.5, GRAY);
+    doc.text('Matrícula: ' + emp.matricula, nx, 88);
+  }
 
-  y = 62;
+  // Badge status DESLIGADO
+  fl(RED); doc.roundedRect(nx, 91, 36, 7, 1.5, 1.5, 'F');
+  sf('bold', 7, W);
+  doc.text('DESLIGADO', nx + 18, 95.8, {align:'center'});
 
-  // ── 6 KPIs ──────────────────────────────────────────
+  // ── 6 KPIs em cards ────────────────────────────────
+  y = 108;
   const kpis = [
-    { label:'Admissão',   value: dtAdm ? dtAdm.toLocaleDateString('pt-BR') : '—',            cor: C.accent  },
-    { label:'Demissão',   value: emp.data_demissao ? new Date(emp.data_demissao+'T00:00:00').toLocaleDateString('pt-BR') : '—', cor: C.red },
-    { label:'Tempo',      value: tempoEmpresa,   cor: C.accent2 },
-    { label:'Score',      value: String(score),  cor: score>=85?C.green:score>=70?C.accent:score>=55?C.yellow:C.red },
-    { label:'Faltas',     value: String(totalF), cor: totalF>10?C.red:C.muted },
-    { label:'Promoções',  value: String(promos), cor: promos>0?C.green:C.muted },
+    { label:'Data de Admissão', value: dtAdm ? dtAdm.toLocaleDateString('pt-BR') : '—', color: BLUE,   small: true },
+    { label:'Data de Demissão', value: emp.data_demissao ? new Date(emp.data_demissao+'T00:00:00').toLocaleDateString('pt-BR') : '—', color: RED, small: true },
+    { label:'Tempo na Empresa', value: tempoEmpresa, color: NAVY2, small: tempoEmpresa.length > 8 },
+    { label:'Score Final',      value: String(score), color: score>=85?GREEN:score>=70?BLUE:score>=55?YELLOW:RED, small: false },
+    { label:'Total de Faltas',  value: String(totalF), color: totalF>10?RED:totalF>5?YELLOW:MUTED, small: false },
+    { label:'Promoções',        value: String(promos), color: promos>0?GREEN:MUTED, small: false },
   ];
-  const kW = pw / 6 - 1.5;
+  const kW = pw / 6 - 2;
   kpis.forEach((k, i) => {
-    const kx = lm + i * (kW + 1.8);
-    fill(C.surf2); doc.roundedRect(kx, y, kW, 20, 2, 2, 'F');
-    // linha cor topo
-    fill(k.cor); doc.roundedRect(kx, y, kW, 1.5, 1, 1, 'F');
-    setFont('bold', k.value.length > 7 ? 7.5 : 11, k.cor);
-    doc.text(k.value, kx + kW/2, y + 12, {align:'center'});
-    setFont('normal', 6.5, C.muted);
-    doc.text(k.label, kx + kW/2, y + 17.5, {align:'center'});
-  });
-  y += 28;
-
-  // ── Competências (radar visual simplificado em barras) ─
-  secTitle('Competências & Desempenho', y); y += 7;
-  const APT_LABELS = {qual:'Qualidade',prio:'Proatividade',know:'Conhecimento',comm:'Comunicação',prod:'Produtividade',assid:'Assiduidade',org:'Organização',equip:'Trabalho em Equipe',cria:'Criatividade',motv:'Motivação'};
-  const APT_KEYS2  = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
-  const colW = pw / 2 - 3;
-  APT_KEYS2.forEach((k, i) => {
-    const val   = emp.competencies?.[k] ?? 5;
-    const col   = i % 2;
-    const row   = Math.floor(i / 2);
-    const bx    = lm + col * (colW + 6);
-    const by    = y + row * 9;
-    addPageCheck(10);
-    // Label
-    setFont('normal', 7, C.muted);
-    doc.text(APT_LABELS[k], bx, by + 4.5);
+    const kx = lm + i * (kW + 2.4);
+    // Card
+    fl(W); doc.roundedRect(kx, y, kW, 24, 2, 2, 'F');
+    dr(BORDER, 0.3); doc.roundedRect(kx, y, kW, 24, 2, 2, 'S');
+    // Barra colorida topo
+    fl(k.color); doc.roundedRect(kx, y, kW, 2.5, 1, 1, 'F');
     // Valor
-    setFont('bold', 7, val>=8?C.green:val>=5?C.accent:C.red);
-    doc.text(`${val}/10`, bx + colW, by + 4.5, {align:'right'});
-    // Barra fundo
-    fill(C.surf3); doc.roundedRect(bx, by + 5.5, colW, 2.5, 1, 1, 'F');
-    // Barra valor
-    const barColor = val>=8?C.green:val>=5?C.accent:C.red;
-    fill(barColor); doc.roundedRect(bx, by + 5.5, (val/10)*colW, 2.5, 1, 1, 'F');
+    sf('bold', k.small ? 8 : 13, k.color);
+    doc.text(k.value, kx + kW/2, y + (k.small ? 14 : 15), {align:'center', maxWidth: kW - 2});
+    // Label
+    sf('normal', 6, MUTED);
+    doc.text(k.label, kx + kW/2, y + 21, {align:'center', maxWidth: kW - 2});
   });
-  y += Math.ceil(APT_KEYS2.length / 2) * 9 + 4;
+  y += 32;
 
-  // Desempenho e Aptidão geral
-  addPageCheck(16);
-  const metaBoxes = [
-    { label:'Desempenho Geral', value:`${emp.perf||0}%`, cor: (emp.perf||0)>=80?C.green:(emp.perf||0)>=60?C.accent:C.red },
-    { label:'Apt. Média',       value:`${aptAvg}/10`,   cor: parseFloat(aptAvg)>=7?C.green:parseFloat(aptAvg)>=5?C.accent:C.red },
-    { label:'Atestados',        value:String(totalA),   cor: C.muted },
+  // ════════════════════════════════════════════════════
+  // SEÇÃO: DESEMPENHO & COMPETÊNCIAS
+  // ════════════════════════════════════════════════════
+  addPage(80);
+  y = sectionHeader('Desempenho & Competências', '◈', y);
+
+  // 3 indicadores grandes lado a lado
+  const indW = pw / 3 - 3;
+  const indH = 28;
+  const indItems = [
+    { label:'Desempenho Geral', value:`${emp.perf||0}%`,  sub:'meta: ≥ 70%',  color:(emp.perf||0)>=80?GREEN:(emp.perf||0)>=60?BLUE:RED,  pct:(emp.perf||0) },
+    { label:'Aptidão Média',    value:`${aptAvg}/10`,      sub:'todas competências',  color:parseFloat(aptAvg)>=7?GREEN:parseFloat(aptAvg)>=5?BLUE:RED, pct:parseFloat(aptAvg)*10 },
+    { label:'Assiduidade',      value:`${assidPct}%`,      sub:`${totalF} falta${totalF!==1?'s':''} registrada${totalF!==1?'s':''}`, color:assidPct>=80?GREEN:assidPct>=60?YELLOW:RED, pct:assidPct },
   ];
-  const mW = pw/3 - 2;
-  metaBoxes.forEach((b,i) => {
-    const mx = lm + i*(mW+3);
-    fill(C.surf2); doc.roundedRect(mx, y, mW, 12, 2, 2, 'F');
-    setFont('bold', 10, b.cor); doc.text(b.value, mx+mW/2, y+7.5, {align:'center'});
-    setFont('normal', 6.5, C.muted); doc.text(b.label, mx+mW/2, y+11, {align:'center'});
-  });
-  y += 18;
 
-  // ── Motivo do Desligamento ───────────────────────────
+  indItems.forEach((ind, i) => {
+    const ix = lm + i * (indW + 4.5);
+    fl(BG); doc.roundedRect(ix, y, indW, indH, 2.5, 2.5, 'F');
+    dr(BORDER, 0.3); doc.roundedRect(ix, y, indW, indH, 2.5, 2.5, 'S');
+    // Barra de progresso
+    const barY = y + indH - 7;
+    fl(BG2); doc.roundedRect(ix+4, barY, indW-8, 3, 1, 1, 'F');
+    fl(ind.color); doc.roundedRect(ix+4, barY, (indW-8)*(ind.pct/100), 3, 1, 1, 'F');
+    // Valor
+    sf('bold', 16, ind.color);
+    doc.text(ind.value, ix + indW/2, y + 14, {align:'center'});
+    sf('bold', 7, TEXT);
+    doc.text(ind.label, ix + indW/2, y + 20, {align:'center'});
+    sf('normal', 6, MUTED);
+    doc.text(ind.sub, ix + indW/2, y + 24.5, {align:'center'});
+  });
+  y += indH + 8;
+
+  // Grade de competências — 2 colunas
+  addPage(60);
+  const APT_LABELS_PDF = {qual:'Qualidade',prio:'Proatividade',know:'Conhecimento',comm:'Comunicação',prod:'Produtividade',assid:'Assiduidade',org:'Organização',equip:'Trabalho em Equipe',cria:'Criatividade',motv:'Motivação'};
+  const APT_ICONS_PDF  = {qual:'✦',prio:'◆',know:'■',comm:'●',prod:'▲',assid:'◇',org:'▪',equip:'◎',cria:'★',motv:'▶'};
+  const colW2 = pw / 2 - 3;
+
+  APT_KEYS_PDF.forEach((k, i) => {
+    const val  = emp.competencies?.[k] ?? 5;
+    const col  = i % 2;
+    const row  = Math.floor(i / 2);
+    const bx   = lm + col * (colW2 + 6);
+    const by   = y + row * 11;
+    if (i === 0) {/* já está no y certo */}
+    const barColor = val>=8?GREEN:val>=6?BLUE:val>=4?YELLOW:RED;
+
+    // Fundo da linha
+    if (row % 2 === 0 && col === 0) {
+      fl(BG); doc.roundedRect(lm, by, pw, 10, 1, 1, 'F');
+    }
+    // Ícone
+    sf('bold', 7, barColor);
+    doc.text(APT_ICONS_PDF[k]||'·', bx + 1, by + 6.5);
+    // Label
+    sf('normal', 7.5, TEXT);
+    doc.text(APT_LABELS_PDF[k], bx + 5, by + 6.5);
+    // Nota numérica
+    sf('bold', 8, barColor);
+    doc.text(`${val}`, bx + colW2 - 18, by + 6.5, {align:'right'});
+    doc.text('/10', bx + colW2 - 10, by + 6.5, {align:'right'});
+    // Mini barra
+    fl(BG2); doc.roundedRect(bx + colW2 - 9, by + 4, 9, 2.5, 1, 1, 'F');
+    fl(barColor); doc.roundedRect(bx + colW2 - 9, by + 4, 9*(val/10), 2.5, 1, 1, 'F');
+  });
+  y += Math.ceil(APT_KEYS_PDF.length / 2) * 11 + 6;
+
+  // ════════════════════════════════════════════════════
+  // SEÇÃO: MOTIVO DO DESLIGAMENTO
+  // ════════════════════════════════════════════════════
   if (emp.motivo_demissao) {
-    addPageCheck(20);
-    secTitle('Motivo do Desligamento', y); y += 7;
-    const mLines = doc.splitTextToSize(emp.motivo_demissao, pw - 10);
-    const boxH   = mLines.length * 5 + 8;
-    fill(C.surf2); doc.roundedRect(lm, y, pw, boxH, 2, 2, 'F');
-    fill(C.red);   doc.roundedRect(lm, y, 2, boxH, 1, 1, 'F');
-    setFont('italic', 8.5, C.text);
-    doc.text(mLines, lm + 6, y + 6);
+    addPage(30);
+    y = sectionHeader('Motivo do Desligamento', '◉', y);
+    const mLines = doc.splitTextToSize(emp.motivo_demissao, pw - 18);
+    const boxH   = Math.max(20, mLines.length * 5.5 + 12);
+    // Card vermelho sutil
+    fl([255, 243, 245]); doc.roundedRect(lm, y, pw, boxH, 2.5, 2.5, 'F');
+    dr([245, 190, 200], 0.4); doc.roundedRect(lm, y, pw, boxH, 2.5, 2.5, 'S');
+    fl(RED); doc.roundedRect(lm, y, 4, boxH, 1.5, 1.5, 'F');
+    // Texto
+    sf('bold', 7.5, RED);
+    doc.text('DECLARAÇÃO OFICIAL', lm + 9, y + 7);
+    sf('normal', 8.5, TEXT);
+    doc.text(mLines, lm + 9, y + 13.5);
     y += boxH + 8;
   }
 
-  // ── Histórico de Cargos ─────────────────────────────
+  // ════════════════════════════════════════════════════
+  // SEÇÃO: HISTÓRICO DE CARGOS
+  // ════════════════════════════════════════════════════
   const hist = emp.historico_cargos || [];
-  addPageCheck(20);
-  secTitle('Histórico de Cargos e Movimentações', y); y += 7;
+  addPage(24);
+  y = sectionHeader('Trajetória na Empresa', '◈', y);
 
   if (!hist.length) {
-    setFont('italic', 8, C.muted);
-    doc.text('Nenhum histórico registrado.', lm, y); y += 10;
+    sf('italic', 8, MUTED);
+    doc.text('Nenhum histórico de cargo registrado.', lm + 4, y + 5);
+    y += 12;
   } else {
-    const TIPO_CFG = {
-      admissao:      { label:'ADMISSÃO',      cor: C.accent  },
-      promocao:      { label:'PROMOÇÃO',      cor: C.green   },
-      transferencia: { label:'TRANSFERÊNCIA', cor: C.yellow  },
-      desligamento:  { label:'DESLIGAMENTO',  cor: C.red     },
+    const TIPO_CFG2 = {
+      admissao:      { label:'ADMISSÃO',      color: BLUE,   dot:[2,54,101]  },
+      promocao:      { label:'PROMOÇÃO',      color: GREEN,  dot:[10,124,78] },
+      transferencia: { label:'TRANSFERÊNCIA', color: YELLOW, dot:[180,83,9]  },
+      desligamento:  { label:'DESLIGAMENTO',  color: RED,    dot:[212,1,56]  },
     };
-    for (const h of hist) {
-      addPageCheck(14);
-      const tc    = TIPO_CFG[h.tipo] || { label: 'REGISTRO', cor: C.muted };
-      const dH    = h.data ? new Date(h.data+'T00:00:00').toLocaleDateString('pt-BR') : '—';
-      const infoH = [h.dept, h.filial, h.turno].filter(Boolean).join(' · ');
 
-      fill(C.surf2); doc.roundedRect(lm, y, pw, 11, 1.5, 1.5, 'F');
-      // Pill tipo
-      const pillW = doc.getTextWidth(tc.label) / (8/2.835) + 6;
-      fill([...tc.cor.map(v=>Math.round(v*0.25))]); doc.roundedRect(lm+3, y+2, pillW, 7, 1.5, 1.5, 'F');
-      setFont('bold', 6.5, tc.cor); doc.text(tc.label, lm+3+pillW/2, y+6.3, {align:'center'});
+    hist.forEach((h, hi) => {
+      addPage(16);
+      const tc  = TIPO_CFG2[h.tipo] || { label:'REGISTRO', color: MUTED, dot: MUTED };
+      const dH  = h.data ? new Date(h.data+'T00:00:00').toLocaleDateString('pt-BR') : '—';
+      const inf = [h.dept, h.filial, h.turno].filter(Boolean).join(' · ');
+      const isLast = hi === hist.length - 1;
+
+      // Linha do timeline
+      fl(hi % 2 === 0 ? BG : W); doc.roundedRect(lm, y, pw, 13, 1.5, 1.5, 'F');
+
+      // Dot do timeline
+      fl(tc.dot); doc.circle(lm + 5, y + 6.5, 2.5, 'F');
+
+      // Tipo badge
+      sf('bold', 6.5, tc.color);
+      doc.text(tc.label, lm + 13, y + 5.5);
       // Cargo
-      setFont('bold', 8.5, C.text); doc.text(h.cargo||'—', lm + pillW + 8, y + 7);
-      // Info
-      if (infoH) { setFont('normal', 7, C.muted); doc.text(infoH, lm + pillW + 8, y + 10.5); }
+      sf('bold', 9, NAVY);
+      doc.text(h.cargo || '—', lm + 13, y + 10);
+      // Info contextual
+      if (inf) { sf('normal', 7, MUTED); doc.text(inf, lm + 60, y + 10); }
       // Data
-      setFont('normal', 7.5, C.muted); doc.text(dH, rm, y + 7, {align:'right'});
-      y += 13;
-    }
+      sf('normal', 7, MUTED);
+      doc.text(dH, rm, y + 8, {align:'right'});
+      y += 14;
+    });
     y += 2;
   }
 
-  // ── Faltas por ano/mês ───────────────────────────────
-  addPageCheck(20);
-  const anosComDados = Object.keys(faltasPorAno).map(Number).sort();
-  secTitle(`Registro de Ausências (${anoInicio}${anoFim!==anoInicio?'–'+anoFim:''})`, y); y += 7;
+  // ════════════════════════════════════════════════════
+  // SEÇÃO: REGISTRO DE AUSÊNCIAS
+  // ════════════════════════════════════════════════════
+  addPage(30);
+  const anosComDados2 = Object.keys(faltasPorAno).map(Number).sort();
+  y = sectionHeader(`Registro de Ausências  (${anoInicio}${anoFim!==anoInicio?' – '+anoFim:''})`, '◉', y);
 
   if (totalF === 0 && totalA === 0) {
-    setFont('italic', 8.5, C.green);
-    doc.text('✓ Nenhuma falta ou atestado registrado em todo o período.', lm, y); y += 10;
+    fl([235, 252, 243]); doc.roundedRect(lm, y, pw, 14, 2, 2, 'F');
+    dr([150, 220, 180], 0.3); doc.roundedRect(lm, y, pw, 14, 2, 2, 'S');
+    fl(GREEN); doc.roundedRect(lm, y, 4, 14, 1.5, 1.5, 'F');
+    sf('bold', 8.5, GREEN);
+    doc.text('Excelente assiduidade — nenhuma falta ou atestado registrado.', lm + 9, y + 9);
+    y += 20;
   } else {
-    for (const ano of anosComDados) {
+    for (const ano of anosComDados2) {
       const meses = faltasPorAno[ano];
-      const comDados = meses.filter(m => m.faltas > 0 || m.atestados > 0);
-      if (!comDados.length) continue;
+      const comDados2 = meses.filter(m => m.faltas > 0 || m.atestados > 0);
+      if (!comDados2.length) continue;
 
-      addPageCheck(12);
+      addPage(14);
       // Cabeçalho do ano
-      fill(C.surf3); doc.roundedRect(lm, y, pw, 7, 1.5, 1.5, 'F');
-      setFont('bold', 8, C.accent2); doc.text(String(ano), lm + 4, y + 5);
-      const anoF = meses.reduce((a,b)=>a+b.faltas,0);
-      const anoA = meses.reduce((a,b)=>a+b.atestados,0);
-      setFont('normal', 7, C.muted);
-      doc.text(`${anoF} falta${anoF!==1?'s':''} · ${anoA} atestado${anoA!==1?'s':''}`, rm, y+5, {align:'right'});
-      y += 9;
+      fl(NAVY2); doc.roundedRect(lm, y, pw, 8, 1.5, 1.5, 'F');
+      sf('bold', 9, W);
+      doc.text(String(ano), lm + 5, y + 5.5);
+      const anoF2 = meses.reduce((a,b)=>a+b.faltas,0);
+      const anoA2 = meses.reduce((a,b)=>a+b.atestados,0);
+      sf('normal', 7.5, [180, 210, 240]);
+      doc.text(`${anoF2} falta${anoF2!==1?'s':''} · ${anoA2} atestado${anoA2!==1?'s':''}`, rm - 4, y + 5.5, {align:'right'});
+      y += 10;
 
-      // Linhas dos meses
-      comDados.forEach((fm, i) => {
-        addPageCheck(8);
-        if (i % 2 === 0) { fill(C.surf2); doc.roundedRect(lm, y, pw, 7, 1, 1, 'F'); }
-        setFont('normal', 8, C.text);
-        doc.text(`${fm.mes}/${ano}`, lm+4, y+5);
-        // Faltas
-        setFont('bold', 8, fm.faltas>0?C.red:C.muted);
-        doc.text(`${fm.faltas}F`, lm+34, y+5);
-        // Atestados
-        setFont('bold', 8, fm.atestados>0?C.yellow:C.muted);
-        doc.text(`${fm.atestados}A`, lm+50, y+5);
-        // Dias da falta
-        if (fm.diasFalta.length) {
-          const dsStr = 'Dias: ' + fm.diasFalta.sort((a,b)=>+a-+b).join(', ');
-          setFont('normal', 6.5, C.muted);
-          doc.text(dsStr, lm+68, y+5, {maxWidth:pw-60});
+      comDados2.forEach((fm, fi) => {
+        addPage(9);
+        fl(fi % 2 === 0 ? BG : W); doc.roundedRect(lm, y, pw, 8, 1, 1, 'F');
+
+        // Mês
+        sf('bold', 8, TEXT);
+        doc.text(`${fm.mes}/${ano}`, lm + 4, y + 5.5);
+
+        // Faltas badge
+        if (fm.faltas > 0) {
+          fl(fm.faltas>=5?RED:[255,220,225]);
+          doc.roundedRect(lm + 30, y + 1.5, 18, 5, 1.5, 1.5, 'F');
+          sf('bold', 7, fm.faltas>=5?W:RED);
+          doc.text(`${fm.faltas} falta${fm.faltas>1?'s':''}`, lm + 39, y + 5, {align:'center'});
         }
-        y += 8;
+
+        // Atestados badge
+        if (fm.atestados > 0) {
+          fl([230, 240, 255]);
+          doc.roundedRect(lm + 51, y + 1.5, 22, 5, 1.5, 1.5, 'F');
+          sf('bold', 7, BLUE);
+          doc.text(`${fm.atestados} atestado${fm.atestados>1?'s':''}`, lm + 62, y + 5, {align:'center'});
+        }
+
+        // Dias específicos
+        if (fm.diasFalta.length) {
+          sf('normal', 6.5, MUTED);
+          const dStr = 'Dias: ' + fm.diasFalta.sort((a,b)=>+a-+b).join(', ');
+          doc.text(dStr, lm + 76, y + 5.5, {maxWidth: pw - 72});
+        }
+
+        y += 9;
       });
       y += 4;
     }
   }
 
-  // ── Ocorrências ──────────────────────────────────────
-  addPageCheck(20);
-  secTitle('Ocorrências Registradas', y); y += 7;
+  // ════════════════════════════════════════════════════
+  // SEÇÃO: OCORRÊNCIAS
+  // ════════════════════════════════════════════════════
+  addPage(28);
+  y = sectionHeader('Ocorrências Registradas', '◈', y);
 
-  const TIPO_OC_COR = {
-    Justificativa: C.accent, Ajuste: C.yellow, 'Ocorrência': C.orange,
-    Entrada: C.green, Saída: C.red, Advertência: C.red, Elogio: C.green,
+  const TIPO_OC_CLR = {
+    Justificativa: BLUE, Ajuste: YELLOW, 'Ocorrência': [200,80,0],
+    Entrada: GREEN, Saída: RED, Advertência: RED, Elogio: GREEN,
   };
 
   if (!ocEmp.length) {
-    setFont('italic', 8, C.muted);
-    doc.text('Nenhuma ocorrência registrada.', lm, y); y += 10;
+    sf('italic', 8.5, MUTED);
+    doc.text('Nenhuma ocorrência registrada durante o vínculo.', lm + 4, y + 5);
+    y += 14;
   } else {
-    for (const oc of ocEmp) {
+    ocEmp.forEach((oc, oi) => {
       const ocDt  = oc.ts ? new Date(oc.ts).toLocaleDateString('pt-BR') : '—';
-      const ocCor = TIPO_OC_COR[oc.tipo] || C.muted;
-      const dL    = oc.desc ? doc.splitTextToSize(oc.desc, pw - 10) : [];
-      const boxH  = 9 + (dL.length > 0 ? dL.length * 4 + 3 : 0);
-      addPageCheck(boxH + 4);
+      const ocCor = TIPO_OC_CLR[oc.tipo] || MUTED;
+      const dL    = oc.desc ? doc.splitTextToSize(oc.desc, pw - 22) : [];
+      const boxH  = 10 + (dL.length > 0 ? dL.length * 4.5 + 3 : 0);
+      addPage(boxH + 4);
 
-      fill(C.surf2); doc.roundedRect(lm, y, pw, boxH, 1.5, 1.5, 'F');
-      fill(ocCor);   doc.roundedRect(lm, y, 2, boxH, 1, 1, 'F');
-      setFont('bold', 8, C.text);
-      doc.text(`${ocDt}  ·  ${oc.tipo||'—'}`, lm+5, y+6);
-      setFont('normal', 6.5, C.muted);
-      doc.text(`Por: ${oc.respName||'—'}`, rm, y+6, {align:'right'});
+      fl(oi % 2 === 0 ? BG : W); doc.roundedRect(lm, y, pw, boxH, 1.5, 1.5, 'F');
+      dr(BORDER, 0.3); doc.roundedRect(lm, y, pw, boxH, 1.5, 1.5, 'S');
+
+      // Barra colorida lateral
+      fl(ocCor); doc.roundedRect(lm, y, 3.5, boxH, 1, 1, 'F');
+
+      // Badge tipo
+      fl(ocCor.map ? ocCor : ocCor);
+      const badgeW = doc.getTextWidth((oc.tipo||'—').toUpperCase()) / 2.835 * 0.6 + 10;
+      fl([...ocCor.map(v=>Math.min(255,v+160))]);
+      doc.roundedRect(lm+7, y+2, badgeW, 5, 1, 1, 'F');
+      sf('bold', 6.5, ocCor);
+      doc.text((oc.tipo||'—').toUpperCase(), lm+7+badgeW/2, y+5.5, {align:'center'});
+
+      // Data
+      sf('normal', 7, MUTED);
+      doc.text(ocDt, rm - 2, y + 6, {align:'right'});
+
+      // Responsável
+      sf('normal', 6.5, MUTED);
+      doc.text('por: ' + (oc.respName||'—'), rm - 2, y + 10.5, {align:'right'});
+
+      // Descrição
       if (dL.length) {
-        setFont('normal', 7.5, [160,170,190]);
-        doc.text(dL, lm+5, y+11);
+        sf('normal', 7.5, TEXT);
+        doc.text(dL, lm + 7, y + 13);
       }
       y += boxH + 4;
-    }
+    });
   }
 
-  // ── Rodapé em todas as páginas ───────────────────────
+  // ════════════════════════════════════════════════════
+  // RODAPÉ + ASSINATURA em todas as páginas
+  // ════════════════════════════════════════════════════
   const totalPags = doc.internal.getNumberOfPages();
   for (let p = 1; p <= totalPags; p++) {
     doc.setPage(p);
-    fill(C.bg); doc.rect(0, 282, 210, 15, 'F');
-    fill(C.accent); doc.rect(0, 282, 210, 0.6, 'F');
-    setFont('normal', 6.5, C.muted);
-    doc.text(`RH Nagumo  ·  Relatório de Desligamento  ·  ${emp.name}`, lm, 289);
-    doc.text(`${new Date().toLocaleDateString('pt-BR')}  ·  Pág. ${p} / ${totalPags}`, rm, 289, {align:'right'});
+
+    // Linha separadora do rodapé
+    fl(BG2); doc.rect(0, 278, 210, 0.8, 'F');
+    fl(W);   doc.rect(0, 278.8, 210, 18.2, 'F');
+
+    // Detalhe vermelho lateral no rodapé
+    fl(RED); doc.rect(0, 278, 5, 18.5, 'F');
+
+    sf('bold', 7.5, NAVY);
+    doc.text('CD NAGUMO', lm + 2, 285);
+    sf('normal', 6.5, MUTED);
+    doc.text('Departamento de Recursos Humanos · Sistema de Gestão de Pessoas', lm + 2, 290);
+    doc.text('Documento gerado eletronicamente — não requer assinatura física', lm + 2, 294.5);
+
+    sf('bold', 7.5, NAVY);
+    doc.text(emp.name, rm, 283, {align:'right'});
+    sf('normal', 6.5, MUTED);
+    doc.text('Desligado em ' + (emp.data_demissao ? new Date(emp.data_demissao+'T00:00:00').toLocaleDateString('pt-BR') : '—'), rm, 288, {align:'right'});
+
+    // Paginação
+    sf('bold', 6.5, [200, 215, 230]);
+    doc.text(`${p} / ${totalPags}`, 105, 293, {align:'center'});
+
+    // Linha de assinatura apenas na última página
+    if (p === totalPags) {
+      addPage(30);
+      // Bloco de assinaturas
+      const sigY = y + 6;
+      if (sigY < 265) {
+        dr(BORDER, 0.3);
+        // Assinatura colaborador
+        doc.line(lm, sigY + 20, lm + 78, sigY + 20);
+        sf('normal', 7, MUTED);
+        doc.text('Assinatura do Colaborador', lm + 39, sigY + 24, {align:'center'});
+        sf('bold', 7, TEXT);
+        doc.text(emp.name || '—', lm + 39, sigY + 28, {align:'center'});
+
+        // Assinatura RH
+        doc.line(rm - 78, sigY + 20, rm, sigY + 20);
+        sf('normal', 7, MUTED);
+        doc.text('Responsável de RH', rm - 39, sigY + 24, {align:'center'});
+        sf('bold', 7, TEXT);
+        doc.text('Departamento de Recursos Humanos', rm - 39, sigY + 28, {align:'center'});
+
+        // Data e cidade
+        sf('normal', 7, MUTED);
+        const hoje = new Date();
+        doc.text(`${[emp.filial||''].filter(Boolean).join('')}${emp.filial?', ':''}` +
+          hoje.toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'}),
+          105, sigY + 34, {align:'center'});
+      }
+    }
   }
 
   const arq = `relatorio_desligamento_${emp.name.replace(/\s+/g,'_')}_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.pdf`;
   doc.save(arq);
-  showToast('✅ Relatório PDF gerado!','ok');
+  showToast('✅ Relatório PDF gerado com sucesso!','ok');
 }
 
-// Fundo escuro de cada página
-function _pdfPageBg(doc, C) {
-  doc.setFillColor(...C.bg);
-  doc.rect(0, 0, 210, 297, 'F');
+// ── Auxiliares de PDF ────────────────────────────────
+function _pdfDrawPageBg(doc, W, BG, lm, rm, pw) {
+  doc.setFillColor(...W); doc.rect(0, 0, 210, 297, 'F');
 }
 
-// Placeholder circular quando não há foto
-function _pdfFotoPlaceholder(doc, emp, x, y, r, C) {
-  doc.setFillColor(...C.surf2);
-  doc.circle(x + r, y + r, r + 1, 'F');
-  doc.setDrawColor(...C.accent);
-  doc.setLineWidth(0.8);
-  doc.circle(x + r, y + r, r + 1);
+function _pdfAvatarBg(doc, emp, x, y, r, NAVY, BLUE, W) {
+  // Fundo gradiente simulado (dois círculos)
+  doc.setFillColor(...BLUE); doc.circle(x+r, y+r, r+1.5, 'F');
+  doc.setFillColor(...NAVY); doc.circle(x+r+2, y+r-2, r, 'F');
+  // Anel branco externo
+  doc.setDrawColor(255,255,255);
+  doc.setLineWidth(1.2);
+  doc.circle(x+r, y+r, r+1.5);
+  // Iniciais
   const ini = (emp.name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
-  doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(...C.accent2);
-  doc.text(ini, x + r, y + r + 5, {align:'center'});
+  doc.setFont('helvetica','bold'); doc.setFontSize(r*1.1); doc.setTextColor(...W);
+  doc.text(ini, x+r, y+r+r*0.38, {align:'center'});
 }
 
-function _pdfPageHeader(doc, C) {
-  // mantido para compatibilidade, usa _pdfPageBg
-  _pdfPageBg(doc, C);
+// Mantido por compatibilidade
+function _pdfPageBg(doc, C) {
+  if (C && C.bg) { doc.setFillColor(...C.bg); doc.rect(0,0,210,297,'F'); }
+  else { doc.setFillColor(255,255,255); doc.rect(0,0,210,297,'F'); }
 }
+function _pdfFotoPlaceholder(doc, emp, x, y, r, C) {
+  _pdfAvatarBg(doc, emp, x, y, r, [4,21,46], [2,54,101], [255,255,255]);
+}
+function _pdfPageHeader(doc, C) { _pdfPageBg(doc, C); }
 
 </script>
 </body>
