@@ -118,6 +118,31 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .kpi-card.red    .kpi-value { color:#FCA5A5; }
 .kpi-sub { font-size:10px; color:var(--muted); margin-top:2px; }
 
+/* ── KPI com alerta pulsante ── */
+.kpi-card.alerta-pendente {
+  border-color: rgba(167,139,250,.6) !important;
+  box-shadow: 0 0 0 0 rgba(167,139,250,.5);
+  animation: kpi-pulse 2.4s ease-in-out infinite;
+  cursor: pointer;
+}
+.kpi-card.alerta-pendente .kpi-sub { color: #f472b6; font-weight: 700; }
+@keyframes kpi-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(167,139,250,.55); }
+  60%  { box-shadow: 0 0 0 8px rgba(167,139,250,.0);  }
+  100% { box-shadow: 0 0 0 0   rgba(167,139,250,.0);  }
+}
+/* tema claro */
+body.light-theme .kpi-card.alerta-pendente {
+  border-color: rgba(109,40,217,.5) !important;
+  animation: kpi-pulse-light 2.4s ease-in-out infinite;
+}
+body.light-theme .kpi-card.alerta-pendente .kpi-sub { color: #7c3aed; }
+@keyframes kpi-pulse-light {
+  0%   { box-shadow: 0 0 0 0   rgba(109,40,217,.4); }
+  60%  { box-shadow: 0 0 0 8px rgba(109,40,217,.0); }
+  100% { box-shadow: 0 0 0 0   rgba(109,40,217,.0); }
+}
+
 /* ── Cards/Gráficos ── */
 .dash-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
 .card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; transition:box-shadow .2s; }
