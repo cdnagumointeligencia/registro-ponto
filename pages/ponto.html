@@ -810,7 +810,9 @@ async function renderGrade() {
     const _key     = pontoKey(emp.id);
     const pontoMap = _allPonto[_key] || {};
     const ini      = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-    // Avatar usa status de HOJE (para indicar visualmente quem está afastado/férias agora)
+
+    // ── Verifica se o funcionário está globalmente bloqueado (afastado ou de férias HOJE) ──
+    // Usado só para colorir o avatar
     const { bloqueado: bloqHoje, motivo: motivoHoje } = isEmpBloqueado(emp);
 
     const avatarStyle = bloqHoje
@@ -819,12 +821,32 @@ async function renderGrade() {
         : 'background:linear-gradient(135deg,#22d3ee,#4f8ef7)'
       : '';
 
-    tbody += `<tr class="emp-row">
+    // ── Badge de status no cabeçalho da linha ──
+    const empBadge = bloqHoje
+      ? motivoHoje==='afastado'
+        ? `<span style="
+            margin-left:6px;padding:2px 7px;border-radius:20px;
+            font-size:9px;font-weight:700;
+            background:rgba(239,68,68,.18);color:#ef4444;
+            border:1px solid rgba(239,68,68,.35);
+            white-space:nowrap;flex-shrink:0">🚫 Afastado</span>`
+        : `<span style="
+            margin-left:6px;padding:2px 7px;border-radius:20px;
+            font-size:9px;font-weight:700;
+            background:rgba(34,211,238,.14);color:#22d3ee;
+            border:1px solid rgba(34,211,238,.35);
+            white-space:nowrap;flex-shrink:0">🏖️ Férias</span>`
+      : '';
+
+    tbody += `<tr class="emp-row" style="${bloqHoje ? 'opacity:.72' : ''}">
       <td class="emp-info-col">
         <div class="emp-mini-wrap">
           <div class="emp-mini-avatar" style="${avatarStyle}">${ini}</div>
-          <div>
-            <div class="emp-name-g">${nomeAbrev(emp, emps)}</div>
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;align-items:center;gap:0;flex-wrap:nowrap">
+              <div class="emp-name-g">${nomeAbrev(emp, emps)}</div>
+              ${empBadge}
+            </div>
             <div class="emp-role-g">${emp.role||''}</div>
           </div>
         </div>
@@ -836,28 +858,34 @@ async function renderGrade() {
     diasArr.forEach(({ d, dow, isDom, isSab, isHoje, isFer, nomeFer }) => {
       const statusSalvo = pontoMap[d];
 
-      // Verifica bloqueio DESTE DIA específico (afastado/férias por período)
-      const bloqDia = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, d);
-      const canEdit = podeEditar && !bloqDia;
+      // ── Bloqueio POR DIA (afastado/férias no período) ──
+      // SEMPRE bloqueia o dia, mesmo que haja dado salvo — não permite edição
+      const bloqDia  = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, d);
+      // canEdit é false para qualquer dia dentro do período de afastamento/férias
+      const canEdit  = podeEditar && !bloqDia;
+      const colCls   = isDom ? 'domingo-col' : isSab ? 'sabado-col' : '';
 
-      // ── DIA COM STATUS BLOQUEADO (afastado/férias) ──
-      // Só aplica se não há nada manualmente salvo neste dia
-      if (bloqDia && !statusSalvo) {
+      // ── DIA BLOQUEADO POR AFASTAMENTO OU FÉRIAS ──
+      // Exibe o status do período (afastado/ferias) com visual bloqueado,
+      // independente de haver dado salvo — nenhum onclick é adicionado
+      if (bloqDia) {
         const sm = STATUS_META[bloqDia];
         if (bloqDia === 'afastado') cAt++;
         if (bloqDia === 'ferias')   cFe++;
-        const colCls = isDom ? 'domingo-col' : isSab ? 'sabado-col' : '';
+        const motivo = bloqDia === 'ferias'
+          ? 'Período de férias — edição bloqueada'
+          : 'Funcionário afastado — edição bloqueada';
         tbody += `<td class="day-cell ${colCls}">
           <div class="status-dot bloqueado ${bloqDia}"
             style="background:${sm.bg};border-color:${sm.border};color:${sm.cor}"
-            title="${sm.label}${bloqDia==='ferias' ? ' — período de férias' : ' — em afastamento'}">
+            title="${sm.label} — ${motivo}">
             ${sm.emoji}
           </div>
         </td>`;
         return;
       }
 
-      // ── DOMINGO ──
+      // ── DOMINGO (não bloqueado) ──
       if (isDom) {
         if (statusSalvo === 'presente') {
           cP++; cBonus++;
@@ -886,7 +914,7 @@ async function renderGrade() {
         return;
       }
 
-      // ── SÁBADO ──
+      // ── SÁBADO (não bloqueado) ──
       if (isSab) {
         if (statusSalvo === 'presente') {
           cP++; cBonus++;
@@ -915,7 +943,7 @@ async function renderGrade() {
         return;
       }
 
-      // ── FERIADO sem marcação manual ──
+      // ── FERIADO sem marcação manual (não bloqueado) ──
       if (isFer && !statusSalvo) {
         tbody += `<td class="day-cell">
           <div class="status-dot feriado"
@@ -925,7 +953,7 @@ async function renderGrade() {
         return;
       }
 
-      // ── FERIADO com presença marcada (bônus) ──
+      // ── FERIADO com presença marcada (bônus, não bloqueado) ──
       if (isFer && statusSalvo === 'presente') {
         cP++; cBonus++;
         tbody += `<td class="day-cell">
@@ -936,7 +964,7 @@ async function renderGrade() {
         return;
       }
 
-      // ── DIA NORMAL ──
+      // ── DIA NORMAL (não bloqueado) ──
       const statusEfetivo = statusSalvo || 'vazio';
       if (statusEfetivo==='presente') cP++;
       if (statusEfetivo==='falta')    cF++;
@@ -1010,6 +1038,16 @@ async function setStatusCtx(status) {
   if (ctxEmpId === null) return;
   const store    = await getStore();
   const emp      = (store.employees||[]).find(e=>String(e.id)===String(ctxEmpId));
+
+  // Proteção extra: verifica se o funcionário está afastado/de férias neste dia
+  const bloqDia = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, ctxDia);
+  if (bloqDia) {
+    const motivo = bloqDia === 'ferias' ? 'férias' : 'afastamento';
+    showToast(`🚫 Edição bloqueada — ${emp?.name||'funcionário'} está em ${motivo}.`, 'warn');
+    closeCtx();
+    return;
+  }
+
   const anterior = (await getPontoEmp(ctxEmpId))[ctxDia] || 'vazio';
 
   // Sem mudança — apenas fecha o menu
