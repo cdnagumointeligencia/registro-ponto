@@ -121,11 +121,14 @@ select {
     <div class="login-field">
       <label>🔑 Senha</label>
       <div style="position:relative;display:flex;align-items:center">
-        <input type="password" id="li-pass" placeholder="Sua senha"
-          style="flex:1;padding-right:42px" onkeydown="if(event.key==='Enter')doLogin()">
+        <input type="text" id="li-pass" placeholder="Sua senha"
+          autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+          style="flex:1;padding-right:42px;-webkit-text-security:disc;letter-spacing:0.1em"
+          onkeydown="if(event.key==='Enter')doLogin()">
         <span class="eye-btn"
-          onmouseenter="document.getElementById('li-pass').type='text'"
-          onmouseleave="document.getElementById('li-pass').type='password'">
+          onmousedown="document.getElementById('li-pass').style.webkitTextSecurity='none';document.getElementById('li-pass').style.letterSpacing='normal'"
+          onmouseup="document.getElementById('li-pass').style.webkitTextSecurity='disc';document.getElementById('li-pass').style.letterSpacing='0.1em'"
+          onmouseleave="document.getElementById('li-pass').style.webkitTextSecurity='disc';document.getElementById('li-pass').style.letterSpacing='0.1em'">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         </span>
       </div>
@@ -172,8 +175,13 @@ select {
     <div class="login-field">
       <label>🔑 Senha</label>
       <div style="position:relative;display:flex;align-items:center">
-        <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres" style="flex:1;padding-right:42px">
-        <span class="eye-btn" onmouseenter="document.getElementById('reg-pass').type='text'" onmouseleave="document.getElementById('reg-pass').type='password'">
+        <input type="text" id="reg-pass" placeholder="Mínimo 6 caracteres"
+          autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+          style="flex:1;padding-right:42px;-webkit-text-security:disc;letter-spacing:0.1em">
+        <span class="eye-btn"
+          onmousedown="document.getElementById('reg-pass').style.webkitTextSecurity='none';document.getElementById('reg-pass').style.letterSpacing='normal'"
+          onmouseup="document.getElementById('reg-pass').style.webkitTextSecurity='disc';document.getElementById('reg-pass').style.letterSpacing='0.1em'"
+          onmouseleave="document.getElementById('reg-pass').style.webkitTextSecurity='disc';document.getElementById('reg-pass').style.letterSpacing='0.1em'">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         </span>
       </div>
@@ -181,8 +189,13 @@ select {
     <div class="login-field">
       <label>🔑 Confirmar Senha</label>
       <div style="position:relative;display:flex;align-items:center">
-        <input type="password" id="reg-pass2" placeholder="Repita a senha" style="flex:1;padding-right:42px">
-        <span class="eye-btn" onmouseenter="document.getElementById('reg-pass2').type='text'" onmouseleave="document.getElementById('reg-pass2').type='password'">
+        <input type="text" id="reg-pass2" placeholder="Repita a senha"
+          autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+          style="flex:1;padding-right:42px;-webkit-text-security:disc;letter-spacing:0.1em">
+        <span class="eye-btn"
+          onmousedown="document.getElementById('reg-pass2').style.webkitTextSecurity='none';document.getElementById('reg-pass2').style.letterSpacing='normal'"
+          onmouseup="document.getElementById('reg-pass2').style.webkitTextSecurity='disc';document.getElementById('reg-pass2').style.letterSpacing='0.1em'"
+          onmouseleave="document.getElementById('reg-pass2').style.webkitTextSecurity='disc';document.getElementById('reg-pass2').style.letterSpacing='0.1em'">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         </span>
       </div>
@@ -190,9 +203,14 @@ select {
     <div class="login-field">
       <label>🛡️ Código de Autorização</label>
       <div style="position:relative;display:flex;align-items:center">
-        <input type="password" id="reg-auth" placeholder="Código fornecido pelo admin"
-          style="flex:1;padding-right:42px" onkeydown="if(event.key==='Enter')doRegister()">
-        <span class="eye-btn" onmouseenter="document.getElementById('reg-auth').type='text'" onmouseleave="document.getElementById('reg-auth').type='password'">
+        <input type="text" id="reg-auth" placeholder="Código fornecido pelo admin"
+          autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+          style="flex:1;padding-right:42px;-webkit-text-security:disc;letter-spacing:0.1em"
+          onkeydown="if(event.key==='Enter')doRegister()">
+        <span class="eye-btn"
+          onmousedown="document.getElementById('reg-auth').style.webkitTextSecurity='none';document.getElementById('reg-auth').style.letterSpacing='normal'"
+          onmouseup="document.getElementById('reg-auth').style.webkitTextSecurity='disc';document.getElementById('reg-auth').style.letterSpacing='0.1em'"
+          onmouseleave="document.getElementById('reg-auth').style.webkitTextSecurity='disc';document.getElementById('reg-auth').style.letterSpacing='0.1em'">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         </span>
       </div>
