@@ -43,13 +43,6 @@
 /* [light-theme.css] body.light-theme .modal label { color:#475569; } */
 /* [light-theme.css] body.light-theme .overlay { background:rgba(15,23,42,.45); } */
 /* [light-theme.css] body.light-theme .search-input { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
-/* [light-theme.css] body.light-theme .search-leader-input { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
-/* [light-theme.css] body.light-theme .search-leader-input::placeholder { color:#94a3b8; } */
-/* [light-theme.css] body.light-theme .search-leader-dropdown { background:#fff; border-color:#E2E8F0; } */
-/* [light-theme.css] body.light-theme .search-leader-option { border-bottom-color:#F1F5F9; } */
-/* [light-theme.css] body.light-theme .search-leader-option:hover { background:#F4F7FB; } */
-/* [light-theme.css] body.light-theme .slo-name { color:#0f172a; } */
-/* [light-theme.css] body.light-theme .slo-role { color:#64748b; } */
 /* [light-theme.css] body.light-theme .dept-chip { background:#fff; border-color:#CBD5E1; color:#64748b; } */
 /* [light-theme.css] body.light-theme .dept-chip.active { background:rgba(37,99,235,.1); border-color:#2563eb; color:#2563eb; } */
 /* [light-theme.css] body.light-theme .hierarquia-label.lider { background:rgba(100,116,139,.08); color:#475569; border-color:rgba(100,116,139,.25); } */
@@ -108,13 +101,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   font-size:13px; padding:8px 36px 8px 34px;
   outline:none; transition:border-color .2s, box-shadow .2s;
   width:240px;
-  /* Remove estilo nativo do type=search (lupa e X do browser) */
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  appearance:none;
 }
-.search-leader-input::-webkit-search-cancel-button,
-.search-leader-input::-webkit-search-decoration { display:none; }
 .search-leader-input:focus {
   border-color:var(--accent);
   box-shadow:0 0 0 3px rgba(79,142,247,.12);
@@ -652,15 +639,11 @@ body.light-theme .leader-apt-banner {
     <!-- ★ NOVO: Campo de busca de líder -->
     <div class="search-leader-wrap">
       <span class="search-leader-icon">🔍</span>
-      <input class="search-leader-input" type="search" id="search-leader-input"
+      <input class="search-leader-input" type="text" id="search-leader-input"
         placeholder="Buscar líder por nome..."
         oninput="onSearchLeaderInput(this.value)"
         onkeydown="onSearchLeaderKey(event)"
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="none"
-        spellcheck="false"
-        name="busca-nagumo-lideres">
+        autocomplete="off">
       <button class="search-leader-clear" id="search-leader-clear"
         onclick="clearLeaderSearch()" title="Limpar busca">✕</button>
       <div class="search-leader-dropdown" id="search-leader-dropdown"></div>
