@@ -138,10 +138,11 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 
 /* badges ação */
 .acao-badge { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:7px; font-size:11px; font-weight:700; white-space:nowrap; }
-.acao-criou  { background:rgba(52,211,153,.15);  color:#34d399; border:1px solid rgba(52,211,153,.3);  }
-.acao-editou { background:rgba(79,142,247,.15);  color:#4f8ef7; border:1px solid rgba(79,142,247,.3);  }
-.acao-excluiu{ background:rgba(248,113,113,.15); color:#f87171; border:1px solid rgba(248,113,113,.3); }
-.acao-login  { background:rgba(251,191,36,.15);  color:#fbbf24; border:1px solid rgba(251,191,36,.3);  }
+.acao-criou    { background:rgba(52,211,153,.15);  color:#34d399; border:1px solid rgba(52,211,153,.3);  }
+.acao-editou   { background:rgba(79,142,247,.15);  color:#4f8ef7; border:1px solid rgba(79,142,247,.3);  }
+.acao-excluiu  { background:rgba(248,113,113,.15); color:#f87171; border:1px solid rgba(248,113,113,.3); }
+.acao-login    { background:rgba(251,191,36,.15);  color:#fbbf24; border:1px solid rgba(251,191,36,.3);  }
+.acao-desligou { background:rgba(244,114,182,.15); color:#f472b6; border:1px solid rgba(244,114,182,.3); }
 .acao-outro  { background:rgba(167,139,250,.15); color:#a78bfa; border:1px solid rgba(167,139,250,.3); }
 
 .log-modulo { font-size:13px; color:var(--text); }
@@ -209,6 +210,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
       <option value="criou">Criação</option>
       <option value="editou">Edição</option>
       <option value="excluiu">Exclusão</option>
+      <option value="desligou">Desligamento</option>
       <option value="login">Login</option>
     </select>
     <select class="filter-select" id="filter-modulo" onchange="renderLog()">
@@ -231,6 +233,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
     <div class="filter-chip"        onclick="setTipo(this,'criou')">Criação</div>
     <div class="filter-chip"        onclick="setTipo(this,'editou')">Edição</div>
     <div class="filter-chip"        onclick="setTipo(this,'excluiu')">Exclusão</div>
+    <div class="filter-chip"        onclick="setTipo(this,'desligou')">🔴 Desligamento</div>
   </div>
 
   <!-- Log -->
@@ -375,11 +378,12 @@ function buildRow(l) {
   // Badge ação
   let acaoCls, acaoEmoji, acaoLabel;
   switch(l.acao) {
-    case 'criou':   acaoCls='acao-criou';   acaoEmoji='＋';  acaoLabel='Criou';   break;
-    case 'editou':  acaoCls='acao-editou';  acaoEmoji='✏️';  acaoLabel='Editou';  break;
-    case 'excluiu': acaoCls='acao-excluiu'; acaoEmoji='🗑️';  acaoLabel='Excluiu'; break;
-    case 'login':   acaoCls='acao-login';   acaoEmoji='🔑';  acaoLabel='Login';   break;
-    default:        acaoCls='acao-outro';   acaoEmoji='·';   acaoLabel=l.acao||'—';
+    case 'criou':    acaoCls='acao-criou';    acaoEmoji='＋';  acaoLabel='Criou';       break;
+    case 'editou':   acaoCls='acao-editou';   acaoEmoji='✏️';  acaoLabel='Editou';      break;
+    case 'excluiu':  acaoCls='acao-excluiu';  acaoEmoji='🗑️';  acaoLabel='Excluiu';     break;
+    case 'login':    acaoCls='acao-login';    acaoEmoji='🔑';  acaoLabel='Login';       break;
+    case 'desligou': acaoCls='acao-desligou'; acaoEmoji='🔴';  acaoLabel='Desligamento';break;
+    default:         acaoCls='acao-outro';    acaoEmoji='·';   acaoLabel=l.acao||'—';
   }
 
   return `

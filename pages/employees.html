@@ -1432,11 +1432,83 @@ async function saveEmployee() {
 
     store.employees[idx] = { ...old, ...dataFields, historico_cargos };
 
+    // ── Detecta ações específicas para o log de auditoria ──────────────────
     if (novoDemitido && !eraDemitido) {
-      await registrarLog('desligou', 'Funcionários', `Desligamento de <strong>${name}</strong>`);
+      // DESLIGAMENTO
+      const dtFmt = dataDemissao
+        ? new Date(dataDemissao + 'T00:00:00').toLocaleDateString('pt-BR')
+        : '—';
+      await registrarLog('desligou', 'Funcionários',
+        `🔴 Desligamento de <strong>${name}</strong> — Data: ${dtFmt}` +
+        (motivoDemissao ? ` — Motivo: ${motivoDemissao}` : '')
+      );
       showToast('🔴 Funcionário desligado e movido para desligados.');
+
     } else {
-      await registrarLog('editou', 'Funcionários', `Editou: <strong>${name}</strong>`);
+      // Monta lista de mudanças detectadas
+      const mudancas = [];
+
+      // Afastamento — iniciou
+      if (dataFields.afastado && !old.afastado) {
+        const dt = dataFields.data_afastamento
+          ? new Date(dataFields.data_afastamento + 'T00:00:00').toLocaleDateString('pt-BR')
+          : '—';
+        mudancas.push(`🚫 <strong>Afastado</strong> a partir de ${dt}`);
+      }
+      // Afastamento — encerrou
+      if (!dataFields.afastado && old.afastado) {
+        mudancas.push(`✅ <strong>Retornou do afastamento</strong>`);
+      }
+
+      // Férias — iniciou
+      if (dataFields.ferias && !old.ferias) {
+        const ini = dataFields.data_ferias_inicio
+          ? new Date(dataFields.data_ferias_inicio + 'T00:00:00').toLocaleDateString('pt-BR')
+          : '—';
+        const fim = dataFields.data_ferias_fim
+          ? new Date(dataFields.data_ferias_fim + 'T00:00:00').toLocaleDateString('pt-BR')
+          : '—';
+        mudancas.push(`🏖️ <strong>Férias</strong> de ${ini} até ${fim}`);
+      }
+      // Férias — encerrou
+      if (!dataFields.ferias && old.ferias) {
+        mudancas.push(`✅ <strong>Retornou das férias</strong>`);
+      }
+      // Férias — datas alteradas (já estava de férias)
+      if (dataFields.ferias && old.ferias &&
+          (dataFields.data_ferias_inicio !== old.data_ferias_inicio ||
+           dataFields.data_ferias_fim    !== old.data_ferias_fim)) {
+        const ini = dataFields.data_ferias_inicio
+          ? new Date(dataFields.data_ferias_inicio + 'T00:00:00').toLocaleDateString('pt-BR')
+          : '—';
+        const fim = dataFields.data_ferias_fim
+          ? new Date(dataFields.data_ferias_fim + 'T00:00:00').toLocaleDateString('pt-BR')
+          : '—';
+        mudancas.push(`🏖️ <strong>Férias atualizadas</strong>: ${ini} → ${fim}`);
+      }
+
+      // Cargo
+      if (oldRole && newRole && oldRole !== newRole) {
+        mudancas.push(`💼 Cargo: <span class="de">${oldRole}</span><span class="seta">→</span><span class="para">${newRole}</span>`);
+      }
+      // Departamento
+      if (old.dept && newDept && old.dept !== newDept) {
+        mudancas.push(`🏢 Dept: <span class="de">${old.dept}</span><span class="seta">→</span><span class="para">${newDept}</span>`);
+      }
+      // Filial
+      if (old.filial && newFilial && old.filial !== newFilial) {
+        mudancas.push(`🏭 Filial: <span class="de">${old.filial}</span><span class="seta">→</span><span class="para">${newFilial}</span>`);
+      }
+      // Desempenho
+      if (old.perf !== dataFields.perf) {
+        mudancas.push(`🎯 Desempenho: <span class="de">${old.perf}%</span><span class="seta">→</span><span class="para">${dataFields.perf}%</span>`);
+      }
+
+      const detalhe = mudancas.length
+        ? `<strong>${name}</strong> — ${mudancas.join(' · ')}`
+        : `<strong>${name}</strong> — dados atualizados`;
+
+      await registrarLog('editou', 'Funcionários', detalhe);
       showToast('✅ Funcionário atualizado!');
     }
   } else {
