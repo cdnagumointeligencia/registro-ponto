@@ -386,7 +386,7 @@ async function renderQuadroContent() {
   const filial  = store.filiais.find(f => f.nome === filialAtiva);
   if (!filial) return;
 
-  const allEmps  = store.employees || [];
+  const allEmps  = (store.employees || []).filter(e => !e.demitido);
   const empsFilial = allEmps.filter(e =>
     e.filial === filialAtiva || e.filial_id === filial.id
   );
@@ -617,7 +617,7 @@ async function renderQuadroContent() {
 async function atualizarResumo() {
   const store      = await getStore();
   const empsFilial = (store.employees||[]).filter(e =>
-    e.filial === filialAtiva
+    !e.demitido && e.filial === filialAtiva
   );
   const totalInput = document.getElementById('input-total-quadro');
   const total      = parseInt(totalInput?.value) || 0;
