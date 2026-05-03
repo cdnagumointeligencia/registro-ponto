@@ -914,9 +914,14 @@ async function renderGrade() {
     const pontoMap = _allPonto[_key] || {};
     const ini      = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
 
-    // ── Verifica se o funcionário está globalmente bloqueado (afastado ou de férias HOJE) ──
-    // Usado só para colorir o avatar
+    // ── Verifica se o funcionário está globalmente bloqueado (afastado ou de férias) ──
+    // bloqHoje → afeta visual do avatar
+    // bloqFuncionario → bloqueia TODA a linha para edição
     const { bloqueado: bloqHoje, motivo: motivoHoje } = isEmpBloqueado(emp);
+
+    // Bloqueia toda a linha quando o funcionário está afastado ou de férias,
+    // independentemente do dia — nenhum dia pode ser editado nesses casos.
+    const bloqFuncionario = bloqHoje;
 
     const avatarStyle = bloqHoje
       ? motivoHoje==='afastado'
@@ -964,8 +969,6 @@ async function renderGrade() {
       // ── Bloqueio POR DIA (afastado/férias no período) ──
       // SEMPRE bloqueia o dia, mesmo que haja dado salvo — não permite edição
       const bloqDia  = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, d);
-      // canEdit é false para qualquer dia dentro do período de afastamento/férias
-      const canEdit  = podeEditar && !bloqDia;
       const colCls   = isDom ? 'domingo-col' : isSab ? 'sabado-col' : '';
 
       // ── DIA BLOQUEADO POR AFASTAMENTO OU FÉRIAS ──
@@ -1017,6 +1020,12 @@ async function renderGrade() {
         return;
       }
 
+      // ── DIA BLOQUEADO PORQUE O FUNCIONÁRIO ESTÁ AFASTADO/FÉRIAS (toda a linha) ──
+      // Aplica-se a dias que NÃO têm um status de afastamento/férias gravado,
+      // mas que pertencem ao mês de um funcionário com bloqueio ativo.
+      // Exibe o dia no status atual (ou vazio) mas sem permitir edição.
+      const canEdit  = podeEditar && !bloqDia && !bloqFuncionario;
+
       // ── DOMINGO (não bloqueado) ──
       if (isDom) {
         if (statusSalvo === 'presente') {
@@ -1039,7 +1048,7 @@ async function renderGrade() {
         } else {
           tbody += `<td class="day-cell domingo-col">
             <div class="status-dot domingo-auto"
-              title="Domingo — clique para marcar presença/bônus"
+              title="${bloqFuncionario ? (motivoHoje === 'afastado' ? 'Linha bloqueada — funcionário afastado' : 'Linha bloqueada — funcionário em férias') : 'Domingo — clique para marcar presença/bônus'}"
               ${canEdit ? `onclick="showCtxMenu(event,${emp.id},${d},'vazio')"` : ''}>☀️</div>
           </td>`;
         }
@@ -1068,7 +1077,7 @@ async function renderGrade() {
         } else {
           tbody += `<td class="day-cell sabado-col">
             <div class="status-dot sabado-auto"
-              title="Sábado — clique para marcar"
+              title="${bloqFuncionario ? (motivoHoje === 'afastado' ? 'Linha bloqueada — funcionário afastado' : 'Linha bloqueada — funcionário em férias') : 'Sábado — clique para marcar'}"
               ${canEdit ? `onclick="showCtxMenu(event,${emp.id},${d},'vazio')"` : ''}></div>
           </td>`;
         }
@@ -1105,7 +1114,11 @@ async function renderGrade() {
 
       const sm       = statusEfetivo !== 'vazio' ? STATUS_META[statusEfetivo] : null;
       const dotStyle = sm ? `background:${sm.bg};border-color:${sm.border};color:${sm.cor}` : '';
-      const dotTitle = sm ? sm.label : 'Clique para registrar';
+      const dotTitle = bloqFuncionario
+        ? (motivoHoje === 'afastado'
+            ? `${sm?.label || '—'} — linha bloqueada: funcionário afastado`
+            : `${sm?.label || '—'} — linha bloqueada: funcionário em férias`)
+        : (sm ? sm.label : 'Clique para registrar');
       const emoji    = sm ? sm.emoji : '';
 
       tbody += `<td class="day-cell">
