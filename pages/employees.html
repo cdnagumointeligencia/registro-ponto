@@ -1998,11 +1998,13 @@ async function gerarRelatorioPDF(id) {
   };
 
   // ── Seção título premium ──────────────────────────────
-  const sectionHeader = (title, icon, yy) => {
-    // linha esquerda colorida
+  const sectionHeader = (title, _icon, yy) => {
+    // barra vermelha esquerda
     fl(RED); doc.rect(lm, yy - 1, 3, 6, 'F');
+    // quadrado decorativo (substitui icone Unicode)
+    fl(NAVY2); doc.rect(lm + 5, yy + 0.5, 3, 3, 'F');
     sf('bold', 9, NAVY);
-    doc.text(icon + ' ' + title.toUpperCase(), lm + 6, yy + 3.5);
+    doc.text(title.toUpperCase(), lm + 11, yy + 3.5);
     // linha fina abaixo
     dr(BORDER, 0.3);
     doc.line(lm, yy + 6.5, rm, yy + 6.5);
@@ -2039,7 +2041,7 @@ async function gerarRelatorioPDF(id) {
   sf('normal', 8.5, [180, 200, 225]);
   doc.text('Departamento de Recursos Humanos', lm + 10, 23);
   sf('normal', 7, [120, 150, 185]);
-  doc.text('Sistema Integrado de Gestão de Pessoas', lm + 10, 30);
+  doc.text('Sistema Integrado de Gestao de Pessoas', lm + 10, 30);
 
   // Badge tipo doc — canto direito
   fl(RED); doc.roundedRect(rm - 58, 12, 58, 14, 2, 2, 'F');
@@ -2072,15 +2074,15 @@ async function gerarRelatorioPDF(id) {
   // Nome e informações
   const nx = avX + avR*2 + 10;
   sf('bold', 22, NAVY);
-  doc.text(emp.name || '—', nx, 66);
+  doc.text(emp.name || '-', nx, 66);
   sf('bold', 10, RED);
-  doc.text(emp.role || 'Cargo não informado', nx, 74);
+  doc.text(emp.role || 'Cargo nao informado', nx, 74);
   sf('normal', 8.5, MUTED);
-  const infoStr = [emp.dept, emp.filial, emp.turno].filter(Boolean).join('  ·  ');
+  const infoStr = [emp.dept, emp.filial, emp.turno].filter(Boolean).join('  /  ');
   if (infoStr) doc.text(infoStr, nx, 81);
   if (emp.matricula) {
     sf('normal', 7.5, GRAY);
-    doc.text('Matrícula: ' + emp.matricula, nx, 88);
+    doc.text('Matricula: ' + emp.matricula, nx, 88);
   }
 
   // Badge status DESLIGADO
@@ -2150,8 +2152,8 @@ async function gerarRelatorioPDF(id) {
 
   // Grade de competências — 2 colunas
   addPage(60);
-  const APT_LABELS_PDF = {qual:'Qualidade',prio:'Proatividade',know:'Conhecimento',comm:'Comunicação',prod:'Produtividade',assid:'Assiduidade',org:'Organização',equip:'Trabalho em Equipe',cria:'Criatividade',motv:'Motivação'};
-  const APT_ICONS_PDF  = {qual:'✦',prio:'◆',know:'■',comm:'●',prod:'▲',assid:'◇',org:'▪',equip:'◎',cria:'★',motv:'▶'};
+  const APT_LABELS_PDF = {qual:'Qualidade',prio:'Proatividade',know:'Conhecimento',comm:'Comunicacao',prod:'Produtividade',assid:'Assiduidade',org:'Organizacao',equip:'Trab. em Equipe',cria:'Criatividade',motv:'Motivacao'};
+  // Sem icones Unicode — usamos pequenos retangulos coloridos desenhados via doc.rect()
   const colW2 = pw / 2 - 3;
 
   APT_KEYS_PDF.forEach((k, i) => {
@@ -2167,9 +2169,8 @@ async function gerarRelatorioPDF(id) {
     if (row % 2 === 0 && col === 0) {
       fl(BG); doc.roundedRect(lm, by, pw, 10, 1, 1, 'F');
     }
-    // Ícone
-    sf('bold', 7, barColor);
-    doc.text(APT_ICONS_PDF[k]||'·', bx + 1, by + 6.5);
+    // Quadrado colorido (substitui icone Unicode — compativel com todas as fontes)
+    fl(barColor); doc.rect(bx + 1, by + 3.5, 2.5, 2.5, 'F');
     // Label
     sf('normal', 7.5, TEXT);
     doc.text(APT_LABELS_PDF[k], bx + 5, by + 6.5);
@@ -2197,7 +2198,7 @@ async function gerarRelatorioPDF(id) {
     fl(RED); doc.roundedRect(lm, y, 4, boxH, 1.5, 1.5, 'F');
     // Texto
     sf('bold', 7.5, RED);
-    doc.text('DECLARAÇÃO OFICIAL', lm + 9, y + 7);
+    doc.text('DECLARACAO OFICIAL', lm + 9, y + 7);
     sf('normal', 8.5, TEXT);
     doc.text(mLines, lm + 9, y + 13.5);
     y += boxH + 8;
@@ -2216,9 +2217,9 @@ async function gerarRelatorioPDF(id) {
     y += 12;
   } else {
     const TIPO_CFG2 = {
-      admissao:      { label:'ADMISSÃO',      color: BLUE,   dot:[2,54,101]  },
-      promocao:      { label:'PROMOÇÃO',      color: GREEN,  dot:[10,124,78] },
-      transferencia: { label:'TRANSFERÊNCIA', color: YELLOW, dot:[180,83,9]  },
+      admissao:      { label:'ADMISSAO',      color: BLUE,   dot:[2,54,101]  },
+      promocao:      { label:'PROMOCAO',      color: GREEN,  dot:[10,124,78] },
+      transferencia: { label:'TRANSFERENCIA', color: YELLOW, dot:[180,83,9]  },
       desligamento:  { label:'DESLIGAMENTO',  color: RED,    dot:[212,1,56]  },
     };
 
@@ -2226,7 +2227,7 @@ async function gerarRelatorioPDF(id) {
       addPage(16);
       const tc  = TIPO_CFG2[h.tipo] || { label:'REGISTRO', color: MUTED, dot: MUTED };
       const dH  = h.data ? new Date(h.data+'T00:00:00').toLocaleDateString('pt-BR') : '—';
-      const inf = [h.dept, h.filial, h.turno].filter(Boolean).join(' · ');
+      const inf = [h.dept, h.filial, h.turno].filter(Boolean).join(' / ');
       const isLast = hi === hist.length - 1;
 
       // Linha do timeline
@@ -2240,7 +2241,7 @@ async function gerarRelatorioPDF(id) {
       doc.text(tc.label, lm + 13, y + 5.5);
       // Cargo
       sf('bold', 9, NAVY);
-      doc.text(h.cargo || '—', lm + 13, y + 10);
+      doc.text(h.cargo || '-', lm + 13, y + 10);
       // Info contextual
       if (inf) { sf('normal', 7, MUTED); doc.text(inf, lm + 60, y + 10); }
       // Data
@@ -2263,7 +2264,7 @@ async function gerarRelatorioPDF(id) {
     dr([150, 220, 180], 0.3); doc.roundedRect(lm, y, pw, 14, 2, 2, 'S');
     fl(GREEN); doc.roundedRect(lm, y, 4, 14, 1.5, 1.5, 'F');
     sf('bold', 8.5, GREEN);
-    doc.text('Excelente assiduidade — nenhuma falta ou atestado registrado.', lm + 9, y + 9);
+    doc.text('Excelente assiduidade - nenhuma falta ou atestado registrado.', lm + 9, y + 9);
     y += 20;
   } else {
     for (const ano of anosComDados2) {
@@ -2279,7 +2280,7 @@ async function gerarRelatorioPDF(id) {
       const anoF2 = meses.reduce((a,b)=>a+b.faltas,0);
       const anoA2 = meses.reduce((a,b)=>a+b.atestados,0);
       sf('normal', 7.5, [180, 210, 240]);
-      doc.text(`${anoF2} falta${anoF2!==1?'s':''} · ${anoA2} atestado${anoA2!==1?'s':''}`, rm - 4, y + 5.5, {align:'right'});
+      doc.text(`${anoF2} falta${anoF2!==1?'s':''} / ${anoA2} atestado${anoA2!==1?'s':''}`, rm - 4, y + 5.5, {align:'right'});
       y += 10;
 
       comDados2.forEach((fm, fi) => {
@@ -2332,7 +2333,7 @@ async function gerarRelatorioPDF(id) {
 
   if (!ocEmp.length) {
     sf('italic', 8.5, MUTED);
-    doc.text('Nenhuma ocorrência registrada durante o vínculo.', lm + 4, y + 5);
+    doc.text('Nenhuma ocorrencia registrada durante o vinculo.', lm + 4, y + 5);
     y += 14;
   } else {
     ocEmp.forEach((oc, oi) => {
@@ -2354,7 +2355,7 @@ async function gerarRelatorioPDF(id) {
       fl([...ocCor.map(v=>Math.min(255,v+160))]);
       doc.roundedRect(lm+7, y+2, badgeW, 5, 1, 1, 'F');
       sf('bold', 6.5, ocCor);
-      doc.text((oc.tipo||'—').toUpperCase(), lm+7+badgeW/2, y+5.5, {align:'center'});
+      doc.text((oc.tipo||'-').toUpperCase(), lm+7+badgeW/2, y+5.5, {align:'center'});
 
       // Data
       sf('normal', 7, MUTED);
@@ -2362,7 +2363,7 @@ async function gerarRelatorioPDF(id) {
 
       // Responsável
       sf('normal', 6.5, MUTED);
-      doc.text('por: ' + (oc.respName||'—'), rm - 2, y + 10.5, {align:'right'});
+      doc.text('por: ' + (oc.respName||'-'), rm - 2, y + 10.5, {align:'right'});
 
       // Descrição
       if (dL.length) {
@@ -2390,13 +2391,13 @@ async function gerarRelatorioPDF(id) {
     sf('bold', 7.5, NAVY);
     doc.text('CD NAGUMO', lm + 2, 285);
     sf('normal', 6.5, MUTED);
-    doc.text('Departamento de Recursos Humanos · Sistema de Gestão de Pessoas', lm + 2, 290);
-    doc.text('Documento gerado eletronicamente — não requer assinatura física', lm + 2, 294.5);
+    doc.text('CD NAGUMO - RH Performance', lm + 2, 290);
+    doc.text('Documento gerado eletronicamente - nao requer assinatura fisica', lm + 2, 294.5);
 
     sf('bold', 7.5, NAVY);
     doc.text(emp.name, rm, 283, {align:'right'});
     sf('normal', 6.5, MUTED);
-    doc.text('Desligado em ' + (emp.data_demissao ? new Date(emp.data_demissao+'T00:00:00').toLocaleDateString('pt-BR') : '—'), rm, 288, {align:'right'});
+    doc.text('Desligado em ' + (emp.data_demissao ? new Date(emp.data_demissao+'T00:00:00').toLocaleDateString('pt-BR') : '-'), rm, 288, {align:'right'});
 
     // Paginação
     sf('bold', 6.5, [200, 215, 230]);
@@ -2414,12 +2415,12 @@ async function gerarRelatorioPDF(id) {
         sf('normal', 7, MUTED);
         doc.text('Assinatura do Colaborador', lm + 39, sigY + 24, {align:'center'});
         sf('bold', 7, TEXT);
-        doc.text(emp.name || '—', lm + 39, sigY + 28, {align:'center'});
+        doc.text(emp.name || '-', lm + 39, sigY + 28, {align:'center'});
 
         // Assinatura RH
         doc.line(rm - 78, sigY + 20, rm, sigY + 20);
         sf('normal', 7, MUTED);
-        doc.text('Responsável de RH', rm - 39, sigY + 24, {align:'center'});
+        doc.text('Responsavel de RH', rm - 39, sigY + 24, {align:'center'});
         sf('bold', 7, TEXT);
         doc.text('Departamento de Recursos Humanos', rm - 39, sigY + 28, {align:'center'});
 
