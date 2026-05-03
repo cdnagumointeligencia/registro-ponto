@@ -727,23 +727,26 @@ function getNomeFeriado(dia, mes) {
 
 // ════════════════════════════════════════════════════════
 // BLOQUEIO AFASTADO/FÉRIAS — por dia específico
+// Bloqueia QUALQUER edição nos dias do período de afastamento ou férias.
+// Para afastado sem data-fim: bloqueia do início do afastamento em diante
+// (dias passados e futuros do mês exibido).
 // ════════════════════════════════════════════════════════
 function getStatusDiaBloqueado(emp, ano, mes, dia) {
   // mes: 0-based
-  const dt  = new Date(ano, mes, dia); dt.setHours(0,0,0,0);
-  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const dt = new Date(ano, mes, dia); dt.setHours(0,0,0,0);
 
   // ── Afastado ──
-  // Marca do início do afastamento até HOJE — dias futuros ficam em branco
+  // Bloqueia todos os dias a partir da data de início do afastamento,
+  // sem limite de data — afastado segue bloqueado até ser desmarcado no cadastro.
   if (emp.afastado) {
     const inicio = emp.data_afastamento
       ? new Date(emp.data_afastamento + 'T00:00:00')
-      : new Date(0);
-    if (dt >= inicio && dt <= hoje) return 'afastado';
+      : new Date(0);  // sem data = afastado desde sempre
+    if (dt >= inicio) return 'afastado';
   }
 
   // ── Férias ──
-  // Intervalo fixo início/fim (pode incluir dias futuros pois férias são programadas)
+  // Bloqueia o intervalo exato início/fim configurado no cadastro.
   if (emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {
     const ini = new Date(emp.data_ferias_inicio + 'T00:00:00');
     const fim = new Date(emp.data_ferias_fim    + 'T00:00:00');
@@ -751,6 +754,16 @@ function getStatusDiaBloqueado(emp, ano, mes, dia) {
   }
 
   return null;
+}
+
+// Retorna true se o funcionário está TOTALMENTE bloqueado no mês exibido
+// (afastado ou de férias cobrindo todo o período do mês ativo)
+function isMesTotalmenteBloqueado(emp, ano, mes) {
+  const primeiro = new Date(ano, mes, 1);
+  const ultimo   = new Date(ano, mes+1, 0);
+  // Basta verificar o primeiro e o último dia — se ambos bloqueados, o mês inteiro é
+  return !!(getStatusDiaBloqueado(emp, ano, mes, 1) &&
+            getStatusDiaBloqueado(emp, ano, mes, ultimo.getDate()));
 }
 
 // ════════════════════════════════════════════════════════
@@ -811,35 +824,35 @@ async function renderGrade() {
     const pontoMap = _allPonto[_key] || {};
     const ini      = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
 
-    // ── Verifica se o funcionário está globalmente bloqueado (afastado ou de férias HOJE) ──
-    // Usado só para colorir o avatar
+    // ── Verifica bloqueio global (hoje) e bloqueio no mês exibido ──
     const { bloqueado: bloqHoje, motivo: motivoHoje } = isEmpBloqueado(emp);
+    const bloqMes1     = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, 1);
+    const mesBloqTotal = isMesTotalmenteBloqueado(emp, anoAtivo, mesAtivo);
+    const motivoBloqMes = bloqMes1 === 'afastado' ? 'afastado'
+                        : bloqMes1 === 'ferias'   ? 'ferias'
+                        : motivoHoje || null;
 
-    const avatarStyle = bloqHoje
-      ? motivoHoje==='afastado'
-        ? 'background:linear-gradient(135deg,#ef4444,#fb923c)'
-        : 'background:linear-gradient(135deg,#22d3ee,#4f8ef7)'
+    const avatarStyle = (bloqHoje || bloqMes1)
+      ? (motivoBloqMes === 'afastado'
+          ? 'background:linear-gradient(135deg,#ef4444,#fb923c)'
+          : 'background:linear-gradient(135deg,#22d3ee,#4f8ef7)')
       : '';
 
-    // ── Badge de status no cabeçalho da linha ──
-    const empBadge = bloqHoje
-      ? motivoHoje==='afastado'
-        ? `<span style="
-            margin-left:6px;padding:2px 7px;border-radius:20px;
-            font-size:9px;font-weight:700;
-            background:rgba(239,68,68,.18);color:#ef4444;
-            border:1px solid rgba(239,68,68,.35);
-            white-space:nowrap;flex-shrink:0">🚫 Afastado</span>`
-        : `<span style="
-            margin-left:6px;padding:2px 7px;border-radius:20px;
-            font-size:9px;font-weight:700;
-            background:rgba(34,211,238,.14);color:#22d3ee;
-            border:1px solid rgba(34,211,238,.35);
-            white-space:nowrap;flex-shrink:0">🏖️ Férias</span>`
-      : '';
+    // ── Badge de status na linha ──
+    const _badgeMot = motivoBloqMes || motivoHoje;
+    const empBadge = _badgeMot === 'afastado'
+      ? `<span style="margin-left:6px;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:700;background:rgba(239,68,68,.18);color:#ef4444;border:1px solid rgba(239,68,68,.35);white-space:nowrap;flex-shrink:0">🚫 Afastado</span>`
+      : _badgeMot === 'ferias'
+        ? `<span style="margin-left:6px;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:700;background:rgba(34,211,238,.14);color:#22d3ee;border:1px solid rgba(34,211,238,.35);white-space:nowrap;flex-shrink:0">🏖️ Férias</span>`
+        : '';
 
-    tbody += `<tr class="emp-row" style="${bloqHoje ? 'opacity:.72' : ''}">
-      <td class="emp-info-col">
+    // Linha totalmente bloqueada = pointer-events:none impede qualquer clique
+    const trStyle = mesBloqTotal
+      ? 'opacity:.55;pointer-events:none;user-select:none'
+      : (bloqHoje || bloqMes1) ? 'opacity:.72' : '';
+
+    tbody += `<tr class="emp-row" style="${trStyle}" ${mesBloqTotal ? `title="Edição bloqueada — funcionário ${motivoBloqMes === 'afastado' ? 'afastado' : 'em férias'}"` : ''}>
+      <td class="emp-info-col" style="${mesBloqTotal ? 'cursor:not-allowed' : ''}">
         <div class="emp-mini-wrap">
           <div class="emp-mini-avatar" style="${avatarStyle}">${ini}</div>
           <div style="flex:1;min-width:0">
@@ -1036,13 +1049,15 @@ function showCtxMenu(e, empId, dia, statusAtual) {
 
 async function setStatusCtx(status) {
   if (ctxEmpId === null) return;
-  const store    = await getStore();
-  const emp      = (store.employees||[]).find(e=>String(e.id)===String(ctxEmpId));
 
-  // Proteção extra: verifica se o funcionário está afastado/de férias neste dia
-  const bloqDia = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, ctxDia);
-  if (bloqDia) {
-    const motivo = bloqDia === 'ferias' ? 'férias' : 'afastamento';
+  // Usa cache _store para não fazer nova requisição ao Firestore
+  const emp = (_store?.employees||[]).find(e=>String(e.id)===String(ctxEmpId));
+
+  // Proteção tripla: bloqueia se afastado ou de férias no dia OU no mês inteiro
+  const bloqDia  = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, ctxDia);
+  const bloqGlob = emp?.afastado || (emp?.ferias && emp?.data_ferias_inicio && emp?.data_ferias_fim);
+  if (bloqDia || bloqGlob) {
+    const motivo = (bloqDia === 'ferias' || emp?.ferias) ? 'férias' : 'afastamento';
     showToast(`🚫 Edição bloqueada — ${emp?.name||'funcionário'} está em ${motivo}.`, 'warn');
     closeCtx();
     return;
