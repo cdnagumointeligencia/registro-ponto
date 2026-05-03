@@ -565,9 +565,13 @@ body.light-theme .leader-apt-banner {
     <!-- Busca simples — mesmo padrão de employees.html -->
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input class="search-input" type="text" id="search-leader-input"
+      <input class="search-input" type="search" id="search-leader-input"
         placeholder="Buscar líder por nome..."
         autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        role="searchbox"
         oninput="renderLeaders()">
     </div>
 
@@ -768,6 +772,13 @@ const ORDEM_IDX        = ['lider','encarregado','coordenacao','gerencia','direto
 document.addEventListener('DOMContentLoaded', async () => {
   currentUser = await requireSession();
   if (!currentUser) return;
+
+  // Bloqueia autocomplete de senha no campo de busca (Chrome/Edge ignoram autocomplete="off" em type=text)
+  const searchInput = document.getElementById('search-leader-input');
+  if (searchInput) {
+    searchInput.setAttribute('autocomplete', 'new-password');
+    searchInput.setAttribute('name', 'search-' + Math.random().toString(36).slice(2));
+  }
 
   initTheme();
   initSidebar('leaders', currentUser);
