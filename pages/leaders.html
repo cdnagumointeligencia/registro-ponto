@@ -85,71 +85,23 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   margin-bottom:22px; flex-wrap:wrap;
 }
 
-/* Campo de busca de líder */
-.search-leader-wrap {
-  position:relative; flex-shrink:0;
-}
-.search-leader-icon {
-  position:absolute; left:11px; top:50%;
-  transform:translateY(-50%);
+/* Campo de busca — mesmo padrão de employees.html */
+.search-wrap { position:relative; }
+.search-icon {
+  position:absolute; left:11px; top:50%; transform:translateY(-50%);
   color:var(--muted); font-size:14px; pointer-events:none;
-  z-index:1;
 }
-.search-leader-input {
-  background:var(--surface); border:1.5px solid var(--border);
+.search-input {
+  background:var(--surface); border:1px solid var(--border);
   border-radius:9px; color:var(--text); font-family:var(--font-body);
-  font-size:13px; padding:8px 36px 8px 34px;
-  outline:none; transition:border-color .2s, box-shadow .2s;
-  width:240px;
+  font-size:13px; padding:8px 12px 8px 34px; outline:none;
+  transition:border-color .2s; width:220px;
 }
-.search-leader-input:focus {
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px rgba(79,142,247,.12);
-}
-.search-leader-input::placeholder { color:var(--muted); }
-
-/* Botão limpar busca */
-.search-leader-clear {
-  position:absolute; right:10px; top:50%; transform:translateY(-50%);
-  background:var(--surface3); border:none; border-radius:50%;
-  width:18px; height:18px; display:none; align-items:center;
-  justify-content:center; cursor:pointer; font-size:9px;
-  color:var(--muted); transition:all .15s;
-}
-.search-leader-clear:hover { background:var(--accent); color:#fff; }
-.search-leader-clear.show { display:flex; }
-
-/* Dropdown de sugestões */
-.search-leader-dropdown {
-  position:absolute; top:calc(100% + 6px); left:0; right:0;
-  background:var(--surface2); border:1px solid var(--border);
-  border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.4);
-  z-index:500; overflow:hidden;
-  display:none; flex-direction:column;
-  max-height:260px; overflow-y:auto;
-}
-.search-leader-dropdown.open { display:flex; }
-.search-leader-option {
-  display:flex; align-items:center; gap:10px;
-  padding:10px 14px; cursor:pointer;
-  transition:background .12s; border-bottom:1px solid rgba(42,47,69,.4);
-}
-.search-leader-option:last-child { border-bottom:none; }
-.search-leader-option:hover { background:var(--surface3); }
-.search-leader-option.selected { background:rgba(79,142,247,.1); }
-.slo-avatar {
-  width:30px; height:30px; border-radius:50%; flex-shrink:0;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-head); font-size:10px; font-weight:800; color:#fff;
-}
-.slo-info { flex:1; min-width:0; }
-.slo-name { font-size:13px; font-weight:600; color:var(--text); }
-.slo-role { font-size:11px; color:var(--muted); }
-.slo-badge {
-  font-size:10px; font-weight:700; padding:2px 8px;
-  border-radius:20px; white-space:nowrap;
-}
+.search-input:focus { border-color:var(--accent); }
+.search-input::placeholder { color:var(--muted); }
+body.light-theme .search-input { background:#fff; border-color:#B0C4D4; color:#04152E; }
+body.light-theme .search-input::placeholder { color:#7A9AB5; }
+body.light-theme .search-input:focus { border-color:#D40138; }
 
 /* Chips de departamento */
 .dept-chip {
@@ -159,32 +111,6 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 }
 .dept-chip:hover  { border-color:var(--accent); color:var(--text); }
 .dept-chip.active { background:rgba(79,142,247,.15); border-color:var(--accent); color:var(--accent); }
-
-/* ════════════════════════════════════════════
-   BANNER DE BUSCA ATIVA
-════════════════════════════════════════════ */
-.search-active-banner {
-  display:none; align-items:center; gap:12px;
-  background:rgba(79,142,247,.08); border:1px solid rgba(79,142,247,.25);
-  border-radius:10px; padding:10px 16px; margin-bottom:16px;
-}
-.search-active-banner.show { display:flex; }
-.sab-avatar {
-  width:36px; height:36px; border-radius:50%; flex-shrink:0;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-head); font-size:12px; font-weight:800; color:#fff;
-}
-.sab-text { flex:1; }
-.sab-title { font-size:13px; font-weight:700; color:var(--text); }
-.sab-sub   { font-size:11px; color:var(--muted); margin-top:2px; }
-.sab-close {
-  background:transparent; border:1px solid var(--border);
-  border-radius:7px; padding:4px 10px; color:var(--muted);
-  font-family:var(--font-body); font-size:11px; font-weight:600;
-  cursor:pointer; transition:all .15s; display:flex; align-items:center; gap:5px;
-}
-.sab-close:hover { border-color:var(--red); color:var(--red); }
 
 /* ════════════════════════════════════════════
    HIERARQUIA — SEÇÕES
@@ -614,7 +540,7 @@ body.light-theme .leader-apt-banner {
   .main { margin-left:0; padding:16px; }
   .leaders-grid { grid-template-columns:1fr; }
   .form-grid { grid-template-columns:1fr; }
-  .search-leader-input { width:180px; }
+  .search-input { width:180px; }
   .tree-emp-cards { grid-template-columns:1fr; }
   .modal-tree { width:98vw; }
 }
@@ -633,35 +559,21 @@ body.light-theme .leader-apt-banner {
     <button class="btn btn-primary" id="btn-novo" onclick="openModal()">＋ Novo Líder</button>
   </div>
 
-  <!-- Filtros: Busca de líder + chips de dept -->
+  <!-- Filtros: Busca + chips de dept -->
   <div class="filter-bar">
 
-    <!-- ★ NOVO: Campo de busca de líder -->
-    <div class="search-leader-wrap">
-      <span class="search-leader-icon">🔍</span>
-      <input class="search-leader-input" type="text" id="search-leader-input"
+    <!-- Busca simples — mesmo padrão de employees.html -->
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" id="search-leader-input"
         placeholder="Buscar líder por nome..."
-        oninput="onSearchLeaderInput(this.value)"
-        onkeydown="onSearchLeaderKey(event)"
-        autocomplete="off">
-      <button class="search-leader-clear" id="search-leader-clear"
-        onclick="clearLeaderSearch()" title="Limpar busca">✕</button>
-      <div class="search-leader-dropdown" id="search-leader-dropdown"></div>
+        autocomplete="off"
+        oninput="renderLeaders()">
     </div>
 
     <!-- Chips de departamento -->
     <div id="dept-chips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
 
-  </div>
-
-  <!-- Banner do líder selecionado na busca -->
-  <div class="search-active-banner" id="search-active-banner">
-    <div class="sab-avatar" id="sab-avatar"></div>
-    <div class="sab-text">
-      <div class="sab-title" id="sab-title"></div>
-      <div class="sab-sub"  id="sab-sub"></div>
-    </div>
-    <button class="sab-close" onclick="clearLeaderSearch()">✕ Limpar filtro</button>
   </div>
 
   <!-- Grid de cards -->
@@ -866,11 +778,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const btnNovo = document.getElementById('btn-novo');
   if (btnNovo) btnNovo.style.display = perfil === 'admin_master' ? '' : 'none';
 
-  // Fecha dropdown ao clicar fora
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.search-leader-wrap')) closeSearchDropdown();
-  });
-
   buildDeptChips();
   renderLeaders();
 });
@@ -1023,153 +930,6 @@ function getLiderDoFuncionario(emp, store) {
 function calcLeaderScore(teamEmps) {
   if (!teamEmps.length) return 0;
   return +(teamEmps.reduce((s,e)=>s+calcAptMedia(e),0)/teamEmps.length).toFixed(1);
-}
-
-// ════════════════════════════════════════════════════════
-// ★ BUSCA DE LÍDER — Campo de pesquisa com dropdown
-// ════════════════════════════════════════════════════════
-function onSearchLeaderInput(val) {
-  _searchLeaderQuery = val.trim();
-  _dropdownIdx       = -1;
-
-  // Botão de limpar
-  const clearBtn = document.getElementById('search-leader-clear');
-  if (clearBtn) clearBtn.classList.toggle('show', val.length > 0);
-
-  if (!_searchLeaderQuery) {
-    closeSearchDropdown();
-    // Se tinha um líder selecionado, limpa apenas se o campo ficou vazio
-    if (_searchLeaderId) clearLeaderSearch();
-    return;
-  }
-
-  // Filtra líderes pelo nome (case-insensitive, acento-insensitive)
-  const store   = _store;
-  if (!store) return;
-
-  const query   = _searchLeaderQuery.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'');
-  const leaders = Object.values(store.users||{})
-    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master')
-    .filter(u => {
-      const name = (u.name||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'');
-      return name.includes(query);
-    })
-    .sort((a,b)=>a.name.localeCompare(b.name))
-    .slice(0,8);
-
-  renderSearchDropdown(leaders);
-}
-
-function renderSearchDropdown(leaders) {
-  const dd = document.getElementById('search-leader-dropdown');
-  if (!leaders.length) {
-    dd.innerHTML = `<div style="padding:14px 16px;font-size:12px;color:var(--muted)">Nenhum líder encontrado.</div>`;
-    dd.classList.add('open');
-    return;
-  }
-  dd.innerHTML = leaders.map((u,i) => {
-    const ini    = u.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-    const meta   = NIVEL_META[u.nivel||'lider'] || NIVEL_META.lider;
-    const isSelected = u.id === _searchLeaderId;
-    return `
-    <div class="search-leader-option ${isSelected?'selected':''}" data-id="${u.id}" data-idx="${i}"
-      onclick="selectLeaderFromDropdown('${u.id}')">
-      <div class="slo-avatar">${u.foto?`<img src="${u.foto}" style="width:30px;height:30px;border-radius:50%;object-fit:cover">`:ini}</div>
-      <div class="slo-info">
-        <div class="slo-name">${u.name}</div>
-        <div class="slo-role">${u.perfil?.funcao||meta.label}</div>
-      </div>
-      <span class="slo-badge" style="background:${meta.cor}18;color:${meta.cor};border:1px solid ${meta.cor}33">
-        ${meta.emoji} ${meta.label}
-      </span>
-    </div>`;
-  }).join('');
-  dd.classList.add('open');
-}
-
-function onSearchLeaderKey(e) {
-  const dd    = document.getElementById('search-leader-dropdown');
-  const items = dd.querySelectorAll('.search-leader-option');
-  if (!dd.classList.contains('open') || !items.length) return;
-
-  if (e.key === 'ArrowDown') {
-    e.preventDefault();
-    _dropdownIdx = Math.min(_dropdownIdx+1, items.length-1);
-    updateDropdownHighlight(items);
-  } else if (e.key === 'ArrowUp') {
-    e.preventDefault();
-    _dropdownIdx = Math.max(_dropdownIdx-1, 0);
-    updateDropdownHighlight(items);
-  } else if (e.key === 'Enter') {
-    e.preventDefault();
-    if (_dropdownIdx >= 0 && items[_dropdownIdx]) {
-      selectLeaderFromDropdown(items[_dropdownIdx].dataset.id);
-    }
-  } else if (e.key === 'Escape') {
-    closeSearchDropdown();
-  }
-}
-
-function updateDropdownHighlight(items) {
-  items.forEach((el, i) => el.classList.toggle('selected', i === _dropdownIdx));
-}
-
-function closeSearchDropdown() {
-  const dd = document.getElementById('search-leader-dropdown');
-  dd.classList.remove('open');
-  _dropdownIdx = -1;
-}
-
-function selectLeaderFromDropdown(id) {
-  const store = _store;
-  if (!store) return;
-  const leader = store.users?.[id];
-  if (!leader) return;
-
-  _searchLeaderId    = id;
-  _searchLeaderQuery = leader.name;
-
-  // Preenche o campo de busca
-  const inp = document.getElementById('search-leader-input');
-  if (inp) inp.value = leader.name;
-
-  // Botão limpar
-  const clearBtn = document.getElementById('search-leader-clear');
-  if (clearBtn) clearBtn.classList.add('show');
-
-  closeSearchDropdown();
-  updateSearchBanner(leader);
-  renderLeaders();
-}
-
-function updateSearchBanner(leader) {
-  const banner = document.getElementById('search-active-banner');
-  const ini    = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-  const meta   = NIVEL_META[leader.nivel||'lider']||NIVEL_META.lider;
-  const team   = getTeamEmps(leader, _store?.employees||[]);
-  const total  = getTeamTotal(leader, _store||{users:{},employees:[]});
-
-  document.getElementById('sab-avatar').innerHTML = leader.foto
-    ? `<img src="${leader.foto}" style="width:36px;height:36px;border-radius:50%;object-fit:cover">`
-    : ini;
-  document.getElementById('sab-title').textContent = `Mostrando hierarquia de: ${leader.name}`;
-  document.getElementById('sab-sub').textContent   = `${meta.emoji} ${meta.label} · ${total} pessoa(s) sob responsabilidade`;
-  banner.classList.add('show');
-}
-
-function clearLeaderSearch() {
-  _searchLeaderId    = null;
-  _searchLeaderQuery = '';
-
-  const inp = document.getElementById('search-leader-input');
-  if (inp) inp.value = '';
-
-  const clearBtn = document.getElementById('search-leader-clear');
-  if (clearBtn) clearBtn.classList.remove('show');
-
-  document.getElementById('search-active-banner').classList.remove('show');
-  closeSearchDropdown();
-  renderLeaders();
 }
 
 // ════════════════════════════════════════════════════════
