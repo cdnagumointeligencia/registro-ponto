@@ -94,7 +94,9 @@ async function requireSession() {
 function doLogout() {
   if (!confirm('Deseja sair?')) return;
   LS_LOCAL.remove('rh_session');   // síncrono — localStorage
-  _redirectLogin();
+  window.close();
+  // Fallback: se window.close() for bloqueado pelo navegador, redireciona para login
+  setTimeout(() => { _redirectLogin(); }, 300);
 }
 
 // ════════════════════════════════════════════════════════

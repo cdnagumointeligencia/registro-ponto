@@ -538,7 +538,9 @@ function irParaAptidoes() {
 function sair() {
   if (!confirm('Deseja sair?')) return;
   LS_LOCAL.remove('rh_session');
-  window.location.href = 'login.html';
+  window.close();
+  // Fallback: se window.close() for bloqueado, redireciona para login
+  setTimeout(() => { window.location.href = 'login.html'; }, 300);
 }
 
 // Sobrescreve doLogout do shared.js para funcionar na raiz
