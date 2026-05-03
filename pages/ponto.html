@@ -727,43 +727,124 @@ function getNomeFeriado(dia, mes) {
 
 // ════════════════════════════════════════════════════════
 // BLOQUEIO AFASTADO/FÉRIAS — por dia específico
-// Bloqueia QUALQUER edição nos dias do período de afastamento ou férias.
-// Para afastado sem data-fim: bloqueia do início do afastamento em diante
-// (dias passados e futuros do mês exibido).
+//
+// ESTRATÉGIA:
+// 1. Se o dia está ATIVO (emp.afastado ou emp.ferias e o dia cai no período)
+//    → retorna o status E grava no rh_ponto (para preservar histórico)
+// 2. Se o funcionário JÁ RETORNOU mas o dia tem 'afastado'/'ferias' no rh_ponto
+//    → retorna o status do rh_ponto (histórico preservado, só leitura)
+// 3. Dias fora de qualquer período → null (editável normalmente)
 // ════════════════════════════════════════════════════════
+
+// Cache do allPonto usado dentro do render — atualizado em renderGrade()
+let _pontoCache = {};
+
+// Verifica se um dia deve ser bloqueado e qual o status a exibir
+// Usa TANTO as flags do cadastro (período ativo) QUANTO o histórico do rh_ponto
 function getStatusDiaBloqueado(emp, ano, mes, dia) {
   // mes: 0-based
-  const dt = new Date(ano, mes, dia); dt.setHours(0,0,0,0);
+  const dt   = new Date(ano, mes, dia); dt.setHours(0,0,0,0);
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
 
-  // ── Afastado ──
-  // Bloqueia todos os dias a partir da data de início do afastamento,
-  // sem limite de data — afastado segue bloqueado até ser desmarcado no cadastro.
+  // ── 1. Verifica período ATIVO no cadastro ──────────────────────────────
+  // Afastado: do início até HOJE (dias futuros ficam em branco)
   if (emp.afastado) {
     const inicio = emp.data_afastamento
       ? new Date(emp.data_afastamento + 'T00:00:00')
-      : new Date(0);  // sem data = afastado desde sempre
-    if (dt >= inicio) return 'afastado';
+      : new Date(0);
+    if (dt >= inicio && dt <= hoje) return 'afastado';
   }
 
-  // ── Férias ──
-  // Bloqueia o intervalo exato início/fim configurado no cadastro.
+  // Férias: intervalo fixo início/fim (inclui dias futuros pois é programado)
   if (emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {
     const ini = new Date(emp.data_ferias_inicio + 'T00:00:00');
     const fim = new Date(emp.data_ferias_fim    + 'T00:00:00');
     if (dt >= ini && dt <= fim) return 'ferias';
   }
 
+  // ── 2. Verifica HISTÓRICO no rh_ponto (funcionário já retornou) ────────
+  // Se o dia está gravado como 'afastado' ou 'ferias' no ponto, mantém
+  // o registro visível mas sem permitir edição (histórico preservado)
+  const key       = `${emp.id}_${ano}_${String(mes+1).padStart(2,'0')}`;
+  const diasPonto = _pontoCache[key] || {};
+  const statusSalvo = diasPonto[dia];
+  if (statusSalvo === 'afastado' || statusSalvo === 'ferias') {
+    return statusSalvo; // histórico — exibe mas bloqueia edição
+  }
+
   return null;
 }
 
-// Retorna true se o funcionário está TOTALMENTE bloqueado no mês exibido
-// (afastado ou de férias cobrindo todo o período do mês ativo)
-function isMesTotalmenteBloqueado(emp, ano, mes) {
-  const primeiro = new Date(ano, mes, 1);
-  const ultimo   = new Date(ano, mes+1, 0);
-  // Basta verificar o primeiro e o último dia — se ambos bloqueados, o mês inteiro é
-  return !!(getStatusDiaBloqueado(emp, ano, mes, 1) &&
-            getStatusDiaBloqueado(emp, ano, mes, ultimo.getDate()));
+// ════════════════════════════════════════════════════════
+// GRAVAÇÃO AUTOMÁTICA DO HISTÓRICO DE AFASTAMENTO/FÉRIAS
+//
+// Chamada sempre que renderGrade() carrega dados.
+// Percorre todos os funcionários do departamento ativo e
+// grava no rh_ponto os dias do período corrente de afastamento/férias.
+// Isso garante que, ao remover a flag do cadastro, o histórico persiste.
+// ════════════════════════════════════════════════════════
+async function gravarHistoricoAfastamento(emps, allPonto) {
+  const hoje    = new Date(); hoje.setHours(0,0,0,0);
+  const diasMes = new Date(anoAtivo, mesAtivo+1, 0).getDate();
+  let   houveMudanca = false;
+
+  for (const emp of emps) {
+    // ── Calcula os dias deste mês que pertencem ao período de afastamento ──
+    if (emp.afastado) {
+      const inicio = emp.data_afastamento
+        ? new Date(emp.data_afastamento + 'T00:00:00')
+        : new Date(0);
+
+      const key    = `${emp.id}_${anoAtivo}_${String(mesAtivo+1).padStart(2,'0')}`;
+      const mPonto = allPonto[key] || {};
+
+      for (let d = 1; d <= diasMes; d++) {
+        const dt = new Date(anoAtivo, mesAtivo, d); dt.setHours(0,0,0,0);
+        // Só grava dias passados e de hoje (não futuros — afastamento ativo)
+        if (dt < inicio || dt > hoje) continue;
+        // Só grava se o dia ainda está vazio ou já era 'afastado'
+        // Não sobrescreve marcações manuais (presente, falta, atestado etc.)
+        if (!mPonto[d] || mPonto[d] === 'afastado') {
+          if (mPonto[d] !== 'afastado') {
+            mPonto[d]    = 'afastado';
+            houveMudanca = true;
+          }
+        }
+      }
+      if (houveMudanca) allPonto[key] = mPonto;
+    }
+
+    // ── Calcula os dias deste mês que pertencem ao período de férias ──
+    if (emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {
+      const ini = new Date(emp.data_ferias_inicio + 'T00:00:00');
+      const fim = new Date(emp.data_ferias_fim    + 'T00:00:00');
+
+      const key    = `${emp.id}_${anoAtivo}_${String(mesAtivo+1).padStart(2,'0')}`;
+      const mPonto = allPonto[key] || {};
+      let   mudouFerias = false;
+
+      for (let d = 1; d <= diasMes; d++) {
+        const dt = new Date(anoAtivo, mesAtivo, d); dt.setHours(0,0,0,0);
+        if (dt < ini || dt > fim) continue;
+        // Só grava se vazio ou já era 'ferias'
+        if (!mPonto[d] || mPonto[d] === 'ferias') {
+          if (mPonto[d] !== 'ferias') {
+            mPonto[d]    = 'ferias';
+            houveMudanca = true;
+            mudouFerias  = true;
+          }
+        }
+      }
+      if (mudouFerias) allPonto[key] = mPonto;
+    }
+  }
+
+  // Persiste apenas se algo mudou (evita writes desnecessários no Firestore)
+  if (houveMudanca) {
+    await LS.set(PONTO_KEY, allPonto);
+  }
+
+  return allPonto; // retorna o allPonto atualizado (com ou sem mudanças)
 }
 
 // ════════════════════════════════════════════════════════
@@ -771,8 +852,17 @@ function isMesTotalmenteBloqueado(emp, ano, mes) {
 // ════════════════════════════════════════════════════════
 async function renderGrade() {
   _store = await getStore();
-  const _allPonto = await LS.get(PONTO_KEY, {});  // pré-carrega todo o ponto
-  const emps    = getEmpsDoDepto();
+
+  // Pré-carrega todo o ponto e grava histórico de afastamentos/férias ativos
+  // antes de renderizar — garante que os dados estejam no rh_ponto
+  let _allPonto = await LS.get(PONTO_KEY, {});
+  const empsParaHistorico = getEmpsDoDepto();
+  _allPonto = await gravarHistoricoAfastamento(empsParaHistorico, _allPonto);
+
+  // Atualiza cache global usado por getStatusDiaBloqueado()
+  _pontoCache = _allPonto;
+
+  const emps    = empsParaHistorico;
   const hoje    = new Date();
   const diasMes = new Date(anoAtivo, mesAtivo+1, 0).getDate();
 
@@ -824,35 +914,35 @@ async function renderGrade() {
     const pontoMap = _allPonto[_key] || {};
     const ini      = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
 
-    // ── Verifica bloqueio global (hoje) e bloqueio no mês exibido ──
+    // ── Verifica se o funcionário está globalmente bloqueado (afastado ou de férias HOJE) ──
+    // Usado só para colorir o avatar
     const { bloqueado: bloqHoje, motivo: motivoHoje } = isEmpBloqueado(emp);
-    const bloqMes1     = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, 1);
-    const mesBloqTotal = isMesTotalmenteBloqueado(emp, anoAtivo, mesAtivo);
-    const motivoBloqMes = bloqMes1 === 'afastado' ? 'afastado'
-                        : bloqMes1 === 'ferias'   ? 'ferias'
-                        : motivoHoje || null;
 
-    const avatarStyle = (bloqHoje || bloqMes1)
-      ? (motivoBloqMes === 'afastado'
-          ? 'background:linear-gradient(135deg,#ef4444,#fb923c)'
-          : 'background:linear-gradient(135deg,#22d3ee,#4f8ef7)')
+    const avatarStyle = bloqHoje
+      ? motivoHoje==='afastado'
+        ? 'background:linear-gradient(135deg,#ef4444,#fb923c)'
+        : 'background:linear-gradient(135deg,#22d3ee,#4f8ef7)'
       : '';
 
-    // ── Badge de status na linha ──
-    const _badgeMot = motivoBloqMes || motivoHoje;
-    const empBadge = _badgeMot === 'afastado'
-      ? `<span style="margin-left:6px;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:700;background:rgba(239,68,68,.18);color:#ef4444;border:1px solid rgba(239,68,68,.35);white-space:nowrap;flex-shrink:0">🚫 Afastado</span>`
-      : _badgeMot === 'ferias'
-        ? `<span style="margin-left:6px;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:700;background:rgba(34,211,238,.14);color:#22d3ee;border:1px solid rgba(34,211,238,.35);white-space:nowrap;flex-shrink:0">🏖️ Férias</span>`
-        : '';
+    // ── Badge de status no cabeçalho da linha ──
+    const empBadge = bloqHoje
+      ? motivoHoje==='afastado'
+        ? `<span style="
+            margin-left:6px;padding:2px 7px;border-radius:20px;
+            font-size:9px;font-weight:700;
+            background:rgba(239,68,68,.18);color:#ef4444;
+            border:1px solid rgba(239,68,68,.35);
+            white-space:nowrap;flex-shrink:0">🚫 Afastado</span>`
+        : `<span style="
+            margin-left:6px;padding:2px 7px;border-radius:20px;
+            font-size:9px;font-weight:700;
+            background:rgba(34,211,238,.14);color:#22d3ee;
+            border:1px solid rgba(34,211,238,.35);
+            white-space:nowrap;flex-shrink:0">🏖️ Férias</span>`
+      : '';
 
-    // Linha totalmente bloqueada = pointer-events:none impede qualquer clique
-    const trStyle = mesBloqTotal
-      ? 'opacity:.55;pointer-events:none;user-select:none'
-      : (bloqHoje || bloqMes1) ? 'opacity:.72' : '';
-
-    tbody += `<tr class="emp-row" style="${trStyle}" ${mesBloqTotal ? `title="Edição bloqueada — funcionário ${motivoBloqMes === 'afastado' ? 'afastado' : 'em férias'}"` : ''}>
-      <td class="emp-info-col" style="${mesBloqTotal ? 'cursor:not-allowed' : ''}">
+    tbody += `<tr class="emp-row" style="${bloqHoje ? 'opacity:.72' : ''}">
+      <td class="emp-info-col">
         <div class="emp-mini-wrap">
           <div class="emp-mini-avatar" style="${avatarStyle}">${ini}</div>
           <div style="flex:1;min-width:0">
@@ -879,18 +969,47 @@ async function renderGrade() {
       const colCls   = isDom ? 'domingo-col' : isSab ? 'sabado-col' : '';
 
       // ── DIA BLOQUEADO POR AFASTAMENTO OU FÉRIAS ──
-      // Exibe o status do período (afastado/ferias) com visual bloqueado,
-      // independente de haver dado salvo — nenhum onclick é adicionado
+      // Pode ser período ATIVO (flag no cadastro) ou HISTÓRICO (salvo no rh_ponto).
+      // Em ambos os casos: exibe o status com visual bloqueado, sem onclick.
+      // O título do tooltip diferencia o período ativo do histórico.
       if (bloqDia) {
         const sm = STATUS_META[bloqDia];
         if (bloqDia === 'afastado') cAt++;
         if (bloqDia === 'ferias')   cFe++;
-        const motivo = bloqDia === 'ferias'
-          ? 'Período de férias — edição bloqueada'
-          : 'Funcionário afastado — edição bloqueada';
+
+        // Verifica se é período ativo ou histórico preservado
+        const periodoAtivo = (() => {
+          if (bloqDia === 'afastado' && emp.afastado) {
+            const inicio = emp.data_afastamento
+              ? new Date(emp.data_afastamento + 'T00:00:00')
+              : new Date(0);
+            const dt  = new Date(anoAtivo, mesAtivo, d); dt.setHours(0,0,0,0);
+            const hoje2 = new Date(); hoje2.setHours(0,0,0,0);
+            return dt >= inicio && dt <= hoje2;
+          }
+          if (bloqDia === 'ferias' && emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {
+            const ini = new Date(emp.data_ferias_inicio + 'T00:00:00');
+            const fim = new Date(emp.data_ferias_fim    + 'T00:00:00');
+            const dt  = new Date(anoAtivo, mesAtivo, d); dt.setHours(0,0,0,0);
+            return dt >= ini && dt <= fim;
+          }
+          return false; // histórico
+        })();
+
+        const motivo = periodoAtivo
+          ? (bloqDia === 'ferias'
+              ? 'Período de férias ativo — edição bloqueada'
+              : 'Funcionário afastado — edição bloqueada')
+          : (bloqDia === 'ferias'
+              ? '🏖️ Histórico de férias — registro preservado'
+              : '🚫 Histórico de afastamento — registro preservado');
+
+        // Histórico tem visual levemente diferente (menor opacidade no dot)
+        const dotOpacity = periodoAtivo ? '' : 'opacity:.7;';
+
         tbody += `<td class="day-cell ${colCls}">
           <div class="status-dot bloqueado ${bloqDia}"
-            style="background:${sm.bg};border-color:${sm.border};color:${sm.cor}"
+            style="background:${sm.bg};border-color:${sm.border};color:${sm.cor};${dotOpacity}"
             title="${sm.label} — ${motivo}">
             ${sm.emoji}
           </div>
@@ -1049,16 +1168,25 @@ function showCtxMenu(e, empId, dia, statusAtual) {
 
 async function setStatusCtx(status) {
   if (ctxEmpId === null) return;
+  const store    = await getStore();
+  const emp      = (store.employees||[]).find(e=>String(e.id)===String(ctxEmpId));
 
-  // Usa cache _store para não fazer nova requisição ao Firestore
-  const emp = (_store?.employees||[]).find(e=>String(e.id)===String(ctxEmpId));
-
-  // Proteção tripla: bloqueia se afastado ou de férias no dia OU no mês inteiro
-  const bloqDia  = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, ctxDia);
-  const bloqGlob = emp?.afastado || (emp?.ferias && emp?.data_ferias_inicio && emp?.data_ferias_fim);
-  if (bloqDia || bloqGlob) {
-    const motivo = (bloqDia === 'ferias' || emp?.ferias) ? 'férias' : 'afastamento';
-    showToast(`🚫 Edição bloqueada — ${emp?.name||'funcionário'} está em ${motivo}.`, 'warn');
+  // Proteção extra: verifica se o dia está bloqueado (período ativo OU histórico)
+  // Recarrega _pontoCache caso esteja desatualizado
+  if (!Object.keys(_pontoCache).length) {
+    _pontoCache = await LS.get(PONTO_KEY, {});
+  }
+  const bloqDia = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, ctxDia);
+  if (bloqDia) {
+    const periodoAtivo = (() => {
+      if (bloqDia === 'afastado' && emp?.afastado) return true;
+      if (bloqDia === 'ferias' && emp?.ferias) return true;
+      return false;
+    })();
+    const motivo = periodoAtivo
+      ? (bloqDia === 'ferias' ? 'férias' : 'afastamento')
+      : (bloqDia === 'ferias' ? 'histórico de férias' : 'histórico de afastamento');
+    showToast(`🚫 Edição bloqueada — ${emp?.name||'funcionário'}: ${motivo}.`, 'warn');
     closeCtx();
     return;
   }
@@ -1122,9 +1250,11 @@ async function lancamentoRapido(status) {
 
   // Faz um único get/set no localStorage para todos os funcionários
   const allPonto = await LS.get(PONTO_KEY, {});
+  // Atualiza cache para que getStatusDiaBloqueado() leia dados corretos
+  _pontoCache = allPonto;
   emps.forEach(emp => {
     const bloqDia = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, dia);
-    if (bloqDia) return;
+    if (bloqDia) return; // bloqueia tanto período ativo quanto histórico
     const key = pontoKey(emp.id);
     const m   = allPonto[key] || {};
     const anterior = m[dia] || 'vazio';
