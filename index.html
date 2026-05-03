@@ -118,6 +118,31 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .kpi-card.red    .kpi-value { color:#FCA5A5; }
 .kpi-sub { font-size:10px; color:var(--muted); margin-top:2px; }
 
+/* ── KPI com alerta pulsante ── */
+.kpi-card.alerta-pendente {
+  border-color: rgba(167,139,250,.6) !important;
+  box-shadow: 0 0 0 0 rgba(167,139,250,.5);
+  animation: kpi-pulse 2.4s ease-in-out infinite;
+  cursor: pointer;
+}
+.kpi-card.alerta-pendente .kpi-sub { color: #f472b6; font-weight: 700; }
+@keyframes kpi-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(167,139,250,.55); }
+  60%  { box-shadow: 0 0 0 8px rgba(167,139,250,.0);  }
+  100% { box-shadow: 0 0 0 0   rgba(167,139,250,.0);  }
+}
+/* tema claro */
+body.light-theme .kpi-card.alerta-pendente {
+  border-color: rgba(109,40,217,.5) !important;
+  animation: kpi-pulse-light 2.4s ease-in-out infinite;
+}
+body.light-theme .kpi-card.alerta-pendente .kpi-sub { color: #7c3aed; }
+@keyframes kpi-pulse-light {
+  0%   { box-shadow: 0 0 0 0   rgba(109,40,217,.4); }
+  60%  { box-shadow: 0 0 0 8px rgba(109,40,217,.0); }
+  100% { box-shadow: 0 0 0 0   rgba(109,40,217,.0); }
+}
+
 /* ── Cards/Gráficos ── */
 .dash-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
 .card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; transition:box-shadow .2s; }
@@ -230,12 +255,128 @@ body.light-theme
 .dash-filter-select:hover,
 .dash-filter-select:focus { border-color:var(--accent); }
 /* [light-theme.css] body.light-theme .dash-filter-select { background:#fff; } */
+
+/* ── Modal Alerta Aptidões Pendentes ── */
+.apt-alert-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.82);
+  backdrop-filter:blur(6px); z-index:500;
+  display:flex; align-items:center; justify-content:center;
+  padding:20px;
+  animation:fadeIn .3s ease;
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.apt-alert-modal {
+  background:var(--surface); border:2px solid rgba(167,139,250,.5);
+  border-radius:20px; width:500px; max-width:96vw;
+  box-shadow:0 0 60px rgba(167,139,250,.25), 0 24px 60px rgba(0,0,0,.6);
+  animation:slideUp .35s ease;
+  overflow:hidden;
+}
+@keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+/* Faixa superior roxa pulsante */
+.apt-alert-stripe {
+  height:4px;
+  background:linear-gradient(90deg,#a78bfa,#f472b6,#a78bfa);
+  background-size:200% 100%;
+  animation:stripeMove 2s linear infinite;
+}
+@keyframes stripeMove {
+  0%{background-position:0%} 100%{background-position:200%}
+}
+
+.apt-alert-body { padding:28px 28px 24px; }
+.apt-alert-icon {
+  width:64px; height:64px; border-radius:50%;
+  background:rgba(167,139,250,.15); border:2px solid rgba(167,139,250,.4);
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px; margin:0 auto 18px;
+  animation:iconPulse 2s ease-in-out infinite;
+}
+@keyframes iconPulse {
+  0%,100%{box-shadow:0 0 0 0 rgba(167,139,250,.4)}
+  50%{box-shadow:0 0 0 12px rgba(167,139,250,.0)}
+}
+.apt-alert-title {
+  font-family:var(--font-head); font-size:20px; font-weight:800;
+  text-align:center; color:var(--text); margin-bottom:8px; letter-spacing:-.5px;
+}
+.apt-alert-sub {
+  font-size:13px; color:var(--muted); text-align:center; margin-bottom:20px; line-height:1.6;
+}
+.apt-alert-list {
+  background:var(--surface2); border:1px solid rgba(167,139,250,.25);
+  border-radius:12px; padding:14px 16px; margin-bottom:20px;
+  max-height:180px; overflow-y:auto;
+}
+.apt-alert-emp {
+  display:flex; align-items:center; gap:10px;
+  padding:7px 0; border-bottom:1px solid rgba(42,47,69,.4);
+}
+.apt-alert-emp:last-child { border-bottom:none; }
+.apt-alert-emp-avatar {
+  width:30px; height:30px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,#a78bfa,#4f8ef7);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:10px; font-weight:800; color:#fff;
+}
+.apt-alert-emp-name { font-size:13px; font-weight:600; color:var(--text); flex:1; }
+.apt-alert-emp-dept { font-size:11px; color:var(--muted); }
+.apt-alert-emp-badge {
+  font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px;
+  background:rgba(248,113,113,.15); color:#f87171; border:1px solid rgba(248,113,113,.3);
+  white-space:nowrap; flex-shrink:0;
+}
+.apt-alert-footer { display:flex; gap:10px; }
+.apt-alert-btn-skip {
+  flex:1; padding:11px; border-radius:10px;
+  border:1px solid var(--border); background:var(--surface2);
+  color:var(--muted); font-family:var(--font-body);
+  font-size:13px; font-weight:600; cursor:pointer; transition:all .2s;
+}
+.apt-alert-btn-skip:hover { background:var(--surface3); color:var(--text); }
+.apt-alert-btn-go {
+  flex:2; padding:11px; border-radius:10px; border:none;
+  background:linear-gradient(135deg,#a78bfa,#7c3aed);
+  color:#fff; font-family:var(--font-body);
+  font-size:13px; font-weight:700; cursor:pointer; transition:all .2s;
+  box-shadow:0 4px 16px rgba(167,139,250,.35);
+}
+.apt-alert-btn-go:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(167,139,250,.5); }
+
+/* Tema claro */
+body.light-theme .apt-alert-modal { background:#fff; border-color:rgba(109,40,217,.4); box-shadow:0 0 40px rgba(109,40,217,.15),0 24px 60px rgba(2,54,101,.2); }
+body.light-theme .apt-alert-icon  { background:rgba(109,40,217,.08); border-color:rgba(109,40,217,.3); }
+body.light-theme .apt-alert-list  { background:#F4F7FB; border-color:rgba(109,40,217,.2); }
+body.light-theme .apt-alert-emp   { border-bottom-color:#E8EDF5; }
+body.light-theme .apt-alert-btn-skip { background:#fff; border-color:#C8D6E3; color:#4D6680; }
+body.light-theme .apt-alert-btn-skip:hover { background:#EBF1F7; }
 </style>
 </head>
 <body>
 
 <div class="toast-container" id="toast-container"></div>
 <nav class="sidebar" id="app-sidebar"></nav>
+
+<!-- Modal Alerta Aptidões Pendentes -->
+<div id="apt-alert-overlay" class="apt-alert-overlay" style="display:none">
+  <div class="apt-alert-modal">
+    <div class="apt-alert-stripe"></div>
+    <div class="apt-alert-body">
+      <div class="apt-alert-icon">🎯</div>
+      <div class="apt-alert-title">Avaliações de Aptidão Pendentes</div>
+      <div class="apt-alert-sub" id="apt-alert-sub">
+        Os funcionários abaixo ainda não foram avaliados neste mês.<br>
+        Avalie as competências para manter os scores atualizados.
+      </div>
+      <div class="apt-alert-list" id="apt-alert-list"></div>
+      <div class="apt-alert-footer">
+        <button class="apt-alert-btn-skip" onclick="fecharAlertaApt()">Depois</button>
+        <button class="apt-alert-btn-go" onclick="irParaAptidoes()">🎯 Avaliar Agora</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Painel fullscreen -->
 <div id="page-panel">
@@ -329,7 +470,67 @@ document.addEventListener('DOMContentLoaded', async () => {
   initTheme();
   initSidebar('dashboard', currentUser);
   await renderDashboard();
+
+  // Exibe modal de aviso se houver aptidões pendentes (só para quem pode editar)
+  const podeAvaliar = (typeof can==='function') ? can(currentUser,'aptidoes','edit') : true;
+  if (podeAvaliar) await verificarAlertaAptidoes();
 });
+
+// ════════════════════════════════════════════════════════
+// ALERTA DE APTIDÕES PENDENTES — modal ao carregar
+// Só exibe uma vez por sessão de navegação (sessionStorage)
+// ════════════════════════════════════════════════════════
+async function verificarAlertaAptidoes() {
+  // Não mostra de novo se o usuário já viu nesta sessão
+  if (sessionStorage.getItem('apt_alerta_visto')) return;
+
+  const mesAtualKey = (() => {
+    const n = new Date();
+    return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+  })();
+
+  // Carrega os funcionários que são de responsabilidade deste usuário
+  _store = _store || await getStore();
+  let meusFuncs = getMyEmployees().filter(e => !e.afastado && !e.demitido);
+
+  // Filtra apenas os sem avaliação neste mês
+  const pendentes = meusFuncs.filter(e => !(e.competencies_history||{})[mesAtualKey]);
+  if (!pendentes.length) return;
+
+  // Monta a lista
+  const lista = document.getElementById('apt-alert-list');
+  const sub   = document.getElementById('apt-alert-sub');
+
+  sub.innerHTML = `<strong style="color:var(--accent2)">${pendentes.length} funcionário${pendentes.length>1?'s':''}</strong> sem avaliação de aptidões em ${new Date().toLocaleString('pt-BR',{month:'long'})}.
+    <br>Avalie as competências para manter os scores atualizados.`;
+
+  lista.innerHTML = pendentes.map(e => {
+    const ini = e.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+    const temAlguma = !!(e.competencies_history && Object.keys(e.competencies_history).length);
+    return `
+    <div class="apt-alert-emp">
+      <div class="apt-alert-emp-avatar">${ini}</div>
+      <div style="flex:1;min-width:0">
+        <div class="apt-alert-emp-name">${e.name}</div>
+        <div class="apt-alert-emp-dept">${e.dept||''}${e.role?' · '+e.role:''}</div>
+      </div>
+      <div class="apt-alert-emp-badge">${temAlguma ? '📅 Mês pendente' : '🆕 Nunca avaliado'}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('apt-alert-overlay').style.display = 'flex';
+}
+
+function fecharAlertaApt() {
+  sessionStorage.setItem('apt_alerta_visto', '1');
+  document.getElementById('apt-alert-overlay').style.display = 'none';
+}
+
+function irParaAptidoes() {
+  sessionStorage.setItem('apt_alerta_visto', '1');
+  document.getElementById('apt-alert-overlay').style.display = 'none';
+  window.location.href = 'pages/aptidoes.html';
+}
 
 // ── Sidebar do dashboard (raiz) ──────────────────────
 
@@ -471,22 +672,40 @@ async function renderKPIs(emps) {
     return true;
   });
   const pendentes = await getPendentesCount();
-  document.getElementById('kpi-grid').innerHTML = [
-    { cls:'blue',   label:'Funcionários',      value:total,              sub:'equipe total'              },
-    { cls:'green',  label:'Desempenho Médio',  value:avgPerf+'%',        sub:'geral da equipe'           },
-    { cls:'cyan',   label:'Assiduidade Média', value:avgAssid+'%',       sub:`${totalAbs} faltas no ano` },
-    { cls:'purple', label:'Aptidões Médias',   value:avgApt+'/10',       sub:'todas competências'        },
-    { cls:'yellow', label:'Candidatos Promoção',value:promos,            sub:'score ≥ 85'                },
-    { cls:'red',    label:'🚫 Afastados Hoje', value:afas.length,        sub:afas.length
-        ? afas.slice(0,2).map(e=>e.name.split(' ')[0]).join(', ')+(afas.length>2?'…':'')
-        : 'nenhum afastado' },
-    { cls:'orange', label:'📝 Ocorrências',    value:pendentes,          sub:'pendentes de aprovação'    },
-  ].map(k=>`
-    <div class="kpi-card ${k.cls}">
+
+  // Conta funcionários sem avaliação de aptidões neste mês
+  const mesAtualKey = (() => {
+    const n = new Date();
+    return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+  })();
+  const aptPendentes = emps.filter(e => !e.afastado && !(e.competencies_history||{})[mesAtualKey]).length;
+  const aptSubText = aptPendentes > 0
+    ? `⚠️ ${aptPendentes} pendente${aptPendentes > 1 ? 's' : ''} este mês`
+    : '✅ todos avaliados';
+
+  // Monta os KPIs — aptidões com classe pulsante se houver pendentes
+  const kpiItems = [
+    { cls:'blue',   label:'Funcionários',       value:total,     sub:'equipe total' },
+    { cls:'green',  label:'Desempenho Médio',   value:avgPerf+'%', sub:'geral da equipe' },
+    { cls:'cyan',   label:'Assiduidade Média',  value:avgAssid+'%', sub:`${totalAbs} faltas no ano` },
+    { cls:'purple', label:'Aptidões Médias',    value:avgApt+'/10', sub:aptSubText,
+      alerta: aptPendentes > 0, onclick: aptPendentes > 0 ? "irParaAptidoes()" : "" },
+    { cls:'yellow', label:'Candidatos Promoção', value:promos,   sub:'score ≥ 85' },
+    { cls:'red',    label:'🚫 Afastados Hoje',  value:afas.length,
+      sub:afas.length ? afas.slice(0,2).map(e=>e.name.split(' ')[0]).join(', ')+(afas.length>2?'…':'') : 'nenhum afastado' },
+    { cls:'orange', label:'📝 Ocorrências',     value:pendentes, sub:'pendentes de aprovação' },
+  ];
+
+  document.getElementById('kpi-grid').innerHTML = kpiItems.map(k => {
+    const alertCls = k.alerta ? ' alerta-pendente' : '';
+    const onclk    = k.onclick ? ` onclick="${k.onclick}"` : '';
+    return `
+    <div class="kpi-card ${k.cls}${alertCls}"${onclk}${k.alerta?' title="Clique para avaliar aptidões pendentes"':''}>
       <div class="kpi-label">${k.label}</div>
       <div class="kpi-value">${k.value}</div>
       <div class="kpi-sub">${k.sub}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 // ── Charts ────────────────────────────────────────────

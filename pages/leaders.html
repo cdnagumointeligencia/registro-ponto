@@ -244,6 +244,81 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   transform:translateY(-2px) !important;
 }
 
+/* ── Card do líder com aptidões pendentes — pulsante ── */
+.leader-card.apt-pendente {
+  border-color: rgba(244,114,182,.7) !important;
+  animation: leader-apt-pulse 2.6s ease-in-out infinite;
+  position: relative;
+}
+.leader-card.apt-pendente::after {
+  content: '🎯';
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 16px;
+  animation: leader-apt-badge-pulse 2.6s ease-in-out infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+@keyframes leader-apt-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(244,114,182,.55); }
+  60%  { box-shadow: 0 0 0 10px rgba(244,114,182,.0);  }
+  100% { box-shadow: 0 0 0 0   rgba(244,114,182,.0);  }
+}
+@keyframes leader-apt-badge-pulse {
+  0%,100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(1.3); opacity: .7; }
+}
+/* Faixa superior do card pulsante — rosa/pink em vez da cor padrão do nível */
+.leader-card.apt-pendente::before {
+  background: linear-gradient(90deg,#f472b6,#a78bfa) !important;
+  animation: stripe-flow 1.8s linear infinite;
+  background-size: 200% 100% !important;
+}
+@keyframes stripe-flow {
+  0%   { background-position: 0%   }
+  100% { background-position: 200% }
+}
+/* Tooltip do badge */
+.apt-pendente-tooltip {
+  position: absolute; top: -34px; right: 0;
+  background: #1a1e2e; border: 1px solid rgba(244,114,182,.5);
+  border-radius: 8px; padding: 4px 10px;
+  font-size: 10px; font-weight: 700; color: #f472b6;
+  white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity .2s;
+  z-index: 10;
+}
+.leader-card.apt-pendente:hover .apt-pendente-tooltip { opacity: 1; }
+
+/* Tema claro */
+body.light-theme .leader-card.apt-pendente { border-color: rgba(219,39,119,.5) !important; }
+body.light-theme .leader-card.apt-pendente::after { filter: none; }
+@keyframes leader-apt-pulse-light {
+  0%   { box-shadow: 0 0 0 0   rgba(219,39,119,.4); }
+  60%  { box-shadow: 0 0 0 10px rgba(219,39,119,.0);  }
+  100% { box-shadow: 0 0 0 0   rgba(219,39,119,.0);  }
+}
+body.light-theme .leader-card.apt-pendente {
+  animation: leader-apt-pulse-light 2.6s ease-in-out infinite;
+}
+
+/* Banner inline no card (sem depender de ::after) */
+.leader-apt-banner {
+  display: flex; align-items: center; gap: 7px;
+  margin: 0 18px 10px;
+  padding: 7px 12px; border-radius: 8px;
+  background: rgba(244,114,182,.12);
+  border: 1px solid rgba(244,114,182,.35);
+  font-size: 11px; font-weight: 700; color: #f472b6;
+  cursor: pointer;
+  transition: background .15s;
+}
+.leader-apt-banner:hover { background: rgba(244,114,182,.22); }
+body.light-theme .leader-apt-banner {
+  background: rgba(219,39,119,.08); border-color: rgba(219,39,119,.3); color: #db2777;
+}
+
 .leader-card::before {
   content:''; display:block; height:3px; background:var(--border); flex-shrink:0;
 }
@@ -1291,6 +1366,19 @@ function buildCard(leader, store, isAdmin, isHighlight=false) {
   const ini = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
   const roleParts = [leader.perfil?.funcao||'', leader.setor||(leader.perfil?.depts||[])[0]||''].filter(Boolean).join(' · ');
 
+  // ── Detecta funcionários sem avaliação de aptidões este mês ──
+  const mesAtualKey = (() => {
+    const n = new Date();
+    return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+  })();
+  const aptPendentesTeam = team.filter(e => !e.afastado && !e.demitido && !(e.competencies_history||{})[mesAtualKey]);
+  const temAptPendente   = aptPendentesTeam.length > 0;
+  const aptBanner = temAptPendente ? `
+    <div class="leader-apt-banner" onclick="window.location.href='aptidoes.html'" title="Clique para avaliar aptidões">
+      🎯 ${aptPendentesTeam.length} funcionário${aptPendentesTeam.length>1?'s':''} sem avaliação este mês
+      <span style="margin-left:auto;font-size:10px;opacity:.7">→ Avaliar</span>
+    </div>` : '';
+
   const shown  = team.slice(0,5);
   const extras = team.length - shown.length;
   const avatarBubbles = shown.map(e => {
@@ -1317,7 +1405,7 @@ function buildCard(leader, store, isAdmin, isHighlight=false) {
     </div>`;
 
   return `
-  <div class="leader-card nivel-${nivel}${isHighlight?' highlight':''}">
+  <div class="leader-card nivel-${nivel}${isHighlight?' highlight':''}${temAptPendente?' apt-pendente':''}">
     <div class="card-header">
       <div class="leader-avatar">${leader.foto?`<img src="${leader.foto}" style="width:52px;height:52px;border-radius:50%;object-fit:cover">`:ini}</div>
       <div class="leader-info">
@@ -1358,6 +1446,7 @@ function buildCard(leader, store, isAdmin, isHighlight=false) {
       ${getMeusFiliais(leader).map(f=>`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.2)">🏭 ${f}</span>`).join('')}
       ${getMeusTurnos(leader).map(t=>`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(167,139,250,.12);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">🕐 ${t}</span>`).join('')}
     </div>`:''}
+    ${aptBanner}
     ${adminBtns}
   </div>`;
 }
