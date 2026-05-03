@@ -2090,32 +2090,39 @@ async function gerarRelatorioPDF(id) {
   sf('bold', 7, W);
   doc.text('DESLIGADO', nx + 18, 95.8, {align:'center'});
 
-  // ── 6 KPIs em cards ────────────────────────────────
+  // ── KPIs em 2 linhas de 3 cards — mais espaço para texto ────────────────
   y = 108;
   const kpis = [
     { label:'Data de Admissão', value: dtAdm ? dtAdm.toLocaleDateString('pt-BR') : '—', color: BLUE,   small: true },
     { label:'Data de Demissão', value: emp.data_demissao ? new Date(emp.data_demissao+'T00:00:00').toLocaleDateString('pt-BR') : '—', color: RED, small: true },
-    { label:'Tempo na Empresa', value: tempoEmpresa, color: NAVY2, small: tempoEmpresa.length > 8 },
+    { label:'Tempo na Empresa', value: tempoEmpresa || '—', color: NAVY2, small: true },
     { label:'Score Final',      value: String(score), color: score>=85?GREEN:score>=70?BLUE:score>=55?YELLOW:RED, small: false },
     { label:'Total de Faltas',  value: String(totalF), color: totalF>10?RED:totalF>5?YELLOW:MUTED, small: false },
     { label:'Promoções',        value: String(promos), color: promos>0?GREEN:MUTED, small: false },
   ];
-  const kW = pw / 6 - 2;
+  const kCols = 3;
+  const kGap  = 4;
+  const kW    = (pw - kGap * (kCols - 1)) / kCols;
+  const kH    = 26;
+  const kRows = 2;
   kpis.forEach((k, i) => {
-    const kx = lm + i * (kW + 2.4);
-    // Card
-    fl(W); doc.roundedRect(kx, y, kW, 24, 2, 2, 'F');
-    dr(BORDER, 0.3); doc.roundedRect(kx, y, kW, 24, 2, 2, 'S');
+    const col = i % kCols;
+    const row = Math.floor(i / kCols);
+    const kx  = lm + col * (kW + kGap);
+    const ky  = y + row * (kH + 4);
+    // Card fundo branco com borda suave
+    fl(W); doc.roundedRect(kx, ky, kW, kH, 2.5, 2.5, 'F');
+    dr(BORDER, 0.3); doc.roundedRect(kx, ky, kW, kH, 2.5, 2.5, 'S');
     // Barra colorida topo
-    fl(k.color); doc.roundedRect(kx, y, kW, 2.5, 1, 1, 'F');
-    // Valor
-    sf('bold', k.small ? 8 : 13, k.color);
-    doc.text(k.value, kx + kW/2, y + (k.small ? 14 : 15), {align:'center', maxWidth: kW - 2});
+    fl(k.color); doc.roundedRect(kx, ky, kW, 2.5, 1.5, 1.5, 'F');
+    // Valor principal
+    sf('bold', k.small ? 9 : 14, k.color);
+    doc.text(k.value, kx + kW/2, ky + (k.small ? 15 : 16), {align:'center', maxWidth: kW - 4});
     // Label
-    sf('normal', 6, MUTED);
-    doc.text(k.label, kx + kW/2, y + 21, {align:'center', maxWidth: kW - 2});
+    sf('normal', 6.5, MUTED);
+    doc.text(k.label.toUpperCase(), kx + kW/2, ky + 22.5, {align:'center', maxWidth: kW - 4});
   });
-  y += 32;
+  y += kRows * (kH + 4) + 4;
 
   // ════════════════════════════════════════════════════
   // SEÇÃO: DESEMPENHO & COMPETÊNCIAS
@@ -2123,66 +2130,94 @@ async function gerarRelatorioPDF(id) {
   addPage(80);
   y = sectionHeader('Desempenho & Competências', '◈', y);
 
-  // 3 indicadores grandes lado a lado
+  // 3 indicadores grandes lado a lado — visual corporativo refinado
   const indW = pw / 3 - 3;
-  const indH = 28;
+  const indH = 32;
   const indItems = [
     { label:'Desempenho Geral', value:`${emp.perf||0}%`,  sub:'meta: ≥ 70%',  color:(emp.perf||0)>=80?GREEN:(emp.perf||0)>=60?BLUE:RED,  pct:(emp.perf||0) },
-    { label:'Aptidão Média',    value:`${aptAvg}/10`,      sub:'todas competências',  color:parseFloat(aptAvg)>=7?GREEN:parseFloat(aptAvg)>=5?BLUE:RED, pct:parseFloat(aptAvg)*10 },
+    { label:'Aptidao Media',    value:`${aptAvg}/10`,      sub:'todas as competencias',  color:parseFloat(aptAvg)>=7?GREEN:parseFloat(aptAvg)>=5?BLUE:RED, pct:parseFloat(aptAvg)*10 },
     { label:'Assiduidade',      value:`${assidPct}%`,      sub:`${totalF} falta${totalF!==1?'s':''} registrada${totalF!==1?'s':''}`, color:assidPct>=80?GREEN:assidPct>=60?YELLOW:RED, pct:assidPct },
   ];
 
   indItems.forEach((ind, i) => {
     const ix = lm + i * (indW + 4.5);
-    fl(BG); doc.roundedRect(ix, y, indW, indH, 2.5, 2.5, 'F');
-    dr(BORDER, 0.3); doc.roundedRect(ix, y, indW, indH, 2.5, 2.5, 'S');
-    // Barra de progresso
-    const barY = y + indH - 7;
-    fl(BG2); doc.roundedRect(ix+4, barY, indW-8, 3, 1, 1, 'F');
-    fl(ind.color); doc.roundedRect(ix+4, barY, (indW-8)*(ind.pct/100), 3, 1, 1, 'F');
-    // Valor
-    sf('bold', 16, ind.color);
-    doc.text(ind.value, ix + indW/2, y + 14, {align:'center'});
-    sf('bold', 7, TEXT);
-    doc.text(ind.label, ix + indW/2, y + 20, {align:'center'});
+    // Card fundo BG com borda colorida no topo
+    fl(BG); doc.roundedRect(ix, y, indW, indH, 3, 3, 'F');
+    dr(ind.color, 0.4); doc.roundedRect(ix, y, indW, indH, 3, 3, 'S');
+    // Barra colorida topo mais grossa
+    fl(ind.color); doc.roundedRect(ix, y, indW, 3.5, 2, 2, 'F');
+    // Valor grande centralizado
+    sf('bold', 18, ind.color);
+    doc.text(ind.value, ix + indW/2, y + 17, {align:'center'});
+    // Label em negrito
+    sf('bold', 7.5, TEXT);
+    doc.text(ind.label.toUpperCase(), ix + indW/2, y + 24, {align:'center'});
+    // Sub-label
     sf('normal', 6, MUTED);
-    doc.text(ind.sub, ix + indW/2, y + 24.5, {align:'center'});
+    doc.text(ind.sub, ix + indW/2, y + 28.5, {align:'center', maxWidth: indW - 6});
+    // Barra de progresso na parte inferior
+    const barY = y + indH - 5;
+    fl([220, 230, 242]); doc.roundedRect(ix + 6, barY, indW - 12, 2.5, 1, 1, 'F');
+    fl(ind.color); doc.roundedRect(ix + 6, barY, (indW - 12) * (ind.pct / 100), 2.5, 1, 1, 'F');
   });
   y += indH + 8;
 
-  // Grade de competências — 2 colunas
-  addPage(60);
+  // Grade de competências — 2 colunas com divisor central
+  addPage(70);
   const APT_LABELS_PDF = {qual:'Qualidade',prio:'Proatividade',know:'Conhecimento',comm:'Comunicacao',prod:'Produtividade',assid:'Assiduidade',org:'Organizacao',equip:'Trab. em Equipe',cria:'Criatividade',motv:'Motivacao'};
-  // Sem icones Unicode — usamos pequenos retangulos coloridos desenhados via doc.rect()
-  const colW2 = pw / 2 - 3;
+
+  // Título da subseção
+  sf('bold', 7.5, MUTED);
+  doc.text('AVALIACAO POR COMPETENCIA (0 a 10)', lm, y);
+  y += 5;
+
+  const colW2 = (pw - 6) / 2;   // largura de cada coluna (com gap de 6mm entre elas)
+  const rowH2 = 12;              // altura de cada linha de competência
+  const totalRows = Math.ceil(APT_KEYS_PDF.length / 2);
+
+  // Fundo do bloco inteiro
+  fl([248, 250, 252]); doc.roundedRect(lm, y, pw, totalRows * rowH2 + 4, 2, 2, 'F');
+  dr(BORDER, 0.3);     doc.roundedRect(lm, y, pw, totalRows * rowH2 + 4, 2, 2, 'S');
+
+  // Linha divisória central vertical
+  dr([200, 215, 230], 0.4);
+  doc.line(lm + colW2 + 3, y + 2, lm + colW2 + 3, y + totalRows * rowH2 + 2);
 
   APT_KEYS_PDF.forEach((k, i) => {
-    const val  = emp.competencies?.[k] ?? 5;
-    const col  = i % 2;
-    const row  = Math.floor(i / 2);
-    const bx   = lm + col * (colW2 + 6);
-    const by   = y + row * 11;
-    if (i === 0) {/* já está no y certo */}
-    const barColor = val>=8?GREEN:val>=6?BLUE:val>=4?YELLOW:RED;
+    const val     = emp.competencies?.[k] ?? 5;
+    const col     = i % 2;
+    const row     = Math.floor(i / 2);
+    const bx      = lm + col * (colW2 + 6) + 3;
+    const by      = y + 2 + row * rowH2;
+    const barColor = val >= 8 ? GREEN : val >= 6 ? BLUE : val >= 4 ? YELLOW : RED;
 
-    // Fundo da linha
-    if (row % 2 === 0 && col === 0) {
-      fl(BG); doc.roundedRect(lm, by, pw, 10, 1, 1, 'F');
+    // Fundo alternado por linha (aplica nas 2 colunas ao mesmo tempo)
+    if (col === 0 && row % 2 === 0) {
+      fl([240, 244, 250]);
+      doc.rect(lm + 0.5, by, pw - 1, rowH2 - 0.5, 'F');
     }
-    // Quadrado colorido (substitui icone Unicode — compativel com todas as fontes)
-    fl(barColor); doc.rect(bx + 1, by + 3.5, 2.5, 2.5, 'F');
-    // Label
-    sf('normal', 7.5, TEXT);
-    doc.text(APT_LABELS_PDF[k], bx + 5, by + 6.5);
-    // Nota numérica
-    sf('bold', 8, barColor);
-    doc.text(`${val}`, bx + colW2 - 18, by + 6.5, {align:'right'});
-    doc.text('/10', bx + colW2 - 10, by + 6.5, {align:'right'});
-    // Mini barra
-    fl(BG2); doc.roundedRect(bx + colW2 - 9, by + 4, 9, 2.5, 1, 1, 'F');
-    fl(barColor); doc.roundedRect(bx + colW2 - 9, by + 4, 9*(val/10), 2.5, 1, 1, 'F');
+
+    // Quadrado colorido indicador
+    fl(barColor); doc.rect(bx, by + 4, 3, 3, 'F');
+
+    // Label da competência
+    sf('bold', 7.5, TEXT);
+    doc.text(APT_LABELS_PDF[k], bx + 5, by + 7);
+
+    // Nota numérica + /10
+    sf('bold', 9, barColor);
+    doc.text(`${val}`, bx + colW2 - 22, by + 7.5, {align:'right'});
+    sf('normal', 6.5, MUTED);
+    doc.text('/10', bx + colW2 - 14, by + 7.5, {align:'right'});
+
+    // Mini barra de progresso
+    const barX  = bx + colW2 - 13;
+    const barW  = 12;
+    fl(BG2); doc.roundedRect(barX, by + 4.5, barW, 2.5, 1, 1, 'F');
+    fl(barColor); doc.roundedRect(barX, by + 4.5, barW * (val / 10), 2.5, 1, 1, 'F');
   });
-  y += Math.ceil(APT_KEYS_PDF.length / 2) * 11 + 6;
+
+  y += totalRows * rowH2 + 8;
 
   // ════════════════════════════════════════════════════
   // SEÇÃO: MOTIVO DO DESLIGAMENTO
