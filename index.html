@@ -579,7 +579,7 @@ function getStatus(score) {
   return               { tag:'risk',  label:'🔴 Risco',    cls:'tag-risk'  };
 }
 function getMyEmployees() {
-  const all   = _store?.employees || [];
+  const all   = (_store?.employees || []).filter(e => !e.demitido);
   const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
   if (scope.all) return all;
   if (scope.sector) {
