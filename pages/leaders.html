@@ -741,10 +741,8 @@ let activeDeptFilter = '';
 let _store           = null;
 let _allPonto        = {};
 
-// Estado da busca de líder
-let _searchLeaderId    = null;   // ID do líder selecionado pelo campo de busca
+// Estado da busca de líder (texto simples)
 let _searchLeaderQuery = '';     // Texto atual no campo de busca
-let _dropdownIdx       = -1;     // Índice de navegação no dropdown
 
 // Estado da árvore hierárquica
 let _treeRootId   = null;        // líder raiz do modal de árvore
@@ -972,18 +970,15 @@ async function renderLeaders() {
   let leaders = Object.values(store.users||{})
     .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
 
-  // ── Filtra por busca de líder ──
-  // Se há um líder selecionado, mostra ele + toda a sua hierarquia descendente
+  // ── Filtra por busca de texto (igual a employees.html) ──
+  const searchText = (document.getElementById('search-leader-input')?.value || '').toLowerCase().trim();
   let highlightId = null;
-  if (_searchLeaderId) {
-    highlightId = _searchLeaderId;
-    const rootLeader = store.users?.[_searchLeaderId];
-    if (rootLeader) {
-      // Inclui o próprio líder + todos os subordinados dele (recursivo)
-      const subIds = getSubordinadosRecursivo(_searchLeaderId, leaders);
-      const allowedIds = new Set([_searchLeaderId, ...subIds.map(u=>u.id)]);
-      leaders = leaders.filter(u => allowedIds.has(u.id));
-    }
+  if (searchText) {
+    leaders = leaders.filter(u =>
+      (u.name || '').toLowerCase().includes(searchText) ||
+      (u.setor || '').toLowerCase().includes(searchText) ||
+      ((u.perfil?.depts || []).some(d => d.toLowerCase().includes(searchText)))
+    );
   }
 
   // Filtro por departamento
@@ -1000,8 +995,8 @@ async function renderLeaders() {
     grid.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">🧑‍💼</div>
-        <p style="font-size:14px">${_searchLeaderId ? 'Nenhum resultado para esta busca' : 'Nenhum líder encontrado'}</p>
-        <p style="font-size:12px;margin-top:6px">${_searchLeaderId ? 'Tente limpar o filtro.' : 'Cadastre novos usuários pelo botão acima.'}</p>
+        <p style="font-size:14px">${searchText ? 'Nenhum resultado para esta busca' : 'Nenhum líder encontrado'}</p>
+        <p style="font-size:12px;margin-top:6px">${searchText ? 'Tente limpar o filtro.' : 'Cadastre novos usuários pelo botão acima.'}</p>
       </div>`;
     return;
   }
@@ -1037,16 +1032,9 @@ async function renderLeaders() {
     lista.forEach(u => { html += buildCard(u, store, isAdmin, u.id===highlightId); });
   });
 
-  // Seção operacional (só se não houver busca ativa ou se a busca incluir funcionários)
+  // Seção operacional
   let emps = store.employees || [];
   if (activeDeptFilter) emps = emps.filter(e=>e.dept===activeDeptFilter);
-
-  // Se busca ativa, filtra apenas funcionários da equipe do líder selecionado
-  if (_searchLeaderId && store.users?.[_searchLeaderId]) {
-    const rootLeader = store.users[_searchLeaderId];
-    const teamEmps   = getTeamEmps(rootLeader, store.employees||[]);
-    emps = activeDeptFilter ? teamEmps.filter(e=>e.dept===activeDeptFilter) : teamEmps;
-  }
 
   if (emps.length) {
     html += `
@@ -1667,7 +1655,6 @@ document.getElementById('modal-tree-overlay').addEventListener('click', e=>{
 document.addEventListener('keydown', e=>{
   if (e.key==='Escape') {
     closeModal(); closeTreeModal(); closeLeaderOcorrencia(); closeLeaderTransferModal();
-    closeSearchDropdown();
   }
 });
 
