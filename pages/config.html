@@ -756,6 +756,8 @@ async function addItem(tipo) {
   await saveStore(store);
   input.value = '';
   renderLista(tipo, store[tipo]);
+  const tipoLabel = { filiais:'Filial', turnos:'Turno', depts:'Departamento', funcoes:'Função' };
+  await registrarLog('criou', 'Configurações', `${tipoLabel[tipo]||tipo} adicionado: <strong>${nome}</strong>`);
   showToast('✅ Adicionado!');
 }
 
@@ -766,6 +768,8 @@ async function removeItem(tipo, id) {
   store[tipo] = store[tipo].filter(x => x.id !== id);
   await saveStore(store);
   renderLista(tipo, store[tipo]);
+  const tipoLabel2 = { filiais:'Filial', turnos:'Turno', depts:'Departamento', funcoes:'Função' };
+  await registrarLog('excluiu', 'Configurações', `${tipoLabel2[tipo]||tipo} removido: <strong>${item?.nome||id}</strong>`);
   showToast('✅ Excluído.');
 }
 
@@ -782,7 +786,13 @@ async function startEdit(tipo, id, oldNome) {
       if (nw && nw !== oldNome) {
         const store = await getStore();
         const item  = store[tipo].find(x => x.id === id);
-        if (item) { item.nome = nw; await saveStore(store); showToast('✅ Atualizado!'); }
+        const tipoLabel3 = { filiais:'Filial', turnos:'Turno', depts:'Departamento', funcoes:'Função' };
+        if (item) {
+          item.nome = nw;
+          await saveStore(store);
+          await registrarLog('editou', 'Configurações', `${tipoLabel3[tipo]||tipo} renomeado: <span class="de">${oldNome}</span><span class="seta">→</span><span class="para">${nw}</span>`);
+          showToast('✅ Atualizado!');
+        }
       }
       renderLista(tipo, await getStore()[tipo]);
     }
@@ -820,6 +830,7 @@ async function saveCfg() {
   store.config.aptWeight  = aw;
   store.config.maxAbs     = parseInt(document.getElementById('cfg-maxabs').value)||36;
   await saveStore(store);
+  await registrarLog('editou', 'Configurações', `Pesos do score atualizados: Desempenho <strong>${pw}%</strong> · Aptidões <strong>${aw}%</strong> · Assiduidade <strong>${Math.max(0,100-pw-aw)}%</strong> · Máx. faltas <strong>${store.config.maxAbs}</strong>`);
   showToast('✅ Configurações salvas!');
   refreshPesos();
 }
@@ -832,6 +843,7 @@ async function gerarNovoCodigo() {
   store.authCode = novo;
   await saveStore(store);
   document.getElementById('auth-code-display').value = novo;
+  await registrarLog('editou', 'Configurações', `Código de autorização regenerado: <strong>${novo}</strong>`);
   showToast('✅ Novo código gerado! Compartilhe com novos usuários.');
 }
 
@@ -874,15 +886,18 @@ async function addFeriado() {
   document.getElementById('feriado-mes').value  = '';
   document.getElementById('feriado-nome').value = '';
   renderFeriados();
+  await registrarLog('criou', 'Configurações', `Feriado regional adicionado: <strong>${nome}</strong> — ${String(parseInt(dia)).padStart(2,'0')}/${mes}`);
   showToast('✅ Feriado adicionado!');
 }
 
 async function removeFeriado(i) {
   if (!confirm('Remover este feriado?')) return;
   const store = await getStore();
+  const feriado = store.config.feriadosCustom[i];
   store.config.feriadosCustom.splice(i, 1);
   await saveStore(store);
   renderFeriados();
+  await registrarLog('excluiu', 'Configurações', `Feriado regional removido: <strong>${feriado?.nome||'—'}</strong> — ${feriado?.chave||''}`);
   showToast('✅ Feriado removido.');
 }
 
@@ -917,15 +932,18 @@ async function adminResetPass(userId) {
   if (!store.users[userId]) { showToast('❌ Usuário não encontrado.','error'); return; }
   store.users[userId].pass = nova;
   await saveStore(store);
+  await registrarLog('editou', 'Configurações', `Senha redefinida pelo admin para usuário: <strong>${store.users[userId]?.name||userId}</strong> (login: ${userId})`);
   showToast('✅ Senha redefinida!');
 }
 
 async function adminDeleteUser(userId) {
   const store = await getStore();
-  if (!confirm(`Excluir "${store.users[userId]?.name}"? Esta ação não pode ser desfeita.`)) return;
+  const u     = store.users[userId];
+  if (!confirm(`Excluir "${u?.name}"? Esta ação não pode ser desfeita.`)) return;
   delete store.users[userId];
   await saveStore(store);
   renderUsers();
+  await registrarLog('excluiu', 'Configurações', `Usuário excluído pelo admin: <strong>${u?.name||userId}</strong> — Nível: ${u?.nivel||'—'} — Login: ${userId}`);
   showToast('✅ Usuário removido.');
 }
 
@@ -984,7 +1002,12 @@ async function savePerfilGestor() {
   store.users[currentUser.id].setor  = depts[0] || '';
   currentUser.perfil = perfil;
   await saveStore(store);
-  await registrarLog('editou', 'Configurações', 'Atualizou perfil próprio');
+  const partes = [];
+  if (filiais.length) partes.push(`Filiais: <strong>${filiais.join(', ')}</strong>`);
+  if (turnos.length)  partes.push(`Turnos: <strong>${turnos.join(', ')}</strong>`);
+  if (depts.length)   partes.push(`Departamentos: <strong>${depts.join(', ')}</strong>`);
+  if (funcao)         partes.push(`Função: <strong>${funcao}</strong>`);
+  await registrarLog('editou', 'Configurações', `Perfil próprio atualizado — ${partes.join(' · ')||'sem alterações'}`);
   showToast('✅ Perfil salvo!');
 }
 
@@ -1025,6 +1048,11 @@ async function savePerfilLider() {
   store.users[currentUser.id].perfil = perfil;
   currentUser.perfil = perfil;
   await saveStore(store);
+  const partesLider = [];
+  if (perfil.filial) partesLider.push(`Filial: <strong>${perfil.filial}</strong>`);
+  if (perfil.turno)  partesLider.push(`Turno: <strong>${perfil.turno}</strong>`);
+  if (depts.length)  partesLider.push(`Departamentos: <strong>${depts.join(', ')}</strong>`);
+  await registrarLog('editou', 'Configurações', `Perfil próprio atualizado — ${partesLider.join(' · ')||'sem alterações'}`);
   showToast('✅ Perfil salvo!');
 }
 
@@ -1101,6 +1129,7 @@ async function importarJSON(input) {
 
       status.textContent = '';
       input.value = '';
+      await registrarLog('editou', 'Configurações', `Backup importado: <strong>${totalUsers}</strong> usuários · <strong>${totalFiliais}</strong> filiais · Exportado em: ${exportedAt}`);
       showToast(`✅ Dados importados! ${totalUsers} usuários carregados.`);
 
       // Recarrega a página para refletir os novos dados
@@ -1200,6 +1229,8 @@ function salvarPermissoes() {
   });
 
   savePermissionOverrides(overrides);
+  const qtd = Object.values(overrides).reduce((s,p)=>s+Object.keys(p).length, 0);
+  registrarLog('editou', 'Configurações', `Permissões salvas: <strong>${qtd}</strong> regra${qtd!==1?'s':''} customizada${qtd!==1?'s':''}`);
   showToast('✅ Permissões salvas!');
   renderTabelaPermissoes();
 }
@@ -1207,6 +1238,7 @@ function salvarPermissoes() {
 function resetarPermissoes() {
   if (!confirm('Restaurar todas as permissões para os valores padrão?\nIsso remove todos os ajustes personalizados.')) return;
   resetPermissionsToDefault();
+  registrarLog('editou', 'Configurações', `Permissões restauradas para os valores padrão do sistema`);
   showToast('✅ Permissões restauradas para o padrão.');
   renderTabelaPermissoes();
 }
@@ -1236,6 +1268,7 @@ async function changePassword(pre) {
   store.users[currentUser.id].pass = nw;
   currentUser.pass = nw;
   await saveStore(store);
+  await registrarLog('editou', 'Configurações', `Senha própria alterada com sucesso`);
   showMsgLocal('✅ Senha alterada com sucesso!','success');
   [`${pre}-current`,`${pre}-new`,`${pre}-new2`].forEach(id => {
     const el = document.getElementById(id); if(el) el.value='';

@@ -149,11 +149,74 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .log-ip     { font-size:11px; color:var(--muted); font-family:monospace; }
 
 /* detalhe com setas de mudança */
-.log-detail { font-size:12px; color:var(--muted); max-width:320px; }
+.log-detail { font-size:12px; color:var(--muted); max-width:420px; line-height:1.5; }
 .log-detail .de   { color:#f87171; text-decoration:line-through; }
 .log-detail .para { color:#34d399; font-weight:700; }
 .log-detail .seta { color:var(--muted); margin:0 4px; }
 .log-detail strong { color:var(--text); }
+.log-detail-truncado { max-height:42px; overflow:hidden; position:relative; }
+.log-detail-truncado::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:16px;
+  background:linear-gradient(transparent, var(--surface));
+}
+.log-row:hover .log-detail-truncado::after { background:linear-gradient(transparent, var(--surface2)); }
+
+/* ── Botão "ver mais" ── */
+.btn-ver-mais {
+  display:inline-flex; align-items:center; gap:5px; margin-top:4px;
+  font-size:10px; font-weight:700; color:var(--accent); cursor:pointer;
+  background:none; border:none; padding:0; font-family:var(--font-body);
+  transition:opacity .15s;
+}
+.btn-ver-mais:hover { opacity:.7; }
+
+/* ── Modal detalhe completo ── */
+.overlay-detail {
+  position:fixed; inset:0; background:rgba(0,0,0,.8);
+  backdrop-filter:blur(6px); z-index:300;
+  display:none; align-items:center; justify-content:center;
+}
+.overlay-detail.open { display:flex; }
+.modal-detail {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; width:580px; max-width:95vw; max-height:90vh;
+  overflow-y:auto; animation:fadeUp .25s ease;
+}
+.modal-detail-header {
+  padding:18px 22px 14px; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:12px;
+}
+.modal-detail-body { padding:20px 22px; }
+.modal-detail-close {
+  margin-left:auto; background:var(--surface2); border:1px solid var(--border);
+  border-radius:7px; color:var(--muted); font-family:var(--font-body);
+  font-size:11px; font-weight:700; padding:5px 10px; cursor:pointer;
+  transition:all .15s;
+}
+.modal-detail-close:hover { border-color:var(--red); color:var(--red); }
+.detail-campo { margin-bottom:12px; }
+.detail-campo-label {
+  font-size:9px; font-weight:700; text-transform:uppercase;
+  letter-spacing:1.2px; color:var(--muted); margin-bottom:4px;
+}
+.detail-campo-val {
+  font-size:13px; color:var(--text); line-height:1.6;
+  background:var(--surface2); border-radius:8px; padding:9px 12px;
+  border:1px solid var(--border);
+}
+.detail-campo-val .de    { color:#f87171; text-decoration:line-through; }
+.detail-campo-val .para  { color:#34d399; font-weight:700; }
+.detail-campo-val .seta  { color:var(--muted); margin:0 5px; }
+.detail-campo-val strong { color:var(--text); font-weight:700; }
+
+/* tema claro */
+body.light-theme .log-detail-truncado::after { background:linear-gradient(transparent,#fff); }
+body.light-theme .log-row:hover .log-detail-truncado::after { background:linear-gradient(transparent,#F4F7FB); }
+body.light-theme .modal-detail { background:#fff; border-color:#E2E8F0; }
+body.light-theme .modal-detail-header { border-bottom-color:#E2E8F0; }
+body.light-theme .detail-campo-val { background:#F4F7FB; border-color:#E2E8F0; color:#0f172a; }
+body.light-theme .detail-campo-val strong { color:#0f172a; }
+body.light-theme .modal-detail-close { background:#F4F7FB; border-color:#E2E8F0; color:#64748b; }
 
 /* ── Toast ── */
 .toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
@@ -216,9 +279,11 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
     <select class="filter-select" id="filter-modulo" onchange="renderLog()">
       <option value="">Todos os módulos</option>
       <option value="Funcionários">Funcionários</option>
+      <option value="Líderes">Líderes</option>
       <option value="Ponto">Ponto</option>
       <option value="Aptidões">Aptidões</option>
-      <option value="Quadro">Quadro</option>
+      <option value="Ocorrências">Ocorrências</option>
+      <option value="Quadro Operacional">Quadro Operacional</option>
       <option value="Sistema">Sistema</option>
       <option value="Configurações">Configurações</option>
     </select>
