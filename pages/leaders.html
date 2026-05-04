@@ -1774,6 +1774,259 @@ function renderCircularOrgChart(leaderId) {
   const leader = store?.users?.[leaderId];
   if (!leader) return;
 
+  // ── Header ──
+  const lm  = NIVEL_META[leader.nivel||'lider'] || NIVEL_META.lider;
+  const ini = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const hAv = document.getElementById('org-modal-avatar');
+  hAv.style.background = leader.foto ? 'transparent' : `linear-gradient(135deg,${lm.cor},${lm.cor}88)`;
+  hAv.innerHTML = leader.foto
+    ? `<img src="${leader.foto}" style="width:46px;height:46px;border-radius:50%;object-fit:cover">` : ini;
+  document.getElementById('org-modal-name').textContent = leader.name;
+  document.getElementById('org-modal-sub').textContent  = `${lm.emoji} ${lm.label} · Árvore hierárquica`;
+
+  const allLeaders = Object.values(store.users||{}).filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
+  const allEmps    = store.employees || [];
+
+  // ── Subordinados DIRETOS (apenas o nível imediatamente abaixo) ──
+  // ORDEM_IDX = ['lider','encarregado','coordenacao','gerencia','diretoria']
+  // Percorre do rank-1 para baixo até achar alguém com dept em comum
+  function getDirectSubs(ldr, candidates) {
+    const myIdx   = ORDEM_IDX.indexOf(ldr.nivel||'lider');
+    const myDepts = getMeusDepts(ldr);
+    for (let t = myIdx - 1; t >= 0; t--) {
+      const found = candidates.filter(u => {
+        if (ORDEM_IDX.indexOf(u.nivel||'lider') !== t) return false;
+        const ud = getMeusDepts(u);
+        return myDepts.some(d => ud.includes(d));
+      });
+      if (found.length) return found;
+    }
+    return [];
+  }
+
+  // ── Árvore recursiva ──
+  let _nodeIdx = 0;
+  function buildTree(ldr, pool, depth) {
+    if (depth > 6) return null;
+    const dirSubs  = getDirectSubs(ldr, pool);
+    const newPool  = pool.filter(c => !dirSubs.some(s => s.id === c.id) && c.id !== ldr.id);
+    const children = dirSubs.map(s => buildTree(s, newPool, depth + 1)).filter(Boolean);
+
+    const teamEmps = getTeamEmps(ldr, allEmps);
+    // Só mostra employees se for nó folha (sem sub-líderes)
+    const employees = children.length === 0 ? teamEmps.slice(0, 8) : [];
+
+    return { leader: ldr, children, employees, idx: _nodeIdx++ };
+  }
+
+  const tree = buildTree(leader, allLeaders.filter(u => u.id !== leader.id), 0);
+  if (!tree) return;
+
+  // ── Constantes ──
+  const R    = 30;   // raio das bolhas de líderes
+  const RR   = 40;   // raio da bolha root
+  const RE   = 24;   // raio das bolhas de funcionários
+  const SLOT = 68;   // largura por funcionário
+  const H_GAP = 16;  // gap entre subárvores irmãs
+  const VG   = 100;  // distância vertical entre níveis
+  const PAD  = 48;
+
+  // ── Calcula largura de cada subárvore ──
+  function calcWidth(node, level) {
+    node.level = level;
+    if (!node.children.length) {
+      node.width = Math.max(SLOT * 1.1, node.employees.length * SLOT);
+    } else {
+      node.children.forEach(c => calcWidth(c, level + 1));
+      const cw = node.children.reduce((s,c) => s + c.width, 0) + (node.children.length - 1) * H_GAP;
+      node.width = Math.max(SLOT * 1.1, cw);
+    }
+  }
+  calcWidth(tree, 0);
+
+  const svgW = tree.width + PAD * 2;
+  const CX   = svgW / 2;
+
+  // ── Profundidade máxima ──
+  function maxDep(node) {
+    if (!node.children.length) return node.employees.length ? 2 : 1;
+    return 1 + Math.max(...node.children.map(maxDep));
+  }
+  const svgH = maxDep(tree) * VG + RR + 70;
+
+  // ── Atribui posições ──
+  function assignPos(node, leftX) {
+    const r  = node.level === 0 ? RR : R;
+    node.x   = leftX + node.width / 2;
+    node.y   = node.level * VG + RR + 10;
+    node.r   = r;
+
+    if (node.children.length) {
+      const totalCW = node.children.reduce((s,c) => s + c.width, 0) + (node.children.length-1) * H_GAP;
+      let cx = node.x - totalCW / 2;
+      node.children.forEach(child => {
+        assignPos(child, cx);
+        cx += child.width + H_GAP;
+      });
+    }
+
+    // Posição dos employees (abaixo deste nó)
+    if (node.employees.length) {
+      const ew = node.employees.length * SLOT;
+      const ex0 = node.x - ew / 2 + SLOT / 2;
+      node.empXs = node.employees.map((_, i) => ex0 + i * SLOT);
+      node.empY  = node.y + VG;
+    } else {
+      node.empXs = [];
+    }
+  }
+  assignPos(tree, PAD);
+
+  // ── Defs ──
+  const mkClip = (id, r) => `<clipPath id="${id}"><circle cx="0" cy="0" r="${r}"/></clipPath>`;
+  const mkGrad = (id, c) => `<radialGradient id="${id}" cx="35%" cy="30%"><stop offset="0%" stop-color="${c}"/><stop offset="100%" stop-color="${c}77"/></radialGradient>`;
+
+  let defs = '<defs>';
+  defs += `<filter id="td-glow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="7" result="blur"/>
+    <feFlood flood-color="${lm.cor}" flood-opacity="0.45" result="c"/>
+    <feComposite in="c" in2="blur" operator="in" result="sh"/>
+    <feComposite in="SourceGraphic" in2="sh" operator="over"/>
+  </filter>`;
+  defs += mkGrad('td-ge', '#4f8ef7');
+
+  // Gradiente por nível (único por nivel)
+  const gradsMade = new Set();
+  function collectGrads(node) {
+    const n = node.leader.nivel||'lider';
+    if (!gradsMade.has(n)) {
+      gradsMade.add(n);
+      const m = NIVEL_META[n]||NIVEL_META.lider;
+      defs += mkGrad(`td-gn-${n}`, m.cor);
+    }
+    node.children.forEach(collectGrads);
+  }
+  collectGrads(tree);
+
+  // Clips por nó
+  function collectClips(node) {
+    const r = node.level === 0 ? RR - 3 : R - 3;
+    defs += mkClip(`td-nc${node.idx}`, r);
+    node.employees.forEach((_, i) => defs += mkClip(`td-ec${node.idx}-${i}`, RE - 2));
+    node.children.forEach(collectClips);
+  }
+  collectClips(tree);
+  defs += '</defs>';
+
+  // ── Funções de desenho ──
+  function drawLeaderNode(node) {
+    const m   = NIVEL_META[node.leader.nivel||'lider']||NIVEL_META.lider;
+    const r   = node.r;
+    const fs  = node.level === 0 ? 19 : 13;
+    const ini = node.leader.name.split(' ').map(c=>c[0]).slice(0,2).join('').toUpperCase();
+    const fn  = node.leader.name.split(' ')[0]||'';
+    const ln  = node.leader.name.split(' ')[1] ? node.leader.name.split(' ')[1][0]+'.' : '';
+    const dn  = (fn.slice(0,9)+(ln?' '+ln:'')).slice(0,12);
+
+    let g = `<g transform="translate(${node.x.toFixed(1)},${node.y.toFixed(1)})">`;
+    if (node.level === 0) g += `<circle cx="0" cy="0" r="${r+10}" fill="${m.cor}12"/>`;
+    g += `<circle cx="0" cy="0" r="${r+3}" fill="none" stroke="${m.cor}44" stroke-width="1.5" stroke-dasharray="3,3"/>`;
+    g += `<circle cx="0" cy="0" r="${r}" fill="url(#td-gn-${node.leader.nivel||'lider'})" stroke="${m.cor}" stroke-width="${node.level===0?3:2}"${node.level===0?' filter="url(#td-glow)"':''}/>`;
+    if (node.leader.foto) {
+      g += `<image href="${node.leader.foto}" x="-${r-3}" y="-${r-3}" width="${(r-3)*2}" height="${(r-3)*2}" clip-path="url(#td-nc${node.idx})"/>`;
+    } else {
+      g += `<text x="0" y="${Math.round(fs*0.38)}" text-anchor="middle" font-family="Syne,sans-serif" font-size="${fs}" font-weight="800" fill="white">${ini}</text>`;
+    }
+    g += `<text x="0" y="${r+15}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="${node.level===0?11:9.5}" font-weight="700" fill="#e2e8f0">${dn}</text>`;
+    g += `<text x="0" y="${r+27}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" fill="${m.cor}cc">${(m.emoji+' '+m.label).slice(0,22)}</text>`;
+    g += '</g>';
+    return g;
+  }
+
+  function drawEmpNode(emp, x, y, clipId) {
+    const ini = emp.name.split(' ').map(c=>c[0]).slice(0,2).join('').toUpperCase();
+    const fn  = emp.name.split(' ')[0]||'';
+    let g = `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})">`;
+    g += `<circle cx="0" cy="0" r="${RE+3}" fill="#4f8ef712"/>`;
+    g += `<circle cx="0" cy="0" r="${RE}" fill="url(#td-ge)" stroke="#4f8ef7" stroke-width="1.5"/>`;
+    if (emp.foto) {
+      g += `<image href="${emp.foto}" x="-${RE-2}" y="-${RE-2}" width="${(RE-2)*2}" height="${(RE-2)*2}" clip-path="url(#${clipId})"/>`;
+    } else {
+      g += `<text x="0" y="4" text-anchor="middle" font-family="Syne,sans-serif" font-size="10" font-weight="800" fill="white">${ini}</text>`;
+    }
+    g += `<text x="0" y="${RE+12}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="700" fill="#e2e8f0">${fn.slice(0,10)}</text>`;
+    g += `<text x="0" y="${RE+21}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="#94a3b8">${(emp.role||emp.dept||'').slice(0,13)}</text>`;
+    g += '</g>';
+    return g;
+  }
+
+  // Linha bezier suave (de baixo do pai para cima do filho)
+  function bezier(x1, y1b, x2, y2t, color) {
+    const my = (y1b + y2t) / 2;
+    return `<path d="M${x1.toFixed(1)},${y1b.toFixed(1)} C${x1.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${y2t.toFixed(1)}" fill="none" stroke="${color}55" stroke-width="1.5" stroke-dasharray="5,4"/>`;
+  }
+  function hbar(x1, x2, y, color) {
+    return `<line x1="${x1.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${color}35" stroke-width="1.5"/>`;
+  }
+  function vdrop(x, y1, y2, color) {
+    return `<line x1="${x.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${color}44" stroke-width="1.5" stroke-dasharray="4,3"/>`;
+  }
+
+  // ── Traversal: linhas primeiro, nós por cima ──
+  const lines = [], nodes = [];
+
+  function traverse(node) {
+    const m = NIVEL_META[node.leader.nivel||'lider']||NIVEL_META.lider;
+    const r = node.r;
+
+    // Conexões para filhos líderes
+    if (node.children.length === 1) {
+      const cm = NIVEL_META[node.children[0].leader.nivel||'lider']||NIVEL_META.lider;
+      lines.push(bezier(node.x, node.y + r + 4, node.children[0].x, node.children[0].y - R - 4, cm.cor));
+    } else if (node.children.length > 1) {
+      const barY = node.y + r + VG * 0.42;
+      const xs   = node.children.map(c => c.x);
+      lines.push(vdrop(node.x, node.y + r + 4, barY, m.cor));
+      lines.push(hbar(xs[0], xs[xs.length-1], barY, m.cor));
+      node.children.forEach(child => {
+        const cm = NIVEL_META[child.leader.nivel||'lider']||NIVEL_META.lider;
+        lines.push(vdrop(child.x, barY, child.y - R - 4, cm.cor));
+      });
+    }
+
+    // Conexões para employees
+    if (node.empXs?.length) {
+      if (node.empXs.length === 1) {
+        lines.push(bezier(node.x, node.y + r + 4, node.empXs[0], node.empY - RE - 4, '#4f8ef7'));
+      } else {
+        const barY = node.y + r + VG * 0.42;
+        lines.push(vdrop(node.x, node.y + r + 4, barY, '#4f8ef7'));
+        lines.push(hbar(node.empXs[0], node.empXs[node.empXs.length-1], barY, '#4f8ef7'));
+        node.empXs.forEach(ex => lines.push(vdrop(ex, barY, node.empY - RE - 4, '#4f8ef7')));
+      }
+    }
+
+    // Nó do líder
+    nodes.push(drawLeaderNode(node));
+
+    // Nós dos employees
+    node.employees.forEach((emp, i) =>
+      nodes.push(drawEmpNode(emp, node.empXs[i], node.empY, `td-ec${node.idx}-${i}`))
+    );
+
+    node.children.forEach(traverse);
+  }
+
+  traverse(tree);
+
+  if (!tree.children.length && !tree.employees.length) {
+    nodes.push(`<text x="${CX}" y="${RR+70}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="13" fill="#94a3b8">Sem subordinados cadastrados</text>`);
+  }
+
+  document.getElementById('org-chart-container').innerHTML =
+    `<svg viewBox="0 0 ${svgW} ${svgH}" xmlns="http://www.w3.org/2000/svg" width="${svgW}" height="${svgH}">${[defs,...lines,...nodes].join('')}</svg>`;
+}
+
   // ── Cabeçalho do modal ──
   const lm  = NIVEL_META[leader.nivel||'lider'] || NIVEL_META.lider;
   const ini = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
