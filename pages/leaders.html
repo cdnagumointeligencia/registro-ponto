@@ -530,6 +530,56 @@ body.light-theme .leader-apt-banner {
 .btn-foto:hover { border-color:var(--accent); color:var(--accent); }
 .btn-foto.remove:hover { border-color:var(--red); color:var(--red); }
 
+/* ════════════════════════════════════════════
+   MODAL ORGANOGRAMA CIRCULAR
+════════════════════════════════════════════ */
+.modal-org-circular {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:20px; width:760px; max-width:96vw;
+  max-height:94vh; overflow:hidden;
+  display:flex; flex-direction:column;
+  animation:fadeUp .3s ease;
+}
+.modal-org-header {
+  display:flex; align-items:center; gap:14px;
+  padding:20px 24px; border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.modal-org-avatar {
+  width:46px; height:46px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:16px; font-weight:800; color:#fff;
+}
+.modal-org-info { flex:1; }
+.modal-org-name { font-family:var(--font-head); font-size:18px; font-weight:800; color:var(--text); }
+.modal-org-sub  { font-size:12px; color:var(--muted); margin-top:3px; }
+.modal-org-close {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; padding:6px 12px; color:var(--muted);
+  font-size:12px; font-weight:600; cursor:pointer;
+  transition:all .15s; font-family:var(--font-body);
+}
+.modal-org-close:hover { border-color:var(--red); color:var(--red); }
+#org-chart-container {
+  flex:1; overflow:auto; display:flex;
+  align-items:center; justify-content:center;
+  padding:24px; background:var(--bg); min-height:400px;
+}
+#org-chart-container svg { max-width:100%; height:auto; display:block; }
+
+/* Botão Organograma — aparece durante busca ativa */
+#btn-organograma {
+  background:rgba(34,211,238,.12); color:var(--cyan);
+  border:1px solid rgba(34,211,238,.35);
+  transition:all .2s; white-space:nowrap;
+}
+#btn-organograma:hover {
+  background:rgba(34,211,238,.22);
+  box-shadow:0 4px 14px rgba(34,211,238,.25);
+  transform:translateY(-1px);
+}
+body.light-theme #btn-organograma { background:rgba(6,182,212,.1); color:#0891b2; border-color:rgba(6,182,212,.3); }
+
 /* ── Responsive ── */
 @media(max-width:1024px) {
   :root { --sidebar-w:56px; }
@@ -571,6 +621,11 @@ body.light-theme .leader-apt-banner {
 
     <!-- Chips de departamento -->
     <div id="dept-chips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+
+    <!-- Botão Organograma Circular (aparece durante busca ativa) -->
+    <button class="btn btn-sm" id="btn-organograma" style="display:none" onclick="openCircularOrg()">
+      🔵 Organograma Circular
+    </button>
 
   </div>
 
@@ -731,6 +786,23 @@ body.light-theme .leader-apt-banner {
   </div>
 </div>
 
+<!-- ══ MODAL ORGANOGRAMA CIRCULAR ══ -->
+<div class="overlay" id="modal-org-overlay">
+  <div class="modal-org-circular">
+    <div class="modal-org-header">
+      <div class="modal-org-avatar" id="org-modal-avatar"></div>
+      <div class="modal-org-info">
+        <div class="modal-org-name" id="org-modal-name">Organograma</div>
+        <div class="modal-org-sub"  id="org-modal-sub">Visão circular da equipe</div>
+      </div>
+      <button class="modal-org-close" onclick="closeCircularOrg()">✕ Fechar</button>
+    </div>
+    <div id="org-chart-container">
+      <div style="color:var(--muted);padding:60px;text-align:center">Carregando organograma...</div>
+    </div>
+  </div>
+</div>
+
 <script>
 // ════════════════════════════════════════════════════════
 // ESTADO
@@ -746,6 +818,7 @@ let _searchLeaderQuery = '';     // Texto atual no campo de busca
 // Estado da árvore hierárquica
 let _treeRootId   = null;        // líder raiz do modal de árvore
 let _treePath     = [];          // trilha de navegação: [{ id, name }]
+let _currentSearchLeaderId = null; // líder alvo do organograma circular
 
 const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
 
@@ -989,6 +1062,20 @@ async function renderLeaders() {
   }
 
   const grid = document.getElementById('leaders-grid');
+
+  // ── Botão organograma circular ──
+  const btnOrg = document.getElementById('btn-organograma');
+  if (btnOrg) {
+    if (searchText && leaders.length) {
+      _currentSearchLeaderId = leaders[0].id;
+      const firstName = leaders[0].name.split(' ')[0];
+      btnOrg.innerHTML = `🔵 Organograma de ${firstName}`;
+      btnOrg.style.display = '';
+    } else {
+      _currentSearchLeaderId = null;
+      btnOrg.style.display = 'none';
+    }
+  }
 
   if (!leaders.length) {
     grid.innerHTML = `
@@ -1653,9 +1740,160 @@ document.getElementById('modal-tree-overlay').addEventListener('click', e=>{
 });
 document.addEventListener('keydown', e=>{
   if (e.key==='Escape') {
-    closeModal(); closeTreeModal(); closeLeaderOcorrencia(); closeLeaderTransferModal();
+    closeModal(); closeTreeModal(); closeLeaderOcorrencia(); closeLeaderTransferModal(); closeCircularOrg();
   }
 });
+
+// ════════════════════════════════════════════════════════
+// ★ ORGANOGRAMA CIRCULAR
+// ════════════════════════════════════════════════════════
+function openCircularOrg() {
+  if (!_currentSearchLeaderId) return;
+  document.getElementById('modal-org-overlay').classList.add('open');
+  renderCircularOrgChart(_currentSearchLeaderId);
+}
+
+function closeCircularOrg() {
+  document.getElementById('modal-org-overlay').classList.remove('open');
+}
+
+document.getElementById('modal-org-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeCircularOrg();
+});
+
+function renderCircularOrgChart(leaderId) {
+  const store  = _store;
+  const leader = store?.users?.[leaderId];
+  if (!leader) return;
+
+  const container = document.getElementById('org-chart-container');
+
+  // — Cabeçalho do modal —
+  const leaderMeta = NIVEL_META[leader.nivel||'lider'] || NIVEL_META.lider;
+  const leaderIni  = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const headerAv   = document.getElementById('org-modal-avatar');
+  headerAv.style.background = leader.foto ? 'transparent' : `linear-gradient(135deg,${leaderMeta.cor},${leaderMeta.cor}88)`;
+  headerAv.innerHTML = leader.foto
+    ? `<img src="${leader.foto}" style="width:46px;height:46px;border-radius:50%;object-fit:cover">`
+    : leaderIni;
+  document.getElementById('org-modal-name').textContent = leader.name;
+  document.getElementById('org-modal-sub').textContent  = `${leaderMeta.emoji} ${leaderMeta.label} · Organograma circular`;
+
+  // — Coletar subordinados —
+  const allLeaders = Object.values(store.users||{})
+    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
+  const allEmps    = store.employees || [];
+
+  const leaderSubs = getSubordinados(leader, allLeaders);
+  const teamEmps   = getTeamEmps(leader, allEmps);
+
+  let ringNodes = [];
+  leaderSubs.forEach(sub => {
+    const m = NIVEL_META[sub.nivel||'lider'] || NIVEL_META.lider;
+    ringNodes.push({ name: sub.name, role: `${m.emoji} ${m.label}`, foto: sub.foto||null, color: m.cor, type:'leader' });
+  });
+  const maxEmps = Math.max(0, 11 - leaderSubs.length);
+  teamEmps.slice(0, maxEmps).forEach(emp => {
+    ringNodes.push({ name: emp.name, role: emp.role||emp.dept||'Operacional', foto: emp.foto||null, color:'#4f8ef7', type:'emp' });
+  });
+  if (!ringNodes.length) {
+    ringNodes.push({ name: 'Sem subordinados', role: '', foto: null, color:'#94a3b8', type:'empty' });
+  }
+
+  // — Calcular dimensões —
+  const n      = ringNodes.length;
+  const W      = 700, H = 700, CX = 350, CY = 350;
+  const R_C    = 68;               // raio do nó central
+  const R_RING = n <= 5 ? 195 : n <= 8 ? 220 : 240;  // raio do anel
+  const R_N    = n <= 5 ? 48  : n <= 8 ? 42  : 36;   // raio dos nós
+
+  // — Construir SVG —
+  let defs = '<defs>';
+  defs += `<clipPath id="oc-clip-c"><circle cx="0" cy="0" r="${R_C-4}"/></clipPath>`;
+  defs += `<radialGradient id="oc-grad-c" cx="35%" cy="30%">
+    <stop offset="0%" stop-color="${leaderMeta.cor}ff"/>
+    <stop offset="100%" stop-color="${leaderMeta.cor}77"/>
+  </radialGradient>`;
+  ringNodes.forEach((nd, i) => {
+    defs += `<clipPath id="oc-clip-${i}"><circle cx="0" cy="0" r="${R_N-3}"/></clipPath>`;
+    defs += `<radialGradient id="oc-grad-${i}" cx="35%" cy="30%">
+      <stop offset="0%" stop-color="${nd.color}ee"/>
+      <stop offset="100%" stop-color="${nd.color}55"/>
+    </radialGradient>`;
+  });
+  // Sombra para nó central
+  defs += `<filter id="oc-shadow" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="${leaderMeta.cor}" flood-opacity="0.35"/>
+  </filter>`;
+  defs += '</defs>';
+
+  let parts = [defs];
+
+  // Anel decorativo
+  parts.push(`<circle cx="${CX}" cy="${CY}" r="${R_RING}" fill="none" stroke="${leaderMeta.cor}22" stroke-width="1.5" stroke-dasharray="6,5"/>`);
+
+  // Linhas + nós do anel
+  ringNodes.forEach((nd, i) => {
+    const angle = (i / n) * 2 * Math.PI - Math.PI / 2;
+    const nx = CX + R_RING * Math.cos(angle);
+    const ny = CY + R_RING * Math.sin(angle);
+
+    // Linha tracejada do centro ao nó
+    const lx1 = CX + (R_C + 8) * Math.cos(angle);
+    const ly1 = CY + (R_C + 8) * Math.sin(angle);
+    const lx2 = CX + (R_RING - R_N - 8) * Math.cos(angle);
+    const ly2 = CY + (R_RING - R_N - 8) * Math.sin(angle);
+    parts.push(`<line x1="${lx1.toFixed(1)}" y1="${ly1.toFixed(1)}" x2="${lx2.toFixed(1)}" y2="${ly2.toFixed(1)}"
+      stroke="${nd.color}55" stroke-width="1.5" stroke-dasharray="4,4"/>`);
+
+    // Nó (grupo com translate)
+    const ini = nd.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+    const firstName  = nd.name.split(' ')[0] || '';
+    const lastInit   = nd.name.split(' ')[1] ? nd.name.split(' ')[1][0]+'.' : '';
+    const dispName   = (firstName.slice(0,9) + (lastInit?' '+lastInit:'')).slice(0,12);
+
+    let g = `<g transform="translate(${nx.toFixed(1)},${ny.toFixed(1)})">`;
+    // Halo
+    g += `<circle cx="0" cy="0" r="${R_N+5}" fill="${nd.color}18"/>`;
+    // Círculo principal
+    g += `<circle cx="0" cy="0" r="${R_N}" fill="url(#oc-grad-${i})" stroke="${nd.color}bb" stroke-width="2"/>`;
+    // Foto ou iniciais
+    if (nd.foto) {
+      g += `<image href="${nd.foto}" x="-${R_N-4}" y="-${R_N-4}" width="${(R_N-4)*2}" height="${(R_N-4)*2}" clip-path="url(#oc-clip-${i})"/>`;
+    } else {
+      const fs = R_N >= 44 ? 15 : R_N >= 38 ? 13 : 11;
+      g += `<text x="0" y="${fs/2+1}" text-anchor="middle" font-family="Syne,sans-serif" font-size="${fs}" font-weight="800" fill="white">${ini}</text>`;
+    }
+    // Nome abaixo
+    g += `<text x="0" y="${R_N+15}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="700" fill="#e2e8f0">${dispName}</text>`;
+    if (nd.role) {
+      g += `<text x="0" y="${R_N+27}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#94a3b8">${nd.role.slice(0,18)}</text>`;
+    }
+    g += `</g>`;
+    parts.push(g);
+  });
+
+  // Nó central
+  parts.push(`<g transform="translate(${CX},${CY})" filter="url(#oc-shadow)">`);
+  parts.push(`  <circle cx="0" cy="0" r="${R_C+6}" fill="${leaderMeta.cor}20"/>`);
+  parts.push(`  <circle cx="0" cy="0" r="${R_C}" fill="url(#oc-grad-c)" stroke="${leaderMeta.cor}" stroke-width="3"/>`);
+  if (leader.foto) {
+    parts.push(`  <image href="${leader.foto}" x="-${R_C-5}" y="-${R_C-5}" width="${(R_C-5)*2}" height="${(R_C-5)*2}" clip-path="url(#oc-clip-c)"/>`);
+  } else {
+    parts.push(`  <text x="0" y="8" text-anchor="middle" font-family="Syne,sans-serif" font-size="24" font-weight="800" fill="white">${leaderIni}</text>`);
+  }
+  parts.push(`</g>`);
+
+  // Nome + cargo do líder central (abaixo do nó)
+  const centerName = leader.name.split(' ').slice(0,2).join(' ');
+  parts.push(`<text x="${CX}" y="${CY+R_C+20}" text-anchor="middle" font-family="Syne,sans-serif" font-size="13" font-weight="800" fill="#ffffff">${centerName}</text>`);
+  parts.push(`<text x="${CX}" y="${CY+R_C+35}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" fill="#94a3b8">${leaderMeta.emoji} ${leaderMeta.label}</text>`);
+
+  const svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"
+    style="background:transparent">${parts.join('\n')}</svg>`;
+
+  container.innerHTML = svg;
+}
 
 // ── Foto do líder ────────────────────────────────────
 function processarFotoLider(input) {
