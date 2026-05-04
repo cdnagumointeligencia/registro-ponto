@@ -648,14 +648,19 @@ async function renderDashboard() {
 
 async function getPendentesCount() {
   const filialFiltro = document.getElementById('dash-filter-filial')?.value || '';
-  const store = _store || await getStore();
-  let ocs = (await LS.get('rh_ocorrencias', [])).filter(o => o.status === 'pendente');
-  if (filialFiltro) {
-    const empsFilial = new Set(
-      (store.employees || []).filter(e => e.filial === filialFiltro).map(e => String(e.id))
-    );
-    ocs = ocs.filter(o => empsFilial.has(String(o.empId)) || o.empFilial === filialFiltro);
-  }
+  const turnoFiltro  = document.getElementById('dash-filter-turno')?.value  || '';
+
+  // Obtém apenas os funcionários visíveis para este usuário (respeita escopo de permissão)
+  let meusEmps = getMyEmployees();
+  if (filialFiltro) meusEmps = meusEmps.filter(e => e.filial === filialFiltro);
+  if (turnoFiltro)  meusEmps = meusEmps.filter(e => e.turno  === turnoFiltro);
+
+  const meusIds = new Set(meusEmps.map(e => String(e.id)));
+
+  // Filtra ocorrências pendentes apenas dos funcionários do escopo do usuário
+  const todasOcs = await LS.get('rh_ocorrencias', []);
+  const ocs = todasOcs.filter(o => o.status === 'pendente' && meusIds.has(String(o.empId)));
+
   return ocs.length;
 }
 
