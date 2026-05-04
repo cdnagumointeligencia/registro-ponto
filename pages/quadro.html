@@ -394,7 +394,7 @@ async function renderQuadroContent() {
   const funcoes  = store.funcoes || [];
   const dadosF   = quadroData[filialAtiva] || { totalQuadro:0, vagas:{} };
 
-  // ── Afastados desta filial ──
+  // ── Afastados desta filial (ativos hoje) ──
   const hoje = new Date(); hoje.setHours(0,0,0,0);
   const afastados = empsFilial.filter(e => {
     if (!e.afastado) return false;
@@ -404,15 +404,19 @@ async function renderQuadroContent() {
     return true;
   });
 
+  // ── Funcionários ativos = todos exceto afastados ──
+  // Férias NÃO são excluídas (funcionário em férias ainda ocupa a vaga)
+  const empsAtivos = empsFilial.filter(e => !afastados.includes(e));
+
   // ── Summary ──
   const totalQuadro = dadosF.totalQuadro || 0;
-  const totalCad    = empsFilial.length;
+  const totalCad    = empsAtivos.length;   // exclui afastados
   const totalAfast  = afastados.length;
-  const vagas       = Math.max(0, totalQuadro - totalCad);
+  const vagas       = Math.max(0, totalQuadro - totalCad); // baseado em ativos
 
-  // ── Turnos com funcionários ou vagas definidas ──
+  // ── Turnos com funcionários ativos ou vagas definidas ──
   const turnosMostrar = turnos.filter(t => {
-    const temFunc = empsFilial.some(e => e.turno === t.nome);
+    const temFunc = empsAtivos.some(e => e.turno === t.nome);
     const temVaga = funcoes.some(f => {
       const key = `${f.nome}__${t.nome}`;
       return (dadosF.vagas?.[key] || 0) > 0;
@@ -453,7 +457,8 @@ async function renderQuadroContent() {
     html += `<div class="turnos-grid">`;
     turnosMostrar.forEach((turno, idx) => {
       const cor      = TURNO_CORES[idx % TURNO_CORES.length];
-      const empsT    = empsFilial.filter(e => e.turno === turno.nome);
+      // Conta apenas ativos (exclui afastados) no turno
+      const empsT    = empsAtivos.filter(e => e.turno === turno.nome);
       const totalT   = empsT.length;
 
       html += `
@@ -616,12 +621,21 @@ async function renderQuadroContent() {
 // ── Atualiza vagas a contratar em tempo real ao editar total ──
 async function atualizarResumo() {
   const store      = await getStore();
+  const hoje       = new Date(); hoje.setHours(0,0,0,0);
   const empsFilial = (store.employees||[]).filter(e =>
     !e.demitido && e.filial === filialAtiva
   );
+  // Exclui afastados ativos (férias não são excluídas)
+  const empsAtivos = empsFilial.filter(e => {
+    if (!e.afastado) return true;
+    const inicio = e.data_afastamento
+      ? new Date(e.data_afastamento + 'T00:00:00')
+      : new Date(0);
+    return inicio > hoje; // só exclui se o afastamento já iniciou
+  });
   const totalInput = document.getElementById('input-total-quadro');
   const total      = parseInt(totalInput?.value) || 0;
-  const vagas      = Math.max(0, total - empsFilial.length);
+  const vagas      = Math.max(0, total - empsAtivos.length);
   const vagasEl    = document.getElementById('vagas-contratar');
   if (vagasEl) vagasEl.textContent = vagas;
 }
