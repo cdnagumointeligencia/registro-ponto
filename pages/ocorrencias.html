@@ -136,6 +136,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .tipo-saida         { background:rgba(251,146,60,.15);  color:#fb923c; border:1px solid rgba(251,146,60,.3);  }
 .tipo-advertencia   { background:rgba(248,113,113,.15); color:#f87171; border:1px solid rgba(248,113,113,.3); }
 .tipo-elogio        { background:rgba(34,211,238,.15);  color:#22d3ee; border:1px solid rgba(34,211,238,.3);  }
+.tipo-atestado      { background:rgba(244,114,182,.15); color:#f472b6; border:1px solid rgba(244,114,182,.3); }
 
 .log-desc { font-size:12px; color:var(--muted); max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .log-resp { font-size:12px; color:var(--muted); }
@@ -204,6 +205,7 @@ textarea.form-input { resize:vertical; min-height:80px; }
         <select class="form-input" id="f-tipo">
           <option value="justificativa">📄 Justificativa</option>
           <option value="ajuste">✏️ Ajuste de Ponto</option>
+          <option value="atestado">🏥 Atestado Médico</option>
           <option value="ocorrencia">⚠️ Ocorrência</option>
           <option value="entrada">→ Entrada Manual</option>
           <option value="saida">← Saída Manual</option>
@@ -292,6 +294,7 @@ textarea.form-input { resize:vertical; min-height:80px; }
       <option value="">Todos os tipos</option>
       <option value="justificativa">Justificativa</option>
       <option value="ajuste">Ajuste</option>
+      <option value="atestado">Atestado Médico</option>
       <option value="ocorrencia">Ocorrência</option>
       <option value="entrada">Entrada</option>
       <option value="saida">Saída</option>
@@ -346,6 +349,7 @@ const OC_KEY = 'rh_ocorrencias';
 const TIPO_META = {
   justificativa: { emoji:'📄', label:'Justificativa', cls:'tipo-justificativa' },
   ajuste:        { emoji:'✏️', label:'Ajuste',        cls:'tipo-ajuste'        },
+  atestado:      { emoji:'🏥', label:'Atestado Médico', cls:'tipo-atestado'    },
   ocorrencia:    { emoji:'⚠️', label:'Ocorrência',    cls:'tipo-ocorrencia'    },
   entrada:       { emoji:'→',  label:'Entrada',       cls:'tipo-entrada'       },
   saida:         { emoji:'←',  label:'Saída',         cls:'tipo-saida'         },
