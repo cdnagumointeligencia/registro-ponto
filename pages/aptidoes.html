@@ -1094,9 +1094,11 @@ async function commitEdit(empId, key, input) {
 
   emps[idx].competencies[key] = v;
 
-  // ── Salva snapshot no histórico do mês atual ──
+  // ── Registra APENAS esta chave no histórico do mês atual ──
+  // (salvar o snapshot completo travaria todas as outras competências)
   if (!emps[idx].competencies_history) emps[idx].competencies_history = {};
-  emps[idx].competencies_history[currentMonthKey()] = { ...emps[idx].competencies };
+  if (!emps[idx].competencies_history[currentMonthKey()]) emps[idx].competencies_history[currentMonthKey()] = {};
+  emps[idx].competencies_history[currentMonthKey()][key] = v;
 
   store.employees = emps;
   await saveStore(store);
