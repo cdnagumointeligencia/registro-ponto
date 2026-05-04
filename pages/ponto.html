@@ -410,13 +410,15 @@ body.light-theme .status-dot.vazio      { background:#DCE6EE; border-color:#B0C4
       <span style="font-size:12px;color:var(--muted)">DIA:</span>
       <input class="dia-input" type="number" id="lancamento-dia" min="1" max="31" placeholder="—">
       <span class="arrow-label">→ MARCAR TODOS COMO:</span>
-      <button class="status-btn" style="background:rgba(52,211,153,.15);color:#34d399;border-color:rgba(52,211,153,.4)"   onclick="lancamentoRapido('presente')">  ✅ Presente</button>
-      <button class="status-btn" style="background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.4)" onclick="lancamentoRapido('falta')">     ✕ Falta</button>
-      <button class="status-btn" style="background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.4)"  onclick="lancamentoRapido('feriado')">   🎉 Feriado</button>
-      <button class="status-btn" style="background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.35)"  onclick="lancamentoRapido('atestado')">  🏥 Atestado</button>
-      <button class="status-btn" style="background:rgba(251,146,60,.15);color:#fb923c;border-color:rgba(251,146,60,.4)"  onclick="lancamentoRapido('ferias')">    🏖️ Férias</button>
-      <button class="status-btn" style="background:rgba(34,211,238,.15);color:#22d3ee;border-color:rgba(34,211,238,.4)"  onclick="lancamentoRapido('folga')">     🌙 Folga</button>
-      <button class="status-btn" style="background:rgba(244,114,182,.15);color:#f472b6;border-color:rgba(244,114,182,.4)"onclick="lancamentoRapido('afastado')">  🚫 Afastado</button>
+      <button class="status-btn" style="background:rgba(52,211,153,.15);color:#34d399;border-color:rgba(52,211,153,.4)"   onclick="lancamentoRapido('presente')">✅ Presente</button>
+      <button class="status-btn" style="background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.4)" onclick="lancamentoRapido('falta')">✕ Falta</button>
+      <button class="status-btn" style="background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.35)"   onclick="lancamentoRapido('atestado')">🏥 Atestado</button>
+      <button class="status-btn" style="background:rgba(34,211,238,.15);color:#22d3ee;border-color:rgba(34,211,238,.4)"   onclick="lancamentoRapido('folga')">🌙 Folga</button>
+      <span style="width:1px;background:var(--border);height:22px;flex-shrink:0"></span>
+      <span style="font-size:10px;color:var(--muted);white-space:nowrap">Automáticos:</span>
+      <span class="status-btn" style="background:rgba(251,191,36,.08);color:#fbbf2488;border-color:rgba(251,191,36,.2);cursor:default;opacity:.6" title="Configurado na ficha do funcionário">🎉 Feriado</span>
+      <span class="status-btn" style="background:rgba(251,146,60,.08);color:#fb923c88;border-color:rgba(251,146,60,.2);cursor:default;opacity:.6" title="Configurado na ficha do funcionário">🏖️ Férias</span>
+      <span class="status-btn" style="background:rgba(244,114,182,.08);color:#f472b688;border-color:rgba(244,114,182,.2);cursor:default;opacity:.6" title="Configurado na ficha do funcionário">🚫 Afastado</span>
     </div>
 
     <!-- Legenda -->
@@ -1157,7 +1159,7 @@ function showCtxMenu(e, empId, dia, statusAtual) {
   ctxEmpId = empId; ctxDia = dia; ctxAtual = statusAtual;
 
   const menu   = document.getElementById('ctx-menu');
-  const options = ['presente','falta','feriado','atestado','ferias','folga','afastado'];
+  const options = ['presente','falta','atestado','folga'];
 
   menu.innerHTML = options.map(s=>{
     const sm   = STATUS_META[s];
