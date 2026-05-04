@@ -203,8 +203,10 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .day-dow      { font-size:9px; margin-top:1px; }
 .day-col-header.domingo { color:rgba(79,142,247,.7); }
 .day-col-header.sabado  { color:rgba(244,114,182,.7); }
-.day-col-header.hoje    { color:#fff; background:rgba(255,255,255,.08); border-radius:6px 6px 0 0; }
+.day-col-header.hoje    { color:#fff; background:rgba(255,255,255,.15); border-radius:6px 6px 0 0; }
 .day-col-header.hoje .day-num { color:#fff; }
+body.light-theme .day-col-header.hoje    { color:#D40138 !important; background:rgba(212,1,56,.12) !important; }
+body.light-theme .day-col-header.hoje .day-num { color:#D40138 !important; }
 .day-col-header.feriado { color:var(--yellow); cursor:help; }
 
 /* Tooltip global de feriado — posicionado via JS no body */
@@ -285,6 +287,10 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .status-dot.sabado-auto  { background:rgba(244,114,182,.1); border-color:rgba(244,114,182,.35); color:#f9a8d4; }
 /* presente em domingo/feriado — destaque especial (bônus) */
 .status-dot.presente-bonus { background:rgba(52,211,153,.3); border-color:#34d399; color:#34d399; box-shadow:0 0 8px rgba(52,211,153,.35); }
+/* tema claro — dots que usam cor branca ficam invisíveis */
+body.light-theme .status-dot.atestado   { background:rgba(2,54,101,.08); border-color:rgba(2,54,101,.4); color:#023665; }
+body.light-theme .status-dot.sabado-auto { background:rgba(219,39,119,.1); border-color:rgba(219,39,119,.35); color:#db2777; }
+body.light-theme .status-dot.vazio      { background:#DCE6EE; border-color:#B0C4D4; }
 
 /* coluna resumo */
 .resumo-col {
