@@ -348,14 +348,18 @@ body.light-theme .status-dot.vazio      { background:#DCE6EE; border-color:#B0C4
 
 /* ── Modal Atestado ── */
 .overlay-at {
-  position:fixed; inset:0; background:rgba(0,0,0,.75); backdrop-filter:blur(4px);
-  z-index:10000; display:none; align-items:center; justify-content:center;
+  position:fixed; top:0; left:0; width:100vw; height:100vh;
+  background:rgba(0,0,0,.75); backdrop-filter:blur(4px);
+  z-index:10000; display:none;
 }
-.overlay-at.open { display:flex; }
+.overlay-at.open { display:block; }
 .modal-at {
+  position:fixed;
+  top:50%; left:50%; transform:translate(-50%,-50%);
   background:var(--surface); border:1px solid var(--border);
   border-radius:16px; padding:28px; width:500px; max-width:95vw;
   max-height:90vh; overflow-y:auto;
+  z-index:10001;
   animation:fadeUp .25s ease;
 }
 .modal-at-title {
@@ -1481,9 +1485,9 @@ async function salvarAtestadoOcorrencia() {
   showToast('✅ Ocorrência de Atestado Médico registrada!');
 }
 
-// Fecha modal ao clicar fora
-document.getElementById('overlay-atestado').addEventListener('click', e => {
-  if (e.target === e.currentTarget) fecharModalAtestado();
+// Fecha modal ao clicar fora (no overlay, fora do .modal-at)
+document.getElementById('overlay-atestado').addEventListener('click', function(e) {
+  if (e.target === this) fecharModalAtestado();
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') fecharModalAtestado();
