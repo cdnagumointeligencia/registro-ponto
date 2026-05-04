@@ -355,6 +355,98 @@ body.light-theme .status-dot.vazio      { background:#DCE6EE; border-color:#B0C4
 }
 .btn-save:hover { background:#3a7ae0; transform:translateY(-1px); box-shadow:0 4px 16px rgba(79,142,247,.4); }
 
+/* ── Botão reset ponto (admin) ── */
+.btn-reset-ponto {
+  display:inline-flex; align-items:center; gap:7px;
+  padding:7px 14px; border-radius:8px;
+  border:1px solid rgba(248,113,113,.4);
+  background:rgba(248,113,113,.1);
+  color:#f87171;
+  font-family:var(--font-body); font-size:11px; font-weight:700;
+  cursor:pointer; transition:all .2s; white-space:nowrap;
+}
+.btn-reset-ponto:hover {
+  background:rgba(248,113,113,.22);
+  border-color:#f87171;
+  transform:translateY(-1px);
+  box-shadow:0 4px 14px rgba(248,113,113,.3);
+}
+
+/* ── Modal de confirmação de reset ── */
+.reset-overlay {
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.85);
+  backdrop-filter:blur(8px);
+  z-index:500;
+  display:none; align-items:center; justify-content:center;
+  padding:20px;
+}
+.reset-overlay.open { display:flex; }
+.reset-modal {
+  background:var(--surface);
+  border:2px solid rgba(248,113,113,.5);
+  border-radius:18px; width:480px; max-width:96vw;
+  box-shadow:0 0 60px rgba(248,113,113,.2), 0 24px 60px rgba(0,0,0,.6);
+  animation:fadeUpReset .3s ease; overflow:hidden;
+}
+@keyframes fadeUpReset { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+.reset-stripe {
+  height:4px;
+  background:linear-gradient(90deg,#f87171,#fb923c,#f87171);
+  background-size:200% 100%;
+  animation:stripeReset 2s linear infinite;
+}
+@keyframes stripeReset { 0%{background-position:0%} 100%{background-position:200%} }
+.reset-body { padding:28px 28px 24px; }
+.reset-icon {
+  width:60px; height:60px; border-radius:50%;
+  background:rgba(248,113,113,.15); border:2px solid rgba(248,113,113,.4);
+  display:flex; align-items:center; justify-content:center;
+  font-size:26px; margin:0 auto 16px;
+  animation:resetIconPulse 2s ease-in-out infinite;
+}
+@keyframes resetIconPulse {
+  0%,100%{box-shadow:0 0 0 0 rgba(248,113,113,.4)}
+  50%{box-shadow:0 0 0 10px rgba(248,113,113,.0)}
+}
+.reset-title {
+  font-family:var(--font-head); font-size:18px; font-weight:800;
+  text-align:center; color:var(--text); margin-bottom:8px; letter-spacing:-.5px;
+}
+.reset-sub {
+  font-size:12px; color:var(--muted); text-align:center; margin-bottom:18px; line-height:1.65;
+}
+.reset-info-box {
+  background:var(--surface2); border:1px solid rgba(248,113,113,.2);
+  border-radius:10px; padding:12px 16px; margin-bottom:18px;
+  font-size:11.5px; color:var(--muted); line-height:1.7;
+}
+.reset-info-box strong { color:var(--text); }
+.reset-info-box .ok   { color:#34d399; }
+.reset-info-box .warn { color:#f87171; }
+.reset-footer { display:flex; gap:10px; }
+.reset-btn-cancel {
+  flex:1; padding:11px; border-radius:10px;
+  border:1px solid var(--border); background:var(--surface2);
+  color:var(--muted); font-family:var(--font-body);
+  font-size:13px; font-weight:600; cursor:pointer; transition:all .2s;
+}
+.reset-btn-cancel:hover { background:var(--surface3); color:var(--text); }
+.reset-btn-confirm {
+  flex:2; padding:11px; border-radius:10px; border:none;
+  background:linear-gradient(135deg,#dc2626,#b91c1c);
+  color:#fff; font-family:var(--font-body);
+  font-size:13px; font-weight:700; cursor:pointer; transition:all .2s;
+  box-shadow:0 4px 16px rgba(220,38,38,.35);
+}
+.reset-btn-confirm:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(220,38,38,.5); }
+
+/* Tema claro */
+body.light-theme .reset-modal { background:#fff; border-color:rgba(220,38,38,.4); }
+body.light-theme .reset-info-box { background:#F4F7FB; border-color:rgba(220,38,38,.15); }
+body.light-theme .reset-btn-cancel { background:#fff; border-color:#C8D6E3; color:#4D6680; }
+body.light-theme .reset-btn-cancel:hover { background:#EBF1F7; }
+
 </style>
 </head>
 <body>
@@ -366,12 +458,48 @@ body.light-theme .status-dot.vazio      { background:#DCE6EE; border-color:#B0C4
 <div class="ctx-menu" id="ctx-menu"></div>
 <div id="feriado-tooltip"></div>
 
+<!-- Modal de confirmação de reset de ponto -->
+<div class="reset-overlay" id="reset-overlay">
+  <div class="reset-modal">
+    <div class="reset-stripe"></div>
+    <div class="reset-body">
+      <div class="reset-icon">🗑️</div>
+      <div class="reset-title">Limpar Ponto do Mês</div>
+      <div class="reset-sub" id="reset-sub">
+        Todos os registros de ponto serão apagados para o mês selecionado.
+      </div>
+      <div class="reset-info-box">
+        <div style="margin-bottom:6px">
+          📅 <strong>Mês:</strong> <span id="reset-mes-label">—</span>
+        </div>
+        <div style="margin-bottom:6px">
+          🏢 <strong>Departamento:</strong> <span id="reset-dept-label">—</span>
+        </div>
+        <div style="margin-bottom:10px">
+          👥 <strong>Funcionários afetados:</strong> <span id="reset-qtd-label">—</span>
+        </div>
+        <div style="font-size:11px;border-top:1px solid rgba(248,113,113,.15);padding-top:8px;margin-top:2px">
+          <div class="ok">✅ Preservados: funcionários em <strong>férias</strong> ou <strong>afastados</strong></div>
+          <div class="warn">🗑️ Apagados: <strong>presentes, faltas, atestados, folgas</strong></div>
+        </div>
+      </div>
+      <div class="reset-footer">
+        <button class="reset-btn-cancel" onclick="fecharResetModal()">Cancelar</button>
+        <button class="reset-btn-confirm" onclick="confirmarResetPonto()">🗑️ Limpar Registros</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="main">
 
   <!-- Topbar mini -->
   <div class="topbar-mini">
     <div class="page-title">🗓️ Ponto Diário Coletivo</div>
     <div class="top-hint" id="top-hint">Selecione um departamento · Clique em qualquer dia para registrar</div>
+    <button class="btn-reset-ponto" id="btn-reset-ponto" style="display:none" onclick="abrirResetModal()" title="Limpar todos os registros de ponto do mês atual (exceto férias e afastados)">
+      🗑️ Limpar Mês
+    </button>
   </div>
 
   <div class="content">
@@ -505,6 +633,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   podeEditar = (typeof can === 'function')
     ? can(currentUser, 'ponto', 'edit')
     : true;
+
+  // Botão reset de ponto — somente admin_master
+  const btnReset = document.getElementById('btn-reset-ponto');
+  if (btnReset && currentUser?.nivel === 'admin_master') {
+    btnReset.style.display = 'inline-flex';
+  }
 
   await buildFilialChips();
   buildDeptChips();
@@ -1309,6 +1443,127 @@ function atualizarGrade() {
   renderGrade();
   showToast('✅ Grade atualizada!');
 }
+
+// ════════════════════════════════════════════════════════
+// RESET DE PONTO DO MÊS — somente admin_master
+// ════════════════════════════════════════════════════════
+
+// Abre o modal de confirmação populando os dados do contexto atual
+function abrirResetModal() {
+  if (currentUser?.nivel !== 'admin_master') {
+    showToast('⚠️ Apenas o Admin Master pode limpar registros de ponto.', 'warn');
+    return;
+  }
+  if (!deptAtivo) {
+    showToast('⚠️ Selecione um departamento antes de limpar.', 'warn');
+    return;
+  }
+
+  const emps          = getEmpsDoDepto();
+  const mesLabel      = `${MESES_PT[mesAtivo]} ${anoAtivo}`;
+  const MESES_SH_LOC  = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+  // Conta quantos serão afetados (exclui afastados e em férias ativos)
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  let afetados = 0, preservados = 0;
+  emps.forEach(emp => {
+    const { bloqueado } = isEmpBloqueado(emp);
+    if (bloqueado) preservados++;
+    else           afetados++;
+  });
+
+  document.getElementById('reset-mes-label').textContent  = mesLabel;
+  document.getElementById('reset-dept-label').textContent = deptAtivo + (filialAtiva ? ` · ${filialAtiva}` : '');
+  document.getElementById('reset-qtd-label').innerHTML    =
+    `<strong style="color:#f87171">${afetados} apagados</strong>` +
+    (preservados > 0 ? ` · <span style="color:#34d399">${preservados} preservados (férias/afastado)</span>` : '');
+
+  document.getElementById('reset-sub').innerHTML =
+    `Apagará <strong style="color:#f87171">todos os registros editáveis</strong> de ` +
+    `<strong>${MESES_SH_LOC[mesAtivo]}/${anoAtivo}</strong> para o dept. <strong>${deptAtivo}</strong>.`;
+
+  document.getElementById('reset-overlay').classList.add('open');
+}
+
+function fecharResetModal() {
+  document.getElementById('reset-overlay').classList.remove('open');
+}
+
+// Executa o reset: apaga entradas editáveis preservando férias e afastados
+async function confirmarResetPonto() {
+  if (currentUser?.nivel !== 'admin_master') return;
+
+  fecharResetModal();
+
+  const emps     = getEmpsDoDepto();
+  const allPonto = await LS.get(PONTO_KEY, {});
+  const mesStr   = String(mesAtivo + 1).padStart(2, '0');
+  // Status que devem ser PRESERVADOS (automáticos vinculados ao cadastro)
+  const PRESERVAR = new Set(['ferias', 'afastado']);
+
+  let limpos = 0, preservados = 0;
+
+  emps.forEach(emp => {
+    // Funcionário com bloqueio global (afastado ou férias ativas) → pula tudo
+    const { bloqueado } = isEmpBloqueado(emp);
+    if (bloqueado) { preservados++; return; }
+
+    const key    = `${emp.id}_${anoAtivo}_${mesStr}`;
+    const mPonto = allPonto[key];
+    if (!mPonto) return; // sem registros, nada a fazer
+
+    // Itera os dias e apaga apenas os status editáveis
+    const diasMes = new Date(anoAtivo, mesAtivo + 1, 0).getDate();
+    let houveMudanca = false;
+
+    for (let d = 1; d <= diasMes; d++) {
+      const status = mPonto[d];
+      if (!status) continue;
+      if (PRESERVAR.has(status)) continue; // mantém férias e afastado
+      delete mPonto[d];
+      houveMudanca = true;
+    }
+
+    if (houveMudanca) {
+      // Se o mapa ficou vazio, remove a chave inteiramente
+      if (Object.keys(mPonto).length === 0) {
+        delete allPonto[key];
+      } else {
+        allPonto[key] = mPonto;
+      }
+      limpos++;
+    }
+  });
+
+  await LS.set(PONTO_KEY, allPonto);
+  _pontoCache = allPonto;
+
+  // Sincroniza absences de todos os funcionários afetados
+  emps.forEach(emp => syncAbsencesToStore(emp.id));
+
+  const MESES_SH_LOC = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const label = `${MESES_SH_LOC[mesAtivo]}/${anoAtivo}`;
+
+  await registrarLog(
+    'editou', 'Ponto',
+    `🗑️ Reset de ponto — <strong>${deptAtivo}</strong>${filialAtiva ? ' · ' + filialAtiva : ''} — ${label} — ` +
+    `${limpos} func. apagados, ${preservados} preservados (férias/afastado)`
+  );
+
+  if (limpos > 0) {
+    showToast(`🗑️ ${limpos} registro${limpos !== 1 ? 's' : ''} apagado${limpos !== 1 ? 's' : ''} em ${label}.${preservados ? ` ${preservados} preservado${preservados > 1 ? 's' : ''}.` : ''}`, 'ok');
+  } else {
+    showToast(`ℹ️ Nenhum registro encontrado para apagar em ${label}.`, 'warn');
+  }
+
+  _store = null; // invalida cache
+  renderGrade();
+}
+
+// Fecha modal ao clicar fora
+document.getElementById('reset-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) fecharResetModal();
+});
 
 </script>
 </body>
