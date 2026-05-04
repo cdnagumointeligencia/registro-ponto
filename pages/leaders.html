@@ -1406,14 +1406,34 @@ function gerarPDFHierarquia() {
   const allLeaders = Object.values(store.users||{}).filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
   const allEmps    = store.employees || [];
 
-  // ── Coleta dados recursivamente ──
+  // ── Coleta dados recursivamente com proteção contra loops ──
+  // visitados: garante que nenhum líder seja processado mais de uma vez
+  // profundidade: limite de segurança para evitar recursão infinita
+  const _visitados = new Set();
+  const MAX_DEPTH  = 8;
+
   function coletarArvore(lid, profundidade) {
+    if (profundidade > MAX_DEPTH) return null;
+    if (_visitados.has(lid)) return null;   // ← evita loop infinito
+    _visitados.add(lid);
+
     const l = store.users?.[lid];
     if (!l) return null;
-    const subs = getSubordinados(l, allLeaders)
-      .sort((a,b) => ORDEM_IDX.indexOf(b.nivel||'lider') - ORDEM_IDX.indexOf(a.nivel||'lider'));
+
+    // Apenas subordinados DIRETOS (um nível abaixo, não toda a cadeia)
+    const meuIdx = ORDEM_IDX.indexOf(l.nivel || 'lider');
+    const subsDirectos = getSubordinados(l, allLeaders).filter(u => {
+      const uIdx = ORDEM_IDX.indexOf(u.nivel || 'lider');
+      return uIdx === meuIdx - 1;           // ← apenas o nível imediatamente abaixo
+    }).sort((a,b) => ORDEM_IDX.indexOf(b.nivel||'lider') - ORDEM_IDX.indexOf(a.nivel||'lider'));
+
     const team = getTeamEmps(l, allEmps);
-    return { leader: l, subs: subs.map(s => coletarArvore(s.id, profundidade+1)).filter(Boolean), team, depth: profundidade };
+    return {
+      leader: l,
+      subs:   subsDirectos.map(s => coletarArvore(s.id, profundidade+1)).filter(Boolean),
+      team,
+      depth:  profundidade
+    };
   }
   const arvore = coletarArvore(leaderId, 0);
 
