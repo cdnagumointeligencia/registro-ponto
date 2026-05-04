@@ -321,7 +321,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
     <button class="tab-btn tab-quadro active" id="tab-btn-quadro" onclick="setTab('quadro')">
       📋 Quadro Operacional
     </button>
-    <button class="tab-btn tab-vagas" id="tab-btn-vagas" onclick="setTab('vagas')" id="tab-vagas-btn" style="display:none">
+    <button class="tab-btn tab-vagas" id="tab-btn-vagas" onclick="setTab('vagas')" style="display:none">
       ⚙️ Gestão de Vagas
       <span class="tab-lock">🔒 Gestor</span>
     </button>
@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     : currentUser.nivel === 'admin_master';
 
   // Mostra aba de vagas apenas para quem pode editar
-  const tabVagasBtn = document.getElementById('tab-vagas-btn');
+  const tabVagasBtn = document.getElementById('tab-btn-vagas');
   if (tabVagasBtn) tabVagasBtn.style.display = podeEditar ? 'inline-flex' : 'none';
 
   // Botão salvar só aparece na aba de vagas e com permissão
@@ -389,7 +389,7 @@ function setTab(tab) {
   tabAtiva = tab;
 
   document.getElementById('tab-btn-quadro').classList.toggle('active', tab === 'quadro');
-  const tbv = document.getElementById('tab-vagas-btn');
+  const tbv = document.getElementById('tab-btn-vagas');
   if (tbv) tbv.classList.toggle('active', tab === 'vagas');
 
   document.getElementById('quadro-content').style.display = tab === 'quadro' ? '' : 'none';
@@ -450,7 +450,12 @@ async function salvarQuadro() {
   showToast('✅ Vagas salvas com sucesso!');
   // Atualiza ambas as views para refletir as novas vagas
   await renderQuadroContent();
-  renderVagasContent();
+  if (tabAtiva === 'vagas') {
+    renderVagasContent();
+    // Garante que o botão salvar permanece visível na aba vagas
+    const btnSalvar = document.getElementById('btn-salvar');
+    if (btnSalvar && podeEditar) btnSalvar.style.display = 'inline-flex';
+  }
 }
 
 // ════════════════════════════════════════════════════════
