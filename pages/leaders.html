@@ -562,10 +562,10 @@ body.light-theme .leader-apt-banner {
 .modal-org-close:hover { border-color:var(--red); color:var(--red); }
 #org-chart-container {
   flex:1; overflow:auto; display:flex;
-  align-items:center; justify-content:center;
+  align-items:flex-start; justify-content:center;
   padding:24px; background:var(--bg); min-height:400px;
 }
-#org-chart-container svg { max-width:100%; height:auto; display:block; }
+#org-chart-container svg { display:block; flex-shrink:0; }
 
 /* Botão Organograma — aparece durante busca ativa */
 #btn-organograma {
@@ -1766,133 +1766,230 @@ function renderCircularOrgChart(leaderId) {
   const leader = store?.users?.[leaderId];
   if (!leader) return;
 
-  const container = document.getElementById('org-chart-container');
-
-  // — Cabeçalho do modal —
-  const leaderMeta = NIVEL_META[leader.nivel||'lider'] || NIVEL_META.lider;
-  const leaderIni  = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-  const headerAv   = document.getElementById('org-modal-avatar');
-  headerAv.style.background = leader.foto ? 'transparent' : `linear-gradient(135deg,${leaderMeta.cor},${leaderMeta.cor}88)`;
-  headerAv.innerHTML = leader.foto
-    ? `<img src="${leader.foto}" style="width:46px;height:46px;border-radius:50%;object-fit:cover">`
-    : leaderIni;
+  // ── Cabeçalho do modal ──
+  const lm  = NIVEL_META[leader.nivel||'lider'] || NIVEL_META.lider;
+  const ini = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const hAv = document.getElementById('org-modal-avatar');
+  hAv.style.background = leader.foto ? 'transparent' : `linear-gradient(135deg,${lm.cor},${lm.cor}88)`;
+  hAv.innerHTML = leader.foto
+    ? `<img src="${leader.foto}" style="width:46px;height:46px;border-radius:50%;object-fit:cover">` : ini;
   document.getElementById('org-modal-name').textContent = leader.name;
-  document.getElementById('org-modal-sub').textContent  = `${leaderMeta.emoji} ${leaderMeta.label} · Organograma circular`;
+  document.getElementById('org-modal-sub').textContent  = `${lm.emoji} ${lm.label} · Árvore hierárquica`;
 
-  // — Coletar subordinados —
-  const allLeaders = Object.values(store.users||{})
-    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
+  // ── Dados ──
+  const allLeaders = Object.values(store.users||{}).filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
   const allEmps    = store.employees || [];
+  const subs       = getSubordinados(leader, allLeaders);
+  const rootTeam   = getTeamEmps(leader, allEmps);
 
-  const leaderSubs = getSubordinados(leader, allLeaders);
-  const teamEmps   = getTeamEmps(leader, allEmps);
+  // Subtrees: cada líder subordinado + seus funcionários (max 8)
+  const subTrees = subs.map(sub => ({
+    leader: sub,
+    emps: getTeamEmps(sub, allEmps).slice(0, 8)
+  }));
 
-  let ringNodes = [];
-  leaderSubs.forEach(sub => {
-    const m = NIVEL_META[sub.nivel||'lider'] || NIVEL_META.lider;
-    ringNodes.push({ name: sub.name, role: `${m.emoji} ${m.label}`, foto: sub.foto||null, color: m.cor, type:'leader' });
-  });
-  const maxEmps = Math.max(0, 11 - leaderSubs.length);
-  teamEmps.slice(0, maxEmps).forEach(emp => {
-    ringNodes.push({ name: emp.name, role: emp.role||emp.dept||'Operacional', foto: emp.foto||null, color:'#4f8ef7', type:'emp' });
-  });
-  if (!ringNodes.length) {
-    ringNodes.push({ name: 'Sem subordinados', role: '', foto: null, color:'#94a3b8', type:'empty' });
-  }
+  // Funcionários diretos do root (excluindo os que já estão sob um sub-líder)
+  const subEmpIds  = new Set(subTrees.flatMap(st => st.emps.map(e => e.id)));
+  const directEmps = rootTeam.filter(e => !subEmpIds.has(e.id)).slice(0, 10);
 
-  // — Calcular dimensões —
-  const n      = ringNodes.length;
-  const W      = 700, H = 700, CX = 350, CY = 350;
-  const R_C    = 68;               // raio do nó central
-  const R_RING = n <= 5 ? 195 : n <= 8 ? 220 : 240;  // raio do anel
-  const R_N    = n <= 5 ? 48  : n <= 8 ? 42  : 36;   // raio dos nós
+  // ── Constantes de layout ──
+  const R    = 33;   // raio das bolhas
+  const RR   = 42;   // raio da bolha root
+  const SLOT = 82;   // largura horizontal por nó
+  const VG   = 100;  // distância vertical entre centros de nível
+  const PAD  = 50;   // padding horizontal
 
-  // — Construir SVG —
+  // Largura de cada subtree = max(1, emps) × SLOT
+  const stW = st => Math.max(1, st.emps.length) * SLOT;
+
+  // Largura total dos sub-líderes
+  const subsW = subTrees.length
+    ? subTrees.reduce((s, st) => s + stW(st), 0) + (subTrees.length - 1) * 12
+    : 0;
+  const dirW  = directEmps.length * SLOT;
+  const svgW  = Math.max(520, subsW, dirW) + PAD * 2;
+  const CX    = svgW / 2;
+
+  // Níveis Y (centro de cada bolha)
+  const Y0  = 16 + RR;
+  const Y1  = Y0 + VG;
+  const Y2  = Y1 + VG;
+
+  const hasL1  = subTrees.length > 0;
+  const hasL2  = subTrees.some(st => st.emps.length > 0);
+  const hasDr  = directEmps.length > 0;
+
+  // Altura do SVG
+  let svgH = Y0 + RR + 55;
+  if (hasL1)          svgH = Y1 + R + 55;
+  if (hasL2 || hasDr) svgH = Y2 + R + 55;
+
+  // ── Defs ──
+  const mkClip = (id,r) => `<clipPath id="${id}"><circle cx="0" cy="0" r="${r}"/></clipPath>`;
+  const mkGrad = (id,c)  => `<radialGradient id="${id}" cx="35%" cy="30%"><stop offset="0%" stop-color="${c}"/><stop offset="100%" stop-color="${c}88"/></radialGradient>`;
+
   let defs = '<defs>';
-  defs += `<clipPath id="oc-clip-c"><circle cx="0" cy="0" r="${R_C-4}"/></clipPath>`;
-  defs += `<radialGradient id="oc-grad-c" cx="35%" cy="30%">
-    <stop offset="0%" stop-color="${leaderMeta.cor}ff"/>
-    <stop offset="100%" stop-color="${leaderMeta.cor}77"/>
-  </radialGradient>`;
-  ringNodes.forEach((nd, i) => {
-    defs += `<clipPath id="oc-clip-${i}"><circle cx="0" cy="0" r="${R_N-3}"/></clipPath>`;
-    defs += `<radialGradient id="oc-grad-${i}" cx="35%" cy="30%">
-      <stop offset="0%" stop-color="${nd.color}ee"/>
-      <stop offset="100%" stop-color="${nd.color}55"/>
-    </radialGradient>`;
+  defs += mkClip('td-cr', RR-3);
+  defs += mkGrad('td-gr', lm.cor);
+  defs += mkGrad('td-ge', '#4f8ef7');  // gradiente para employees
+  subTrees.forEach((st, i) => {
+    const m = NIVEL_META[st.leader.nivel||'lider']||NIVEL_META.lider;
+    defs += mkClip(`td-cl${i}`, R-3);
+    defs += mkGrad(`td-gl${i}`, m.cor);
+    st.emps.forEach((_, j) => defs += mkClip(`td-ce${i}-${j}`, R-3));
   });
-  // Sombra para nó central
-  defs += `<filter id="oc-shadow" x="-30%" y="-30%" width="160%" height="160%">
-    <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="${leaderMeta.cor}" flood-opacity="0.35"/>
+  directEmps.forEach((_, i) => defs += mkClip(`td-cd${i}`, R-3));
+  defs += `<filter id="td-drop" x="-40%" y="-40%" width="180%" height="180%">
+    <feGaussianBlur stdDeviation="6" result="blur"/>
+    <feFlood flood-color="${lm.cor}" flood-opacity="0.4" result="color"/>
+    <feComposite in="color" in2="blur" operator="in" result="shadow"/>
+    <feComposite in="SourceGraphic" in2="shadow" operator="over"/>
   </filter>`;
   defs += '</defs>';
 
-  let parts = [defs];
+  let p = [defs];  // parts
 
-  // Anel decorativo
-  parts.push(`<circle cx="${CX}" cy="${CY}" r="${R_RING}" fill="none" stroke="${leaderMeta.cor}22" stroke-width="1.5" stroke-dasharray="6,5"/>`);
+  // ── Helpers ──
 
-  // Linhas + nós do anel
-  ringNodes.forEach((nd, i) => {
-    const angle = (i / n) * 2 * Math.PI - Math.PI / 2;
-    const nx = CX + R_RING * Math.cos(angle);
-    const ny = CY + R_RING * Math.sin(angle);
+  // Bolha genérica — desenhada em coordenadas locais via <g transform="translate">
+  function node(x, y, person, clipId, fillGrad, strokeColor, isRoot=false) {
+    const r   = isRoot ? RR : R;
+    const fs  = isRoot ? 18 : 13;
+    const ini = person.name.split(' ').map(c=>c[0]).slice(0,2).join('').toUpperCase();
+    const fn  = person.name.split(' ')[0]||'';
+    const ln  = person.name.split(' ')[1] ? person.name.split(' ')[1][0]+'.' : '';
+    const dn  = (fn.slice(0,9)+(ln?' '+ln:'')).slice(0,12);
+    const rl  = (isRoot
+      ? (lm.emoji+' '+lm.label)
+      : (NIVEL_META[person.nivel||'']?.label || person.role || person.dept || '')
+    ).slice(0,20);
 
-    // Linha tracejada do centro ao nó
-    const lx1 = CX + (R_C + 8) * Math.cos(angle);
-    const ly1 = CY + (R_C + 8) * Math.sin(angle);
-    const lx2 = CX + (R_RING - R_N - 8) * Math.cos(angle);
-    const ly2 = CY + (R_RING - R_N - 8) * Math.sin(angle);
-    parts.push(`<line x1="${lx1.toFixed(1)}" y1="${ly1.toFixed(1)}" x2="${lx2.toFixed(1)}" y2="${ly2.toFixed(1)}"
-      stroke="${nd.color}55" stroke-width="1.5" stroke-dasharray="4,4"/>`);
-
-    // Nó (grupo com translate)
-    const ini = nd.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-    const firstName  = nd.name.split(' ')[0] || '';
-    const lastInit   = nd.name.split(' ')[1] ? nd.name.split(' ')[1][0]+'.' : '';
-    const dispName   = (firstName.slice(0,9) + (lastInit?' '+lastInit:'')).slice(0,12);
-
-    let g = `<g transform="translate(${nx.toFixed(1)},${ny.toFixed(1)})">`;
-    // Halo
-    g += `<circle cx="0" cy="0" r="${R_N+5}" fill="${nd.color}18"/>`;
-    // Círculo principal
-    g += `<circle cx="0" cy="0" r="${R_N}" fill="url(#oc-grad-${i})" stroke="${nd.color}bb" stroke-width="2"/>`;
+    let g = `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})">`;
+    // Halo externo
+    g += `<circle cx="0" cy="0" r="${r+6}" fill="${strokeColor}14"/>`;
+    // Anel de borda colorido
+    g += `<circle cx="0" cy="0" r="${r+2}" fill="none" stroke="${strokeColor}55" stroke-width="1.5"/>`;
+    // Bolha principal
+    g += `<circle cx="0" cy="0" r="${r}" fill="${fillGrad}" stroke="${strokeColor}" stroke-width="${isRoot?3:2}"${isRoot?' filter="url(#td-drop)"':''}/>`;
     // Foto ou iniciais
-    if (nd.foto) {
-      g += `<image href="${nd.foto}" x="-${R_N-4}" y="-${R_N-4}" width="${(R_N-4)*2}" height="${(R_N-4)*2}" clip-path="url(#oc-clip-${i})"/>`;
+    if (person.foto) {
+      g += `<image href="${person.foto}" x="-${r-3}" y="-${r-3}" width="${(r-3)*2}" height="${(r-3)*2}" clip-path="url(#${clipId})"/>`;
     } else {
-      const fs = R_N >= 44 ? 15 : R_N >= 38 ? 13 : 11;
-      g += `<text x="0" y="${fs/2+1}" text-anchor="middle" font-family="Syne,sans-serif" font-size="${fs}" font-weight="800" fill="white">${ini}</text>`;
+      g += `<text x="0" y="${Math.round(fs*0.38)}" text-anchor="middle" font-family="Syne,sans-serif" font-size="${fs}" font-weight="800" fill="white">${ini}</text>`;
     }
-    // Nome abaixo
-    g += `<text x="0" y="${R_N+15}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="700" fill="#e2e8f0">${dispName}</text>`;
-    if (nd.role) {
-      g += `<text x="0" y="${R_N+27}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#94a3b8">${nd.role.slice(0,18)}</text>`;
-    }
-    g += `</g>`;
-    parts.push(g);
-  });
-
-  // Nó central
-  parts.push(`<g transform="translate(${CX},${CY})" filter="url(#oc-shadow)">`);
-  parts.push(`  <circle cx="0" cy="0" r="${R_C+6}" fill="${leaderMeta.cor}20"/>`);
-  parts.push(`  <circle cx="0" cy="0" r="${R_C}" fill="url(#oc-grad-c)" stroke="${leaderMeta.cor}" stroke-width="3"/>`);
-  if (leader.foto) {
-    parts.push(`  <image href="${leader.foto}" x="-${R_C-5}" y="-${R_C-5}" width="${(R_C-5)*2}" height="${(R_C-5)*2}" clip-path="url(#oc-clip-c)"/>`);
-  } else {
-    parts.push(`  <text x="0" y="8" text-anchor="middle" font-family="Syne,sans-serif" font-size="24" font-weight="800" fill="white">${leaderIni}</text>`);
+    // Nome
+    g += `<text x="0" y="${r+15}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="${isRoot?12:10}" font-weight="700" fill="#e2e8f0">${dn}</text>`;
+    // Cargo
+    if (rl) g += `<text x="0" y="${r+27}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#94a3b8">${rl}</text>`;
+    g += '</g>';
+    return g;
   }
-  parts.push(`</g>`);
 
-  // Nome + cargo do líder central (abaixo do nó)
-  const centerName = leader.name.split(' ').slice(0,2).join(' ');
-  parts.push(`<text x="${CX}" y="${CY+R_C+20}" text-anchor="middle" font-family="Syne,sans-serif" font-size="13" font-weight="800" fill="#ffffff">${centerName}</text>`);
-  parts.push(`<text x="${CX}" y="${CY+R_C+35}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" fill="#94a3b8">${leaderMeta.emoji} ${leaderMeta.label}</text>`);
+  // Linha bezier entre dois pontos (parte de baixo do pai → parte de cima do filho)
+  function link(x1, y1b, x2, y2t, color) {
+    const my = (y1b + y2t) / 2;
+    return `<path d="M${x1.toFixed(1)},${y1b.toFixed(1)} C${x1.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${y2t.toFixed(1)}" fill="none" stroke="${color}55" stroke-width="1.5" stroke-dasharray="5,4"/>`;
+  }
 
-  const svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"
-    style="background:transparent">${parts.join('\n')}</svg>`;
+  // Barra horizontal conectando irmãos
+  function hBar(x1, x2, y, color) {
+    return `<line x1="${x1.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${color}33" stroke-width="1.5"/>`;
+  }
 
-  container.innerHTML = svg;
+  // ── ROOT ──
+  p.push(node(CX, Y0, leader, 'td-cr', `url(#td-gr)`, lm.cor, true));
+
+  // ── SUB-LÍDERES (nível 1) ──
+  if (hasL1) {
+    // Calcular posições X de cada sub-líder
+    const totalSubsW = subTrees.reduce((s,st)=>s+stW(st),0) + (subTrees.length-1)*12;
+    let cx = CX - totalSubsW/2;
+    const subXs = [];
+
+    subTrees.forEach((st, i) => {
+      const w = stW(st);
+      subXs.push(cx + w/2);
+      cx += w + 12;
+    });
+
+    // Barra horizontal entre sub-líderes (se >1)
+    if (subTrees.length > 1) {
+      const barY = Y0 + (Y1-Y0)/2;
+      p.push(hBar(subXs[0], subXs[subXs.length-1], barY, lm.cor));
+      // Pinos verticais da barra até cada sub-líder
+      subXs.forEach(sx => {
+        p.push(`<line x1="${sx.toFixed(1)}" y1="${(Y0+(Y1-Y0)/2).toFixed(1)}" x2="${sx.toFixed(1)}" y2="${(Y1-R-4).toFixed(1)}" stroke="${lm.cor}44" stroke-width="1.5" stroke-dasharray="4,3"/>`);
+      });
+      // Pino vertical do root à barra
+      p.push(`<line x1="${CX.toFixed(1)}" y1="${(Y0+RR+4).toFixed(1)}" x2="${CX.toFixed(1)}" y2="${(Y0+(Y1-Y0)/2).toFixed(1)}" stroke="${lm.cor}44" stroke-width="1.5" stroke-dasharray="4,3"/>`);
+    } else {
+      // Só 1: linha direta
+      p.push(link(CX, Y0+RR+4, subXs[0], Y1-R-4, lm.cor));
+    }
+
+    // Calcular de novo o leftX de cada subtree para os employees
+    let leftX = CX - totalSubsW/2;
+    subTrees.forEach((st, i) => {
+      const sx = subXs[i];
+      const m  = NIVEL_META[st.leader.nivel||'lider']||NIVEL_META.lider;
+
+      // Nó do sub-líder
+      p.push(node(sx, Y1, st.leader, `td-cl${i}`, `url(#td-gl${i})`, m.cor));
+
+      // Funcionários deste sub-líder
+      if (st.emps.length > 0) {
+        const empXs = st.emps.map((_, j) => leftX + j*SLOT + SLOT/2);
+
+        // Barra horizontal entre employees (se >1)
+        if (st.emps.length > 1) {
+          const barY = Y1 + (Y2-Y1)/2;
+          p.push(hBar(empXs[0], empXs[empXs.length-1], barY, m.cor));
+          empXs.forEach(ex => {
+            p.push(`<line x1="${ex.toFixed(1)}" y1="${barY.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${(Y2-R-4).toFixed(1)}" stroke="${m.cor}44" stroke-width="1.5" stroke-dasharray="4,3"/>`);
+          });
+          p.push(`<line x1="${sx.toFixed(1)}" y1="${(Y1+R+4).toFixed(1)}" x2="${sx.toFixed(1)}" y2="${barY.toFixed(1)}" stroke="${m.cor}44" stroke-width="1.5" stroke-dasharray="4,3"/>`);
+        } else {
+          p.push(link(sx, Y1+R+4, empXs[0], Y2-R-4, m.cor));
+        }
+
+        st.emps.forEach((emp, j) => {
+          p.push(node(empXs[j], Y2, emp, `td-ce${i}-${j}`, `url(#td-ge)`, '#4f8ef7'));
+        });
+      }
+
+      leftX += stW(st) + 12;
+    });
+  }
+
+  // ── FUNCIONÁRIOS DIRETOS DO ROOT (sem sub-líder) ──
+  if (hasDr) {
+    const dY     = hasL1 ? Y2 : Y1;
+    const dLeft  = CX - directEmps.length * SLOT / 2;
+    const dEmpXs = directEmps.map((_, i) => dLeft + i*SLOT + SLOT/2);
+
+    if (directEmps.length > 1) {
+      const barY = Y0 + (dY-Y0)/2;
+      p.push(hBar(dEmpXs[0], dEmpXs[dEmpXs.length-1], barY, '#4f8ef7'));
+      dEmpXs.forEach(ex => {
+        p.push(`<line x1="${ex.toFixed(1)}" y1="${barY.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${(dY-R-4).toFixed(1)}" stroke="#4f8ef744" stroke-width="1.5" stroke-dasharray="4,3"/>`);
+      });
+      p.push(`<line x1="${CX.toFixed(1)}" y1="${(Y0+RR+4).toFixed(1)}" x2="${CX.toFixed(1)}" y2="${barY.toFixed(1)}" stroke="#4f8ef744" stroke-width="1.5" stroke-dasharray="4,3"/>`);
+    } else {
+      p.push(link(CX, Y0+RR+4, dEmpXs[0], dY-R-4, '#4f8ef7'));
+    }
+
+    directEmps.forEach((emp, i) => {
+      p.push(node(dEmpXs[i], dY, emp, `td-cd${i}`, `url(#td-ge)`, '#4f8ef7'));
+    });
+  }
+
+  // ── Estado vazio ──
+  if (!hasL1 && !hasDr) {
+    p.push(`<text x="${CX}" y="${Y0+RR+50}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="13" fill="#94a3b8">Sem subordinados cadastrados</text>`);
+  }
+
+  const svg = `<svg viewBox="0 0 ${svgW} ${svgH}" xmlns="http://www.w3.org/2000/svg" width="${svgW}" height="${svgH}">${p.join('')}</svg>`;
+  document.getElementById('org-chart-container').innerHTML = svg;
 }
 
 // ── Foto do líder ────────────────────────────────────
