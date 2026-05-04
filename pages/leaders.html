@@ -510,8 +510,51 @@ body.light-theme .modal-tree-pdf:hover { background:rgba(8,145,178,.16); }
   background:var(--surface2); border:1px solid var(--border);
 }
 
-/* ── Empty state ── */
-.empty-state { text-align:center; padding:60px 20px; color:var(--muted); grid-column:1/-1; }
+/* ════════════════════════════════════════════
+   IMPRESSÃO — só mostra o modal de hierarquia
+════════════════════════════════════════════ */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  /* Esconde tudo */
+  body > *                          { display: none !important; }
+  .toast-container                  { display: none !important; }
+
+  /* Mostra apenas o overlay da árvore */
+  #modal-tree-overlay               { display: block !important; position: static !important;
+                                      background: none !important; padding: 0 !important; }
+  #modal-tree-overlay .modal-tree   { width: 100% !important; max-width: 100% !important;
+                                      max-height: none !important; border: none !important;
+                                      border-radius: 0 !important; box-shadow: none !important;
+                                      overflow: visible !important; }
+  .modal-tree-header                { padding: 0 0 12px !important; border-bottom: 2px solid #e5e7eb !important; margin-bottom: 12px; }
+  .modal-tree-pdf,
+  .modal-tree-close                 { display: none !important; }
+  .modal-tree-avatar                { background: var(--accent) !important; }
+  .modal-tree-name                  { color: #111 !important; }
+  .modal-tree-sub                   { color: #555 !important; }
+  .tree-breadcrumb                  { display: none !important; }
+  .modal-tree-body                  { overflow: visible !important; padding: 0 !important; }
+
+  /* Cards dos nós da árvore */
+  .tree-root-card                   { background: #f0f6ff !important; border-color: #93c5fd !important; break-inside: avoid; }
+  .tree-root-name                   { color: #111 !important; }
+  .tree-root-meta                   { color: #555 !important; }
+  .tree-connector                   { border-left-color: #93c5fd !important; }
+  .tree-connector-label             { color: #555 !important; }
+  .tree-sub-card                    { background: #f9fafb !important; border-color: #d1d5db !important; break-inside: avoid; }
+  .tree-sub-card::after             { display: none !important; }
+  .tree-sub-name                    { color: #111 !important; }
+  .tree-sub-meta                    { color: #555 !important; }
+  .tree-emp-card                    { background: #fff !important; border-color: #e5e7eb !important; break-inside: avoid; }
+  .tree-emp-name                    { color: #111 !important; }
+  .tree-emp-meta                    { color: #666 !important; }
+  .tree-stat-pill                   { background: #f3f4f6 !important; border-color: #d1d5db !important; color: #374151 !important; }
+  .tree-stat-pill[style*="accent2"] { color: #6d28d9 !important; }
+  .tree-stat-pill[style*="green"]   { color: #059669 !important; }
+  .tree-stat-pill[style*="red"]     { color: #dc2626 !important; }
+}
+
 .empty-icon  { font-size:52px; margin-bottom:14px; }
 
 /* ── Toast ── */
@@ -1389,214 +1432,7 @@ function closeTreeModal() {
 }
 
 function gerarPDFHierarquia() {
-  const store    = _store;
-  const leaderId = _treeRootId;
-  const leader   = store?.users?.[leaderId];
-  if (!leader) { showToast('⚠️ Nenhuma hierarquia aberta.','warn'); return; }
-
-  showToast('⏳ Gerando PDF...','ok');
-
-  const NIVEL_META_PDF = {
-    admin_master: { label:'Admin Master', emoji:'🛡️', cor:'#f87171', bg:'#fef2f2', border:'#fca5a5' },
-    diretoria:    { label:'Diretoria',    emoji:'🏢', cor:'#ea580c', bg:'#fff7ed', border:'#fdba74' },
-    gerencia:     { label:'Gerência',     emoji:'📊', cor:'#d97706', bg:'#fffbeb', border:'#fcd34d' },
-    coordenacao:  { label:'Coordenação',  emoji:'📋', cor:'#7c3aed', bg:'#f5f3ff', border:'#c4b5fd' },
-    encarregado:  { label:'Encarregado',  emoji:'🔰', cor:'#059669', bg:'#ecfdf5', border:'#6ee7b7' },
-    lider:        { label:'Líder',        emoji:'👷', cor:'#2563eb', bg:'#eff6ff', border:'#93c5fd' },
-  };
-
-  // ── BFS iterativo — sem recursão, sem cálculos pesados ──
-  // Cada nó: { id, parentId, depth }
-  const MAX_LIDERES = 60;
-  const MAX_EMPS_POR_NO = 15;
-
-  const allLeaders = Object.values(store.users||{})
-    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
-
-  const visitados = new Set();
-  const nos = [];        // lista plana de nós na ordem BFS
-  const fila = [{ id: leaderId, parentId: null, depth: 0 }];
-
-  while (fila.length > 0 && nos.length < MAX_LIDERES) {
-    const { id, parentId, depth } = fila.shift();
-    if (visitados.has(id)) continue;
-    visitados.add(id);
-
-    const l = store.users?.[id];
-    if (!l) continue;
-
-    // Filhos diretos: apenas o nível imediatamente abaixo
-    const meuIdx = ORDEM_IDX.indexOf(l.nivel || 'lider');
-    const filhos = allLeaders
-      .filter(u => {
-        if (visitados.has(u.id)) return false;
-        const uIdx = ORDEM_IDX.indexOf(u.nivel || 'lider');
-        if (uIdx !== meuIdx - 1) return false;
-        const meusDepts = getMeusDepts(l);
-        if (!meusDepts.length) return false;
-        return meusDepts.some(d => getMeusDepts(u).includes(d));
-      })
-      .sort((a,b) => ORDEM_IDX.indexOf(b.nivel||'lider') - ORDEM_IDX.indexOf(a.nivel||'lider'));
-
-    // Funcionários diretos (sem iterar score/bonus — apenas nome e cargo)
-    const depts  = getMeusDepts(l);
-    const turnos = getMeusTurnos(l);
-    const filhosIds = new Set(filhos.map(f => f.id));
-
-    // Emps diretos: pertence ao dept do líder e não é subordinado de um filho
-    let emps = [];
-    if (depts.length) {
-      emps = (store.employees || []).filter(e => {
-        if (!depts.includes(e.dept)) return false;
-        if (turnos.length && !turnos.includes(e.turno)) return false;
-        return true;
-      });
-      // Remove os que serão cobertos por um filho
-      const empsCobertosFilhos = new Set(
-        filhos.flatMap(f => {
-          const fd = getMeusDepts(f);
-          const ft = getMeusTurnos(f);
-          return (store.employees||[]).filter(e => {
-            if (!fd.includes(e.dept)) return false;
-            if (ft.length && !ft.includes(e.turno)) return false;
-            return true;
-          }).map(e => e.id);
-        })
-      );
-      emps = emps.filter(e => !empsCobertosFilhos.has(e.id));
-    } else {
-      emps = (store.employees||[]).filter(e => (e.owner_id||e.ownerId) === id);
-    }
-
-    nos.push({ leader: l, parentId, depth, filhos: filhos.map(f=>f.id), emps: emps.slice(0, MAX_EMPS_POR_NO), totalEmps: emps.length });
-
-    filhos.forEach(f => fila.push({ id: f.id, parentId: id, depth: depth + 1 }));
-  }
-
-
-  // ── Renderiza cada nó como bloco HTML plano (sem recursão) ──
-  function renderNoHTML(no) {
-    const { leader: l, depth, emps, totalEmps } = no;
-    const meta   = NIVEL_META_PDF[l.nivel||'lider'] || NIVEL_META_PDF.lider;
-    const ini    = l.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-    const indent = depth * 20;
-    const filiais = getMeusFiliais(l);
-    const turnos  = getMeusTurnos(l);
-    const totalNo = getTeamTotal(l, store);
-
-    const avatarHtml = l.foto
-      ? `<img src="${l.foto}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0">`
-      : `<div style="width:40px;height:40px;border-radius:50%;background:${meta.cor};color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;font-family:sans-serif;flex-shrink:0">${ini}</div>`;
-
-    const tags = [
-      filiais.length ? `<span style="background:#eff6ff;border:1px solid #93c5fd;color:#2563eb;padding:2px 7px;border-radius:8px;font-size:8px;font-weight:700">🏭 ${filiais.slice(0,2).join(', ')}${filiais.length>2?'…':''}</span>` : '',
-      turnos.length  ? `<span style="background:#f5f3ff;border:1px solid #c4b5fd;color:#7c3aed;padding:2px 7px;border-radius:8px;font-size:8px;font-weight:700">🕐 ${turnos.slice(0,2).join(', ')}${turnos.length>2?'…':''}</span>` : '',
-    ].filter(Boolean).join('');
-
-    const empsHtml = emps.length ? `
-      <div style="margin-top:8px;border-top:1px solid ${meta.border};padding-top:8px">
-        <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#6b7280;margin-bottom:5px">
-          👥 Operacional direto — ${totalEmps} ${totalEmps===1?'funcionário':'funcionários'}${totalEmps>MAX_EMPS_POR_NO?` (mostrando ${MAX_EMPS_POR_NO})`:''}
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px">
-          ${emps.map(e => {
-            const eIni = e.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-            return `<div style="border:1px solid #e5e7eb;border-radius:5px;padding:4px 6px;display:flex;align-items:center;gap:5px;background:#fff">
-              ${e.foto
-                ? `<img src="${e.foto}" style="width:20px;height:20px;border-radius:50%;object-fit:cover;flex-shrink:0">`
-                : `<div style="width:20px;height:20px;border-radius:50%;background:#dbeafe;color:#2563eb;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${eIni}</div>`}
-              <div style="min-width:0">
-                <div style="font-size:9px;font-weight:700;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.name.split(' ').slice(0,2).join(' ')}</div>
-                <div style="font-size:8px;color:#6b7280;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${(e.role||e.dept||'Operacional').slice(0,20)}</div>
-              </div>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>` : '';
-
-    // Linha conectora se tem indentação
-    const connector = depth > 0
-      ? `<div style="position:absolute;left:${indent - 10}px;top:20px;width:10px;height:1px;background:#d1d5db"></div>`
-      : '';
-
-    return `
-      <div style="position:relative;margin-left:${indent}px;margin-bottom:10px;break-inside:avoid">
-        ${connector}
-        <div style="border:1.5px solid ${meta.border};border-radius:8px;padding:10px 12px;background:${meta.bg}">
-          <div style="display:flex;align-items:center;gap:10px">
-            ${avatarHtml}
-            <div style="flex:1;min-width:0">
-              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-                <span style="font-size:13px;font-weight:800;color:#111827">${l.name}</span>
-                <span style="background:${meta.cor};color:#fff;padding:1px 8px;border-radius:8px;font-size:8px;font-weight:800">${meta.emoji} ${meta.label}</span>
-                ${l.perfil?.funcao ? `<span style="color:#6b7280;font-size:9px">${l.perfil.funcao}</span>` : ''}
-              </div>
-              ${tags ? `<div style="margin-top:3px;display:flex;gap:4px;flex-wrap:wrap">${tags}</div>` : ''}
-              ${totalNo ? `<div style="margin-top:3px;font-size:9px;font-weight:700;color:#374151">👥 ${totalNo} pessoas sob responsabilidade</div>` : ''}
-            </div>
-          </div>
-          ${empsHtml}
-        </div>
-      </div>`;
-  }
-
-  const corpoHtml = nos.map(no => renderNoHTML(no)).join('');
-
-  // ── Monta o documento final ──
-  const metaRoot  = NIVEL_META_PDF[leader.nivel||'lider'] || NIVEL_META_PDF.lider;
-  const totalRoot = getTeamTotal(leader, store);
-  const iniRoot   = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-  const dataHoje  = new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
-
-  const avatarRootHtml = leader.foto
-    ? `<img src="${leader.foto}" style="width:52px;height:52px;border-radius:50%;object-fit:cover">`
-    : `<div style="width:52px;height:52px;border-radius:50%;background:${metaRoot.cor};color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;font-family:sans-serif">${iniRoot}</div>`;
-
-  const html = `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<title>Hierarquia — ${leader.name}</title>
-<style>
-  @page { size:A4; margin:14mm 12mm 12mm 12mm; }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:'Segoe UI',Arial,sans-serif; font-size:11px; color:#111827; background:#fff; }
-  .ph { display:flex;align-items:center;gap:14px;border-bottom:2px solid #e5e7eb;padding-bottom:12px;margin-bottom:16px; }
-  .ph-info { flex:1 }
-  .ph-title { font-size:18px;font-weight:800;color:#111827;letter-spacing:-0.5px; }
-  .ph-sub   { font-size:10px;color:#6b7280;margin-top:2px; }
-  .ph-meta  { text-align:right; }
-  .ph-badge { display:inline-block;background:${metaRoot.cor};color:#fff;padding:2px 10px;border-radius:10px;font-size:10px;font-weight:800;margin-bottom:3px; }
-  .footer   { border-top:1px solid #e5e7eb;margin-top:14px;padding-top:6px;font-size:8px;color:#9ca3af;display:flex;justify-content:space-between; }
-  @media print { body { -webkit-print-color-adjust:exact; print-color-adjust:exact; } }
-</style>
-</head>
-<body>
-  <div class="ph">
-    ${avatarRootHtml}
-    <div class="ph-info">
-      <div class="ph-title">${leader.name}</div>
-      <div class="ph-sub">${metaRoot.emoji} ${metaRoot.label}${leader.perfil?.funcao?' · '+leader.perfil.funcao:''} · Árvore de Responsabilidades</div>
-    </div>
-    <div class="ph-meta">
-      <div class="ph-badge">${metaRoot.emoji} ${metaRoot.label}</div>
-      <div style="font-size:12px;font-weight:800;color:#374151">👥 ${totalRoot} pessoas</div>
-      <div style="font-size:8px;color:#9ca3af;margin-top:1px">${dataHoje}</div>
-    </div>
-  </div>
-  <div>${corpoHtml}</div>
-  <div class="footer">
-    <span>Sistema RH Nagumo · Hierarquia de ${leader.name} · ${dataHoje}</span>
-    <span>Uso interno</span>
-  </div>
-<script>window.onload = function(){ window.print(); }<\/script>
-</body>
-</html>`;
-
-  const win = window.open('', '_blank');
-  if (!win) { showToast('⚠️ Permita pop-ups para gerar o PDF.','warn'); return; }
-  win.document.write(html);
-  win.document.close();
+  window.print();
 }
 
 function renderTreeModal(leaderId) {
