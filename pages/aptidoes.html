@@ -1007,7 +1007,8 @@ function buildRow(emp, lista) {
     📈${histCount > 0 ? `<span style="font-size:7px;margin-left:1px;color:var(--muted)">${histCount}</span>` : ''}
   </button>`;
   // Botão reset do mês — só para quem pode editar E se houver histórico no mês atual
-  const btnResetMes = (podeEditar && temHistMes) ? `
+  const isAdminMaster = currentUser?.nivel === 'admin_master';
+  const btnResetMes = (isAdminMaster && temHistMes) ? `
     <button onclick="resetMesAtual(${emp.id})"
       title="🔄 Limpar avaliações do mês atual (desbloqueia todas as competências)"
       style="display:inline-flex;align-items:center;justify-content:center;
