@@ -313,6 +313,57 @@ body.light-theme .ponto-day-btn.active {
 }
 body.light-theme .ponto-day-btn:hover:not(.active) { background: #EBF1F7; border-color: #023665; }
 
+/* Grade de ponto — cabeçalho do dia atual */
+body.light-theme .day-col-header.hoje {
+  color: #D40138 !important;
+  background: rgba(212, 1, 56, .10) !important;
+  border-radius: 6px 6px 0 0;
+}
+body.light-theme .day-col-header.hoje .day-num { color: #D40138 !important; }
+
+/* Grade de ponto — cabeçalhos gerais */
+body.light-theme .day-col-header { color: #4D6680; border-bottom-color: #C8D6E3; }
+body.light-theme .day-col-header.domingo { color: #B0C4D4; }
+body.light-theme .day-col-header.sabado  { color: #CBA8C0; }
+body.light-theme .day-col-header.feriado { color: #B45309; }
+
+/* Grade de ponto — colunas e linhas */
+body.light-theme .emp-col-header  { background: #F0F4F8; border-right-color: #C8D6E3; color: #4D6680; }
+body.light-theme .resumo-col-header { background: #F0F4F8; border-left-color: #C8D6E3; color: #4D6680; }
+body.light-theme .emp-row         { border-bottom-color: #E8EDF5; }
+body.light-theme .emp-info-col    { background: #FFFFFF; border-right-color: #C8D6E3; }
+body.light-theme .emp-row:hover .emp-info-col { background: #F4F8FC; }
+body.light-theme .emp-name-g      { color: #04152E; }
+body.light-theme .emp-role-g      { color: #4D6680; }
+body.light-theme .resumo-col      { background: #FFFFFF; border-left-color: #C8D6E3; color: #4D6680; }
+body.light-theme .emp-row:hover .resumo-col { background: #F4F8FC; }
+
+/* Grade de ponto — status dot vazio no tema claro */
+body.light-theme .status-dot.vazio { background: #E8EDF5; border-color: #C8D6E3; }
+body.light-theme .status-dot.atestado { background: rgba(2, 54, 101, .06); border-color: rgba(2, 54, 101, .35); color: #023665; }
+
+/* Grade de ponto — cabeçalhos de topbar e painéis */
+body.light-theme .topbar-mini  { background: #FFFFFF; border-bottom-color: #C8D6E3; }
+body.light-theme .page-title   { color: #023665; }
+body.light-theme .top-hint     { color: #4D6680; }
+body.light-theme .panel        { background: #FFFFFF; border-color: #C8D6E3; }
+body.light-theme .panel-label  { color: #4D6680; }
+body.light-theme .dept-btn     { background: #F0F4F8; border-color: #C8D6E3; color: #4D6680; }
+body.light-theme .dept-btn:hover  { border-color: #D40138; color: #D40138; }
+body.light-theme .dept-btn.active { background: rgba(212, 1, 56, .08); border-color: #D40138; color: #D40138; }
+body.light-theme .mes-chip        { color: #4D6680; }
+body.light-theme .mes-chip:hover  { color: #023665; }
+body.light-theme .mes-chip.active { background: #023665; color: #FFFFFF; }
+body.light-theme .mes-nav-btn  { background: #F0F4F8; border-color: #C8D6E3; color: #04152E; }
+body.light-theme .lancamento-bar  { background: #FFFFFF; border-color: #C8D6E3; }
+body.light-theme .lancamento-label { color: #D40138; }
+body.light-theme .dia-input    { background: #FFFFFF; border-color: #B0C4D4; color: #04152E; }
+body.light-theme .legenda-bar  { background: #FFFFFF; border-color: #C8D6E3; color: #4D6680; }
+body.light-theme .grade-wrap   { background: #FFFFFF; border-color: #C8D6E3; }
+body.light-theme .grade-header { background: #F0F4F8; border-bottom-color: #C8D6E3; }
+body.light-theme .grade-title  { color: #04152E; }
+body.light-theme .grade-badge  { background: rgba(212, 1, 56, .10); color: #D40138; }
+
 /* ══════════════════════════════════════════
    MODAIS
 ══════════════════════════════════════════ */
