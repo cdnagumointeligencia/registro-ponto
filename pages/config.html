@@ -505,6 +505,7 @@ input[readonly] { opacity:.6; cursor:not-allowed; background:var(--surface3); }
         <div class="form-group" style="margin:0;flex:1;min-width:160px">
           <label>Nome do Feriado</label>
           <input type="text" id="feriado-nome" placeholder="Ex: Aniversário de Guarulhos"
+            autocomplete="off"
             onkeydown="if(event.key==='Enter')addFeriado()">
         </div>
         <button class="btn btn-primary btn-sm" onclick="addFeriado()">＋ Adicionar</button>
