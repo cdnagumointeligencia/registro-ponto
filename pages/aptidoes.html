@@ -999,12 +999,23 @@ function buildRow(emp, lista) {
   }).join('');
 
   // ── Quantidade de meses com histórico ──
-  const histCount = Object.keys(emp.competencies_history||{}).length;
+  const histCount   = Object.keys(emp.competencies_history||{}).length;
+  const temHistMes  = !!((emp.competencies_history||{})[currentMonthKey()]);
   const btnHistorico = `<button class="btn-historico" onclick="openHistorico(${emp.id})"
     title="${histCount > 0 ? histCount + ' mês(es) de histórico' : 'Sem histórico ainda'}"
     style="width:22px;height:22px;flex-shrink:0">
     📈${histCount > 0 ? `<span style="font-size:7px;margin-left:1px;color:var(--muted)">${histCount}</span>` : ''}
   </button>`;
+  // Botão reset do mês — só para quem pode editar E se houver histórico no mês atual
+  const btnResetMes = (podeEditar && temHistMes) ? `
+    <button onclick="resetMesAtual(${emp.id})"
+      title="🔄 Limpar avaliações do mês atual (desbloqueia todas as competências)"
+      style="display:inline-flex;align-items:center;justify-content:center;
+        width:22px;height:22px;border-radius:7px;flex-shrink:0;cursor:pointer;
+        border:1px solid rgba(248,113,113,.35);background:rgba(248,113,113,.1);
+        color:#f87171;font-size:11px;transition:all .15s"
+      onmouseover="this.style.background='rgba(248,113,113,.25)'"
+      onmouseout="this.style.background='rgba(248,113,113,.1)'">🔄</button>` : '';
 
   return `
   <tr style="${bloqueado?'opacity:.75':''}">
@@ -1018,6 +1029,7 @@ function buildRow(emp, lista) {
           <div style="display:flex;align-items:center;gap:6px">
             <div class="emp-name-text">${nomeAbrev(emp, lista)}${bloqueioBadge}</div>
             ${btnHistorico}
+            ${btnResetMes}
           </div>
           <div class="emp-role-text">${emp.role||''}</div>
         </div>
@@ -1105,6 +1117,35 @@ async function commitEdit(empId, key, input) {
   renderTabela();
   await registrarLog('editou', 'Aptidões', `<strong>${emps[idx]?.name||empId}</strong> — ${key}: <span class="de">${anterior??'—'}</span><span class="seta">→</span><span class="para">${v}</span>`);
   showToast('✅ Competência atualizada!');
+}
+
+// ════════════════════════════════════════════════════════
+// RESET MÊS ATUAL
+// ════════════════════════════════════════════════════════
+async function resetMesAtual(empId) {
+  const store = await getStore();
+  const emps  = store.employees || [];
+  const idx   = emps.findIndex(e => e.id === empId);
+  if (idx < 0) { showToast('❌ Funcionário não encontrado.', 'error'); return; }
+
+  const empName = emps[idx].name || String(empId);
+  const mes     = currentMonthKey();
+  const [ano, m] = mes.split('-');
+  const MESES   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const label   = `${MESES[parseInt(m)-1]}/${ano.slice(2)}`;
+
+  if (!confirm(`🔄 Limpar avaliações de ${empName} em ${label}?\n\nIsso desbloqueará todas as competências para que possam ser avaliadas novamente neste mês.`)) return;
+
+  if (emps[idx].competencies_history && emps[idx].competencies_history[mes]) {
+    delete emps[idx].competencies_history[mes];
+    store.employees = emps;
+    await saveStore(store);
+    renderTabela();
+    await registrarLog('editou', 'Aptidões', `Reset de avaliações de <strong>${empName}</strong> — mês ${label} desbloqueado`);
+    showToast(`🔄 Avaliações de ${label} limpas. Todas as competências liberadas.`);
+  } else {
+    showToast('ℹ️ Nenhuma avaliação encontrada para este mês.', 'warn');
+  }
 }
 
 // ════════════════════════════════════════════════════════
