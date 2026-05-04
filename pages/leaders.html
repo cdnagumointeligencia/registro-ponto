@@ -531,28 +531,28 @@ body.light-theme .leader-apt-banner {
 .btn-foto.remove:hover { border-color:var(--red); color:var(--red); }
 
 /* ════════════════════════════════════════════
-   MODAL ORGANOGRAMA CIRCULAR
+   MODAL ORGANOGRAMA — PAINÉIS DESLIZANTES
 ════════════════════════════════════════════ */
 .modal-org-circular {
   background:var(--surface); border:1px solid var(--border);
-  border-radius:20px; width:760px; max-width:96vw;
+  border-radius:20px; width:820px; max-width:96vw;
   max-height:94vh; overflow:hidden;
   display:flex; flex-direction:column;
   animation:fadeUp .3s ease;
 }
 .modal-org-header {
   display:flex; align-items:center; gap:14px;
-  padding:20px 24px; border-bottom:1px solid var(--border);
+  padding:18px 22px; border-bottom:1px solid var(--border);
   flex-shrink:0;
 }
 .modal-org-avatar {
-  width:46px; height:46px; border-radius:50%; flex-shrink:0;
+  width:42px; height:42px; border-radius:50%; flex-shrink:0;
   display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-head); font-size:16px; font-weight:800; color:#fff;
+  font-family:var(--font-head); font-size:15px; font-weight:800; color:#fff;
 }
 .modal-org-info { flex:1; }
-.modal-org-name { font-family:var(--font-head); font-size:18px; font-weight:800; color:var(--text); }
-.modal-org-sub  { font-size:12px; color:var(--muted); margin-top:3px; }
+.modal-org-name { font-family:var(--font-head); font-size:17px; font-weight:800; color:var(--text); }
+.modal-org-sub  { font-size:11px; color:var(--muted); margin-top:2px; }
 .modal-org-close {
   background:var(--surface2); border:1px solid var(--border);
   border-radius:8px; padding:6px 12px; color:var(--muted);
@@ -560,12 +560,77 @@ body.light-theme .leader-apt-banner {
   transition:all .15s; font-family:var(--font-body);
 }
 .modal-org-close:hover { border-color:var(--red); color:var(--red); }
-#org-chart-container {
-  flex:1; overflow:auto; display:flex;
-  align-items:flex-start; justify-content:center;
-  padding:24px; background:var(--bg); min-height:400px;
+.org-nav-hint {
+  padding:5px 22px; font-size:10px; color:var(--muted);
+  background:var(--surface2); border-bottom:1px solid var(--border);
+  flex-shrink:0;
 }
-#org-chart-container svg { display:block; flex-shrink:0; }
+#org-chart-container {
+  flex:1; overflow-x:auto; overflow-y:hidden;
+  display:flex; flex-direction:row; align-items:stretch;
+  background:var(--border); min-height:420px; gap:1px;
+}
+.org-panel {
+  width:250px; min-width:250px;
+  background:var(--surface);
+  display:flex; flex-direction:column; flex-shrink:0;
+}
+.org-panel-hdr {
+  padding:13px 14px 11px; background:var(--surface2);
+  display:flex; align-items:center; gap:10px;
+  flex-shrink:0; border-bottom:2px solid var(--border);
+}
+.org-panel-av {
+  width:34px; height:34px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:12px; font-weight:800;
+  color:#fff; overflow:hidden;
+}
+.org-panel-nm {
+  font-family:var(--font-head); font-size:12px; font-weight:800;
+  color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.org-panel-rl { font-size:9.5px; color:var(--muted); margin-top:2px; }
+.org-panel-body { flex:1; overflow-y:auto; }
+.org-sec-lbl {
+  font-size:9px; font-weight:700; text-transform:uppercase;
+  letter-spacing:1.5px; color:var(--muted); padding:10px 14px 5px; user-select:none;
+}
+.org-item {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 10px 9px 11px; cursor:pointer;
+  transition:background .12s; border-left:3px solid transparent;
+}
+.org-item:hover { background:var(--surface2); }
+.org-item.org-emp { cursor:default; border-left-color:rgba(79,142,247,.35); }
+.org-item.org-emp:hover { background:transparent; }
+.org-item-av {
+  width:30px; height:30px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:10px; font-weight:800;
+  color:#fff; overflow:hidden;
+}
+.org-item-av.emp-av { background:linear-gradient(135deg,#4f8ef7,#3b6fd4); }
+.org-item-info { flex:1; min-width:0; }
+.org-item-nm {
+  font-size:12px; font-weight:700; color:var(--text);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.org-item-rl { font-size:9.5px; color:var(--muted); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.org-item-cnt { font-size:9px; color:var(--muted); margin-top:2px; }
+.org-item-arr {
+  font-size:20px; color:var(--muted); flex-shrink:0;
+  line-height:1; transition:all .12s; margin-right:2px;
+}
+.org-item:hover .org-item-arr { color:var(--accent); transform:translateX(2px); }
+.org-item-arr.arr-sel { color:var(--accent); }
+body.light-theme .org-panel { background:#fff; }
+body.light-theme .org-panel-hdr { background:#F4F7FB; }
+body.light-theme #org-chart-container { background:#CBD5E1; }
+body.light-theme .org-item:hover { background:#F4F7FB; }
+body.light-theme .org-item.org-emp:hover { background:transparent; }
+body.light-theme .org-item-nm { color:#0f172a; }
+body.light-theme .org-panel-nm { color:#0f172a; }
 
 /* Botão Organograma — aparece durante busca ativa */
 #btn-organograma {
@@ -797,6 +862,7 @@ body.light-theme #btn-organograma { background:rgba(6,182,212,.1); color:#0891b2
       </div>
       <button class="modal-org-close" onclick="closeCircularOrg()">✕ Fechar</button>
     </div>
+    <div class="org-nav-hint">👆 Clique em qualquer líder para ver os subordinados dele na próxima coluna</div>
     <div id="org-chart-container">
       <div style="color:var(--muted);padding:60px;text-align:center">Carregando organograma...</div>
     </div>
@@ -819,6 +885,8 @@ let _searchLeaderQuery = '';     // Texto atual no campo de busca
 let _treeRootId   = null;        // líder raiz do modal de árvore
 let _treePath     = [];          // trilha de navegação: [{ id, name }]
 let _currentSearchLeaderId = null; // líder alvo do organograma circular
+let _orgRootId    = null;
+let _orgPanelPath = [];  // [leaderId, ...] caminho de seleção
 
 const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
 
@@ -1757,276 +1825,182 @@ document.addEventListener('keydown', e=>{
 // ════════════════════════════════════════════════════════
 function openCircularOrg() {
   if (!_currentSearchLeaderId) return;
+  _orgRootId    = _currentSearchLeaderId;
+  _orgPanelPath = [];
   document.getElementById('modal-org-overlay').classList.add('open');
   renderCircularOrgChart(_currentSearchLeaderId);
 }
 
 function closeCircularOrg() {
   document.getElementById('modal-org-overlay').classList.remove('open');
+  _orgPanelPath = [];
 }
 
 document.getElementById('modal-org-overlay').addEventListener('click', e => {
   if (e.target === e.currentTarget) closeCircularOrg();
 });
 
+// Subordinados diretos para o organograma (apenas o nível imediatamente abaixo)
+function getDirectSubsOrgChart(ldr, allLeaders) {
+  const myIdx   = ORDEM_IDX.indexOf(ldr.nivel||'lider');
+  const myDepts = getMeusDepts(ldr);
+  for (let t = myIdx - 1; t >= 0; t--) {
+    const found = allLeaders.filter(u => {
+      if (ORDEM_IDX.indexOf(u.nivel||'lider') !== t) return false;
+      return myDepts.some(d => getMeusDepts(u).includes(d));
+    });
+    if (found.length) return found;
+  }
+  return [];
+}
+
+// Chamado pelo onclick dos itens do painel
+function selectOrgNode(leaderId, panelIdx) {
+  _orgPanelPath = _orgPanelPath.slice(0, panelIdx);
+  _orgPanelPath.push(leaderId);
+  renderCircularOrgChart(_orgRootId);
+}
+
 function renderCircularOrgChart(leaderId) {
-  const store  = _store;
+  _orgRootId = leaderId;
+  const store = _store;
   const leader = store?.users?.[leaderId];
   if (!leader) return;
 
-  // ── Header ──
+  // ── Header do modal ──
   const lm  = NIVEL_META[leader.nivel||'lider'] || NIVEL_META.lider;
   const ini = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
   const hAv = document.getElementById('org-modal-avatar');
   hAv.style.background = leader.foto ? 'transparent' : `linear-gradient(135deg,${lm.cor},${lm.cor}88)`;
   hAv.innerHTML = leader.foto
-    ? `<img src="${leader.foto}" style="width:46px;height:46px;border-radius:50%;object-fit:cover">` : ini;
+    ? `<img src="${leader.foto}" style="width:42px;height:42px;border-radius:50%;object-fit:cover">` : ini;
   document.getElementById('org-modal-name').textContent = leader.name;
-  document.getElementById('org-modal-sub').textContent  = `${lm.emoji} ${lm.label} · Árvore hierárquica`;
+  document.getElementById('org-modal-sub').textContent  = `${lm.emoji} ${lm.label} · Organograma`;
 
   const allLeaders = Object.values(store.users||{}).filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
   const allEmps    = store.employees || [];
+  const container  = document.getElementById('org-chart-container');
+  container.innerHTML = '';
 
-  // ── Subordinados DIRETOS (apenas o nível imediatamente abaixo) ──
-  // ORDEM_IDX = ['lider','encarregado','coordenacao','gerencia','diretoria']
-  // Percorre do rank-1 para baixo até achar alguém com dept em comum
-  function getDirectSubs(ldr, candidates) {
-    const myIdx   = ORDEM_IDX.indexOf(ldr.nivel||'lider');
-    const myDepts = getMeusDepts(ldr);
-    for (let t = myIdx - 1; t >= 0; t--) {
-      const found = candidates.filter(u => {
-        if (ORDEM_IDX.indexOf(u.nivel||'lider') !== t) return false;
-        const ud = getMeusDepts(u);
-        return myDepts.some(d => ud.includes(d));
-      });
-      if (found.length) return found;
-    }
-    return [];
-  }
+  // Sequência de painéis: [root, ...path selecionado]
+  const panelIds = [leaderId, ..._orgPanelPath];
 
-  // ── Árvore recursiva ──
-  let _nodeIdx = 0;
-  function buildTree(ldr, pool, depth) {
-    if (depth > 6) return null;
-    const dirSubs  = getDirectSubs(ldr, pool);
-    const newPool  = pool.filter(c => !dirSubs.some(s => s.id === c.id) && c.id !== ldr.id);
-    const children = dirSubs.map(s => buildTree(s, newPool, depth + 1)).filter(Boolean);
+  panelIds.forEach((lid, panelIdx) => {
+    const pl = store.users?.[lid];
+    if (!pl) return;
 
-    const teamEmps = getTeamEmps(ldr, allEmps);
-    // Só mostra employees se for nó folha (sem sub-líderes)
-    const employees = children.length === 0 ? teamEmps.slice(0, 8) : [];
+    const pm   = NIVEL_META[pl.nivel||'lider'] || NIVEL_META.lider;
+    const pIni = pl.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
 
-    return { leader: ldr, children, employees, idx: _nodeIdx++ };
-  }
+    const dirSubs    = getDirectSubsOrgChart(pl, allLeaders);
+    const teamEmps   = getTeamEmps(pl, allEmps);
+    const subEmpIds  = new Set(dirSubs.flatMap(s => getTeamEmps(s, allEmps).map(e => e.id)));
+    const directEmps = teamEmps.filter(e => !subEmpIds.has(e.id));
+    const selectedId = _orgPanelPath[panelIdx];
 
-  const tree = buildTree(leader, allLeaders.filter(u => u.id !== leader.id), 0);
-  if (!tree) return;
+    // ── Painel ──
+    const panel = document.createElement('div');
+    panel.className = 'org-panel';
 
-  // ── Constantes ──
-  const R    = 30;   // raio das bolhas de líderes
-  const RR   = 40;   // raio da bolha root
-  const RE   = 24;   // raio das bolhas de funcionários
-  const SLOT = 68;   // largura por funcionário
-  const H_GAP = 16;  // gap entre subárvores irmãs
-  const VG   = 100;  // distância vertical entre níveis
-  const PAD  = 48;
+    // Header do painel
+    const hdr = document.createElement('div');
+    hdr.className = 'org-panel-hdr';
+    hdr.style.borderBottomColor = pm.cor + '66';
+    hdr.innerHTML = `
+      <div class="org-panel-av" style="background:${pl.foto ? 'transparent' : `linear-gradient(135deg,${pm.cor},${pm.cor}77)`}">
+        ${pl.foto ? `<img src="${pl.foto}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">` : pIni}
+      </div>
+      <div style="flex:1;min-width:0">
+        <div class="org-panel-nm">${pl.name.split(' ').slice(0,2).join(' ')}</div>
+        <div class="org-panel-rl">${pm.emoji} ${pm.label}</div>
+      </div>
+    `;
+    panel.appendChild(hdr);
 
-  // ── Calcula largura de cada subárvore ──
-  function calcWidth(node, level) {
-    node.level = level;
-    if (!node.children.length) {
-      node.width = Math.max(SLOT * 1.1, node.employees.length * SLOT);
-    } else {
-      node.children.forEach(c => calcWidth(c, level + 1));
-      const cw = node.children.reduce((s,c) => s + c.width, 0) + (node.children.length - 1) * H_GAP;
-      node.width = Math.max(SLOT * 1.1, cw);
-    }
-  }
-  calcWidth(tree, 0);
+    const body = document.createElement('div');
+    body.className = 'org-panel-body';
 
-  const svgW = tree.width + PAD * 2;
-  const CX   = svgW / 2;
+    // ── Sub-líderes ──
+    if (dirSubs.length) {
+      const sec = document.createElement('div');
+      sec.className = 'org-sec-lbl';
+      sec.textContent = `👔 Líderes (${dirSubs.length})`;
+      body.appendChild(sec);
 
-  // ── Profundidade máxima ──
-  function maxDep(node) {
-    if (!node.children.length) return node.employees.length ? 2 : 1;
-    return 1 + Math.max(...node.children.map(maxDep));
-  }
-  const svgH = maxDep(tree) * VG + RR + 70;
+      dirSubs.forEach(sub => {
+        const sm      = NIVEL_META[sub.nivel||'lider'] || NIVEL_META.lider;
+        const isSelected = sub.id === selectedId;
+        const sIni    = sub.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+        const hasSubs = getDirectSubsOrgChart(sub, allLeaders).length > 0 || getTeamEmps(sub, allEmps).length > 0;
+        const total   = getTeamTotal(sub, store);
 
-  // ── Atribui posições ──
-  function assignPos(node, leftX) {
-    const r  = node.level === 0 ? RR : R;
-    node.x   = leftX + node.width / 2;
-    node.y   = node.level * VG + RR + 10;
-    node.r   = r;
+        const item = document.createElement('div');
+        item.className = 'org-item';
+        item.style.borderLeftColor = sm.cor + (isSelected ? '' : '55');
+        if (isSelected) item.style.background = sm.cor + '1a';
+        item.onclick = () => selectOrgNode(sub.id, panelIdx);
 
-    if (node.children.length) {
-      const totalCW = node.children.reduce((s,c) => s + c.width, 0) + (node.children.length-1) * H_GAP;
-      let cx = node.x - totalCW / 2;
-      node.children.forEach(child => {
-        assignPos(child, cx);
-        cx += child.width + H_GAP;
+        item.innerHTML = `
+          <div class="org-item-av" style="background:${sub.foto ? 'transparent' : `linear-gradient(135deg,${sm.cor},${sm.cor}77)`}">
+            ${sub.foto ? `<img src="${sub.foto}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">` : sIni}
+          </div>
+          <div class="org-item-info">
+            <div class="org-item-nm">${sub.name.split(' ').slice(0,2).join(' ')}</div>
+            <div class="org-item-rl" style="color:${sm.cor}cc">${sm.emoji} ${sm.label}</div>
+            ${total ? `<div class="org-item-cnt">👥 ${total} ${total===1?'pessoa':'pessoas'}</div>` : ''}
+          </div>
+          ${hasSubs ? `<div class="org-item-arr${isSelected?' arr-sel':''}">›</div>` : ''}
+        `;
+        body.appendChild(item);
       });
     }
 
-    // Posição dos employees (abaixo deste nó)
-    if (node.employees.length) {
-      const ew = node.employees.length * SLOT;
-      const ex0 = node.x - ew / 2 + SLOT / 2;
-      node.empXs = node.employees.map((_, i) => ex0 + i * SLOT);
-      node.empY  = node.y + VG;
-    } else {
-      node.empXs = [];
-    }
-  }
-  assignPos(tree, PAD);
+    // ── Funcionários diretos ──
+    if (directEmps.length) {
+      const sec = document.createElement('div');
+      sec.className = 'org-sec-lbl';
+      sec.textContent = `👥 Operacional (${directEmps.length})`;
+      body.appendChild(sec);
 
-  // ── Defs ──
-  const mkClip = (id, r) => `<clipPath id="${id}"><circle cx="0" cy="0" r="${r}"/></clipPath>`;
-  const mkGrad = (id, c) => `<radialGradient id="${id}" cx="35%" cy="30%"><stop offset="0%" stop-color="${c}"/><stop offset="100%" stop-color="${c}77"/></radialGradient>`;
-
-  let defs = '<defs>';
-  defs += `<filter id="td-glow" x="-50%" y="-50%" width="200%" height="200%">
-    <feGaussianBlur stdDeviation="7" result="blur"/>
-    <feFlood flood-color="${lm.cor}" flood-opacity="0.45" result="c"/>
-    <feComposite in="c" in2="blur" operator="in" result="sh"/>
-    <feComposite in="SourceGraphic" in2="sh" operator="over"/>
-  </filter>`;
-  defs += mkGrad('td-ge', '#4f8ef7');
-
-  // Gradiente por nível (único por nivel)
-  const gradsMade = new Set();
-  function collectGrads(node) {
-    const n = node.leader.nivel||'lider';
-    if (!gradsMade.has(n)) {
-      gradsMade.add(n);
-      const m = NIVEL_META[n]||NIVEL_META.lider;
-      defs += mkGrad(`td-gn-${n}`, m.cor);
-    }
-    node.children.forEach(collectGrads);
-  }
-  collectGrads(tree);
-
-  // Clips por nó
-  function collectClips(node) {
-    const r = node.level === 0 ? RR - 3 : R - 3;
-    defs += mkClip(`td-nc${node.idx}`, r);
-    node.employees.forEach((_, i) => defs += mkClip(`td-ec${node.idx}-${i}`, RE - 2));
-    node.children.forEach(collectClips);
-  }
-  collectClips(tree);
-  defs += '</defs>';
-
-  // ── Funções de desenho ──
-  function drawLeaderNode(node) {
-    const m   = NIVEL_META[node.leader.nivel||'lider']||NIVEL_META.lider;
-    const r   = node.r;
-    const fs  = node.level === 0 ? 19 : 13;
-    const ini = node.leader.name.split(' ').map(c=>c[0]).slice(0,2).join('').toUpperCase();
-    const fn  = node.leader.name.split(' ')[0]||'';
-    const ln  = node.leader.name.split(' ')[1] ? node.leader.name.split(' ')[1][0]+'.' : '';
-    const dn  = (fn.slice(0,9)+(ln?' '+ln:'')).slice(0,12);
-
-    let g = `<g transform="translate(${node.x.toFixed(1)},${node.y.toFixed(1)})">`;
-    if (node.level === 0) g += `<circle cx="0" cy="0" r="${r+10}" fill="${m.cor}12"/>`;
-    g += `<circle cx="0" cy="0" r="${r+3}" fill="none" stroke="${m.cor}44" stroke-width="1.5" stroke-dasharray="3,3"/>`;
-    g += `<circle cx="0" cy="0" r="${r}" fill="url(#td-gn-${node.leader.nivel||'lider'})" stroke="${m.cor}" stroke-width="${node.level===0?3:2}"${node.level===0?' filter="url(#td-glow)"':''}/>`;
-    if (node.leader.foto) {
-      g += `<image href="${node.leader.foto}" x="-${r-3}" y="-${r-3}" width="${(r-3)*2}" height="${(r-3)*2}" clip-path="url(#td-nc${node.idx})"/>`;
-    } else {
-      g += `<text x="0" y="${Math.round(fs*0.38)}" text-anchor="middle" font-family="Syne,sans-serif" font-size="${fs}" font-weight="800" fill="white">${ini}</text>`;
-    }
-    g += `<text x="0" y="${r+15}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="${node.level===0?11:9.5}" font-weight="700" fill="#e2e8f0">${dn}</text>`;
-    g += `<text x="0" y="${r+27}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" fill="${m.cor}cc">${(m.emoji+' '+m.label).slice(0,22)}</text>`;
-    g += '</g>';
-    return g;
-  }
-
-  function drawEmpNode(emp, x, y, clipId) {
-    const ini = emp.name.split(' ').map(c=>c[0]).slice(0,2).join('').toUpperCase();
-    const fn  = emp.name.split(' ')[0]||'';
-    let g = `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})">`;
-    g += `<circle cx="0" cy="0" r="${RE+3}" fill="#4f8ef712"/>`;
-    g += `<circle cx="0" cy="0" r="${RE}" fill="url(#td-ge)" stroke="#4f8ef7" stroke-width="1.5"/>`;
-    if (emp.foto) {
-      g += `<image href="${emp.foto}" x="-${RE-2}" y="-${RE-2}" width="${(RE-2)*2}" height="${(RE-2)*2}" clip-path="url(#${clipId})"/>`;
-    } else {
-      g += `<text x="0" y="4" text-anchor="middle" font-family="Syne,sans-serif" font-size="10" font-weight="800" fill="white">${ini}</text>`;
-    }
-    g += `<text x="0" y="${RE+12}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="700" fill="#e2e8f0">${fn.slice(0,10)}</text>`;
-    g += `<text x="0" y="${RE+21}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="#94a3b8">${(emp.role||emp.dept||'').slice(0,13)}</text>`;
-    g += '</g>';
-    return g;
-  }
-
-  // Linha bezier suave (de baixo do pai para cima do filho)
-  function bezier(x1, y1b, x2, y2t, color) {
-    const my = (y1b + y2t) / 2;
-    return `<path d="M${x1.toFixed(1)},${y1b.toFixed(1)} C${x1.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${y2t.toFixed(1)}" fill="none" stroke="${color}55" stroke-width="1.5" stroke-dasharray="5,4"/>`;
-  }
-  function hbar(x1, x2, y, color) {
-    return `<line x1="${x1.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${color}35" stroke-width="1.5"/>`;
-  }
-  function vdrop(x, y1, y2, color) {
-    return `<line x1="${x.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${color}44" stroke-width="1.5" stroke-dasharray="4,3"/>`;
-  }
-
-  // ── Traversal: linhas primeiro, nós por cima ──
-  const lines = [], nodes = [];
-
-  function traverse(node) {
-    const m = NIVEL_META[node.leader.nivel||'lider']||NIVEL_META.lider;
-    const r = node.r;
-
-    // Conexões para filhos líderes
-    if (node.children.length === 1) {
-      const cm = NIVEL_META[node.children[0].leader.nivel||'lider']||NIVEL_META.lider;
-      lines.push(bezier(node.x, node.y + r + 4, node.children[0].x, node.children[0].y - R - 4, cm.cor));
-    } else if (node.children.length > 1) {
-      const barY = node.y + r + VG * 0.42;
-      const xs   = node.children.map(c => c.x);
-      lines.push(vdrop(node.x, node.y + r + 4, barY, m.cor));
-      lines.push(hbar(xs[0], xs[xs.length-1], barY, m.cor));
-      node.children.forEach(child => {
-        const cm = NIVEL_META[child.leader.nivel||'lider']||NIVEL_META.lider;
-        lines.push(vdrop(child.x, barY, child.y - R - 4, cm.cor));
+      directEmps.slice(0, 18).forEach(emp => {
+        const eIni = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+        const item = document.createElement('div');
+        item.className = 'org-item org-emp';
+        item.innerHTML = `
+          <div class="org-item-av emp-av">
+            ${emp.foto ? `<img src="${emp.foto}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">` : eIni}
+          </div>
+          <div class="org-item-info">
+            <div class="org-item-nm">${emp.name.split(' ').slice(0,2).join(' ')}</div>
+            <div class="org-item-rl">${(emp.role||emp.dept||'Operacional').slice(0,22)}</div>
+          </div>
+        `;
+        body.appendChild(item);
       });
-    }
 
-    // Conexões para employees
-    if (node.empXs?.length) {
-      if (node.empXs.length === 1) {
-        lines.push(bezier(node.x, node.y + r + 4, node.empXs[0], node.empY - RE - 4, '#4f8ef7'));
-      } else {
-        const barY = node.y + r + VG * 0.42;
-        lines.push(vdrop(node.x, node.y + r + 4, barY, '#4f8ef7'));
-        lines.push(hbar(node.empXs[0], node.empXs[node.empXs.length-1], barY, '#4f8ef7'));
-        node.empXs.forEach(ex => lines.push(vdrop(ex, barY, node.empY - RE - 4, '#4f8ef7')));
+      if (directEmps.length > 18) {
+        const more = document.createElement('div');
+        more.style.cssText = 'text-align:center;padding:8px 0 12px;font-size:10px;color:var(--muted)';
+        more.textContent = `+ ${directEmps.length - 18} mais`;
+        body.appendChild(more);
       }
     }
 
-    // Nó do líder
-    nodes.push(drawLeaderNode(node));
+    // ── Vazio ──
+    if (!dirSubs.length && !directEmps.length) {
+      const empty = document.createElement('div');
+      empty.style.cssText = 'padding:36px 16px;text-align:center;color:var(--muted);font-size:12px';
+      empty.innerHTML = '<div style="font-size:30px;margin-bottom:8px">👤</div>Sem subordinados';
+      body.appendChild(empty);
+    }
 
-    // Nós dos employees
-    node.employees.forEach((emp, i) =>
-      nodes.push(drawEmpNode(emp, node.empXs[i], node.empY, `td-ec${node.idx}-${i}`))
-    );
+    panel.appendChild(body);
+    container.appendChild(panel);
+  });
 
-    node.children.forEach(traverse);
-  }
-
-  traverse(tree);
-
-  if (!tree.children.length && !tree.employees.length) {
-    nodes.push(`<text x="${CX}" y="${RR+70}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="13" fill="#94a3b8">Sem subordinados cadastrados</text>`);
-  }
-
-  document.getElementById('org-chart-container').innerHTML =
-    `<svg viewBox="0 0 ${svgW} ${svgH}" xmlns="http://www.w3.org/2000/svg" width="${svgW}" height="${svgH}">${[defs,...lines,...nodes].join('')}</svg>`;
+  // Auto-scroll para mostrar o painel mais recente
+  setTimeout(() => { container.scrollLeft = container.scrollWidth; }, 30);
 }
-
 
 // ── Foto do líder ────────────────────────────────────
 function processarFotoLider(input) {
