@@ -753,12 +753,13 @@ function getStatusDiaBloqueado(emp, ano, mes, dia) {
   const hoje = new Date(); hoje.setHours(0,0,0,0);
 
   // ── 1. Verifica período ATIVO no cadastro ──────────────────────────────
-  // Afastado: do início até HOJE (dias futuros ficam em branco)
+  // Afastado: do início em diante (sem data de retorno conhecida, bloqueia tudo)
   if (emp.afastado) {
     const inicio = emp.data_afastamento
       ? new Date(emp.data_afastamento + 'T00:00:00')
       : new Date(0);
-    if (dt >= inicio && dt <= hoje) return 'afastado';
+    // Bloqueia do início do afastamento em diante (inclui dias futuros)
+    if (dt >= inicio) return 'afastado';
   }
 
   // Férias: intervalo fixo início/fim (inclui dias futuros pois é programado)
@@ -1272,6 +1273,10 @@ async function lancamentoRapido(status) {
   // Atualiza cache para que getStatusDiaBloqueado() leia dados corretos
   _pontoCache = allPonto;
   emps.forEach(emp => {
+    // Bloqueia funcionários afastados ou em férias (verificação pelo status atual do cadastro)
+    const { bloqueado: bloqGlobal } = isEmpBloqueado(emp);
+    if (bloqGlobal) return;
+    // Bloqueia se o dia específico cair dentro de período de afastamento/férias (histórico ou ativo)
     const bloqDia = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, dia);
     if (bloqDia) return; // bloqueia tanto período ativo quanto histórico
     const key = pontoKey(emp.id);
