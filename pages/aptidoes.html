@@ -175,6 +175,19 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .score-bubble.readonly { cursor:default; }
 .score-bubble.readonly:hover { transform:none; box-shadow:none; }
 
+/* Travada no mês atual */
+.score-bubble.month-locked {
+  cursor:not-allowed;
+  border-color:rgba(251,191,36,.45) !important;
+}
+.score-bubble.month-locked:hover { transform:none; box-shadow:none; }
+/* Wrapper relativo para posicionar o cadeado */
+.score-cell-wrap { display:inline-flex; position:relative; }
+.lock-badge {
+  position:absolute; bottom:-5px; right:-6px;
+  font-size:9px; pointer-events:none; line-height:1; user-select:none;
+}
+
 /* input de edição inline */
 .apt-input {
   width:44px; text-align:center;
@@ -663,9 +676,13 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
     <div class="form-grid" style="margin-bottom:16px">
       <div class="form-group full">
         <label class="form-label">👤 Funcionário</label>
-        <select class="form-input" id="f-emp"></select>
+        <select class="form-input" id="f-emp" onchange="onModalEmpChange()"></select>
       </div>
     </div>
+    <!-- Banner de aviso quando competências já foram avaliadas no mês -->
+    <div id="modal-lock-banner" style="display:none;padding:10px 14px;border-radius:8px;
+      background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);
+      color:#fbbf24;font-size:12px;margin-bottom:14px;line-height:1.6"></div>
     <div class="form-label" style="margin-bottom:10px">⭐ Competências (0 – 10)</div>
     <div class="apt-modal-grid" id="modal-apt-grid"></div>
     <div class="modal-footer">
@@ -710,6 +727,26 @@ function prevMonthKey() {
   n.setDate(1);
   n.setMonth(n.getMonth()-1);
   return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+}
+
+// Retorna label do próximo mês ex: "Jun/25"
+function nextMonthLabel() {
+  const n = new Date();
+  n.setDate(1);
+  n.setMonth(n.getMonth()+1);
+  const MESES_SH = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return `${MESES_SH[n.getMonth()]}/${String(n.getFullYear()).slice(2)}`;
+}
+
+// Verifica se uma competência específica já foi avaliada neste mês
+function isCompetencyLockedThisMonth(emp, key) {
+  const snap = (emp.competencies_history||{})[currentMonthKey()];
+  return !!(snap && snap[key] != null);
+}
+
+// Verifica se TODAS as competências já foram avaliadas neste mês
+function areAllCompetenciesLockedThisMonth(emp) {
+  return APT_KEYS.every(k => isCompetencyLockedThisMonth(emp, k));
 }
 
 // Retorna status de avaliação: 'este-mes' | 'mes-passado' | 'sem-avaliacao'
@@ -927,7 +964,7 @@ function buildRow(emp, lista) {
     const v = c[k]!=null ? c[k] : 5;
     const { bg, color } = bubbleColor(v);
 
-    // Se bloqueado: sempre readonly, com tooltip explicativo
+    // Se bloqueado por afastamento/férias: sempre readonly, com tooltip explicativo
     if (!podeEditarEste) {
       const title = bloqueado
         ? `title="Edição bloqueada — funcionário ${motivo==='afastado'?'afastado':'em férias'}"`
@@ -939,6 +976,22 @@ function buildRow(emp, lista) {
       </td>`;
     }
 
+    // Se competência já foi avaliada neste mês: mostrar cadeado
+    const monthLocked = isCompetencyLockedThisMonth(emp, k);
+    if (monthLocked) {
+      const tip = `title="🔒 Já avaliado neste mês — próxima avaliação em ${nextMonthLabel()}"`;
+      return `<td>
+        <div class="score-cell-wrap">
+          <span class="score-bubble month-locked"
+            style="background:${bg};color:${color}"
+            ${tip}
+            onclick="showToast('🔒 Esta competência já foi avaliada neste mês. Próxima avaliação disponível em ${nextMonthLabel()}.','warn')"
+          >${v}</span>
+          <span class="lock-badge">🔒</span>
+        </div>
+      </td>`;
+    }
+
     return `<td>
       <span class="score-bubble" style="background:${bg};color:${color}"
         onclick="startEdit(${emp.id},'${k}',this)">${v}</span>
@@ -946,12 +999,24 @@ function buildRow(emp, lista) {
   }).join('');
 
   // ── Quantidade de meses com histórico ──
-  const histCount = Object.keys(emp.competencies_history||{}).length;
+  const histCount   = Object.keys(emp.competencies_history||{}).length;
+  const temHistMes  = !!((emp.competencies_history||{})[currentMonthKey()]);
   const btnHistorico = `<button class="btn-historico" onclick="openHistorico(${emp.id})"
     title="${histCount > 0 ? histCount + ' mês(es) de histórico' : 'Sem histórico ainda'}"
     style="width:22px;height:22px;flex-shrink:0">
     📈${histCount > 0 ? `<span style="font-size:7px;margin-left:1px;color:var(--muted)">${histCount}</span>` : ''}
   </button>`;
+  // Botão reset do mês — só para quem pode editar E se houver histórico no mês atual
+  const isAdminMaster = currentUser?.nivel === 'admin_master';
+  const btnResetMes = (isAdminMaster && temHistMes) ? `
+    <button onclick="resetMesAtual(${emp.id})"
+      title="🔄 Limpar avaliações do mês atual (desbloqueia todas as competências)"
+      style="display:inline-flex;align-items:center;justify-content:center;
+        width:22px;height:22px;border-radius:7px;flex-shrink:0;cursor:pointer;
+        border:1px solid rgba(248,113,113,.35);background:rgba(248,113,113,.1);
+        color:#f87171;font-size:11px;transition:all .15s"
+      onmouseover="this.style.background='rgba(248,113,113,.25)'"
+      onmouseout="this.style.background='rgba(248,113,113,.1)'">🔄</button>` : '';
 
   return `
   <tr style="${bloqueado?'opacity:.75':''}">
@@ -965,6 +1030,7 @@ function buildRow(emp, lista) {
           <div style="display:flex;align-items:center;gap:6px">
             <div class="emp-name-text">${nomeAbrev(emp, lista)}${bloqueioBadge}</div>
             ${btnHistorico}
+            ${btnResetMes}
           </div>
           <div class="emp-role-text">${emp.role||''}</div>
         </div>
@@ -1008,6 +1074,12 @@ async function startEdit(empId, key, cell) {
     return;
   }
 
+  // Bloqueia se esta competência já foi avaliada neste mês
+  if (isCompetencyLockedThisMonth(emp, key)) {
+    showToast(`🔒 Esta competência já foi avaliada neste mês. Próxima avaliação disponível em ${nextMonthLabel()}.`, 'warn');
+    return;
+  }
+
   const cur = (emp.competencies||{})[key] ?? 5;
   const { color } = bubbleColor(cur);
 
@@ -1035,15 +1107,46 @@ async function commitEdit(empId, key, input) {
 
   emps[idx].competencies[key] = v;
 
-  // ── Salva snapshot no histórico do mês atual ──
+  // ── Registra APENAS esta chave no histórico do mês atual ──
+  // (salvar o snapshot completo travaria todas as outras competências)
   if (!emps[idx].competencies_history) emps[idx].competencies_history = {};
-  emps[idx].competencies_history[currentMonthKey()] = { ...emps[idx].competencies };
+  if (!emps[idx].competencies_history[currentMonthKey()]) emps[idx].competencies_history[currentMonthKey()] = {};
+  emps[idx].competencies_history[currentMonthKey()][key] = v;
 
   store.employees = emps;
   await saveStore(store);
   renderTabela();
   await registrarLog('editou', 'Aptidões', `<strong>${emps[idx]?.name||empId}</strong> — ${key}: <span class="de">${anterior??'—'}</span><span class="seta">→</span><span class="para">${v}</span>`);
   showToast('✅ Competência atualizada!');
+}
+
+// ════════════════════════════════════════════════════════
+// RESET MÊS ATUAL
+// ════════════════════════════════════════════════════════
+async function resetMesAtual(empId) {
+  const store = await getStore();
+  const emps  = store.employees || [];
+  const idx   = emps.findIndex(e => e.id === empId);
+  if (idx < 0) { showToast('❌ Funcionário não encontrado.', 'error'); return; }
+
+  const empName = emps[idx].name || String(empId);
+  const mes     = currentMonthKey();
+  const [ano, m] = mes.split('-');
+  const MESES   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const label   = `${MESES[parseInt(m)-1]}/${ano.slice(2)}`;
+
+  if (!confirm(`🔄 Limpar avaliações de ${empName} em ${label}?\n\nIsso desbloqueará todas as competências para que possam ser avaliadas novamente neste mês.`)) return;
+
+  if (emps[idx].competencies_history && emps[idx].competencies_history[mes]) {
+    delete emps[idx].competencies_history[mes];
+    store.employees = emps;
+    await saveStore(store);
+    renderTabela();
+    await registrarLog('editou', 'Aptidões', `Reset de avaliações de <strong>${empName}</strong> — mês ${label} desbloqueado`);
+    showToast(`🔄 Avaliações de ${label} limpas. Todas as competências liberadas.`);
+  } else {
+    showToast('ℹ️ Nenhuma avaliação encontrada para este mês.', 'warn');
+  }
 }
 
 // ════════════════════════════════════════════════════════
@@ -1064,17 +1167,63 @@ async function openModal(empId) {
   sel.disabled = !!emp;
   sel.style.opacity = emp ? '.6' : '1';
 
-  // Grid de competências
-  const c   = emp?.competencies || {};
-  const grd = document.getElementById('modal-apt-grid');
-  grd.innerHTML = APT_KEYS.map(k => `
-    <div class="form-group">
-      <label class="form-label">${APT_META[k].emoji} ${APT_META[k].label}</label>
-      <input class="form-input" type="number" id="m-${k}"
-        min="0" max="10" value="${c[k]??5}" placeholder="5">
-    </div>`).join('');
+  // Preenche o grid de competências (com locks mensais se houver funcionário)
+  _buildModalGrid(emp);
 
   document.getElementById('modal-overlay').classList.add('open');
+}
+
+// Preenche (ou atualiza) o grid de competências do modal, respeitando locks mensais
+function _buildModalGrid(emp) {
+  const c    = emp?.competencies || {};
+  const snap = emp ? ((emp.competencies_history||{})[currentMonthKey()]||null) : null;
+  const grd  = document.getElementById('modal-apt-grid');
+  const banner = document.getElementById('modal-lock-banner');
+  const btnSave = document.querySelector('#modal-overlay .btn-primary');
+
+  grd.innerHTML = APT_KEYS.map(k => {
+    const isLocked = !!(snap && snap[k] != null);
+    const lockLabel = isLocked
+      ? `<span style="font-size:9px;font-weight:700;margin-left:4px;color:#fbbf24;
+          background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.3);
+          border-radius:4px;padding:1px 5px">🔒 JÁ AVALIADO</span>` : '';
+    return `
+    <div class="form-group">
+      <label class="form-label">${APT_META[k].emoji} ${APT_META[k].label}${lockLabel}</label>
+      <input class="form-input" type="number" id="m-${k}"
+        min="0" max="10" value="${c[k]??5}" placeholder="5"
+        ${isLocked ? `disabled title="Já avaliado neste mês — liberado em ${nextMonthLabel()}"
+          style="opacity:.45;cursor:not-allowed"` : ''}>
+    </div>`;
+  }).join('');
+
+  // Quantidade de competências ainda editáveis
+  const editableCount = APT_KEYS.filter(k => !(snap && snap[k] != null)).length;
+  const lockedCount   = APT_KEYS.length - editableCount;
+
+  if (lockedCount > 0 && emp) {
+    if (editableCount === 0) {
+      banner.innerHTML = `🔒 <strong>Todas as competências já foram avaliadas neste mês.</strong><br>
+        <span style="opacity:.85">A próxima avaliação poderá ser realizada em <strong>${nextMonthLabel()}</strong>.</span>`;
+      banner.style.display = '';
+      if (btnSave) { btnSave.disabled = true; btnSave.style.opacity = '.4'; btnSave.title = `Próxima avaliação em ${nextMonthLabel()}`; }
+    } else {
+      banner.innerHTML = `🔒 <strong>${lockedCount} competência${lockedCount>1?'s':''} já avaliada${lockedCount>1?'s':''} neste mês</strong> — bloqueada${lockedCount>1?'s':''} até <strong>${nextMonthLabel()}</strong>.<br>
+        <span style="opacity:.85">As demais ${editableCount} podem ser avaliadas agora.</span>`;
+      banner.style.display = '';
+      if (btnSave) { btnSave.disabled = false; btnSave.style.opacity = ''; btnSave.title = ''; }
+    }
+  } else {
+    banner.style.display = 'none';
+    if (btnSave) { btnSave.disabled = false; btnSave.style.opacity = ''; btnSave.title = ''; }
+  }
+}
+
+// Atualiza o grid quando o usuário seleciona um funcionário no select do modal
+function onModalEmpChange() {
+  const empId = document.getElementById('f-emp').value;
+  const emp   = empId ? getMyEmployees().find(e=>String(e.id)===String(empId)) : null;
+  _buildModalGrid(emp);
 }
 
 function closeModal() {
@@ -1093,7 +1242,7 @@ async function saveAvaliacao() {
   const idx   = emps.findIndex(e=>String(e.id)===String(empId));
   if (idx<0) { showToast('❌ Funcionário não encontrado.','error'); return; }
 
-  // Verifica bloqueio
+  // Verifica bloqueio por afastamento/férias
   const { bloqueado, motivo } = isEmpBloqueado(emps[idx]);
   if (bloqueado) {
     const msg = motivo==='afastado'
@@ -1103,23 +1252,37 @@ async function saveAvaliacao() {
     return;
   }
 
-  const competencies = {};
-  APT_KEYS.forEach(k => {
+  // Verifica quais competências ainda podem ser editadas neste mês
+  const snap = ((emps[idx].competencies_history||{})[currentMonthKey()])||null;
+  const editableKeys = APT_KEYS.filter(k => !(snap && snap[k] != null));
+
+  if (!editableKeys.length) {
+    showToast(`🔒 Todas as competências já foram avaliadas neste mês. Próxima avaliação em ${nextMonthLabel()}.`, 'warn');
+    return;
+  }
+
+  // Monta objeto de competências: mantém valores existentes + atualiza apenas as editáveis
+  const competencies = { ...(emps[idx].competencies||{}) };
+  editableKeys.forEach(k => {
     const el = document.getElementById(`m-${k}`);
     competencies[k] = el ? Math.min(10,Math.max(0,parseFloat(el.value)||5)) : 5;
   });
 
   store.employees[idx].competencies = competencies;
 
-  // ── Salva snapshot no histórico do mês atual ──
+  // ── Salva snapshot no histórico do mês atual (merge: locked + novas) ──
   if (!store.employees[idx].competencies_history) store.employees[idx].competencies_history = {};
-  store.employees[idx].competencies_history[currentMonthKey()] = { ...competencies };
+  const snapAtual = store.employees[idx].competencies_history[currentMonthKey()] || {};
+  const novoSnap = { ...snapAtual };
+  editableKeys.forEach(k => { novoSnap[k] = competencies[k]; });
+  store.employees[idx].competencies_history[currentMonthKey()] = novoSnap;
 
   await saveStore(store);
   closeModal();
   renderTabela();
-  await registrarLog('editou', 'Aptidões', `Avaliação completa de <strong>${store.employees[idx]?.name||empId}</strong>`);
-  showToast('✅ Avaliação salva com sucesso!');
+  const qtd = editableKeys.length;
+  await registrarLog('editou', 'Aptidões', `Avaliação de <strong>${store.employees[idx]?.name||empId}</strong> — ${qtd} competência${qtd>1?'s':''} avaliada${qtd>1?'s':''}`);
+  showToast(`✅ ${qtd} competência${qtd>1?'s':''} avaliada${qtd>1?'s':''} com sucesso!`);
 }
 
 // ════════════════════════════════════════════════════════
