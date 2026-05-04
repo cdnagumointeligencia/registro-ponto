@@ -380,6 +380,16 @@ body.light-theme .leader-apt-banner {
   font-family:var(--font-body);
 }
 .modal-tree-close:hover { border-color:var(--red); color:var(--red); }
+.modal-tree-pdf {
+  background:rgba(34,211,238,.1); border:1px solid rgba(34,211,238,.35);
+  border-radius:8px; padding:6px 14px; color:var(--cyan);
+  font-size:12px; font-weight:600; cursor:pointer;
+  transition:all .15s; display:flex; align-items:center; gap:5px;
+  font-family:var(--font-body);
+}
+.modal-tree-pdf:hover { background:rgba(34,211,238,.22); border-color:var(--cyan); }
+body.light-theme .modal-tree-pdf { background:rgba(8,145,178,.08); border-color:rgba(8,145,178,.3); color:#0891b2; }
+body.light-theme .modal-tree-pdf:hover { background:rgba(8,145,178,.16); }
 
 /* Breadcrumb de navegação */
 .tree-breadcrumb {
@@ -708,6 +718,7 @@ body.light-theme #btn-organograma { background:rgba(6,182,212,.1); color:#0891b2
         <div class="modal-tree-name" id="tree-modal-name">Hierarquia</div>
         <div class="modal-tree-sub"  id="tree-modal-sub">Árvore de responsabilidades</div>
       </div>
+      <button class="modal-tree-pdf" id="btn-tree-pdf" onclick="gerarPDFHierarquia()">📄 Gerar PDF</button>
       <button class="modal-tree-close" onclick="closeTreeModal()">✕ Fechar</button>
     </div>
     <div class="tree-breadcrumb" id="tree-breadcrumb"></div>
@@ -1375,6 +1386,182 @@ function closeTreeModal() {
   document.getElementById('modal-tree-overlay').classList.remove('open');
   _treeRootId = null;
   _treePath   = [];
+}
+
+function gerarPDFHierarquia() {
+  const store  = _store;
+  const leaderId = _treeRootId;
+  const leader   = store?.users?.[leaderId];
+  if (!leader) return;
+
+  const NIVEL_META_PDF = {
+    admin_master: { label:'Admin Master', emoji:'🛡️', cor:'#f87171', bg:'#fef2f2', border:'#fca5a5' },
+    diretoria:    { label:'Diretoria',    emoji:'🏢', cor:'#ea580c', bg:'#fff7ed', border:'#fdba74' },
+    gerencia:     { label:'Gerência',     emoji:'📊', cor:'#d97706', bg:'#fffbeb', border:'#fcd34d' },
+    coordenacao:  { label:'Coordenação',  emoji:'📋', cor:'#7c3aed', bg:'#f5f3ff', border:'#c4b5fd' },
+    encarregado:  { label:'Encarregado',  emoji:'🔰', cor:'#059669', bg:'#ecfdf5', border:'#6ee7b7' },
+    lider:        { label:'Líder',        emoji:'👷', cor:'#2563eb', bg:'#eff6ff', border:'#93c5fd' },
+  };
+
+  const allLeaders = Object.values(store.users||{}).filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
+  const allEmps    = store.employees || [];
+
+  // ── Coleta dados recursivamente ──
+  function coletarArvore(lid, profundidade) {
+    const l = store.users?.[lid];
+    if (!l) return null;
+    const subs = getSubordinados(l, allLeaders)
+      .sort((a,b) => ORDEM_IDX.indexOf(b.nivel||'lider') - ORDEM_IDX.indexOf(a.nivel||'lider'));
+    const team = getTeamEmps(l, allEmps);
+    return { leader: l, subs: subs.map(s => coletarArvore(s.id, profundidade+1)).filter(Boolean), team, depth: profundidade };
+  }
+  const arvore = coletarArvore(leaderId, 0);
+
+  // ── Renderiza nó HTML para o PDF ──
+  function renderNoPDF(node) {
+    const { leader: l, subs, team } = node;
+    const meta  = NIVEL_META_PDF[l.nivel||'lider'] || NIVEL_META_PDF.lider;
+    const ini   = l.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+    const total = getTeamTotal(l, store);
+    const avgScore = team.length ? Math.round(team.reduce((s,e)=>s+calcScore(e),0)/team.length) : null;
+    const promos   = team.filter(e=>calcScore(e)>=85).length;
+    const riscos   = team.filter(e=>calcScore(e)<55).length;
+    const filiais  = getMeusFiliais(l);
+    const turnos   = getMeusTurnos(l);
+
+    const avatarHtml = l.foto
+      ? `<img src="${l.foto}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;display:block">`
+      : `<div style="width:44px;height:44px;border-radius:50%;background:${meta.cor};color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;font-family:sans-serif;flex-shrink:0">${ini}</div>`;
+
+    const badges = [
+      filiais.length ? `<span style="background:#eff6ff;border:1px solid #93c5fd;color:#2563eb;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700">🏭 ${filiais.join(', ')}</span>` : '',
+      turnos.length  ? `<span style="background:#f5f3ff;border:1px solid #c4b5fd;color:#7c3aed;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700">🕐 ${turnos.join(', ')}</span>` : '',
+    ].filter(Boolean).join(' ');
+
+    const statsHtml = `
+      <div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap">
+        ${total ? `<span style="font-size:10px;font-weight:700;color:#374151">👥 ${total} pessoas sob responsabilidade</span>` : ''}
+        ${avgScore!==null && team.length ? `<span style="font-size:10px;font-weight:700;color:#6d28d9">⭐ Score médio: ${avgScore}</span>` : ''}
+        ${promos ? `<span style="font-size:10px;font-weight:700;color:#059669">🏆 ${promos} promoção</span>` : ''}
+        ${riscos ? `<span style="font-size:10px;font-weight:700;color:#dc2626">🔴 ${riscos} em risco</span>` : ''}
+      </div>`;
+
+    // Funcionários diretos (exclui os que têm líder abaixo)
+    const subEmpIds = new Set(subs.flatMap(s => getTeamEmps(s.leader, allEmps).map(e => e.id)));
+    const directEmps = team.filter(e => !subEmpIds.has(e.id));
+
+    const empsHtml = directEmps.length ? `
+      <div style="margin-top:10px">
+        <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#6b7280;margin-bottom:6px">👥 Operacional direto (${directEmps.length})</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px">
+          ${directEmps.map(e => {
+            const eIni = e.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+            const sc   = calcScore(e);
+            const scColor = sc>=85?'#059669':sc>=70?'#2563eb':sc>=55?'#d97706':'#dc2626';
+            return `<div style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:6px;background:#fff">
+              ${e.foto
+                ? `<img src="${e.foto}" style="width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0">`
+                : `<div style="width:22px;height:22px;border-radius:50%;background:#dbeafe;color:#2563eb;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${eIni}</div>`
+              }
+              <div style="min-width:0">
+                <div style="font-size:10px;font-weight:700;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.name.split(' ').slice(0,2).join(' ')}</div>
+                <div style="font-size:8px;color:#6b7280;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.role||e.dept||'Operacional'}</div>
+              </div>
+              <div style="margin-left:auto;font-size:9px;font-weight:800;color:${scColor};flex-shrink:0">${sc}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>` : '';
+
+    const subsHtml = subs.length ? subs.map(s => renderNoPDF(s)).join('') : '';
+
+    const indent = node.depth * 18;
+    const borderColor = meta.border;
+    const bgColor     = meta.bg;
+
+    return `
+      <div style="margin-left:${indent}px;margin-bottom:12px;break-inside:avoid">
+        <div style="border:1.5px solid ${borderColor};border-radius:10px;padding:12px 14px;background:${bgColor}">
+          <div style="display:flex;align-items:center;gap:12px">
+            ${avatarHtml}
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                <span style="font-size:14px;font-weight:800;color:#111827;font-family:sans-serif">${l.name}</span>
+                <span style="background:${meta.cor};color:#fff;padding:2px 9px;border-radius:10px;font-size:9px;font-weight:800">${meta.emoji} ${meta.label}</span>
+                ${l.perfil?.funcao ? `<span style="color:#6b7280;font-size:10px">${l.perfil.funcao}</span>` : ''}
+              </div>
+              ${badges ? `<div style="margin-top:4px;display:flex;gap:5px;flex-wrap:wrap">${badges}</div>` : ''}
+              ${statsHtml}
+            </div>
+          </div>
+          ${empsHtml}
+        </div>
+        ${subsHtml ? `<div style="margin-left:18px;padding-left:14px;border-left:2px dashed ${borderColor};margin-top:6px">${subsHtml}</div>` : ''}
+      </div>`;
+  }
+
+  const dataHoje  = new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+  const metaRoot  = NIVEL_META_PDF[leader.nivel||'lider'] || NIVEL_META_PDF.lider;
+  const totalRoot = getTeamTotal(leader, store);
+  const iniRoot   = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const avatarHtmlRoot = leader.foto
+    ? `<img src="${leader.foto}" style="width:56px;height:56px;border-radius:50%;object-fit:cover">`
+    : `<div style="width:56px;height:56px;border-radius:50%;background:${metaRoot.cor};color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;font-family:sans-serif">${iniRoot}</div>`;
+
+  const html = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Hierarquia — ${leader.name}</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm 14mm 14mm; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; font-size:11px; color:#111827; background:#fff; }
+  .page-header {
+    display:flex; align-items:center; gap:16px;
+    border-bottom:2.5px solid #e5e7eb; padding-bottom:14px; margin-bottom:18px;
+  }
+  .page-header-info { flex:1 }
+  .page-header-title { font-size:20px; font-weight:800; color:#111827; letter-spacing:-0.5px; }
+  .page-header-sub   { font-size:11px; color:#6b7280; margin-top:3px; }
+  .page-header-meta  { text-align:right; }
+  .page-header-badge { display:inline-block; background:${metaRoot.cor};color:#fff;padding:3px 12px;border-radius:12px;font-size:11px;font-weight:800;margin-bottom:4px; }
+  .page-header-count { font-size:13px; font-weight:800; color:#374151; }
+  .section-tree { margin-top:0; }
+  .footer { border-top:1px solid #e5e7eb; margin-top:18px; padding-top:8px; font-size:9px; color:#9ca3af; display:flex; justify-content:space-between; }
+  @media print {
+    body { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+</style>
+</head>
+<body>
+  <div class="page-header">
+    ${avatarHtmlRoot}
+    <div class="page-header-info">
+      <div class="page-header-title">${leader.name}</div>
+      <div class="page-header-sub">${metaRoot.emoji} ${metaRoot.label}${leader.perfil?.funcao?' · '+leader.perfil.funcao:''} · Árvore de Responsabilidades</div>
+    </div>
+    <div class="page-header-meta">
+      <div class="page-header-badge">${metaRoot.emoji} ${metaRoot.label}</div>
+      <div class="page-header-count">👥 ${totalRoot} pessoas</div>
+      <div style="font-size:9px;color:#9ca3af;margin-top:2px">${dataHoje}</div>
+    </div>
+  </div>
+  <div class="section-tree">
+    ${renderNoPDF(arvore)}
+  </div>
+  <div class="footer">
+    <span>Sistema RH Nagumo · Hierarquia gerada em ${dataHoje}</span>
+    <span>Gerado automaticamente — uso interno</span>
+  </div>
+<script>window.onload = function(){ window.print(); }<\/script>
+</body>
+</html>`;
+
+  const win = window.open('', '_blank');
+  if (!win) { showToast('⚠️ Permita pop-ups para gerar o PDF.','warn'); return; }
+  win.document.write(html);
+  win.document.close();
 }
 
 function renderTreeModal(leaderId) {
