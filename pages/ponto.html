@@ -753,13 +753,12 @@ function getStatusDiaBloqueado(emp, ano, mes, dia) {
   const hoje = new Date(); hoje.setHours(0,0,0,0);
 
   // ── 1. Verifica período ATIVO no cadastro ──────────────────────────────
-  // Afastado: do início em diante (sem data de retorno conhecida, bloqueia tudo)
+  // Afastado: do início até HOJE (dias futuros ficam em branco — serão marcados conforme passam)
   if (emp.afastado) {
     const inicio = emp.data_afastamento
       ? new Date(emp.data_afastamento + 'T00:00:00')
       : new Date(0);
-    // Bloqueia do início do afastamento em diante (inclui dias futuros)
-    if (dt >= inicio) return 'afastado';
+    if (dt >= inicio && dt <= hoje) return 'afastado';
   }
 
   // Férias: intervalo fixo início/fim (inclui dias futuros pois é programado)
