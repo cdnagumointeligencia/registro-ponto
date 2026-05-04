@@ -1064,11 +1064,19 @@ async function renderLeaders() {
   const grid = document.getElementById('leaders-grid');
 
   // ── Botão organograma circular ──
+  // Usa a mesma ordem de exibição do grid (HIERARQUIA_ORDER) para garantir
+  // que o botão aponte para quem aparece PRIMEIRO na tela
   const btnOrg = document.getElementById('btn-organograma');
   if (btnOrg) {
     if (searchText && leaders.length) {
-      _currentSearchLeaderId = leaders[0].id;
-      const firstName = leaders[0].name.split(' ')[0];
+      let firstVisible = null;
+      for (const nivel of HIERARQUIA_ORDER) {
+        firstVisible = leaders.find(u => (u.nivel||'lider') === nivel);
+        if (firstVisible) break;
+      }
+      if (!firstVisible) firstVisible = leaders[0];
+      _currentSearchLeaderId = firstVisible.id;
+      const firstName = firstVisible.name.split(' ')[0];
       btnOrg.innerHTML = `🔵 Organograma de ${firstName}`;
       btnOrg.style.display = '';
     } else {
