@@ -346,65 +346,6 @@ body.light-theme .status-dot.vazio      { background:#DCE6EE; border-color:#B0C4
 }
 
 
-/* ── Modal Atestado ── */
-.overlay-at {
-  position:fixed; top:0; left:0; width:100vw; height:100vh;
-  background:rgba(0,0,0,.75); backdrop-filter:blur(4px);
-  z-index:10000; display:none;
-}
-.overlay-at.open { display:block; }
-.modal-at {
-  position:fixed;
-  top:50%; left:50%; transform:translate(-50%,-50%);
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:16px; padding:28px; width:500px; max-width:95vw;
-  max-height:90vh; overflow-y:auto;
-  z-index:10001;
-  animation:fadeUp .25s ease;
-}
-.modal-at-title {
-  font-family:var(--font-head); font-size:18px; font-weight:800;
-  margin-bottom:6px; color:var(--text);
-}
-.modal-at-sub {
-  font-size:12px; color:var(--muted); margin-bottom:20px;
-  padding-bottom:16px; border-bottom:1px solid var(--border);
-}
-.modal-at-sub strong { color:#f472b6; }
-.at-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.at-form-group { display:flex; flex-direction:column; gap:6px; }
-.at-form-group.full { grid-column:1/-1; }
-.at-label {
-  font-size:10px; font-weight:700; color:var(--muted);
-  text-transform:uppercase; letter-spacing:1px;
-}
-.at-input {
-  background:var(--surface2); border:1px solid var(--border); border-radius:8px;
-  color:var(--text); font-family:var(--font-body); font-size:13px;
-  padding:9px 11px; outline:none; transition:border-color .2s;
-}
-.at-input:focus { border-color:#f472b6; box-shadow:0 0 0 3px rgba(244,114,182,.12); }
-.at-input:disabled { opacity:.55; cursor:not-allowed; }
-.at-input option { background:var(--surface2); }
-textarea.at-input { resize:vertical; min-height:80px; }
-.modal-at-footer {
-  display:flex; gap:10px; justify-content:flex-end; margin-top:20px; flex-wrap:wrap;
-}
-.btn-at-skip {
-  display:inline-flex; align-items:center; gap:7px; padding:9px 16px;
-  border-radius:8px; border:1px solid var(--border); background:var(--surface2);
-  color:var(--muted); font-family:var(--font-body); font-size:12px; font-weight:600;
-  cursor:pointer; transition:all .2s;
-}
-.btn-at-skip:hover { background:var(--surface3); color:var(--text); }
-.btn-at-save {
-  display:inline-flex; align-items:center; gap:7px; padding:9px 16px;
-  border-radius:8px; border:none; background:#f472b6; color:#fff;
-  font-family:var(--font-body); font-size:12px; font-weight:700;
-  cursor:pointer; transition:all .2s;
-}
-.btn-at-save:hover { background:#ec4899; transform:translateY(-1px); box-shadow:0 4px 16px rgba(244,114,182,.4); }
-
 /* ── Botão salvar/atualizar ── */
 .btn-save {
   display:inline-flex; align-items:center; gap:8px; padding:9px 20px;
@@ -507,46 +448,6 @@ textarea.at-input { resize:vertical; min-height:80px; }
 
   </div><!-- /content -->
 </div><!-- /main -->
-
-<!-- ══ Modal Registrar Atestado ══ -->
-<div class="overlay-at" id="overlay-atestado">
-  <div class="modal-at">
-    <div class="modal-at-title">🏥 Registrar Atestado Médico</div>
-    <div class="modal-at-sub">
-      Atestado marcado para <strong id="at-emp-nome">—</strong> —
-      dia <strong id="at-dia-label">—</strong>.
-      Deseja registrar a ocorrência agora?
-    </div>
-    <div class="at-form-grid">
-      <div class="at-form-group full">
-        <label class="at-label">👤 Funcionário</label>
-        <input class="at-input" id="at-emp-display" type="text" disabled>
-      </div>
-      <div class="at-form-group">
-        <label class="at-label">📅 Data / Hora</label>
-        <input class="at-input" id="at-dt" type="datetime-local">
-      </div>
-      <div class="at-form-group">
-        <label class="at-label">📋 Tipo</label>
-        <input class="at-input" type="text" value="🏥 Atestado Médico" disabled>
-      </div>
-      <div class="at-form-group full">
-        <label class="at-label">📝 Descrição</label>
-        <textarea class="at-input" id="at-desc" placeholder="Descreva o atestado (CID, período, médico, CRM...)"></textarea>
-      </div>
-      <div class="at-form-group full">
-        <label class="at-label">📎 Observação interna (opcional)</label>
-        <textarea class="at-input" id="at-obs" placeholder="Observação para uso interno da gestão..." style="min-height:56px"></textarea>
-      </div>
-    </div>
-    <div class="modal-at-footer">
-      <button class="btn-at-skip" onclick="fecharModalAtestado()">Pular — só marcar ponto</button>
-      <button class="btn-at-save" onclick="salvarAtestadoOcorrencia()">💾 Salvar Ocorrência</button>
-    </div>
-    <!-- dados ocultos -->
-    <input type="hidden" id="at-emp-id">
-  </div>
-</div>
 
 <script>
 // ════════════════════════════════════════════════════════
@@ -1319,11 +1220,6 @@ async function setStatusCtx(status) {
   await registrarLog('editou', 'Ponto', `<strong>${emp?.name||ctxEmpId}</strong> dia ${ctxDia} → ${sm?.emoji||''} ${sm?.label||status}`);
   closeCtx();
   renderGrade();
-
-  // ── Se marcou atestado, oferece registrar a ocorrência ──
-  if (status === 'atestado' && emp) {
-    abrirModalAtestado(emp, ctxDia);
-  }
 }
 
 function closeCtx() {
@@ -1402,96 +1298,6 @@ async function lancamentoRapido(status) {
   }
   renderGrade();
 }
-
-
-// ════════════════════════════════════════════════════════
-// MODAL ATESTADO — abre ao marcar atestado na grade
-// ════════════════════════════════════════════════════════
-function abrirModalAtestado(emp, dia) {
-  // Preenche campos
-  document.getElementById('at-emp-id').value      = emp.id;
-  document.getElementById('at-emp-display').value = emp.name || '—';
-  document.getElementById('at-emp-nome').textContent = emp.name || '—';
-  document.getElementById('at-dia-label').textContent =
-    `${String(dia).padStart(2,'0')}/${String(mesAtivo+1).padStart(2,'0')}/${anoAtivo}`;
-
-  // Pré-preenche a data/hora com o dia marcado (meia-noite local)
-  const d = new Date(anoAtivo, mesAtivo, dia, 0, 0);
-  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-  document.getElementById('at-dt').value = d.toISOString().slice(0, 16);
-
-  // Limpa campos livres
-  document.getElementById('at-desc').value = '';
-  document.getElementById('at-obs').value  = '';
-
-  document.getElementById('overlay-atestado').classList.add('open');
-  setTimeout(() => document.getElementById('at-desc').focus(), 200);
-}
-
-function fecharModalAtestado() {
-  document.getElementById('overlay-atestado').classList.remove('open');
-}
-
-async function salvarAtestadoOcorrencia() {
-  const empId = document.getElementById('at-emp-id').value;
-  const dtVal = document.getElementById('at-dt').value;
-  const desc  = document.getElementById('at-desc').value.trim();
-  const obs   = document.getElementById('at-obs').value.trim();
-
-  if (!desc) {
-    document.getElementById('at-desc').focus();
-    document.getElementById('at-desc').style.borderColor = '#f87171';
-    setTimeout(() => document.getElementById('at-desc').style.borderColor = '', 1500);
-    showToast('⚠️ Preencha a descrição do atestado.', 'warn');
-    return;
-  }
-
-  const store   = await getStore();
-  const empData = (store.employees||[]).find(e=>String(e.id)===String(empId));
-
-  // Monta timestamp
-  const d  = new Date(dtVal);
-  const ts = isNaN(d) ? new Date().toISOString() : d.toISOString();
-
-  // Garante que a lista atual não seja perdida (leitura direta no Firestore)
-  const list = await LS.get('rh_ocorrencias', []);
-
-  // Gera ID único simples
-  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
-
-  const novaOc = {
-    id:        uid(),
-    ts,
-    empId:     empData?.id,
-    empName:   empData?.name   || '—',
-    empDept:   empData?.dept   || '—',
-    empFilial: empData?.filial || '—',
-    tipo:      'atestado',
-    desc,
-    obs,
-    status:    'pendente',
-    respName:  currentUser?.name || '—',
-    respId:    currentUser?.id,
-    createdAt: new Date().toISOString(),
-    origem:    'ponto', // marca que veio da grade de ponto
-  };
-
-  list.unshift(novaOc);
-  await LS.set('rh_ocorrencias', list);
-  await registrarLog('criou', 'Ocorrências',
-    `Atestado via Ponto: <strong>Atestado Médico</strong> para <strong>${empData?.name||'—'}</strong>`);
-
-  fecharModalAtestado();
-  showToast('✅ Ocorrência de Atestado Médico registrada!');
-}
-
-// Fecha modal ao clicar fora (no overlay, fora do .modal-at)
-document.getElementById('overlay-atestado').addEventListener('click', function(e) {
-  if (e.target === this) fecharModalAtestado();
-});
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') fecharModalAtestado();
-});
 
 function atualizarGrade() {
   renderGrade();
