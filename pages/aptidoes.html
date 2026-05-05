@@ -930,29 +930,23 @@ function buildRow(emp, lista) {
   const assidColor = assid>=85?'#34d399':assid>=70?'#4f8ef7':assid>=50?'#fbbf24':'#f87171';
 
   // ── Verifica bloqueio ──
-  const { bloqueado: _bloq, motivo } = isEmpBloqueado(emp);
-  // Maternidade NÃO bloqueia edição de aptidões (longo período — RH pode avaliar)
-  const bloqueado    = _bloq && motivo !== 'maternidade';
+  const { bloqueado, motivo } = isEmpBloqueado(emp);
   const podeEditarEste = podeEditar && !bloqueado;
 
-  // Badge de status bloqueado / informativo
-  const bloqueioBadge = (_bloq && motivo==='afastado') ? `
+  // Badge de status bloqueado
+  const bloqueioBadge = bloqueado ? `
     <span style="margin-left:6px;padding:1px 7px;border-radius:20px;font-size:9px;font-weight:700;
-      background:rgba(239,68,68,.18);color:#ef4444;border:1px solid rgba(239,68,68,.3)">
-      🚫 Afastado
-    </span>` : (_bloq && motivo==='maternidade') ? `
-    <span style="margin-left:6px;padding:1px 7px;border-radius:20px;font-size:9px;font-weight:700;
-      background:rgba(251,191,36,.18);color:#f59e0b;border:1px solid rgba(251,191,36,.4)">
-      🤰 Maternidade
-    </span>` : (_bloq && motivo==='ferias') ? `
-    <span style="margin-left:6px;padding:1px 7px;border-radius:20px;font-size:9px;font-weight:700;
-      background:rgba(34,211,238,.14);color:#22d3ee;border:1px solid rgba(34,211,238,.3)">
-      🏖️ Férias
+      ${motivo==='afastado'
+        ? 'background:rgba(239,68,68,.18);color:#ef4444;border:1px solid rgba(239,68,68,.3)'
+        : motivo==='maternidade'
+          ? 'background:rgba(251,191,36,.18);color:#f59e0b;border:1px solid rgba(251,191,36,.4)'
+          : 'background:rgba(34,211,238,.14);color:#22d3ee;border:1px solid rgba(34,211,238,.3)'}>
+      ${motivo==='afastado' ? '🚫 Afastado' : motivo==='maternidade' ? '🤰 Maternidade' : '🏖️ Férias'}
     </span>` : '';
 
-  // Ícone de score congelado (só afastado e férias congelam)
+  // Ícone de score congelado
   const scoreCongelado = bloqueado
-    ? `<span title="Score congelado durante afastamento/férias"
+    ? `<span title="Score congelado durante afastamento/maternidade/férias"
         style="font-size:10px;margin-left:3px;opacity:.7">❄️</span>`
     : '';
 
@@ -1074,12 +1068,14 @@ async function startEdit(empId, key, cell) {
   const emp   = (store.employees||[]).find(e=>e.id===empId);
   if (!emp) return;
 
-  // Bloqueia se afastado ou em férias (maternidade NÃO bloqueia edição de aptidões)
-  const { bloqueado: _bloqEdit, motivo: motivoEdit } = isEmpBloqueado(emp);
-  if (_bloqEdit && motivoEdit !== 'maternidade') {
-    const msg = motivoEdit==='afastado'
+  // Bloqueia se afastado, em licença maternidade ou em férias
+  const { bloqueado, motivo } = isEmpBloqueado(emp);
+  if (bloqueado) {
+    const msg = motivo==='afastado'
       ? '🚫 Afastado — edição bloqueada até o retorno.'
-      : '🏖️ Em férias — edição bloqueada até o fim do período.';
+      : motivo==='maternidade'
+        ? '🤰 Em licença maternidade — edição bloqueada até o retorno.'
+        : '🏖️ Em férias — edição bloqueada até o fim do período.';
     showToast(msg, 'warn');
     return;
   }
@@ -1252,12 +1248,14 @@ async function saveAvaliacao() {
   const idx   = emps.findIndex(e=>String(e.id)===String(empId));
   if (idx<0) { showToast('❌ Funcionário não encontrado.','error'); return; }
 
-  // Verifica bloqueio por afastamento/férias (maternidade NÃO bloqueia edição de aptidões)
-  const { bloqueado: _bloqSave, motivo: motivoSave } = isEmpBloqueado(emps[idx]);
-  if (_bloqSave && motivoSave !== 'maternidade') {
-    const msg = motivoSave==='afastado'
+  // Verifica bloqueio por afastamento/maternidade/férias
+  const { bloqueado, motivo } = isEmpBloqueado(emps[idx]);
+  if (bloqueado) {
+    const msg = motivo==='afastado'
       ? '🚫 Funcionário afastado. Aptidões não podem ser editadas durante o afastamento.'
-      : '🏖️ Funcionário em férias. Aptidões não podem ser editadas durante as férias.';
+      : motivo==='maternidade'
+        ? '🤰 Funcionária em licença maternidade. Aptidões não podem ser editadas neste período.'
+        : '🏖️ Funcionário em férias. Aptidões não podem ser editadas durante as férias.';
     showToast(msg, 'warn');
     return;
   }
