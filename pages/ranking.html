@@ -626,6 +626,8 @@ function updateSortIcons() {
 function isForaDeAtividade(emp) {
   // Afastado explícito
   if (emp.afastado) return { fora: true, motivo: '🚫 Afastado' };
+  // Licença Maternidade
+  if (emp.maternidade) return { fora: true, motivo: '🤰 Lic. Maternidade' };
   // Em férias na data atual
   if (emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {
     const hoje = new Date(); hoje.setHours(0,0,0,0);

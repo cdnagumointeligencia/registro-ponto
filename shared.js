@@ -292,7 +292,7 @@ function _initSidebarTooltip() {
 function renderSidebar(activeId, user) { initSidebar(activeId, user); }
 
 // ════════════════════════════════════════════════════════
-// BLOQUEIO DE AFASTADO / FÉRIAS
+// BLOQUEIO DE AFASTADO / FÉRIAS / MATERNIDADE
 // ════════════════════════════════════════════════════════
 function isEmpBloqueado(emp) {
   const hoje = new Date(); hoje.setHours(0,0,0,0);
@@ -302,6 +302,14 @@ function isEmpBloqueado(emp) {
       if (inicio <= hoje) return { bloqueado:true, motivo:'afastado' };
     } else {
       return { bloqueado:true, motivo:'afastado' };
+    }
+  }
+  if (emp.maternidade) {
+    if (emp.data_maternidade) {
+      const inicio = new Date(emp.data_maternidade + 'T00:00:00');
+      if (inicio <= hoje) return { bloqueado:true, motivo:'maternidade' };
+    } else {
+      return { bloqueado:true, motivo:'maternidade' };
     }
   }
   if (emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {

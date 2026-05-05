@@ -162,9 +162,21 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   padding:4px 14px; font-size:10px; font-weight:700;
   text-align:center; letter-spacing:.5px; border-radius:12px 12px 0 0;
 }
-.emp-banner.afastado { background:rgba(239,68,68,.18); color:#ef4444; border-bottom:1px solid rgba(239,68,68,.3); }
-.emp-banner.ferias   { background:rgba(34,211,238,.14); color:#22d3ee; border-bottom:1px solid rgba(34,211,238,.3); }
-.emp-banner.demitido { background:rgba(248,113,113,.22); color:#f87171; border-bottom:1px solid rgba(248,113,113,.4); }
+.emp-banner.afastado    { background:rgba(239,68,68,.18);   color:#ef4444; border-bottom:1px solid rgba(239,68,68,.3); }
+.emp-banner.ferias      { background:rgba(34,211,238,.14);  color:#22d3ee; border-bottom:1px solid rgba(34,211,238,.3); }
+.emp-banner.demitido    { background:rgba(248,113,113,.22); color:#f87171; border-bottom:1px solid rgba(248,113,113,.4); }
+.emp-banner.maternidade { background:rgba(251,191,36,.2);   color:#f59e0b; border-bottom:1px solid rgba(251,191,36,.4); }
+
+/* ── Card licença maternidade ── */
+.maternidade-card {
+  background:linear-gradient(160deg, rgba(251,191,36,.07) 0%, var(--surface) 60%);
+  border-color:rgba(251,191,36,.5) !important;
+}
+.maternidade-card:hover {
+  border-color:rgba(251,191,36,.8) !important;
+  transform:translateY(-2px);
+  box-shadow:0 6px 28px rgba(251,191,36,.18);
+}
 
 /* ── Card demitido ── */
 .demitido-card {
@@ -650,6 +662,28 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
           </div>
         </div>
       </div>
+
+      <!-- Licença Maternidade -->
+      <label class="check-row" style="border-color:rgba(251,191,36,.3)">
+        <input type="checkbox" id="f-maternidade" onchange="toggleMaternidade()"
+          style="accent-color:#f59e0b">
+        <div>
+          <div class="check-row-label">🤰 Funcionária em <strong style="color:#f59e0b">Licença Maternidade</strong></div>
+          <div class="check-row-sub">Dias marcados automaticamente no ponto — segue as mesmas regras do afastamento</div>
+        </div>
+      </label>
+      <div id="maternidade-date-wrap" class="date-wrap" style="display:none;border-color:rgba(251,191,36,.4)">
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <div>
+            <label class="form-label" style="margin-bottom:6px">📅 Início da Licença</label>
+            <input class="form-input" type="date" id="f-data-maternidade" style="border-color:#f59e0b;width:200px">
+          </div>
+          <div>
+            <label class="form-label" style="margin-bottom:6px">📅 Previsão de Retorno</label>
+            <input class="form-input" type="date" id="f-data-maternidade-fim" style="border-color:#f59e0b;width:200px">
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Faltas por mês -->
@@ -839,7 +873,7 @@ function calcAptMedia(emp) {
   return APT_KEYS.reduce((s,k) => s+(c[k]||0), 0) / APT_KEYS.length;
 }
 function calcAssid(emp) {
-  if (emp.afastado) return 100;
+  if (emp.afastado || emp.maternidade) return 100;
   const total  = getTotalFaltasEmp(emp);
   const maxAbs = _store?.config?.maxAbs || 36;
   return Math.max(0, 100-(total/maxAbs)*100);
@@ -1150,13 +1184,15 @@ function buildCard(emp) {
     new Date(emp.data_ferias_fim+'T00:00:00') >= hoje;
   const banner = emp.afastado
     ? `<div class="emp-banner afastado">🚫 AFASTADO</div>`
-    : emFerias
-      ? `<div class="emp-banner ferias">🏖️ FÉRIAS${emp.data_ferias_fim?' · até '+new Date(emp.data_ferias_fim+'T00:00:00').toLocaleDateString('pt-BR'):''}</div>`
-      : '';
-  const topPad = (emp.afastado||emFerias) ? 'margin-top:26px' : '';
+    : emp.maternidade
+      ? `<div class="emp-banner maternidade">🤰 LICENÇA MATERNIDADE${emp.data_maternidade_fim?' · retorno '+new Date(emp.data_maternidade_fim+'T00:00:00').toLocaleDateString('pt-BR'):''}</div>`
+      : emFerias
+        ? `<div class="emp-banner ferias">🏖️ FÉRIAS${emp.data_ferias_fim?' · até '+new Date(emp.data_ferias_fim+'T00:00:00').toLocaleDateString('pt-BR'):''}</div>`
+        : '';
+  const topPad = (emp.afastado || emp.maternidade || emFerias) ? 'margin-top:26px' : '';
 
   return `
-  <div class="emp-card" style="${emp.afastado?'border-color:rgba(239,68,68,.4)':emFerias?'border-color:rgba(34,211,238,.4)':''}">
+  <div class="emp-card ${emp.maternidade ? 'maternidade-card' : ''}" style="${emp.afastado?'border-color:rgba(239,68,68,.4)':emFerias?'border-color:rgba(34,211,238,.4)':''}">
     ${banner}
     <div class="emp-card-header" style="${topPad}">
       <div class="emp-avatar">${emp.foto ? `<img src="${emp.foto}" style="width:42px;height:42px;border-radius:50%;object-fit:cover">` : ini}</div>
@@ -1249,6 +1285,12 @@ function openModal(emp) {
   document.getElementById('f-ferias-inicio').value        = emp?.data_ferias_inicio || '';
   document.getElementById('f-ferias-fim').value           = emp?.data_ferias_fim    || '';
   document.getElementById('ferias-date-wrap').style.display = emp?.ferias ? 'block' : 'none';
+
+  // Maternidade
+  document.getElementById('f-maternidade').checked              = !!emp?.maternidade;
+  document.getElementById('f-data-maternidade').value           = emp?.data_maternidade     || '';
+  document.getElementById('f-data-maternidade-fim').value       = emp?.data_maternidade_fim || '';
+  document.getElementById('maternidade-date-wrap').style.display = emp?.maternidade ? 'block' : 'none';
 
   // Demissão — só exibe em edição e com permissão
   const podeDemitir = canDemitirEmp();
@@ -1372,9 +1414,12 @@ async function saveEmployee() {
 
   const afastado           = document.getElementById('f-afastado').checked;
   const ferias             = document.getElementById('f-ferias').checked;
-  const data_afastamento   = afastado ? (document.getElementById('f-data-afastamento').value||null)   : null;
-  const data_ferias_inicio = ferias   ? (document.getElementById('f-ferias-inicio').value||null)      : null;
-  const data_ferias_fim    = ferias   ? (document.getElementById('f-ferias-fim').value||null)         : null;
+  const maternidade        = document.getElementById('f-maternidade').checked;
+  const data_afastamento   = afastado     ? (document.getElementById('f-data-afastamento').value||null)    : null;
+  const data_ferias_inicio = ferias       ? (document.getElementById('f-ferias-inicio').value||null)       : null;
+  const data_ferias_fim    = ferias       ? (document.getElementById('f-ferias-fim').value||null)          : null;
+  const data_maternidade     = maternidade ? (document.getElementById('f-data-maternidade').value||null)     : null;
+  const data_maternidade_fim = maternidade ? (document.getElementById('f-data-maternidade-fim').value||null) : null;
 
   const dataFields = {
     name,
@@ -1385,6 +1430,7 @@ async function saveEmployee() {
     absences, competencies,
     afastado, data_afastamento,
     ferias, data_ferias_inicio, data_ferias_fim,
+    maternidade, data_maternidade, data_maternidade_fim,
     foto:            document.getElementById('f-foto').value || null,
     data_admissao:   dataAdmissao,
     demitido:        novoDemitido,
@@ -1487,6 +1533,28 @@ async function saveEmployee() {
         mudancas.push(`🏖️ <strong>Férias atualizadas</strong>: ${ini} → ${fim}`);
       }
 
+      // Maternidade — iniciou
+      if (dataFields.maternidade && !old.maternidade) {
+        const dt = dataFields.data_maternidade
+          ? new Date(dataFields.data_maternidade + 'T00:00:00').toLocaleDateString('pt-BR')
+          : '—';
+        mudancas.push(`🤰 <strong>Licença Maternidade</strong> a partir de ${dt}`);
+      }
+      // Maternidade — encerrou
+      if (!dataFields.maternidade && old.maternidade) {
+        mudancas.push(`✅ <strong>Retornou da Licença Maternidade</strong>`);
+      }
+      // Maternidade — datas alteradas
+      if (dataFields.maternidade && old.maternidade &&
+          (dataFields.data_maternidade !== old.data_maternidade ||
+           dataFields.data_maternidade_fim !== old.data_maternidade_fim)) {
+        const dt  = dataFields.data_maternidade
+          ? new Date(dataFields.data_maternidade + 'T00:00:00').toLocaleDateString('pt-BR') : '—';
+        const ret = dataFields.data_maternidade_fim
+          ? new Date(dataFields.data_maternidade_fim + 'T00:00:00').toLocaleDateString('pt-BR') : '—';
+        mudancas.push(`🤰 <strong>Maternidade atualizada</strong>: início ${dt} · retorno ${ret}`);
+      }
+
       // Cargo
       if (oldRole && newRole && oldRole !== newRole) {
         mudancas.push(`💼 Cargo: <span class="de">${oldRole}</span><span class="seta">→</span><span class="para">${newRole}</span>`);
@@ -1538,7 +1606,7 @@ async function saveEmployee() {
 }
 
 // ════════════════════════════════════════════════════════
-// TOGGLE AFASTADO / FÉRIAS
+// TOGGLE AFASTADO / FÉRIAS / MATERNIDADE
 // ════════════════════════════════════════════════════════
 function toggleAfastado() {
   const checked = document.getElementById('f-afastado').checked;
@@ -1558,6 +1626,21 @@ function toggleFerias() {
     if (!document.getElementById('f-ferias-fim').value) {
       const fim = new Date(); fim.setDate(fim.getDate()+29);
       document.getElementById('f-ferias-fim').value = fim.toISOString().split('T')[0];
+    }
+  }
+}
+
+function toggleMaternidade() {
+  const checked = document.getElementById('f-maternidade').checked;
+  document.getElementById('maternidade-date-wrap').style.display = checked ? 'block' : 'none';
+  if (checked) {
+    const hoje = new Date();
+    if (!document.getElementById('f-data-maternidade').value)
+      document.getElementById('f-data-maternidade').value = hoje.toISOString().split('T')[0];
+    if (!document.getElementById('f-data-maternidade-fim').value) {
+      // Licença maternidade padrão: 120 dias (4 meses)
+      const retorno = new Date(); retorno.setDate(retorno.getDate() + 120);
+      document.getElementById('f-data-maternidade-fim').value = retorno.toISOString().split('T')[0];
     }
   }
 }

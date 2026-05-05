@@ -491,7 +491,7 @@ async function verificarAlertaAptidoes() {
 
   // Carrega os funcionários que são de responsabilidade deste usuário
   _store = _store || await getStore();
-  let meusFuncs = getMyEmployees().filter(e => !e.afastado && !e.demitido);
+  let meusFuncs = getMyEmployees().filter(e => !e.afastado && !e.maternidade && !e.demitido);
 
   // Filtra apenas os sem avaliação neste mês
   const pendentes = meusFuncs.filter(e => !(e.competencies_history||{})[mesAtualKey]);
@@ -561,7 +561,7 @@ function calcAptMedia(emp) {
   return APT_KEYS.reduce((s,k) => s+(c[k]||0), 0) / APT_KEYS.length;
 }
 function calcAssid(emp) {
-  if (emp.afastado) return 100;
+  if (emp.afastado || emp.maternidade) return 100;
   const total  = (emp.absences||[]).reduce((a,b)=>a+b,0);
   const maxAbs = _store?.config?.maxAbs || 36;
   return Math.max(0, 100-(total/maxAbs)*100);
@@ -674,9 +674,15 @@ async function renderKPIs(emps) {
   const promos   = emps.filter(e=>calcScore(e)>=85).length;
   const hoje = new Date(); hoje.setHours(0,0,0,0);
   const afas = emps.filter(e => {
-    if (!e.afastado) return false;
-    if (e.data_afastamento) return new Date(e.data_afastamento+'T00:00:00') <= hoje;
-    return true;
+    if (e.afastado) {
+      if (e.data_afastamento) return new Date(e.data_afastamento+'T00:00:00') <= hoje;
+      return true;
+    }
+    if (e.maternidade) {
+      if (e.data_maternidade) return new Date(e.data_maternidade+'T00:00:00') <= hoje;
+      return true;
+    }
+    return false;
   });
   const pendentes = await getPendentesCount();
 
@@ -685,7 +691,7 @@ async function renderKPIs(emps) {
     const n = new Date();
     return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
   })();
-  const aptPendentes = emps.filter(e => !e.afastado && !(e.competencies_history||{})[mesAtualKey]).length;
+  const aptPendentes = emps.filter(e => !e.afastado && !e.maternidade && !(e.competencies_history||{})[mesAtualKey]).length;
   const aptSubText = aptPendentes > 0
     ? `⚠️ ${aptPendentes} pendente${aptPendentes > 1 ? 's' : ''} este mês`
     : '✅ todos avaliados';
@@ -698,7 +704,7 @@ async function renderKPIs(emps) {
     { cls:'purple', label:'Aptidões Médias',    value:avgApt+'/10', sub:aptSubText,
       alerta: aptPendentes > 0, onclick: aptPendentes > 0 ? "irParaAptidoes()" : "" },
     { cls:'yellow', label:'Candidatos Promoção', value:promos,   sub:'score ≥ 85' },
-    { cls:'red',    label:'🚫 Afastados Hoje',  value:afas.length,
+    { cls:'red',    label:'🚫 Afastados / 🤰 Mat.', value:afas.length,
       sub:afas.length ? afas.slice(0,2).map(e=>e.name.split(' ')[0]).join(', ')+(afas.length>2?'…':'') : 'nenhum afastado' },
     { cls:'orange', label:'📝 Ocorrências',     value:pendentes, sub:'pendentes de aprovação' },
   ];

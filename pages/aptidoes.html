@@ -814,7 +814,7 @@ function calcAptMedia(emp) {
   return APT_KEYS.reduce((s,k)=>s+(c[k]||0),0)/APT_KEYS.length;
 }
 function calcAssid(emp) {
-  if (emp.afastado) return 100;
+  if (emp.afastado || emp.maternidade) return 100;
   const total  = (emp.absences||[]).reduce((a,b)=>a+b,0);
   const maxAbs = _store?.config?.maxAbs||36;
   return Math.max(0,100-(total/maxAbs)*100);
@@ -938,13 +938,15 @@ function buildRow(emp, lista) {
     <span style="margin-left:6px;padding:1px 7px;border-radius:20px;font-size:9px;font-weight:700;
       ${motivo==='afastado'
         ? 'background:rgba(239,68,68,.18);color:#ef4444;border:1px solid rgba(239,68,68,.3)'
-        : 'background:rgba(34,211,238,.14);color:#22d3ee;border:1px solid rgba(34,211,238,.3)'}>
-      ${motivo==='afastado' ? '🚫 Afastado' : '🏖️ Férias'}
+        : motivo==='maternidade'
+          ? 'background:rgba(251,191,36,.18);color:#f59e0b;border:1px solid rgba(251,191,36,.4)'
+          : 'background:rgba(34,211,238,.14);color:#22d3ee;border:1px solid rgba(34,211,238,.3)'}>
+      ${motivo==='afastado' ? '🚫 Afastado' : motivo==='maternidade' ? '🤰 Maternidade' : '🏖️ Férias'}
     </span>` : '';
 
   // Ícone de score congelado
   const scoreCongelado = bloqueado
-    ? `<span title="Score congelado durante afastamento/férias"
+    ? `<span title="Score congelado durante afastamento/maternidade/férias"
         style="font-size:10px;margin-left:3px;opacity:.7">❄️</span>`
     : '';
 
@@ -964,10 +966,11 @@ function buildRow(emp, lista) {
     const v = c[k]!=null ? c[k] : 5;
     const { bg, color } = bubbleColor(v);
 
-    // Se bloqueado por afastamento/férias: sempre readonly, com tooltip explicativo
+    // Se bloqueado por afastamento/maternidade/férias: sempre readonly, com tooltip explicativo
     if (!podeEditarEste) {
+      const motLabel = motivo==='afastado' ? 'afastado' : motivo==='maternidade' ? 'em licença maternidade' : 'em férias';
       const title = bloqueado
-        ? `title="Edição bloqueada — funcionário ${motivo==='afastado'?'afastado':'em férias'}"`
+        ? `title="Edição bloqueada — funcionário ${motLabel}"`
         : '';
       return `<td>
         <span class="score-bubble readonly"
@@ -1023,8 +1026,9 @@ function buildRow(emp, lista) {
     <td class="td-emp">
       <div class="emp-cell">
         <div class="emp-mini-avatar"
-          style="${motivo==='afastado'?'background:linear-gradient(135deg,#ef4444,#fb923c)':
-                  motivo==='ferias'  ?'background:linear-gradient(135deg,#22d3ee,#4f8ef7)':''}">
+          style="${motivo==='afastado'     ?'background:linear-gradient(135deg,#ef4444,#fb923c)':
+                  motivo==='maternidade'   ?'background:linear-gradient(135deg,#f59e0b,#fbbf24)':
+                  motivo==='ferias'        ?'background:linear-gradient(135deg,#22d3ee,#4f8ef7)':''}">
           ${ini}</div>
         <div style="flex:1;min-width:0">
           <div style="display:flex;align-items:center;gap:6px">
@@ -1064,12 +1068,14 @@ async function startEdit(empId, key, cell) {
   const emp   = (store.employees||[]).find(e=>e.id===empId);
   if (!emp) return;
 
-  // Bloqueia se afastado ou em férias
+  // Bloqueia se afastado, em licença maternidade ou em férias
   const { bloqueado, motivo } = isEmpBloqueado(emp);
   if (bloqueado) {
     const msg = motivo==='afastado'
       ? '🚫 Afastado — edição bloqueada até o retorno.'
-      : '🏖️ Em férias — edição bloqueada até o fim do período.';
+      : motivo==='maternidade'
+        ? '🤰 Em licença maternidade — edição bloqueada até o retorno.'
+        : '🏖️ Em férias — edição bloqueada até o fim do período.';
     showToast(msg, 'warn');
     return;
   }
@@ -1242,12 +1248,14 @@ async function saveAvaliacao() {
   const idx   = emps.findIndex(e=>String(e.id)===String(empId));
   if (idx<0) { showToast('❌ Funcionário não encontrado.','error'); return; }
 
-  // Verifica bloqueio por afastamento/férias
+  // Verifica bloqueio por afastamento/maternidade/férias
   const { bloqueado, motivo } = isEmpBloqueado(emps[idx]);
   if (bloqueado) {
     const msg = motivo==='afastado'
       ? '🚫 Funcionário afastado. Aptidões não podem ser editadas durante o afastamento.'
-      : '🏖️ Funcionário em férias. Aptidões não podem ser editadas durante as férias.';
+      : motivo==='maternidade'
+        ? '🤰 Funcionária em licença maternidade. Aptidões não podem ser editadas neste período.'
+        : '🏖️ Funcionário em férias. Aptidões não podem ser editadas durante as férias.';
     showToast(msg, 'warn');
     return;
   }

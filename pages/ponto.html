@@ -479,7 +479,7 @@ body.light-theme .reset-btn-cancel:hover { background:#EBF1F7; }
           👥 <strong>Funcionários afetados:</strong> <span id="reset-qtd-label">—</span>
         </div>
         <div style="font-size:11px;border-top:1px solid rgba(248,113,113,.15);padding-top:8px;margin-top:2px">
-          <div class="ok">✅ Preservados: funcionários em <strong>férias</strong> ou <strong>afastados</strong></div>
+          <div class="ok">✅ Preservados: funcionários em <strong>férias</strong>, <strong>afastados</strong> ou em <strong>licença maternidade</strong></div>
           <div class="warn">🗑️ Apagados: <strong>presentes, faltas, atestados, folgas</strong></div>
         </div>
       </div>
@@ -544,9 +544,9 @@ body.light-theme .reset-btn-cancel:hover { background:#EBF1F7; }
       <button class="status-btn" style="background:rgba(34,211,238,.15);color:#22d3ee;border-color:rgba(34,211,238,.4)"   onclick="lancamentoRapido('folga')">🌙 Folga</button>
       <span style="width:1px;background:var(--border);height:22px;flex-shrink:0"></span>
       <span style="font-size:10px;color:var(--muted);white-space:nowrap">Automáticos:</span>
-      <span class="status-btn" style="background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.5);cursor:default" title="Configurado na ficha do funcionário">🎉 Feriado</span>
-      <span class="status-btn" style="background:rgba(251,146,60,.15);color:#fb923c;border-color:rgba(251,146,60,.5);cursor:default" title="Configurado na ficha do funcionário">🏖️ Férias</span>
-      <span class="status-btn" style="background:rgba(244,114,182,.15);color:#f472b6;border-color:rgba(244,114,182,.5);cursor:default" title="Configurado na ficha do funcionário">🚫 Afastado</span>
+      <span class="status-btn" style="background:rgba(251,191,36,.08);color:#fbbf2488;border-color:rgba(251,191,36,.2);cursor:default;opacity:.6" title="Configurado na ficha do funcionário">🎉 Feriado</span>
+      <span class="status-btn" style="background:rgba(251,146,60,.08);color:#fb923c88;border-color:rgba(251,146,60,.2);cursor:default;opacity:.6" title="Configurado na ficha do funcionário">🏖️ Férias</span>
+      <span class="status-btn" style="background:rgba(244,114,182,.08);color:#f472b688;border-color:rgba(244,114,182,.2);cursor:default;opacity:.6" title="Configurado na ficha do funcionário">🚫 Afastado</span>
     </div>
 
     <!-- Legenda -->
@@ -595,7 +595,8 @@ const STATUS_META = {
   atestado: { emoji:'🏥', label:'Atestado',  cor:'#ffffff', bg:'rgba(255,255,255,.06)', border:'rgba(255,255,255,.35)' },
   ferias:   { emoji:'🏖️', label:'Férias',    cor:'#fb923c', bg:'rgba(251,146,60,.25)',  border:'#fb923c'  },
   folga:    { emoji:'🌙', label:'Folga',     cor:'#22d3ee', bg:'rgba(34,211,238,.25)',  border:'#22d3ee'  },
-  afastado: { emoji:'🚫', label:'Afastado',  cor:'#f472b6', bg:'rgba(244,114,182,.25)', border:'#f472b6'  },
+  afastado:    { emoji:'🚫', label:'Afastado',            cor:'#f472b6', bg:'rgba(244,114,182,.25)', border:'#f472b6'  },
+  maternidade: { emoji:'🤰', label:'Lic. Maternidade',    cor:'#f59e0b', bg:'rgba(251,191,36,.25)',  border:'#f59e0b'  },
   domingo:  { emoji:'☀️',  label:'Domingo',   cor:'#4f8ef7', bg:'rgba(79,142,247,.15)', border:'rgba(79,142,247,.4)' },
   sabado:   { emoji:'',   label:'Sábado',    cor:'#f9a8d4', bg:'rgba(244,114,182,.1)', border:'rgba(244,114,182,.35)' },
 };
@@ -897,6 +898,14 @@ function getStatusDiaBloqueado(emp, ano, mes, dia) {
     if (dt >= inicio && dt <= hoje) return 'afastado';
   }
 
+  // Maternidade: do início até HOJE (mesmas regras do afastado)
+  if (emp.maternidade) {
+    const inicio = emp.data_maternidade
+      ? new Date(emp.data_maternidade + 'T00:00:00')
+      : new Date(0);
+    if (dt >= inicio && dt <= hoje) return 'maternidade';
+  }
+
   // Férias: intervalo fixo início/fim (inclui dias futuros pois é programado)
   if (emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {
     const ini = new Date(emp.data_ferias_inicio + 'T00:00:00');
@@ -910,7 +919,7 @@ function getStatusDiaBloqueado(emp, ano, mes, dia) {
   const key       = `${emp.id}_${ano}_${String(mes+1).padStart(2,'0')}`;
   const diasPonto = _pontoCache[key] || {};
   const statusSalvo = diasPonto[dia];
-  if (statusSalvo === 'afastado' || statusSalvo === 'ferias') {
+  if (statusSalvo === 'afastado' || statusSalvo === 'ferias' || statusSalvo === 'maternidade') {
     return statusSalvo; // histórico — exibe mas bloqueia edição
   }
 
@@ -978,6 +987,28 @@ async function gravarHistoricoAfastamento(emps, allPonto) {
         }
       }
       if (mudouFerias) allPonto[key] = mPonto;
+    }
+
+    // ── Licença Maternidade — mesmas regras do afastado (do início até HOJE) ──
+    if (emp.maternidade) {
+      const inicio = emp.data_maternidade
+        ? new Date(emp.data_maternidade + 'T00:00:00')
+        : new Date(0);
+
+      const key    = `${emp.id}_${anoAtivo}_${String(mesAtivo+1).padStart(2,'0')}`;
+      const mPonto = allPonto[key] || {};
+
+      for (let d = 1; d <= diasMes; d++) {
+        const dt = new Date(anoAtivo, mesAtivo, d); dt.setHours(0,0,0,0);
+        if (dt < inicio || dt > hoje) continue;
+        if (!mPonto[d] || mPonto[d] === 'maternidade') {
+          if (mPonto[d] !== 'maternidade') {
+            mPonto[d]    = 'maternidade';
+            houveMudanca = true;
+          }
+        }
+      }
+      if (houveMudanca) allPonto[key] = mPonto;
     }
   }
 
@@ -1068,7 +1099,9 @@ async function renderGrade() {
     const avatarStyle = bloqHoje
       ? motivoHoje==='afastado'
         ? 'background:linear-gradient(135deg,#ef4444,#fb923c)'
-        : 'background:linear-gradient(135deg,#22d3ee,#4f8ef7)'
+        : motivoHoje==='maternidade'
+          ? 'background:linear-gradient(135deg,#f59e0b,#fbbf24)'
+          : 'background:linear-gradient(135deg,#22d3ee,#4f8ef7)'
       : '';
 
     // ── Badge de status no cabeçalho da linha ──
@@ -1080,12 +1113,19 @@ async function renderGrade() {
             background:rgba(239,68,68,.18);color:#ef4444;
             border:1px solid rgba(239,68,68,.35);
             white-space:nowrap;flex-shrink:0">🚫 Afastado</span>`
-        : `<span style="
-            margin-left:6px;padding:2px 7px;border-radius:20px;
-            font-size:9px;font-weight:700;
-            background:rgba(34,211,238,.14);color:#22d3ee;
-            border:1px solid rgba(34,211,238,.35);
-            white-space:nowrap;flex-shrink:0">🏖️ Férias</span>`
+        : motivoHoje==='maternidade'
+          ? `<span style="
+              margin-left:6px;padding:2px 7px;border-radius:20px;
+              font-size:9px;font-weight:700;
+              background:rgba(251,191,36,.18);color:#f59e0b;
+              border:1px solid rgba(251,191,36,.4);
+              white-space:nowrap;flex-shrink:0">🤰 Maternidade</span>`
+          : `<span style="
+              margin-left:6px;padding:2px 7px;border-radius:20px;
+              font-size:9px;font-weight:700;
+              background:rgba(34,211,238,.14);color:#22d3ee;
+              border:1px solid rgba(34,211,238,.35);
+              white-space:nowrap;flex-shrink:0">🏖️ Férias</span>`
       : '';
 
     tbody += `<tr class="emp-row" style="${bloqHoje ? 'opacity:.72' : ''}">
@@ -1132,6 +1172,14 @@ async function renderGrade() {
             const hoje2 = new Date(); hoje2.setHours(0,0,0,0);
             return dt >= inicio && dt <= hoje2;
           }
+          if (bloqDia === 'maternidade' && emp.maternidade) {
+            const inicio = emp.data_maternidade
+              ? new Date(emp.data_maternidade + 'T00:00:00')
+              : new Date(0);
+            const dt  = new Date(anoAtivo, mesAtivo, d); dt.setHours(0,0,0,0);
+            const hoje2 = new Date(); hoje2.setHours(0,0,0,0);
+            return dt >= inicio && dt <= hoje2;
+          }
           if (bloqDia === 'ferias' && emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {
             const ini = new Date(emp.data_ferias_inicio + 'T00:00:00');
             const fim = new Date(emp.data_ferias_fim    + 'T00:00:00');
@@ -1144,10 +1192,14 @@ async function renderGrade() {
         const motivo = periodoAtivo
           ? (bloqDia === 'ferias'
               ? 'Período de férias ativo — edição bloqueada'
-              : 'Funcionário afastado — edição bloqueada')
+              : bloqDia === 'maternidade'
+                ? 'Licença Maternidade ativa — edição bloqueada'
+                : 'Funcionário afastado — edição bloqueada')
           : (bloqDia === 'ferias'
               ? '🏖️ Histórico de férias — registro preservado'
-              : '🚫 Histórico de afastamento — registro preservado');
+              : bloqDia === 'maternidade'
+                ? '🤰 Histórico de maternidade — registro preservado'
+                : '🚫 Histórico de afastamento — registro preservado');
 
         // Histórico tem visual levemente diferente (menor opacidade no dot)
         const dotOpacity = periodoAtivo ? '' : 'opacity:.7;';
@@ -1335,12 +1387,13 @@ async function setStatusCtx(status) {
   if (bloqDia) {
     const periodoAtivo = (() => {
       if (bloqDia === 'afastado' && emp?.afastado) return true;
+    if (bloqDia === 'maternidade' && emp?.maternidade) return true;
       if (bloqDia === 'ferias' && emp?.ferias) return true;
       return false;
     })();
     const motivo = periodoAtivo
-      ? (bloqDia === 'ferias' ? 'férias' : 'afastamento')
-      : (bloqDia === 'ferias' ? 'histórico de férias' : 'histórico de afastamento');
+      ? (bloqDia === 'ferias' ? 'férias' : bloqDia === 'maternidade' ? 'licença maternidade' : 'afastamento')
+      : (bloqDia === 'ferias' ? 'histórico de férias' : bloqDia === 'maternidade' ? 'histórico de maternidade' : 'histórico de afastamento');
     showToast(`🚫 Edição bloqueada — ${emp?.name||'funcionário'}: ${motivo}.`, 'warn');
     closeCtx();
     return;
@@ -1476,7 +1529,7 @@ function abrirResetModal() {
   document.getElementById('reset-dept-label').textContent = deptAtivo + (filialAtiva ? ` · ${filialAtiva}` : '');
   document.getElementById('reset-qtd-label').innerHTML    =
     `<strong style="color:#f87171">${afetados} apagados</strong>` +
-    (preservados > 0 ? ` · <span style="color:#34d399">${preservados} preservados (férias/afastado)</span>` : '');
+    (preservados > 0 ? ` · <span style="color:#34d399">${preservados} preservados (férias/afastado/maternidade)</span>` : '');
 
   document.getElementById('reset-sub').innerHTML =
     `Apagará <strong style="color:#f87171">todos os registros editáveis</strong> de ` +
@@ -1499,7 +1552,7 @@ async function confirmarResetPonto() {
   const allPonto = await LS.get(PONTO_KEY, {});
   const mesStr   = String(mesAtivo + 1).padStart(2, '0');
   // Status que devem ser PRESERVADOS (automáticos vinculados ao cadastro)
-  const PRESERVAR = new Set(['ferias', 'afastado']);
+  const PRESERVAR = new Set(['ferias', 'afastado', 'maternidade']);
 
   let limpos = 0, preservados = 0;
 

@@ -518,15 +518,22 @@ async function renderQuadroContent() {
 
   const hoje = new Date(); hoje.setHours(0,0,0,0);
   const afastados = empsFilial.filter(e => {
-    if (!e.afastado) return false;
-    if (e.data_afastamento) return new Date(e.data_afastamento+'T00:00:00') <= hoje;
+    if (e.afastado) {
+      if (e.data_afastamento) return new Date(e.data_afastamento+'T00:00:00') <= hoje;
+      return true;
+    }
+    return false;
+  });
+  const emMaternidade = empsFilial.filter(e => {
+    if (!e.maternidade) return false;
+    if (e.data_maternidade) return new Date(e.data_maternidade+'T00:00:00') <= hoje;
     return true;
   });
-  const empsAtivos = empsFilial.filter(e => !afastados.includes(e));
+  const empsAtivos = empsFilial.filter(e => !afastados.includes(e) && !emMaternidade.includes(e));
 
   const totalQuadro = dadosF.totalQuadro || 0;
   const totalCad    = empsAtivos.length;
-  const totalAfast  = afastados.length;
+  const totalAfast  = afastados.length + emMaternidade.length;
   const vagas       = Math.max(0, totalQuadro - totalCad);
 
   const turnosMostrar = turnos.filter(t => {
@@ -728,6 +735,46 @@ async function renderQuadroContent() {
       }).join('')}
     </div>`;
   }
+
+  // Licença Maternidade ativas
+  if (emMaternidade.length) {
+    html += `
+    <div class="afastado-card" style="border-top:3px solid #f59e0b;margin-top:16px">
+      <div class="afastado-header">
+        <div class="afastado-title">🤰 Licença Maternidade</div>
+        <div class="afastado-badge" style="background:rgba(251,191,36,.12);color:#f59e0b;border-color:rgba(251,191,36,.4)">${emMaternidade.length} funcionária(s)</div>
+      </div>
+      ${emMaternidade.map(e => {
+        const ini = e.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+        let diasBadge = '';
+        if (e.data_maternidade) {
+          const inicio = new Date(e.data_maternidade+'T00:00:00');
+          const dias   = Math.floor((hoje - inicio) / (1000*60*60*24)) + 1;
+          diasBadge    = `<span class="dias-badge" style="color:#f59e0b;border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.1)">⏱ ${dias} dia${dias!==1?'s':''}</span>`;
+        }
+        const retornoTag = e.data_maternidade_fim
+          ? `<span style="padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;
+              background:rgba(251,191,36,.1);color:#f59e0b;border:1px solid rgba(251,191,36,.35)">
+              🤰 retorno ${new Date(e.data_maternidade_fim+'T00:00:00').toLocaleDateString('pt-BR')}
+             </span>`
+          : `<span style="padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;
+              background:rgba(251,191,36,.1);color:#f59e0b;border:1px solid rgba(251,191,36,.35)">
+              🤰 Lic. Maternidade
+             </span>`;
+        return `
+        <div class="afastado-item">
+          <div class="af-avatar" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">${ini}</div>
+          <div class="af-info">
+            <div class="afastado-name">${e.name}</div>
+            <div class="afastado-role">${e.role||''}${e.dept?' · '+e.dept:''}</div>
+          </div>
+          <div class="af-right">
+            ${diasBadge}
+            ${retornoTag}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
 
   document.getElementById('quadro-content').innerHTML = html;
 }
