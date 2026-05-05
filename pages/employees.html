@@ -152,15 +152,16 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   background:var(--surface); border:1.5px solid var(--border);
   border-radius:14px; padding:18px;
   position:relative; transition:border-color .2s, transform .2s, box-shadow .2s;
-  overflow:hidden;
+  overflow:visible;  /* permite a foto "flutuar" ao fazer zoom sem ser cortada */
+  z-index:0;         /* estabelece contexto de empilhamento para o z-index do zoom */
 }
-.emp-card:hover { border-color:var(--accent); transform:translateY(-2px); box-shadow:0 6px 24px rgba(0,0,0,.2); }
+.emp-card:hover { border-color:var(--accent); transform:translateY(-2px); box-shadow:0 6px 24px rgba(0,0,0,.2); z-index:10; }
 
 /* banner afastado/férias */
 .emp-banner {
   position:absolute; top:0; left:0; right:0;
   padding:4px 14px; font-size:10px; font-weight:700;
-  text-align:center; letter-spacing:.5px; border-radius:12px 12px 0 0;
+  text-align:center; letter-spacing:.5px; border-radius:14px 14px 0 0; /* 14px para coincidir com o card sem precisar de overflow:hidden */
 }
 .emp-banner.afastado    { background:rgba(239,68,68,.18);   color:#ef4444; border-bottom:1px solid rgba(239,68,68,.3); }
 .emp-banner.ferias      { background:rgba(34,211,238,.14);  color:#22d3ee; border-bottom:1px solid rgba(34,211,238,.3); }
@@ -239,6 +240,24 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   display:flex; align-items:center; justify-content:center;
   font-family:var(--font-head); font-size:14px; font-weight:800; color:#fff;
+  position:relative; /* necessário para z-index funcionar no zoom */
+}
+
+/* ── Zoom da foto ao passar o mouse ──────────────────────────
+   A foto é salva em 80×80 px e exibida em 42×42 px (scale ×1.9).
+   Zoom de ×2 atinge exatamente a resolução nativa → sem pixelação.
+   cubic-bezier(.34,1.56,.64,1) = efeito "mola" suave na entrada.  */
+.emp-avatar img {
+  transition: transform .22s cubic-bezier(.34,1.56,.64,1),
+              box-shadow  .22s ease;
+  cursor: zoom-in;
+  position: relative;
+  z-index: 1;
+}
+.emp-avatar:hover img {
+  transform: scale(2);                        /* 42 px → 84 px ≈ resolução nativa */
+  box-shadow: 0 8px 28px rgba(0,0,0,.55);    /* sombra para "destacar" da grade */
+  z-index: 200;
 }
 .emp-info { flex:1; min-width:0; }
 .emp-name { font-family:var(--font-head); font-size:15px; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -1106,6 +1125,21 @@ async function renderCards() {
     const matchDept   = !deptSel   || e.dept   === deptSel;
     const matchStatus = !activeFilter || getStatus(calcScore(e)).tag === activeFilter;
     return matchName && matchFilial && matchDept && matchStatus;
+  });
+
+  // Ordena: ativos normais primeiro (A→Z), depois afastados/maternidade/férias (A→Z)
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const estaEmFerias = e =>
+    e.ferias && e.data_ferias_inicio && e.data_ferias_fim &&
+    new Date(e.data_ferias_inicio + 'T00:00:00') <= hoje &&
+    new Date(e.data_ferias_fim    + 'T00:00:00') >= hoje;
+  const isIrregular = e => e.afastado || e.maternidade || estaEmFerias(e);
+
+  ativos.sort((a, b) => {
+    const aIrreg = isIrregular(a) ? 1 : 0;
+    const bIrreg = isIrregular(b) ? 1 : 0;
+    if (aIrreg !== bIrreg) return aIrreg - bIrreg;       // irregulares vão para o fim
+    return (a.name || '').localeCompare(b.name || '', 'pt-BR', { sensitivity: 'base' });
   });
 
   const grid = document.getElementById('emp-grid');
