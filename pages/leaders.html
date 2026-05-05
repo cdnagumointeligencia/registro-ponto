@@ -1007,6 +1007,50 @@ function getMeusTurnos(leader) {
   if (arr && arr.length) return arr;
   return leader.perfil?.turno ? [leader.perfil.turno] : [];
 }
+
+/**
+ * Retorna as filiais EFETIVAS de um líder.
+ * Prioridade:
+ *   1. Filiais explícitas no perfil (campo perfil.filiais / perfil.filial)
+ *   2. Filiais inferidas pelos funcionários com owner_id == leader.id
+ *   3. Filiais inferidas pelos funcionários no mesmo dept+turno (sem filtro de filial)
+ *   4. [] — sem restrição (fallback)
+ *
+ * Esse mecanismo resolve o caso onde o líder não tem filial cadastrada no perfil,
+ * mas seus funcionários (ou os funcionários do seu dept+turno) estão todos em uma
+ * filial específica — evitando que líderes de filiais diferentes apareçam na mesma
+ * árvore hierárquica só por compartilharem o mesmo departamento.
+ */
+function getEffectiveFiliais(leader, allEmps) {
+  // 1. Usa explícitas se disponíveis
+  const explicit = getMeusFiliais(leader);
+  if (explicit.length) return explicit;
+
+  // 2. Infere via funcionários com owner_id
+  const ownedFiliais = [...new Set(
+    allEmps
+      .filter(e => e.filial && (e.owner_id || e.ownerId) === leader.id)
+      .map(e => e.filial)
+  )];
+  if (ownedFiliais.length) return ownedFiliais;
+
+  // 3. Infere via dept+turno (sem filtro de filial)
+  const depts  = getMeusDepts(leader);
+  const turnos = getMeusTurnos(leader);
+  if (!depts.length) return [];
+
+  const deptFiliais = [...new Set(
+    allEmps
+      .filter(e => {
+        const dOk = depts.includes(e.dept);
+        const tOk = turnos.length ? turnos.includes(e.turno) : true;
+        return dOk && tOk && e.filial;
+      })
+      .map(e => e.filial)
+  )];
+  return deptFiliais;
+}
+
 function getTeamEmps(leader, allEmps) {
   const depts   = getMeusDepts(leader);
   const turnos  = getMeusTurnos(leader);
@@ -1019,12 +1063,15 @@ function getTeamEmps(leader, allEmps) {
     return deptOk && turnoOk && filialOk;
   });
 }
-function getSubordinados(leader, allUsers) {
+// allEmps é opcional — quando fornecido, usa getEffectiveFiliais para inferir
+// filiais de líderes que não têm filial explícita no perfil, evitando que líderes
+// de filiais diferentes apareçam na mesma árvore só por terem o mesmo departamento.
+function getSubordinados(leader, allUsers, allEmps) {
   const meuIdx      = ORDEM_IDX.indexOf(leader.nivel || 'lider');
   const meusDepts   = getMeusDepts(leader);
   const meusTurnos  = getMeusTurnos(leader);
-  const meusFiliais = getMeusFiliais(leader);
-
+  // Usa filial efetiva (com inferência) quando allEmps for fornecido
+  const meusFiliais = allEmps ? getEffectiveFiliais(leader, allEmps) : getMeusFiliais(leader);
 
   return allUsers.filter(u => {
     if (u.id === ADMIN_ID || u.nivel === 'admin_master' || u.id === leader.id) return false;
@@ -1039,12 +1086,12 @@ function getSubordinados(leader, allUsers) {
     if (meusTurnos.length || uTurnos.length) {
       if (!meusTurnos.length || !uTurnos.length || !meusTurnos.some(t => uTurnos.includes(t))) return false;
     }
-    // Filial: se QUALQUER lado tem filial definida, ambos devem ter E compartilhar ao menos uma.
-    const uFiliais = getMeusFiliais(u);
+    // Filial: usa filial efetiva (explícita + inferida) para ambos os lados.
+    // Isso garante que líderes sem filial no perfil mas com equipe em filiais
+    // distintas não apareçam na árvore uns dos outros.
+    const uFiliais = allEmps ? getEffectiveFiliais(u, allEmps) : getMeusFiliais(u);
     const filialPass = !(meusFiliais.length || uFiliais.length) ||
                        (meusFiliais.length && uFiliais.length && meusFiliais.some(f => uFiliais.includes(f)));
-
-
     if (!filialPass) return false;
     return true;
   });
@@ -1055,7 +1102,8 @@ function getTeamTotal(leader, store) {
   const meuIdx    = ORDEM_IDX.indexOf(leader.nivel||'lider');
   const meusDepts = getMeusDepts(leader);
   const meusTurnos= getMeusTurnos(leader);
-  const meusFiliais=getMeusFiliais(leader);
+  // Usa filial efetiva (com inferência) para contagem consistente com a árvore
+  const meusFiliais = getEffectiveFiliais(leader, allEmps);
 
   let totalFuncionarios;
   if (!meusDepts.length) {
@@ -1077,7 +1125,8 @@ function getTeamTotal(leader, store) {
     const uTurnos = getMeusTurnos(u);
     const turnoOk = (meusTurnos.length && uTurnos.length)
       ? meusTurnos.some(t=>uTurnos.includes(t)) : true;
-    const uFiliais = getMeusFiliais(u);
+    // Usa filial efetiva do subordinado também
+    const uFiliais = getEffectiveFiliais(u, allEmps);
     if (meusFiliais.length || uFiliais.length) {
       if (!meusFiliais.length || !uFiliais.length || !meusFiliais.some(f=>uFiliais.includes(f))) return false;
     }
@@ -1283,13 +1332,13 @@ async function renderLeaders() {
 }
 
 // Retorna todos os subordinados recursivamente
-function getSubordinadosRecursivo(leaderId, allLeaders) {
+function getSubordinadosRecursivo(leaderId, allLeaders, allEmps) {
   const leader = _store?.users?.[leaderId];
   if (!leader) return [];
-  const diretos = getSubordinados(leader, allLeaders);
+  const diretos = getSubordinados(leader, allLeaders, allEmps);
   const result  = [...diretos];
   diretos.forEach(sub => {
-    result.push(...getSubordinadosRecursivo(sub.id, allLeaders));
+    result.push(...getSubordinadosRecursivo(sub.id, allLeaders, allEmps));
   });
   return result;
 }
@@ -1490,7 +1539,7 @@ function renderTreeBody(leaderId) {
   const meta        = NIVEL_META[leader.nivel||'lider']||NIVEL_META.lider;
   const ini         = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
   const team        = getTeamEmps(leader, allEmps);
-  const subordinados= getSubordinados(leader, allLeaders);
+  const subordinados= getSubordinados(leader, allLeaders, allEmps);
   const totalTime   = getTeamTotal(leader, store);
   const avgScore    = team.length ? Math.round(team.reduce((s,e)=>s+calcScore(e),0)/team.length) : 0;
   const promos      = team.filter(e=>calcScore(e)>=85).length;
@@ -1880,11 +1929,12 @@ document.getElementById('modal-org-overlay').addEventListener('click', e => {
 });
 
 // Subordinados diretos para o organograma (apenas o nível imediatamente abaixo)
-function getDirectSubsOrgChart(ldr, allLeaders) {
+// allEmps é opcional — quando fornecido, usa getEffectiveFiliais para inferir filiais.
+function getDirectSubsOrgChart(ldr, allLeaders, allEmps) {
   const myIdx     = ORDEM_IDX.indexOf(ldr.nivel||'lider');
   const myDepts   = getMeusDepts(ldr);
   const myTurnos  = getMeusTurnos(ldr);
-  const myFiliais = getMeusFiliais(ldr);
+  const myFiliais = allEmps ? getEffectiveFiliais(ldr, allEmps) : getMeusFiliais(ldr);
   for (let t = myIdx - 1; t >= 0; t--) {
     const found = allLeaders.filter(u => {
       if (ORDEM_IDX.indexOf(u.nivel||'lider') !== t) return false;
@@ -1896,8 +1946,8 @@ function getDirectSubsOrgChart(ldr, allLeaders) {
       if (myTurnos.length || uTurnos.length) {
         if (!myTurnos.length || !uTurnos.length || !myTurnos.some(t2 => uTurnos.includes(t2))) return false;
       }
-      // Filial: se QUALQUER lado tem filial definida, ambos devem ter E compartilhar ao menos uma.
-      const uFiliais = getMeusFiliais(u);
+      // Filial: usa filial efetiva (explícita + inferida) para ambos os lados.
+      const uFiliais = allEmps ? getEffectiveFiliais(u, allEmps) : getMeusFiliais(u);
       if (myFiliais.length || uFiliais.length) {
         if (!myFiliais.length || !uFiliais.length || !myFiliais.some(f => uFiliais.includes(f))) return false;
       }
@@ -1946,7 +1996,7 @@ function renderCircularOrgChart(leaderId) {
     const pm   = NIVEL_META[pl.nivel||'lider'] || NIVEL_META.lider;
     const pIni = pl.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
 
-    const dirSubs    = getDirectSubsOrgChart(pl, allLeaders);
+    const dirSubs    = getDirectSubsOrgChart(pl, allLeaders, allEmps);
     const teamEmps   = getTeamEmps(pl, allEmps);
     const subEmpIds  = new Set(dirSubs.flatMap(s => getTeamEmps(s, allEmps).map(e => e.id)));
     const directEmps = teamEmps.filter(e => !subEmpIds.has(e.id));
@@ -1985,7 +2035,7 @@ function renderCircularOrgChart(leaderId) {
         const sm      = NIVEL_META[sub.nivel||'lider'] || NIVEL_META.lider;
         const isSelected = sub.id === selectedId;
         const sIni    = sub.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-        const hasSubs = getDirectSubsOrgChart(sub, allLeaders).length > 0 || getTeamEmps(sub, allEmps).length > 0;
+        const hasSubs = getDirectSubsOrgChart(sub, allLeaders, allEmps).length > 0 || getTeamEmps(sub, allEmps).length > 0;
         const total   = getTeamTotal(sub, store);
 
         const item = document.createElement('div');
