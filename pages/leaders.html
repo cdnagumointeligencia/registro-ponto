@@ -997,25 +997,35 @@ function getMeusDepts(leader) {
   return [...new Set([...depts, ...(setor ? [setor] : [])])];
 }
 function getMeusFiliais(leader) {
-  return leader.perfil?.filiais || (leader.perfil?.filial ? [leader.perfil.filial] : []);
+  // Array vazio é truthy em JS, então verificamos length antes de usar
+  const arr = leader.perfil?.filiais;
+  if (arr && arr.length) return arr;
+  return leader.perfil?.filial ? [leader.perfil.filial] : [];
 }
 function getMeusTurnos(leader) {
-  return leader.perfil?.turnos || (leader.perfil?.turno ? [leader.perfil.turno] : []);
+  const arr = leader.perfil?.turnos;
+  if (arr && arr.length) return arr;
+  return leader.perfil?.turno ? [leader.perfil.turno] : [];
 }
 function getTeamEmps(leader, allEmps) {
-  const depts  = getMeusDepts(leader);
-  const turnos = getMeusTurnos(leader);
+  const depts   = getMeusDepts(leader);
+  const turnos  = getMeusTurnos(leader);
+  const filiais = getMeusFiliais(leader);
   if (!depts.length) return allEmps.filter(e=>(e.owner_id||e.ownerId)===leader.id);
   return allEmps.filter(e => {
-    const deptOk  = depts.includes(e.dept);
-    const turnoOk = turnos.length ? turnos.includes(e.turno) : true;
-    return deptOk && turnoOk;
+    const deptOk   = depts.includes(e.dept);
+    const turnoOk  = turnos.length  ? turnos.includes(e.turno)   : true;
+    const filialOk = filiais.length ? filiais.includes(e.filial) : true;
+    return deptOk && turnoOk && filialOk;
   });
 }
 function getSubordinados(leader, allUsers) {
-  const meuIdx     = ORDEM_IDX.indexOf(leader.nivel || 'lider');
-  const meusDepts  = getMeusDepts(leader);
-  const meusTurnos = getMeusTurnos(leader);
+  const meuIdx      = ORDEM_IDX.indexOf(leader.nivel || 'lider');
+  const meusDepts   = getMeusDepts(leader);
+  const meusTurnos  = getMeusTurnos(leader);
+  const meusFiliais = getMeusFiliais(leader);
+
+
   return allUsers.filter(u => {
     if (u.id === ADMIN_ID || u.nivel === 'admin_master' || u.id === leader.id) return false;
     const uIdx = ORDEM_IDX.indexOf(u.nivel || 'lider');
@@ -1024,51 +1034,71 @@ function getSubordinados(leader, allUsers) {
     // Deve compartilhar ao menos um departamento
     const deptOk = meusDepts.some(d => getMeusDepts(u).includes(d));
     if (!deptOk) return false;
-    // Se o líder tem turnos definidos, o subordinado também deve compartilhar ao menos um
+    // Turno: se QUALQUER lado tem turno definido, ambos devem ter E compartilhar ao menos um
     const uTurnos = getMeusTurnos(u);
-    const turnoOk = (meusTurnos.length && uTurnos.length)
-      ? meusTurnos.some(t => uTurnos.includes(t))
-      : true;
-    return turnoOk;
+    if (meusTurnos.length || uTurnos.length) {
+      if (!meusTurnos.length || !uTurnos.length || !meusTurnos.some(t => uTurnos.includes(t))) return false;
+    }
+    // Filial: se QUALQUER lado tem filial definida, ambos devem ter E compartilhar ao menos uma.
+    const uFiliais = getMeusFiliais(u);
+    const filialPass = !(meusFiliais.length || uFiliais.length) ||
+                       (meusFiliais.length && uFiliais.length && meusFiliais.some(f => uFiliais.includes(f)));
+
+
+    if (!filialPass) return false;
+    return true;
   });
 }
 function getTeamTotal(leader, store) {
-  const allEmps  = store.employees || [];
-  const allUsers = Object.values(store.users||{}).filter(u=>u.id!==ADMIN_ID&&u.nivel!=='admin_master'&&u.id!==leader.id);
-  const meuIdx   = ORDEM_IDX.indexOf(leader.nivel||'lider');
-  const meusDepts= getMeusDepts(leader);
-  const meusTurnos=getMeusTurnos(leader);
+  const allEmps   = store.employees || [];
+  const allUsers  = Object.values(store.users||{}).filter(u=>u.id!==ADMIN_ID&&u.nivel!=='admin_master'&&u.id!==leader.id);
+  const meuIdx    = ORDEM_IDX.indexOf(leader.nivel||'lider');
+  const meusDepts = getMeusDepts(leader);
+  const meusTurnos= getMeusTurnos(leader);
+  const meusFiliais=getMeusFiliais(leader);
 
   let totalFuncionarios;
   if (!meusDepts.length) {
     totalFuncionarios = allEmps.filter(e=>(e.owner_id||e.ownerId)===leader.id).length;
   } else {
     totalFuncionarios = allEmps.filter(e => {
-      const deptOk  = meusDepts.includes(e.dept);
-      const turnoOk = meusTurnos.length ? meusTurnos.includes(e.turno) : true;
-      return deptOk && turnoOk;
+      const deptOk   = meusDepts.includes(e.dept);
+      const turnoOk  = meusTurnos.length  ? meusTurnos.includes(e.turno)   : true;
+      const filialOk = meusFiliais.length ? meusFiliais.includes(e.filial) : true;
+      return deptOk && turnoOk && filialOk;
     }).length;
   }
   const subordinados = allUsers.filter(u => {
     const uIdx = ORDEM_IDX.indexOf(u.nivel||'lider');
     if (uIdx >= meuIdx) return false;
     if (!meusDepts.length) return false;
-    return meusDepts.some(d=>getMeusDepts(u).includes(d));
+    const deptOk = meusDepts.some(d=>getMeusDepts(u).includes(d));
+    if (!deptOk) return false;
+    const uTurnos = getMeusTurnos(u);
+    const turnoOk = (meusTurnos.length && uTurnos.length)
+      ? meusTurnos.some(t=>uTurnos.includes(t)) : true;
+    const uFiliais = getMeusFiliais(u);
+    if (meusFiliais.length || uFiliais.length) {
+      if (!meusFiliais.length || !uFiliais.length || !meusFiliais.some(f=>uFiliais.includes(f))) return false;
+    }
+    return turnoOk;
   });
   return totalFuncionarios + subordinados.length;
 }
 function getLiderDoFuncionario(emp, store) {
   const users = Object.values(store.users||{});
-  const dept = emp.dept||'', turno = emp.turno||'';
+  const dept = emp.dept||'', turno = emp.turno||'', filial = emp.filial||'';
   for (const nivel of HIERARQUIA_ORDER.slice().reverse()) {
     const match = users.find(u => {
       if (u.id===ADMIN_ID||u.nivel==='admin_master') return false;
       if ((u.nivel||'lider')!==nivel) return false;
       const depts      = getMeusDepts(u);
       const liderTurno = u.perfil?.turno||'';
-      const deptOk     = depts.length ? depts.includes(dept) : (emp.owner_id||emp.ownerId)===u.id;
-      const turnoOk    = liderTurno ? liderTurno===turno : true;
-      return deptOk && turnoOk;
+      const liderFiliais= getMeusFiliais(u);
+      const deptOk    = depts.length ? depts.includes(dept) : (emp.owner_id||emp.ownerId)===u.id;
+      const turnoOk   = liderTurno ? liderTurno===turno : true;
+      const filialOk  = liderFiliais.length ? liderFiliais.includes(filial) : true;
+      return deptOk && turnoOk && filialOk;
     });
     if (match) return match;
   }
@@ -1851,21 +1881,27 @@ document.getElementById('modal-org-overlay').addEventListener('click', e => {
 
 // Subordinados diretos para o organograma (apenas o nível imediatamente abaixo)
 function getDirectSubsOrgChart(ldr, allLeaders) {
-  const myIdx    = ORDEM_IDX.indexOf(ldr.nivel||'lider');
-  const myDepts  = getMeusDepts(ldr);
-  const myTurnos = getMeusTurnos(ldr);
+  const myIdx     = ORDEM_IDX.indexOf(ldr.nivel||'lider');
+  const myDepts   = getMeusDepts(ldr);
+  const myTurnos  = getMeusTurnos(ldr);
+  const myFiliais = getMeusFiliais(ldr);
   for (let t = myIdx - 1; t >= 0; t--) {
     const found = allLeaders.filter(u => {
       if (ORDEM_IDX.indexOf(u.nivel||'lider') !== t) return false;
       // Deve compartilhar ao menos um departamento
       const deptOk = myDepts.some(d => getMeusDepts(u).includes(d));
       if (!deptOk) return false;
-      // Se o líder tem turnos definidos, o subordinado também deve compartilhar ao menos um
+      // Turno: se QUALQUER lado tem turno definido, ambos devem ter E compartilhar ao menos um
       const uTurnos = getMeusTurnos(u);
-      const turnoOk = (myTurnos.length && uTurnos.length)
-        ? myTurnos.some(t2 => uTurnos.includes(t2))
-        : true;
-      return turnoOk;
+      if (myTurnos.length || uTurnos.length) {
+        if (!myTurnos.length || !uTurnos.length || !myTurnos.some(t2 => uTurnos.includes(t2))) return false;
+      }
+      // Filial: se QUALQUER lado tem filial definida, ambos devem ter E compartilhar ao menos uma.
+      const uFiliais = getMeusFiliais(u);
+      if (myFiliais.length || uFiliais.length) {
+        if (!myFiliais.length || !uFiliais.length || !myFiliais.some(f => uFiliais.includes(f))) return false;
+      }
+      return true;
     });
     if (found.length) return found;
   }
