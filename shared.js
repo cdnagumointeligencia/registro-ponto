@@ -9,7 +9,7 @@ const AUTH_CODE_DEFAULT = 'NAGUMO2025';
 const NAV_ITEMS = [
   { id:'dashboard',    icon:'📊', label:'Dashboard',          href:'../index.html',      page:'dashboard'    },
   { id:'employees',    icon:'👥', label:'Funcionários',       href:'employees.html',     page:'employees'    },
-  { id:'leaders',      icon:'🧑‍💼', label:'Líderes',            href:'leaders.html',       page:'leaders'      },
+  { id:'leaders',      icon:'👔', label:'Líderes',            href:'leaders.html',       page:'leaders'      },
   { id:'absenteeism',  icon:'📅', label:'Absenteísmo',        href:'absenteeism.html',   page:'absenteeism'  },
   { id:'ranking',      icon:'🏆', label:'Ranking',            href:'ranking.html',       page:'ranking'      },
   { id:'quadro',       icon:'📋', label:'Quadro Operacional', href:'quadro.html',        page:'quadro'       },
@@ -94,9 +94,7 @@ async function requireSession() {
 function doLogout() {
   if (!confirm('Deseja sair?')) return;
   LS_LOCAL.remove('rh_session');   // síncrono — localStorage
-  window.close();
-  // Fallback: se window.close() for bloqueado pelo navegador, redireciona para login
-  setTimeout(() => { _redirectLogin(); }, 300);
+  _redirectLogin();
 }
 
 // ════════════════════════════════════════════════════════
@@ -292,7 +290,7 @@ function _initSidebarTooltip() {
 function renderSidebar(activeId, user) { initSidebar(activeId, user); }
 
 // ════════════════════════════════════════════════════════
-// BLOQUEIO DE AFASTADO / FÉRIAS / MATERNIDADE
+// BLOQUEIO DE AFASTADO / FÉRIAS
 // ════════════════════════════════════════════════════════
 function isEmpBloqueado(emp) {
   const hoje = new Date(); hoje.setHours(0,0,0,0);
@@ -302,17 +300,6 @@ function isEmpBloqueado(emp) {
       if (inicio <= hoje) return { bloqueado:true, motivo:'afastado' };
     } else {
       return { bloqueado:true, motivo:'afastado' };
-    }
-  }
-  if (emp.maternidade && emp.data_maternidade) {
-    const inicio = new Date(emp.data_maternidade + 'T00:00:00');
-    if (emp.data_maternidade_fim) {
-      // Com data de fim: bloqueia apenas dentro do intervalo
-      const fim = new Date(emp.data_maternidade_fim + 'T00:00:00');
-      if (inicio <= hoje && fim >= hoje) return { bloqueado:true, motivo:'maternidade' };
-    } else {
-      // Sem data de fim: bloqueia a partir do início (como afastado)
-      if (inicio <= hoje) return { bloqueado:true, motivo:'maternidade' };
     }
   }
   if (emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {
