@@ -1013,14 +1013,23 @@ function getTeamEmps(leader, allEmps) {
   });
 }
 function getSubordinados(leader, allUsers) {
-  const meuIdx    = ORDEM_IDX.indexOf(leader.nivel || 'lider');
-  const meusDepts = getMeusDepts(leader);
+  const meuIdx     = ORDEM_IDX.indexOf(leader.nivel || 'lider');
+  const meusDepts  = getMeusDepts(leader);
+  const meusTurnos = getMeusTurnos(leader);
   return allUsers.filter(u => {
     if (u.id === ADMIN_ID || u.nivel === 'admin_master' || u.id === leader.id) return false;
     const uIdx = ORDEM_IDX.indexOf(u.nivel || 'lider');
     if (uIdx >= meuIdx) return false;
     if (!meusDepts.length) return false;
-    return meusDepts.some(d => getMeusDepts(u).includes(d));
+    // Deve compartilhar ao menos um departamento
+    const deptOk = meusDepts.some(d => getMeusDepts(u).includes(d));
+    if (!deptOk) return false;
+    // Se o líder tem turnos definidos, o subordinado também deve compartilhar ao menos um
+    const uTurnos = getMeusTurnos(u);
+    const turnoOk = (meusTurnos.length && uTurnos.length)
+      ? meusTurnos.some(t => uTurnos.includes(t))
+      : true;
+    return turnoOk;
   });
 }
 function getTeamTotal(leader, store) {
@@ -1842,12 +1851,21 @@ document.getElementById('modal-org-overlay').addEventListener('click', e => {
 
 // Subordinados diretos para o organograma (apenas o nível imediatamente abaixo)
 function getDirectSubsOrgChart(ldr, allLeaders) {
-  const myIdx   = ORDEM_IDX.indexOf(ldr.nivel||'lider');
-  const myDepts = getMeusDepts(ldr);
+  const myIdx    = ORDEM_IDX.indexOf(ldr.nivel||'lider');
+  const myDepts  = getMeusDepts(ldr);
+  const myTurnos = getMeusTurnos(ldr);
   for (let t = myIdx - 1; t >= 0; t--) {
     const found = allLeaders.filter(u => {
       if (ORDEM_IDX.indexOf(u.nivel||'lider') !== t) return false;
-      return myDepts.some(d => getMeusDepts(u).includes(d));
+      // Deve compartilhar ao menos um departamento
+      const deptOk = myDepts.some(d => getMeusDepts(u).includes(d));
+      if (!deptOk) return false;
+      // Se o líder tem turnos definidos, o subordinado também deve compartilhar ao menos um
+      const uTurnos = getMeusTurnos(u);
+      const turnoOk = (myTurnos.length && uTurnos.length)
+        ? myTurnos.some(t2 => uTurnos.includes(t2))
+        : true;
+      return turnoOk;
     });
     if (found.length) return found;
   }
