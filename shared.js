@@ -304,12 +304,15 @@ function isEmpBloqueado(emp) {
       return { bloqueado:true, motivo:'afastado' };
     }
   }
-  if (emp.maternidade) {
-    if (emp.data_maternidade) {
-      const inicio = new Date(emp.data_maternidade + 'T00:00:00');
-      if (inicio <= hoje) return { bloqueado:true, motivo:'maternidade' };
+  if (emp.maternidade && emp.data_maternidade) {
+    const inicio = new Date(emp.data_maternidade + 'T00:00:00');
+    if (emp.data_maternidade_fim) {
+      // Com data de fim: bloqueia apenas dentro do intervalo
+      const fim = new Date(emp.data_maternidade_fim + 'T00:00:00');
+      if (inicio <= hoje && fim >= hoje) return { bloqueado:true, motivo:'maternidade' };
     } else {
-      return { bloqueado:true, motivo:'maternidade' };
+      // Sem data de fim: bloqueia a partir do início (como afastado)
+      if (inicio <= hoje) return { bloqueado:true, motivo:'maternidade' };
     }
   }
   if (emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {

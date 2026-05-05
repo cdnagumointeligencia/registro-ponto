@@ -898,12 +898,16 @@ function getStatusDiaBloqueado(emp, ano, mes, dia) {
     if (dt >= inicio && dt <= hoje) return 'afastado';
   }
 
-  // Maternidade: do início até HOJE (mesmas regras do afastado)
-  if (emp.maternidade) {
-    const inicio = emp.data_maternidade
-      ? new Date(emp.data_maternidade + 'T00:00:00')
-      : new Date(0);
-    if (dt >= inicio && dt <= hoje) return 'maternidade';
+  // Maternidade: intervalo fixo início/fim (igual às férias — inclui dias futuros pois é programado)
+  if (emp.maternidade && emp.data_maternidade) {
+    const ini = new Date(emp.data_maternidade + 'T00:00:00');
+    if (emp.data_maternidade_fim) {
+      const fim = new Date(emp.data_maternidade_fim + 'T00:00:00');
+      if (dt >= ini && dt <= fim) return 'maternidade';
+    } else {
+      // Sem data de fim: bloqueia do início até hoje (igual ao afastado)
+      if (dt >= ini && dt <= hoje) return 'maternidade';
+    }
   }
 
   // Férias: intervalo fixo início/fim (inclui dias futuros pois é programado)
@@ -989,26 +993,29 @@ async function gravarHistoricoAfastamento(emps, allPonto) {
       if (mudouFerias) allPonto[key] = mPonto;
     }
 
-    // ── Licença Maternidade — mesmas regras do afastado (do início até HOJE) ──
-    if (emp.maternidade) {
-      const inicio = emp.data_maternidade
-        ? new Date(emp.data_maternidade + 'T00:00:00')
-        : new Date(0);
+    // ── Licença Maternidade — intervalo completo início/fim (igual às férias) ──
+    if (emp.maternidade && emp.data_maternidade) {
+      const ini = new Date(emp.data_maternidade + 'T00:00:00');
+      const fim = emp.data_maternidade_fim
+        ? new Date(emp.data_maternidade_fim + 'T00:00:00')
+        : hoje; // sem data de fim: bloqueia só até hoje
 
       const key    = `${emp.id}_${anoAtivo}_${String(mesAtivo+1).padStart(2,'0')}`;
       const mPonto = allPonto[key] || {};
+      let   mudouMat = false;
 
       for (let d = 1; d <= diasMes; d++) {
         const dt = new Date(anoAtivo, mesAtivo, d); dt.setHours(0,0,0,0);
-        if (dt < inicio || dt > hoje) continue;
+        if (dt < ini || dt > fim) continue;
         if (!mPonto[d] || mPonto[d] === 'maternidade') {
           if (mPonto[d] !== 'maternidade') {
             mPonto[d]    = 'maternidade';
             houveMudanca = true;
+            mudouMat     = true;
           }
         }
       }
-      if (houveMudanca) allPonto[key] = mPonto;
+      if (mudouMat) allPonto[key] = mPonto;
     }
   }
 
@@ -1172,13 +1179,13 @@ async function renderGrade() {
             const hoje2 = new Date(); hoje2.setHours(0,0,0,0);
             return dt >= inicio && dt <= hoje2;
           }
-          if (bloqDia === 'maternidade' && emp.maternidade) {
-            const inicio = emp.data_maternidade
-              ? new Date(emp.data_maternidade + 'T00:00:00')
-              : new Date(0);
+          if (bloqDia === 'maternidade' && emp.maternidade && emp.data_maternidade) {
+            const ini = new Date(emp.data_maternidade + 'T00:00:00');
+            const fim = emp.data_maternidade_fim
+              ? new Date(emp.data_maternidade_fim + 'T00:00:00')
+              : hoje2;
             const dt  = new Date(anoAtivo, mesAtivo, d); dt.setHours(0,0,0,0);
-            const hoje2 = new Date(); hoje2.setHours(0,0,0,0);
-            return dt >= inicio && dt <= hoje2;
+            return dt >= ini && dt <= fim;
           }
           if (bloqDia === 'ferias' && emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {
             const ini = new Date(emp.data_ferias_inicio + 'T00:00:00');
