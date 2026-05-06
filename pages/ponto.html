@@ -253,17 +253,17 @@ body.light-theme .day-col-header.hoje .day-num { color:#D40138 !important; }
 .emp-name-g { font-size:12px; font-weight:700; color:var(--text); white-space:nowrap; position:relative; cursor:default; }
 .emp-name-g[data-tooltip]::after {
   content: attr(data-tooltip);
-  position:absolute; bottom:calc(100% + 7px); left:0; transform:scale(.92);
+  position:absolute; top:calc(100% + 7px); left:0; transform:scale(.92);
   background:#1a1e2e; color:#fff; font-family:var(--font-body); font-size:12px; font-weight:500;
   white-space:nowrap; padding:5px 11px; border-radius:7px;
   border:1px solid var(--border); box-shadow:0 6px 20px rgba(0,0,0,.4);
   pointer-events:none; opacity:0; transition:opacity .18s ease, transform .18s ease;
-  z-index:999;
+  z-index:9999;
 }
 .emp-name-g[data-tooltip]::before {
-  content:''; position:absolute; bottom:calc(100% + 2px); left:14px;
-  border:5px solid transparent; border-top-color:#2a2f45;
-  pointer-events:none; opacity:0; transition:opacity .18s ease; z-index:999;
+  content:''; position:absolute; top:calc(100% + 2px); left:14px;
+  border:5px solid transparent; border-bottom-color:#2a2f45;
+  pointer-events:none; opacity:0; transition:opacity .18s ease; z-index:9999;
 }
 .emp-name-g[data-tooltip]:hover::after,
 .emp-name-g[data-tooltip]:hover::before { opacity:1; transform:scale(1); }
