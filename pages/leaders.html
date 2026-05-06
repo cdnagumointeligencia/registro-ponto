@@ -1282,9 +1282,35 @@ async function renderLeaders() {
     lista.forEach(u => { html += buildCard(u, store, isAdmin, u.id===highlightId); });
   });
 
-  // Seção operacional
-  let emps = store.employees || [];
-  if (activeDeptFilter) emps = emps.filter(e=>e.dept===activeDeptFilter);
+  // ── Filtro de filial no grid de líderes ─────────────────────────────────
+  // Determina filiais efetivas dos líderes visíveis e remove líderes de outras
+  // filiais quando o conjunto visível é homogêneo (ex: busca retornou só CD1).
+  if (leaders.length) {
+    const allEmpsForFilter = store.employees || [];
+    // Coleta todas as filiais efetivas dos líderes atualmente visíveis
+    const filiaisVisiveis = new Set(
+      leaders.flatMap(u => getEffectiveFiliais(u, allEmpsForFilter)).filter(Boolean)
+    );
+    // Se TODOS os líderes visíveis têm filial definida (pelo menos uma filial comum)
+    // então remove os líderes de outras filiais da lista
+    if (filiaisVisiveis.size > 0) {
+      leaders = leaders.filter(u => {
+        const uf = getEffectiveFiliais(u, allEmpsForFilter);
+        // Mantém se não tem filial definida (gerência/diretoria sem filial) OU
+        // se compartilha ao menos uma filial com o conjunto visível
+        return uf.length === 0 || uf.some(f => filiaisVisiveis.has(f));
+      });
+    }
+  }
+
+  // Seção operacional: mostra apenas os funcionários das equipes dos líderes visíveis
+  const allEmps = store.employees || [];
+  // Coleta o conjunto de IDs de funcionários de todos os líderes visíveis
+  const visibleTeamIds = new Set(
+    leaders.flatMap(u => getTeamEmps(u, allEmps).map(e => e.id))
+  );
+  let emps = allEmps.filter(e => visibleTeamIds.size > 0 ? visibleTeamIds.has(e.id) : true);
+  if (activeDeptFilter) emps = emps.filter(e => e.dept === activeDeptFilter);
 
   if (emps.length) {
     html += `
