@@ -80,15 +80,6 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 /* ════════════════════════════════════════════
    BARRA DE FILTROS + BUSCA
 ════════════════════════════════════════════ */
-.dept-select {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:9px; color:var(--text); font-family:var(--font-body);
-  font-size:13px; padding:8px 12px; outline:none;
-  transition:border-color .2s; cursor:pointer;
-}
-.dept-select:focus { border-color:var(--accent); }
-.dept-select option { background:var(--surface2); }
-
 .filter-bar {
   display:flex; align-items:center; gap:10px;
   margin-bottom:22px; flex-wrap:wrap;
@@ -683,34 +674,16 @@ body.light-theme #btn-organograma { background:rgba(6,182,212,.1); color:#0891b2
     <button class="btn btn-primary" id="btn-novo" onclick="openModal()">＋ Novo Líder</button>
   </div>
 
-  <!-- Filtros: Busca + chips de dept -->
+  <!-- Busca por nome -->
   <div class="filter-bar">
-
-    <!-- Busca simples — mesmo padrão de employees.html -->
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
       <input class="search-input" type="text" id="search-leader-input"
         placeholder="Buscar líder por nome..." oninput="renderLeaders()">
     </div>
-
-    <!-- Filtro por filial -->
-    <select class="dept-select" id="filial-leader-select" onchange="renderLeaders()">
-      <option value="">Todas as filiais</option>
-    </select>
-
-    <!-- Filtro por turno -->
-    <select class="dept-select" id="turno-leader-select" onchange="renderLeaders()">
-      <option value="">Todos os turnos</option>
-    </select>
-
-    <!-- Chips de departamento -->
-    <div id="dept-chips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-
-    <!-- Botão Organograma Circular (aparece durante busca ativa) -->
-    <button class="btn btn-sm" id="btn-organograma" style="display:none" onclick="openCircularOrg()">
-      🔵 Organograma Circular
-    </button>
-
+    <span style="font-size:12px;color:var(--muted);margin-left:4px">
+      Clique em qualquer card para ver a hierarquia completa
+    </span>
   </div>
 
   <!-- Grid de cards -->
@@ -935,7 +908,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const btnNovo = document.getElementById('btn-novo');
   if (btnNovo) btnNovo.style.display = perfil === 'admin_master' ? '' : 'none';
 
-  buildDeptChips();
+  
   renderLeaders();
 });
 
@@ -1225,7 +1198,7 @@ async function buildDeptChips() {
 
 function setDeptFilter(val) {
   activeDeptFilter = val;
-  buildDeptChips();
+  
   renderLeaders();
 }
 
@@ -1241,57 +1214,12 @@ async function renderLeaders() {
   const perfil  = getUserPerfil(currentUser);
   const isAdmin = perfil === 'admin_master';
 
-  // ── Popula e aplica filtro de filial ─────────────────────────────────
-  const allEmpsRef = store.employees || [];
-  const todasFiliais = [...new Set(
-    Object.values(store.users||{})
-      .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master')
-      .flatMap(u => getEffectiveFiliais(u, allEmpsRef))
-  )].filter(Boolean).sort();
-  const selFilialEl = document.getElementById('filial-leader-select');
-  if (selFilialEl && todasFiliais.length) {
-    const curFilial = selFilialEl.value;
-    selFilialEl.innerHTML = '<option value="">Todas as filiais</option>' +
-      todasFiliais.map(f => `<option value="${f}"${f===curFilial?' selected':''}>${f}</option>`).join('');
-    // Restaura seleção anterior se ainda existir
-    if (curFilial && todasFiliais.includes(curFilial)) selFilialEl.value = curFilial;
-  }
-  const filialFilter = selFilialEl?.value || '';
-
-  // ── Popula e aplica filtro de turno ──────────────────────────────────
-  const todosTurnos = [...new Set(allEmpsRef.map(e => e.turno).filter(Boolean))].sort();
-  const selTurnoEl  = document.getElementById('turno-leader-select');
-  if (selTurnoEl) {
-    const curTurno = selTurnoEl.value;
-    selTurnoEl.innerHTML = '<option value="">Todos os turnos</option>' +
-      todosTurnos.map(t => `<option value="${t}"${t===curTurno?' selected':''}>${t}</option>`).join('');
-    if (curTurno && todosTurnos.includes(curTurno)) selTurnoEl.value = curTurno;
-  }
-  const turnoFilter = selTurnoEl?.value || '';
-
   // Todos os líderes (exceto admin_master)
   let leaders = Object.values(store.users||{})
     .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
 
-  // Filtro por filial
-  if (filialFilter) {
-    leaders = leaders.filter(u =>
-      getEffectiveFiliais(u, allEmpsRef).includes(filialFilter)
-    );
-  }
-
-  // Filtro por turno (líderes que têm o turno no perfil OU cujos funcionários têm esse turno)
-  if (turnoFilter) {
-    leaders = leaders.filter(u => {
-      const lt = getMeusTurnos(u);
-      return lt.length ? lt.includes(turnoFilter) :
-        getTeamEmps(u, allEmpsRef).some(e => e.turno === turnoFilter);
-    });
-  }
-
-  // ── Filtra por busca de texto ──────────────────────────────────────
+  // Filtro por nome (busca)
   const searchText = (document.getElementById('search-leader-input')?.value || '').toLowerCase().trim();
-  let highlightId = null;
   if (searchText) {
     leaders = leaders.filter(u =>
       (u.name || '').toLowerCase().includes(searchText) ||
@@ -1300,81 +1228,19 @@ async function renderLeaders() {
     );
   }
 
-  // Filtro por departamento (mantém líderes que têm funcionários nesse dept)
-  if (activeDeptFilter) {
-    leaders = leaders.filter(u => {
-      const teamEmps = getTeamEmps(u, allEmpsRef);
-      return teamEmps.some(e => e.dept === activeDeptFilter);
-    });
-  }
-
-  // ── Expansão hierárquica ─────────────────────────────────────────────
-  // Quando qualquer filtro está ativo, expande a lista para incluir toda a
-  // árvore hierárquica dos líderes encontrados — igual ao modal de hierarquia.
-  // Isso garante que o grid mostre APENAS quem está sob o líder/encarregado
-  // encontrado, sem misturar líderes de outras filiais ou fora da hierarquia.
-  const anyFilterActive = searchText || filialFilter || turnoFilter || activeDeptFilter;
-  if (anyFilterActive && leaders.length) {
-    const allLeadersGlobal = Object.values(store.users||{})
-      .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
-
-    // Encontra os líderes de mais alto nível dentro do resultado filtrado
-    const rootSet = new Set(leaders.map(u => u.id));
-    const roots   = leaders.filter(u => {
-      // É raiz se nenhum dos outros líderes filtrados é seu superior direto
-      const idx = ORDEM_IDX.indexOf(u.nivel||'lider');
-      return !leaders.some(other =>
-        other.id !== u.id &&
-        ORDEM_IDX.indexOf(other.nivel||'lider') > idx &&
-        getSubordinados(other, allLeadersGlobal, allEmpsRef).some(s => s.id === u.id)
-      );
-    });
-
-    // Expande cada raiz com toda a sua árvore hierárquica
-    const treeIds = new Set(roots.map(r => r.id));
-    roots.forEach(root => {
-      getSubordinadosRecursivo(root.id, allLeadersGlobal, allEmpsRef)
-        .forEach(s => treeIds.add(s.id));
-    });
-
-    // Lista final: apenas líderes na árvore das raízes encontradas
-    leaders = allLeadersGlobal.filter(u => treeIds.has(u.id));
-  }
-
   const grid = document.getElementById('leaders-grid');
-
-  // ── Botão organograma circular ──
-  const btnOrg = document.getElementById('btn-organograma');
-  if (btnOrg) {
-    if (anyFilterActive && leaders.length) {
-      // Aponta para o líder de maior nível hierárquico no resultado
-      let firstVisible = null;
-      for (const nivel of HIERARQUIA_ORDER) {
-        firstVisible = leaders.find(u => (u.nivel||'lider') === nivel);
-        if (firstVisible) break;
-      }
-      if (!firstVisible) firstVisible = leaders[0];
-      _currentSearchLeaderId = firstVisible.id;
-      const firstName = firstVisible.name.split(' ')[0];
-      btnOrg.innerHTML = `🔵 Organograma de ${firstName}`;
-      btnOrg.style.display = '';
-    } else {
-      _currentSearchLeaderId = null;
-      btnOrg.style.display = 'none';
-    }
-  }
 
   if (!leaders.length) {
     grid.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">🧑‍💼</div>
-        <p style="font-size:14px">${anyFilterActive ? 'Nenhum resultado para este filtro' : 'Nenhum líder encontrado'}</p>
-        <p style="font-size:12px;margin-top:6px">${anyFilterActive ? 'Tente limpar os filtros.' : 'Cadastre novos usuários pelo botão acima.'}</p>
+        <p style="font-size:14px">${searchText ? 'Nenhum resultado para esta busca' : 'Nenhum líder encontrado'}</p>
+        <p style="font-size:12px;margin-top:6px">${searchText ? 'Tente limpar o filtro.' : 'Cadastre novos usuários pelo botão acima.'}</p>
       </div>`;
     return;
   }
 
-  // Agrupa por nível hierárquico
+  // Agrupa por nível
   const HIERARQUIA_META = {
     diretoria:   { label:'🏢 Diretoria',    cls:'diretoria'   },
     gerencia:    { label:'📊 Gerência',     cls:'gerencia'    },
@@ -1402,23 +1268,11 @@ async function renderLeaders() {
         <div class="hierarquia-linha"></div>
         <span style="font-size:11px;color:var(--muted);white-space:nowrap">${lista.length} ${lista.length===1?'pessoa':'pessoas'}</span>
       </div>`;
-    lista.forEach(u => { html += buildCard(u, store, isAdmin, u.id===highlightId); });
+    lista.forEach(u => { html += buildCard(u, store, isAdmin); });
   });
 
-  // ── Seção operacional ────────────────────────────────────────────────
-  // Quando filtro ativo: mostra apenas funcionários da equipe dos líderes visíveis.
-  // Sem filtro: respeita dept/filial/turno da seleção manual.
-  let emps;
-  if (anyFilterActive) {
-    // Pega apenas os funcionários que pertencem aos líderes da árvore atual
-    const visibleTeamIds = new Set(leaders.flatMap(u => getTeamEmps(u, allEmpsRef).map(e => e.id)));
-    emps = allEmpsRef.filter(e => visibleTeamIds.has(e.id));
-  } else {
-    emps = [...allEmpsRef];
-  }
-  if (activeDeptFilter) emps = emps.filter(e => e.dept   === activeDeptFilter);
-  if (filialFilter)     emps = emps.filter(e => e.filial === filialFilter);
-  if (turnoFilter)      emps = emps.filter(e => e.turno  === turnoFilter);
+  grid.innerHTML = html;
+}
 
   if (emps.length) {
     html += `
@@ -1521,23 +1375,21 @@ function buildCard(leader, store, isAdmin, isHighlight=false) {
   const podTransfer = isAdmin || (typeof can==='function' && can(currentUser,'leaders','transfer'));
   const podOcorr    = typeof can==='function' && can(currentUser,'leaders','ocorrencia');
 
+  // Botões admin: stopPropagation para não disparar o clique do card
   const adminBtns = (isAdmin || podOcorr) ? `
-    <div class="card-actions">
+    <div class="card-actions" onclick="event.stopPropagation()">
       ${isAdmin ? `<button class="btn btn-ghost btn-sm" onclick="editLeader('${leader.id}')">✏️ Editar</button>` : ''}
       ${isAdmin ? `<button class="btn btn-ghost btn-sm" onclick="resetLeaderPass('${leader.id}','${leader.name.replace(/'/g,"\\'")}')">🔑 Senha</button>` : ''}
       ${isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteLeader('${leader.id}')">✕ Remover</button>` : ''}
       ${podTransfer ? `<button class="btn btn-sm" style="background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.3)" onclick="openLeaderTransferModal('${leader.id}')">🔀 Transferir</button>` : ''}
       ${podOcorr    ? `<button class="btn btn-sm" style="background:rgba(167,139,250,.1);color:var(--accent2);border:1px solid rgba(167,139,250,.3)" onclick="openLeaderOcorrencia('${leader.id}')">📝 Ocorrência</button>` : ''}
-      <button class="btn btn-sm" style="background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.3)"
-        onclick="openTreeModal('${leader.id}')">🌳 Hierarquia</button>
-    </div>` : `
-    <div class="card-actions">
-      <button class="btn btn-sm" style="background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.3)"
-        onclick="openTreeModal('${leader.id}')">🌳 Hierarquia</button>
-    </div>`;
+    </div>` : '';
 
   return `
-  <div class="leader-card nivel-${nivel}${isHighlight?' highlight':''}${temAptPendente?' apt-pendente':''}">
+  <div class="leader-card nivel-${nivel}${temAptPendente?' apt-pendente':''}"
+       style="cursor:pointer"
+       onclick="openTreeModal('${leader.id}')"
+       title="Clique para ver a hierarquia de ${leader.name.split(' ')[0]}">
     <div class="card-header">
       <div class="leader-avatar">${leader.foto?`<img src="${leader.foto}" style="width:52px;height:52px;border-radius:50%;object-fit:cover">`:ini}</div>
       <div class="leader-info">
