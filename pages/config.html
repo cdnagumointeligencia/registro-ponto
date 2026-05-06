@@ -701,6 +701,31 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (perfil === 'admin_master') renderAdminMaster();
   if (perfil === 'admin_gestor') renderAdminGestor();
   if (perfil === 'lider')        renderLider();
+
+  // ── Auto-backup local (somente admin_master) ──────────────────────────────
+  // Toda vez que o admin abre Configurações, salva um snapshot no localStorage.
+  // Em caso de perda de dados no Firestore, permite recuperação via console.
+  if (perfil === 'admin_master') {
+    try {
+      const storeSnap = await getStore();
+      if ((storeSnap.employees || []).length > 0) {
+        const snap = {
+          rh_store:       storeSnap,
+          rh_ponto:       await LS.get('rh_ponto', {}),
+          rh_ocorrencias: await LS.get('rh_ocorrencias', []),
+          exported_at:    new Date().toISOString(),
+          version:        '2.0',
+          auto:           true,
+        };
+        localStorage.setItem('rh_autobackup', JSON.stringify(snap));
+        localStorage.setItem('rh_autobackup_ts', new Date().toLocaleString('pt-BR'));
+        console.log('[AutoBackup] Snapshot salvo localmente —',
+          storeSnap.employees.length, 'funcionários —', new Date().toLocaleString('pt-BR'));
+      }
+    } catch(e) {
+      console.warn('[AutoBackup] Falha ao salvar snapshot local:', e);
+    }
+  }
 });
 
 // ════════════════════════════════════════════════════════
@@ -1087,6 +1112,13 @@ async function exportarJSON() {
 }
 
 async function importarJSON(input) {
+  // Somente admin_master pode importar
+  if (currentUser?.nivel !== 'admin_master') {
+    showToast('⚠️ Apenas o Admin Master pode importar backups.','warn');
+    input.value = '';
+    return;
+  }
+
   const file = input.files[0];
   if (!file) return;
 
@@ -1105,18 +1137,30 @@ async function importarJSON(input) {
         return;
       }
 
-      const totalUsers   = Object.keys(data.rh_store.users).length;
-      const totalFiliais = (data.rh_store.filiais || []).length;
-      const exportedAt   = data.exported_at
+      const totalUsers        = Object.keys(data.rh_store.users).length;
+      const totalFiliais      = (data.rh_store.filiais || []).length;
+      const totalFuncionarios = (data.rh_store.employees || []).length;
+      const exportedAt        = data.exported_at
         ? new Date(data.exported_at).toLocaleString('pt-BR')
         : 'data desconhecida';
+
+      // Alerta extra se o arquivo não tiver funcionários
+      if (totalFuncionarios === 0) {
+        const prosseguir = confirm(
+          `⚠️ ATENÇÃO: este arquivo não contém funcionários!\n\n` +
+          `Importar vai apagar todos os funcionários cadastrados atualmente.\n\n` +
+          `Tem certeza que quer continuar?`
+        );
+        if (!prosseguir) { status.textContent = ''; input.value = ''; return; }
+      }
 
       const ok = confirm(
         `📦 Importar backup?\n\n` +
         `Exportado em: ${exportedAt}\n` +
-        `Usuários: ${totalUsers}\n` +
+        `Funcionários: ${totalFuncionarios}\n` +
+        `Usuários/Líderes: ${totalUsers}\n` +
         `Filiais: ${totalFiliais}\n\n` +
-        `⚠️ ATENÇÃO: isso vai substituir todos os dados atuais desta máquina.\n` +
+        `⚠️ ATENÇÃO: isso vai substituir TODOS os dados atuais.\n` +
         `Esta ação não pode ser desfeita.`
       );
       if (!ok) { status.textContent = ''; input.value = ''; return; }
