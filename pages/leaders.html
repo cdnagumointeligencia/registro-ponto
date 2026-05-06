@@ -80,6 +80,15 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 /* ════════════════════════════════════════════
    BARRA DE FILTROS + BUSCA
 ════════════════════════════════════════════ */
+.leader-name-select {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:9px; color:var(--text); font-family:var(--font-body);
+  font-size:13px; padding:8px 14px; outline:none; cursor:pointer;
+  transition:border-color .2s; min-width:220px;
+}
+.leader-name-select:focus { border-color:var(--accent); }
+.leader-name-select option { background:var(--surface2); }
+
 .filter-bar {
   display:flex; align-items:center; gap:10px;
   margin-bottom:22px; flex-wrap:wrap;
@@ -674,16 +683,19 @@ body.light-theme #btn-organograma { background:rgba(6,182,212,.1); color:#0891b2
     <button class="btn btn-primary" id="btn-novo" onclick="openModal()">＋ Novo Líder</button>
   </div>
 
-  <!-- Busca por nome -->
+  <!-- Filtros: Busca + chips de dept -->
   <div class="filter-bar">
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input class="search-input" type="text" id="search-leader-input"
-        placeholder="Buscar líder por nome..." oninput="renderLeaders()">
-    </div>
-    <span style="font-size:12px;color:var(--muted);margin-left:4px">
-      Clique em qualquer card para ver a hierarquia completa
-    </span>
+
+    <!-- Dropdown de líderes por nome -->
+    <select class="leader-name-select" id="leader-name-select" onchange="renderLeaders()">
+      <option value="">👥 Todos os líderes</option>
+    </select>
+
+    <!-- Botão Organograma Circular (aparece quando líder selecionado) -->
+    <button class="btn btn-sm" id="btn-organograma" style="display:none" onclick="openCircularOrg()">
+      🔵 Organograma Circular
+    </button>
+
   </div>
 
   <!-- Grid de cards -->
@@ -908,7 +920,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const btnNovo = document.getElementById('btn-novo');
   if (btnNovo) btnNovo.style.display = perfil === 'admin_master' ? '' : 'none';
 
-  
+  buildDeptChips();
   renderLeaders();
 });
 
@@ -1182,10 +1194,11 @@ function calcLeaderScore(teamEmps) {
 // CHIPS DE DEPARTAMENTO
 // ════════════════════════════════════════════════════════
 async function buildDeptChips() {
+  const wrap = document.getElementById('dept-chips');
+  if (!wrap) return; // elemento removido do layout — sai silenciosamente
   const store = _store || await getStore();
   const emps  = store.employees || [];
   const depts = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
-  const wrap  = document.getElementById('dept-chips');
 
   wrap.innerHTML = [
     { label:'Todos', val:'' },
@@ -1198,7 +1211,7 @@ async function buildDeptChips() {
 
 function setDeptFilter(val) {
   activeDeptFilter = val;
-  
+  buildDeptChips();
   renderLeaders();
 }
 
@@ -1214,21 +1227,41 @@ async function renderLeaders() {
   const perfil  = getUserPerfil(currentUser);
   const isAdmin = perfil === 'admin_master';
 
-  // Todos os líderes (exceto admin_master)
-  let leaders = Object.values(store.users||{})
-    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
+  // Todos os líderes (exceto admin_master), ordenados por nome
+  const allLeaders = Object.values(store.users||{})
+    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master')
+    .sort((a,b) => (a.name||'').localeCompare(b.name||'', 'pt-BR'));
 
-  // Filtro por nome (busca)
-  const searchText = (document.getElementById('search-leader-input')?.value || '').toLowerCase().trim();
-  if (searchText) {
-    leaders = leaders.filter(u =>
-      (u.name || '').toLowerCase().includes(searchText) ||
-      (u.setor || '').toLowerCase().includes(searchText) ||
-      ((u.perfil?.depts || []).some(d => d.toLowerCase().includes(searchText)))
-    );
+  // ── Popula o dropdown de nomes ──────────────────────────────────────
+  const sel = document.getElementById('leader-name-select');
+  if (sel) {
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">👥 Todos os líderes</option>' +
+      allLeaders.map(u => `<option value="${u.id}"${u.id===cur?' selected':''}>${u.name}</option>`).join('');
+    if (cur) sel.value = cur;
   }
+  const selectedId = sel?.value || '';
+
+  // ── Filtra: todos ou somente o selecionado ──────────────────────────
+  let leaders = selectedId
+    ? allLeaders.filter(u => u.id === selectedId)
+    : allLeaders;
 
   const grid = document.getElementById('leaders-grid');
+
+  // ── Botão organograma circular ──────────────────────────────────────
+  const btnOrg = document.getElementById('btn-organograma');
+  if (btnOrg) {
+    if (selectedId && leaders.length) {
+      _currentSearchLeaderId = leaders[0].id;
+      const firstName = leaders[0].name.split(' ')[0];
+      btnOrg.innerHTML = `🔵 Organograma de ${firstName}`;
+      btnOrg.style.display = '';
+    } else {
+      _currentSearchLeaderId = null;
+      btnOrg.style.display = 'none';
+    }
+  }
 
   if (!leaders.length) {
     grid.innerHTML = `
@@ -1268,11 +1301,12 @@ async function renderLeaders() {
         <div class="hierarquia-linha"></div>
         <span style="font-size:11px;color:var(--muted);white-space:nowrap">${lista.length} ${lista.length===1?'pessoa':'pessoas'}</span>
       </div>`;
-    lista.forEach(u => { html += buildCard(u, store, isAdmin); });
+    lista.forEach(u => { html += buildCard(u, store, isAdmin, u.id===highlightId); });
   });
 
-  grid.innerHTML = html;
-}
+  // Seção operacional
+  let emps = store.employees || [];
+  if (activeDeptFilter) emps = emps.filter(e=>e.dept===activeDeptFilter);
 
   if (emps.length) {
     html += `
@@ -1375,7 +1409,6 @@ function buildCard(leader, store, isAdmin, isHighlight=false) {
   const podTransfer = isAdmin || (typeof can==='function' && can(currentUser,'leaders','transfer'));
   const podOcorr    = typeof can==='function' && can(currentUser,'leaders','ocorrencia');
 
-  // Botões admin: stopPropagation para não disparar o clique do card
   const adminBtns = (isAdmin || podOcorr) ? `
     <div class="card-actions" onclick="event.stopPropagation()">
       ${isAdmin ? `<button class="btn btn-ghost btn-sm" onclick="editLeader('${leader.id}')">✏️ Editar</button>` : ''}
@@ -1383,13 +1416,19 @@ function buildCard(leader, store, isAdmin, isHighlight=false) {
       ${isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteLeader('${leader.id}')">✕ Remover</button>` : ''}
       ${podTransfer ? `<button class="btn btn-sm" style="background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.3)" onclick="openLeaderTransferModal('${leader.id}')">🔀 Transferir</button>` : ''}
       ${podOcorr    ? `<button class="btn btn-sm" style="background:rgba(167,139,250,.1);color:var(--accent2);border:1px solid rgba(167,139,250,.3)" onclick="openLeaderOcorrencia('${leader.id}')">📝 Ocorrência</button>` : ''}
-    </div>` : '';
+      <button class="btn btn-sm" style="background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.3)"
+        onclick="openTreeModal('${leader.id}')">🌳 Hierarquia</button>
+    </div>` : `
+    <div class="card-actions" onclick="event.stopPropagation()">
+      <button class="btn btn-sm" style="background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.3)"
+        onclick="openTreeModal('${leader.id}')">🌳 Hierarquia</button>
+    </div>`;
 
   return `
-  <div class="leader-card nivel-${nivel}${temAptPendente?' apt-pendente':''}"
+  <div class="leader-card nivel-${nivel}${isHighlight?' highlight':''}${temAptPendente?' apt-pendente':''}"
        style="cursor:pointer"
        onclick="openTreeModal('${leader.id}')"
-       title="Clique para ver a hierarquia de ${leader.name.split(' ')[0]}">
+       title="${leader.name} — clique para ver a hierarquia">
     <div class="card-header">
       <div class="leader-avatar">${leader.foto?`<img src="${leader.foto}" style="width:52px;height:52px;border-radius:50%;object-fit:cover">`:ini}</div>
       <div class="leader-info">
