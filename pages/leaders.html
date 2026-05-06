@@ -1054,12 +1054,31 @@ function getEffectiveFiliais(leader, allEmps) {
 function getTeamEmps(leader, allEmps) {
   const depts   = getMeusDepts(leader);
   const turnos  = getMeusTurnos(leader);
-  const filiais = getMeusFiliais(leader);
+
   if (!depts.length) return allEmps.filter(e=>(e.owner_id||e.ownerId)===leader.id);
+
+  // Filiais a usar: apenas EXPLÍCITAS no perfil ou inferidas via owner_id direto.
+  // NÃO usa inferência por dept+turno aqui — ela retornaria todas as filiais que
+  // compartilham o mesmo departamento, misturando CD1 e CD2 indevidamente.
+  let filiais = getMeusFiliais(leader);
+  if (!filiais.length) {
+    // Tenta inferir apenas pelos funcionários que têm vínculo direto (owner_id)
+    filiais = [...new Set(
+      allEmps
+        .filter(e => e.filial && (e.owner_id || e.ownerId) === leader.id)
+        .map(e => e.filial)
+    )];
+  }
+
+  // Em sistema multi-filial: se o líder não tem filial definida de forma alguma,
+  // retorna vazio — força o administrador a configurar a filial corretamente.
+  const sistemMultiFilial = new Set(allEmps.filter(e=>e.filial).map(e=>e.filial)).size > 1;
+  const filialOkSemDef    = !sistemMultiFilial; // mono-filial → sem restrição
+
   return allEmps.filter(e => {
     const deptOk   = depts.includes(e.dept);
     const turnoOk  = turnos.length  ? turnos.includes(e.turno)   : true;
-    const filialOk = filiais.length ? filiais.includes(e.filial) : true;
+    const filialOk = filiais.length ? filiais.includes(e.filial) : filialOkSemDef;
     return deptOk && turnoOk && filialOk;
   });
 }
@@ -1102,8 +1121,17 @@ function getTeamTotal(leader, store) {
   const meuIdx    = ORDEM_IDX.indexOf(leader.nivel||'lider');
   const meusDepts = getMeusDepts(leader);
   const meusTurnos= getMeusTurnos(leader);
-  // Usa filial efetiva (com inferência) para contagem consistente com a árvore
-  const meusFiliais = getEffectiveFiliais(leader, allEmps);
+
+  // Mesma lógica de getTeamEmps: usa apenas filiais explícitas ou via owner_id.
+  // NÃO infere por dept+turno para evitar cruzamento entre filiais distintas.
+  let meusFiliais = getMeusFiliais(leader);
+  if (!meusFiliais.length) {
+    meusFiliais = [...new Set(
+      allEmps.filter(e=>e.filial&&(e.owner_id||e.ownerId)===leader.id).map(e=>e.filial)
+    )];
+  }
+  const sistemMultiFilial = new Set(allEmps.filter(e=>e.filial).map(e=>e.filial)).size > 1;
+  const filialOkSemDef    = !sistemMultiFilial;
 
   let totalFuncionarios;
   if (!meusDepts.length) {
@@ -1112,7 +1140,7 @@ function getTeamTotal(leader, store) {
     totalFuncionarios = allEmps.filter(e => {
       const deptOk   = meusDepts.includes(e.dept);
       const turnoOk  = meusTurnos.length  ? meusTurnos.includes(e.turno)   : true;
-      const filialOk = meusFiliais.length ? meusFiliais.includes(e.filial) : true;
+      const filialOk = meusFiliais.length ? meusFiliais.includes(e.filial) : filialOkSemDef;
       return deptOk && turnoOk && filialOk;
     }).length;
   }
@@ -1282,35 +1310,9 @@ async function renderLeaders() {
     lista.forEach(u => { html += buildCard(u, store, isAdmin, u.id===highlightId); });
   });
 
-  // ── Filtro de filial no grid de líderes ─────────────────────────────────
-  // Determina filiais efetivas dos líderes visíveis e remove líderes de outras
-  // filiais quando o conjunto visível é homogêneo (ex: busca retornou só CD1).
-  if (leaders.length) {
-    const allEmpsForFilter = store.employees || [];
-    // Coleta todas as filiais efetivas dos líderes atualmente visíveis
-    const filiaisVisiveis = new Set(
-      leaders.flatMap(u => getEffectiveFiliais(u, allEmpsForFilter)).filter(Boolean)
-    );
-    // Se TODOS os líderes visíveis têm filial definida (pelo menos uma filial comum)
-    // então remove os líderes de outras filiais da lista
-    if (filiaisVisiveis.size > 0) {
-      leaders = leaders.filter(u => {
-        const uf = getEffectiveFiliais(u, allEmpsForFilter);
-        // Mantém se não tem filial definida (gerência/diretoria sem filial) OU
-        // se compartilha ao menos uma filial com o conjunto visível
-        return uf.length === 0 || uf.some(f => filiaisVisiveis.has(f));
-      });
-    }
-  }
-
-  // Seção operacional: mostra apenas os funcionários das equipes dos líderes visíveis
-  const allEmps = store.employees || [];
-  // Coleta o conjunto de IDs de funcionários de todos os líderes visíveis
-  const visibleTeamIds = new Set(
-    leaders.flatMap(u => getTeamEmps(u, allEmps).map(e => e.id))
-  );
-  let emps = allEmps.filter(e => visibleTeamIds.size > 0 ? visibleTeamIds.has(e.id) : true);
-  if (activeDeptFilter) emps = emps.filter(e => e.dept === activeDeptFilter);
+  // Seção operacional
+  let emps = store.employees || [];
+  if (activeDeptFilter) emps = emps.filter(e=>e.dept===activeDeptFilter);
 
   if (emps.length) {
     html += `
