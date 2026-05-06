@@ -273,6 +273,44 @@ async function doLogin() {
   if (user.pass !== pass) { showMsg('login-msg','❌ Senha incorreta.','error');        return; }
   LS_LOCAL.set('rh_session', id);
   await registrarLog('login', 'Sistema', `Entrou no sistema`, user);
+
+  // ── Backup automático ao logar como admin_master ──────────────────────────
+  if (user.nivel === 'admin_master') {
+    try {
+      const funcionarios = (store.employees || []).length;
+      const ultimoBackup = localStorage.getItem('rh_autobackup_ts') || 'nunca';
+
+      const fazer = confirm(
+        `💾 Deseja fazer backup antes de entrar?\n\n` +
+        `Funcionários cadastrados: ${funcionarios}\n` +
+        `Último backup local: ${ultimoBackup}\n\n` +
+        `Clique em OK para baixar o arquivo de backup.\n` +
+        `Clique em Cancelar para entrar sem fazer backup.`
+      );
+
+      if (fazer) {
+        const payload = {
+          rh_store:       store,
+          rh_ponto:       await window.DB.get('rh_ponto', {}),
+          rh_ocorrencias: await window.DB.get('rh_ocorrencias', []),
+          exported_at:    new Date().toISOString(),
+          version:        '2.0',
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement('a');
+        const date = new Date().toISOString().slice(0, 10);
+        a.href     = url;
+        a.download = `rh-nagumo-backup-${date}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        localStorage.setItem('rh_autobackup_ts', new Date().toLocaleString('pt-BR'));
+      }
+    } catch(e) {
+      console.warn('[Backup login] Erro:', e);
+    }
+  }
+
   window.location.href = 'index.html';
 }
 
