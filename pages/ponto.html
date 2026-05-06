@@ -101,14 +101,16 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .content { padding:18px 24px; flex:1; }
 
 /* ── Painéis (dept + período) ── */
-.panels-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:14px; }
+.panels-row { display:flex; gap:14px; margin-bottom:14px; align-items:stretch; }
 .panel { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px 18px; }
 .panel-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:10px; display:flex; align-items:center; gap:6px; }
 .dept-chips  { display:flex; gap:8px; flex-wrap:wrap; }
 #filial-chips,
 #turno-chips { flex-direction:column; align-items:flex-start; }
 .panel:has(#filial-chips),
-.panel:has(#turno-chips) { justify-self:start; min-width:140px; }
+.panel:has(#turno-chips) { flex:0 0 auto; min-width:140px; }
+.panel:has(#dept-chips)  { flex:1; }
+.panel:has(#mes-chips)   { flex:0 0 auto; }
 .dept-btn {
   display:inline-flex; align-items:center; gap:6px; padding:7px 14px;
   border-radius:8px; border:1.5px solid var(--border); background:var(--surface2);
@@ -341,17 +343,14 @@ body.light-theme .status-dot.vazio      { background:#DCE6EE; border-color:#B0C4
 /* ── Responsive ── */
 @media(max-width:1024px) {
   :root { --sidebar-w:56px; }
-  
-  
-  
-  
-
-  .panels-row { grid-template-columns:1fr 1fr; }
+  .panels-row { flex-wrap:wrap; }
+  .panel:has(#dept-chips) { min-width:300px; }
 }
 @media(max-width:768px) {
   :root { --sidebar-w:0px; }
-  
-  .panels-row { grid-template-columns:1fr 1fr; }
+  .panels-row { flex-wrap:wrap; }
+  .panel:has(#dept-chips),
+  .panel:has(#mes-chips) { flex:1 1 100%; }
 }
 
 }
