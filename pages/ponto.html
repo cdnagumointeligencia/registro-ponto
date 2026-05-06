@@ -527,6 +527,12 @@ body.light-theme .reset-btn-cancel:hover { background:#EBF1F7; }
         <div class="dept-chips" id="dept-chips"></div>
       </div>
 
+      <!-- Turno -->
+      <div class="panel">
+        <div class="panel-label">🕐 Turno</div>
+        <div class="dept-chips" id="turno-chips"></div>
+      </div>
+
       <!-- Período -->
       <div class="panel">
         <div class="panel-label">📅 Período</div>
@@ -625,6 +631,7 @@ const nomeAbrev = (emp, lista) => {
 };
 let filialAtiva  = '';
 let deptAtivo    = '';
+let turnoAtivo   = '';
 let mesAtivo     = new Date().getMonth();      // 0–11
 let anoAtivo     = new Date().getFullYear();
 let podeEditar   = false;
@@ -674,7 +681,9 @@ function getEmpsDoDepto() {
   if (!deptAtivo) return [];
   let list = getMyEmployees();
   if (filialAtiva) list = list.filter(e=>e.filial===filialAtiva);
-  return list.filter(e=>e.dept===deptAtivo);
+  list = list.filter(e=>e.dept===deptAtivo);
+  if (turnoAtivo) list = list.filter(e=>e.turno===turnoAtivo);
+  return list;
 }
 
 
@@ -709,6 +718,7 @@ async function buildFilialChips() {
 
 function selecionarFilial(filial) {
   filialAtiva = filial;
+  turnoAtivo  = '';
   document.querySelectorAll('#filial-chips .dept-btn').forEach(b=>{
     const label = b.textContent.trim().replace('🏭 ','');
     b.classList.toggle('active', filial === '' ? label === 'Todas' : label === filial);
@@ -740,12 +750,53 @@ function buildDeptChips() {
 }
 
 function selecionarDept(dept) {
-  deptAtivo = dept;
-  document.querySelectorAll('.dept-btn').forEach(b=>{
-    b.classList.toggle('active', b.textContent.trim().endsWith(dept));
+  deptAtivo  = dept;
+  turnoAtivo = '';
+  document.querySelectorAll('#dept-chips .dept-btn').forEach(b=>{
+    b.classList.toggle('active', b.textContent.trim().replace('🏢 ','') === dept);
   });
   document.getElementById('grade-badge-dept').textContent = dept;
   atualizarHint();
+  buildTurnoChips();
+}
+
+// ════════════════════════════════════════════════════════
+// TURNO CHIPS
+// ════════════════════════════════════════════════════════
+function buildTurnoChips() {
+  let emps = getMyEmployees();
+  if (filialAtiva) emps = emps.filter(e=>e.filial===filialAtiva);
+  if (deptAtivo)   emps = emps.filter(e=>e.dept===deptAtivo);
+  const turnos = [...new Set(emps.map(e=>e.turno))].filter(Boolean).sort();
+  const wrap   = document.getElementById('turno-chips');
+  if (!wrap) { renderGrade(); return; }
+
+  if (!turnos.length) {
+    wrap.innerHTML = `<span style="color:var(--muted);font-size:13px">—</span>`;
+    renderGrade();
+    return;
+  }
+
+  const todosBtn = turnos.length > 1
+    ? `<button class="dept-btn ${!turnoAtivo?'active':''}" onclick="selecionarTurno('')">🕐 Todos</button>`
+    : '';
+
+  wrap.innerHTML = todosBtn + turnos.map(t=>`
+    <button class="dept-btn ${t===turnoAtivo?'active':''}" onclick="selecionarTurno('${t}')">
+      🕐 ${t}
+    </button>`).join('');
+
+  // Auto-seleciona se só um turno
+  if (!turnoAtivo && turnos.length === 1) { turnoAtivo = turnos[0]; }
+  renderGrade();
+}
+
+function selecionarTurno(turno) {
+  turnoAtivo = turno;
+  document.querySelectorAll('#turno-chips .dept-btn').forEach(b=>{
+    const label = b.textContent.trim().replace('🕐 ','');
+    b.classList.toggle('active', turno === '' ? label === 'Todos' : label === turno);
+  });
   renderGrade();
 }
 
