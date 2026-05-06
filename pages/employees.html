@@ -987,36 +987,54 @@ function canVerDemitidos() {
 
 // Retorna o líder/responsável direto do funcionário com base no dept e turno atuais
 function getLiderDoFuncionario(emp) {
-  const users = Object.values(_store?.users || {});
-  const dept  = emp.dept  || '';
-  const turno = emp.turno || '';
+  // IMPORTANTE: ordena por ID para garantir resultado determinístico entre reloads.
+  // Object.values() não garante ordem estável — sem isso, dois líderes do mesmo dept
+  // competem e o vencedor muda a cada carregamento (bug de "líder que troca").
+  const users = Object.values(_store?.users || {})
+    .sort((a, b) => String(a.id).localeCompare(String(b.id)));
+
+  const dept    = emp.dept  || '';
+  const turno   = emp.turno || '';
+  const ownerId = String(emp.owner_id || emp.ownerId || '');
 
   // Prioridade: lider operacional → encarregado → coordenação → gerencia → diretoria
   const PRIORIDADE = ['lider','encarregado','coordenacao','gerencia','diretoria'];
 
   for (const nivel of PRIORIDADE) {
-    const match = users.find(u => {
+    // Coleta TODOS os candidatos válidos do nível atual
+    const candidatos = users.filter(u => {
       if (u.id === ADMIN_ID || u.nivel === 'admin_master') return false;
       if ((u.nivel || 'lider') !== nivel) return false;
 
       // Gerência/Diretoria: responsável por todos
       if (['gerencia','diretoria'].includes(nivel)) return true;
 
-      const depts     = u.perfil?.depts || [];
-      const setor     = u.setor || '';
+      const depts      = u.perfil?.depts || [];
+      const setor      = u.setor || '';
       const liderTurno = u.perfil?.turno || '';
 
       // Verifica se o dept do funcionário está coberto pelo líder
-      const deptOk = depts.length || setor
+      const deptOk = (depts.length || setor)
         ? depts.includes(dept) || setor === dept
-        : (emp.owner_id || emp.ownerId) === u.id;
+        : ownerId === String(u.id);
 
       // Se o líder tem turno definido, o funcionário precisa estar no mesmo turno
       const turnoOk = liderTurno ? liderTurno === turno : true;
 
       return deptOk && turnoOk;
     });
-    if (match) return match;
+
+    if (!candidatos.length) continue;
+
+    // Dentro dos candidatos, prioriza o owner direto do funcionário (quem o cadastrou)
+    // Isso evita que um líder de outra filial/turno "vaze" para um funcionário de outro setor
+    if (ownerId) {
+      const ownerMatch = candidatos.find(u => String(u.id) === ownerId);
+      if (ownerMatch) return ownerMatch;
+    }
+
+    // Senão, retorna o primeiro candidato (ordem estável por ID)
+    return candidatos[0];
   }
   return null;
 }
