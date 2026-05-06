@@ -1236,18 +1236,20 @@ async function renderLeaders() {
   const perfil  = getUserPerfil(currentUser);
   const isAdmin = perfil === 'admin_master';
 
-  // ── Popula select de filiais (baseado nos líderes existentes) ──────────
-  const allEmpsForFilial = store.employees || [];
+  // ── Popula e aplica filtro de filial ─────────────────────────────────
+  const allEmpsRef = store.employees || [];
   const todasFiliais = [...new Set(
     Object.values(store.users||{})
       .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master')
-      .flatMap(u => getEffectiveFiliais(u, allEmpsForFilial))
+      .flatMap(u => getEffectiveFiliais(u, allEmpsRef))
   )].filter(Boolean).sort();
   const selFilialEl = document.getElementById('filial-leader-select');
-  if (selFilialEl) {
+  if (selFilialEl && todasFiliais.length) {
     const curFilial = selFilialEl.value;
     selFilialEl.innerHTML = '<option value="">Todas as filiais</option>' +
-      todasFiliais.map(f => `<option value="${f}" ${f===curFilial?'selected':''}>${f}</option>`).join('');
+      todasFiliais.map(f => `<option value="${f}"${f===curFilial?' selected':''}>${f}</option>`).join('');
+    // Restaura seleção anterior se ainda existir
+    if (curFilial && todasFiliais.includes(curFilial)) selFilialEl.value = curFilial;
   }
   const filialFilter = selFilialEl?.value || '';
 
@@ -1255,10 +1257,10 @@ async function renderLeaders() {
   let leaders = Object.values(store.users||{})
     .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
 
-  // ── Filtro por filial ─────────────────────────────────────────────────
+  // Filtro por filial
   if (filialFilter) {
     leaders = leaders.filter(u =>
-      getEffectiveFiliais(u, allEmpsForFilial).includes(filialFilter)
+      getEffectiveFiliais(u, allEmpsRef).includes(filialFilter)
     );
   }
 
