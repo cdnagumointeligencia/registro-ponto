@@ -250,23 +250,14 @@ body.light-theme .day-col-header.hoje .day-num { color:#D40138 !important; }
   display:flex; align-items:center; justify-content:center;
   font-family:var(--font-head); font-size:9px; font-weight:800; color:#fff;
 }
-.emp-name-g { font-size:12px; font-weight:700; color:var(--text); white-space:nowrap; position:relative; cursor:default; }
-.emp-name-g[data-tooltip]::after {
-  content: attr(data-tooltip);
-  position:absolute; top:calc(100% + 7px); left:0; transform:scale(.92);
+.emp-name-g { font-size:12px; font-weight:700; color:var(--text); white-space:nowrap; cursor:default; }
+#emp-tooltip {
+  position:fixed; z-index:99999; pointer-events:none;
   background:#1a1e2e; color:#fff; font-family:var(--font-body); font-size:12px; font-weight:500;
   white-space:nowrap; padding:5px 11px; border-radius:7px;
-  border:1px solid var(--border); box-shadow:0 6px 20px rgba(0,0,0,.4);
-  pointer-events:none; opacity:0; transition:opacity .18s ease, transform .18s ease;
-  z-index:9999;
+  border:1px solid var(--border); box-shadow:0 6px 20px rgba(0,0,0,.5);
+  opacity:0; transition:opacity .15s ease;
 }
-.emp-name-g[data-tooltip]::before {
-  content:''; position:absolute; top:calc(100% + 2px); left:14px;
-  border:5px solid transparent; border-bottom-color:#2a2f45;
-  pointer-events:none; opacity:0; transition:opacity .18s ease; z-index:9999;
-}
-.emp-name-g[data-tooltip]:hover::after,
-.emp-name-g[data-tooltip]:hover::before { opacity:1; transform:scale(1); }
 .emp-role-g { font-size:10px; color:var(--muted); }
 
 /* células de dia */
@@ -473,6 +464,7 @@ body.light-theme .reset-btn-cancel:hover { background:#EBF1F7; }
 <!-- Context menu -->
 <div class="ctx-menu" id="ctx-menu"></div>
 <div id="feriado-tooltip"></div>
+<div id="emp-tooltip"></div>
 
 <!-- Modal de confirmação de reset de ponto -->
 <div class="reset-overlay" id="reset-overlay">
@@ -1461,6 +1453,29 @@ document.addEventListener('mousemove', e => {
   _ferTip.style.top  = (rect.top - _ferTip.offsetHeight - 10) + 'px';
 });
 document.addEventListener('mouseleave', () => _ferTip.classList.remove('show'), true);
+
+// ── Tooltip de nome completo (fixed no body, sem clipping) ──────────────
+const _empTip = document.getElementById('emp-tooltip');
+document.addEventListener('mouseover', e => {
+  const el = e.target.closest('[data-tooltip]');
+  if (!el) return;
+  _empTip.textContent = el.dataset.tooltip;
+  _empTip.style.opacity = '1';
+});
+document.addEventListener('mousemove', e => {
+  const el = e.target.closest('[data-tooltip]');
+  if (!el) { _empTip.style.opacity = '0'; return; }
+  const rect = el.getBoundingClientRect();
+  const tx = rect.left;
+  const ty = rect.top - _empTip.offsetHeight - 8;
+  // Garante que não sai da tela pela direita
+  const maxX = window.innerWidth - _empTip.offsetWidth - 8;
+  _empTip.style.left = Math.min(tx, maxX) + 'px';
+  _empTip.style.top  = ty + 'px';
+});
+document.addEventListener('mouseout', e => {
+  if (!e.target.closest('[data-tooltip]')) _empTip.style.opacity = '0';
+});
 
 // ════════════════════════════════════════════════════════
 // LANÇAMENTO RÁPIDO — marca todos no dia selecionado
