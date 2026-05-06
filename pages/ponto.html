@@ -107,6 +107,8 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .dept-chips  { display:flex; gap:8px; flex-wrap:wrap; }
 #filial-chips,
 #turno-chips { flex-direction:column; align-items:flex-start; }
+.panel:has(#filial-chips),
+.panel:has(#turno-chips) { justify-self:start; min-width:140px; }
 .dept-btn {
   display:inline-flex; align-items:center; gap:6px; padding:7px 14px;
   border-radius:8px; border:1.5px solid var(--border); background:var(--surface2);
