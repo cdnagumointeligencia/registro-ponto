@@ -698,6 +698,11 @@ body.light-theme #btn-organograma { background:rgba(6,182,212,.1); color:#0891b2
       <option value="">Todas as filiais</option>
     </select>
 
+    <!-- Filtro por turno -->
+    <select class="dept-select" id="turno-leader-select" onchange="renderLeaders()">
+      <option value="">Todos os turnos</option>
+    </select>
+
     <!-- Chips de departamento -->
     <div id="dept-chips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
 
@@ -1253,6 +1258,17 @@ async function renderLeaders() {
   }
   const filialFilter = selFilialEl?.value || '';
 
+  // ── Popula e aplica filtro de turno ──────────────────────────────────
+  const todosTurnos = [...new Set(allEmpsRef.map(e => e.turno).filter(Boolean))].sort();
+  const selTurnoEl  = document.getElementById('turno-leader-select');
+  if (selTurnoEl) {
+    const curTurno = selTurnoEl.value;
+    selTurnoEl.innerHTML = '<option value="">Todos os turnos</option>' +
+      todosTurnos.map(t => `<option value="${t}"${t===curTurno?' selected':''}>${t}</option>`).join('');
+    if (curTurno && todosTurnos.includes(curTurno)) selTurnoEl.value = curTurno;
+  }
+  const turnoFilter = selTurnoEl?.value || '';
+
   // Todos os líderes (exceto admin_master)
   let leaders = Object.values(store.users||{})
     .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
@@ -1262,6 +1278,15 @@ async function renderLeaders() {
     leaders = leaders.filter(u =>
       getEffectiveFiliais(u, allEmpsRef).includes(filialFilter)
     );
+  }
+
+  // Filtro por turno (líderes que têm o turno no perfil OU cujos funcionários têm esse turno)
+  if (turnoFilter) {
+    leaders = leaders.filter(u => {
+      const lt = getMeusTurnos(u);
+      return lt.length ? lt.includes(turnoFilter) :
+        getTeamEmps(u, allEmpsRef).some(e => e.turno === turnoFilter);
+    });
   }
 
   // ── Filtra por busca de texto (igual a employees.html) ──
@@ -1348,9 +1373,11 @@ async function renderLeaders() {
     lista.forEach(u => { html += buildCard(u, store, isAdmin, u.id===highlightId); });
   });
 
-  // Seção operacional
+  // Seção operacional — filtrada por filial, turno e departamento
   let emps = store.employees || [];
-  if (activeDeptFilter) emps = emps.filter(e=>e.dept===activeDeptFilter);
+  if (activeDeptFilter) emps = emps.filter(e => e.dept   === activeDeptFilter);
+  if (filialFilter)     emps = emps.filter(e => e.filial === filialFilter);
+  if (turnoFilter)      emps = emps.filter(e => e.turno  === turnoFilter);
 
   if (emps.length) {
     html += `
