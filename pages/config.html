@@ -730,7 +730,8 @@ function renderLista(tipo, lista) {
   if (badge) badge.textContent = lista.length;
   if (!el) return;
 
-  el.innerHTML = lista.map(item =>
+  const listaSorted = lista.slice().sort((a,b) => a.nome.localeCompare(b.nome, 'pt-BR', { sensitivity:'base' }));
+  el.innerHTML = listaSorted.map(item =>
     `<div class="dept-item">
       <span class="dept-item-name" id="item-${tipo}-${item.id}">${item.nome}</span>
       <div style="display:flex;gap:4px">
@@ -907,7 +908,8 @@ async function renderUsers() {
   const store = await getStore();
   const box   = document.getElementById('users-list');
   if (!box) return;
-  const users = Object.values(store.users).filter(u => u.id !== ADMIN_ID);
+  const users = Object.values(store.users).filter(u => u.id !== ADMIN_ID)
+    .sort((a,b) => (a.name||'').localeCompare(b.name||'', 'pt-BR', { sensitivity:'base' }));
   if (!users.length) {
     box.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:4px 0">Nenhum usuário cadastrado além do admin.</div>';
     return;
