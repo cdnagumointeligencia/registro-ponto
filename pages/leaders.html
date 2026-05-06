@@ -3,20 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Organograma · RH Nagumo</title>
+<title>Líderes · RH Nagumo</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../sidebar.css">
 <link rel="stylesheet" href="../light-theme.css">
 <link rel="stylesheet" href="../responsive.css">
+<!-- Firebase Compat SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="../firebase.js"></script>
 <script src="../permissions.js"></script>
 <script src="../shared.js"></script>
 <style>
-/* ══════════════════════════════════════════════
+/* ════════════════════════════════════════════
    VARIÁVEIS
-══════════════════════════════════════════════ */
+════════════════════════════════════════════ */
 :root {
   --bg:#0b0d14; --surface:#12151f; --surface2:#1a1e2e; --surface3:#222638;
   --border:#2a2f45; --accent:#4f8ef7; --accent2:#a78bfa;
@@ -25,369 +26,327 @@
   --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
   --sidebar-w:220px;
 }
+/* [light-theme.css] body.light-theme { ... } */
+/* [light-theme.css] body.light-theme .main { background:#EEF2F8; } */
+/* [light-theme.css] body.light-theme .page-title { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .leader-card { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .leader-card:hover { border-color:#2563eb; } */
+/* [light-theme.css] body.light-theme .leader-name { color:#0f172a; } */
+/* [light-theme.css] body.light-theme .leader-role { color:#64748b; } */
+/* [light-theme.css] body.light-theme .stat-box { background:#F4F7FB; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .stat-label { color:#94a3b8; } */
+/* [light-theme.css] body.light-theme .score-footer { background:#EEF4FF; border-color:#C7D8FB; } */
+/* [light-theme.css] body.light-theme .score-footer span { color:#1D4ED8; } */
+/* [light-theme.css] body.light-theme .avatar-bubble { background:#E2E8F0; color:#475569; } */
+/* [light-theme.css] body.light-theme .modal { background:#fff; border-color:#E2E8F0; } */
+/* [light-theme.css] body.light-theme .modal input, body.light-theme .modal select { background:#F4F7FB; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .modal label { color:#475569; } */
+/* [light-theme.css] body.light-theme .overlay { background:rgba(15,23,42,.45); } */
+/* [light-theme.css] body.light-theme .search-input { background:#fff; border-color:#CBD5E1; color:#0f172a; } */
+/* [light-theme.css] body.light-theme .dept-chip { background:#fff; border-color:#CBD5E1; color:#64748b; } */
+/* [light-theme.css] body.light-theme .dept-chip.active { background:rgba(37,99,235,.1); border-color:#2563eb; color:#2563eb; } */
+/* [light-theme.css] body.light-theme .hierarquia-label.lider { background:rgba(100,116,139,.08); color:#475569; border-color:rgba(100,116,139,.25); } */
+/* [light-theme.css] body.light-theme .leader-card.nivel-lider { border-color:rgba(100,116,139,.35); } */
+/* [light-theme.css] body.light-theme .leader-card.nivel-lider:hover { border-color:#64748b; } */
+/* [light-theme.css] body.light-theme .leader-card.nivel-lider::before { background:linear-gradient(90deg,#cbd5e1,#e2e8f0); } */
+
+/* ── Base ── */
 * { box-sizing:border-box; margin:0; padding:0; }
 html { font-size:14px; }
-body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; }
-::-webkit-scrollbar { width:5px; height:5px; }
+body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
+::-webkit-scrollbar { width:6px; height:6px; }
 ::-webkit-scrollbar-track { background:var(--surface); }
 ::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
 
-/* ══ MAIN ══ */
+/* ── Main ── */
 .main { margin-left:var(--sidebar-w); padding:24px 28px; min-height:100vh; }
-.topbar {
-  display:flex; align-items:center; justify-content:space-between;
-  margin-bottom:20px; flex-wrap:wrap; gap:12px;
-}
-.page-title { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; }
+.topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; flex-wrap:wrap; gap:12px; }
+.page-title { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; color:var(--text); }
 
-/* ══ BOTÕES ══ */
+/* ── Botões ── */
 .btn {
-  display:inline-flex; align-items:center; gap:6px; padding:9px 16px;
+  display:inline-flex; align-items:center; gap:7px; padding:9px 16px;
   border-radius:8px; border:none; font-family:var(--font-body);
   font-size:12px; font-weight:600; cursor:pointer; transition:all .2s;
 }
 .btn-primary { background:var(--accent); color:#fff; }
-.btn-primary:hover { background:#3a7ae0; transform:translateY(-1px); box-shadow:0 4px 16px rgba(79,142,247,.35); }
+.btn-primary:hover { background:#3a7ae0; transform:translateY(-1px); box-shadow:0 4px 16px rgba(79,142,247,.4); }
 .btn-ghost { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
 .btn-ghost:hover { background:var(--surface3); }
-.btn-danger { background:rgba(248,113,113,.12); color:var(--red); border:1px solid rgba(248,113,113,.25); }
-.btn-danger:hover { background:rgba(248,113,113,.22); }
-.btn-sm { padding:5px 11px; font-size:11px; border-radius:7px; }
+.btn-danger { background:rgba(248,113,113,.15); color:var(--red); border:1px solid rgba(248,113,113,.3); }
+.btn-danger:hover { background:rgba(248,113,113,.25); }
+.btn-sm { padding:5px 11px; font-size:11px; }
 
-/* ══ FILTER BAR ══ */
-.filter-bar { margin-bottom:22px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-
-.leader-select-wrap { position:relative; }
-.leader-select-wrap::after {
-  content:'▾'; position:absolute; right:12px; top:50%; transform:translateY(-50%);
-  color:var(--muted); font-size:12px; pointer-events:none;
-}
-.leader-select {
-  appearance:none; background:var(--surface); border:1.5px solid var(--border);
-  border-radius:10px; color:var(--text); font-family:var(--font-body);
-  font-size:13px; font-weight:500; padding:9px 34px 9px 14px;
-  outline:none; cursor:pointer; transition:border-color .2s, box-shadow .2s;
-  min-width:240px;
-}
-.leader-select:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(79,142,247,.12); }
-.leader-select option { background:var(--surface2); }
-
-.filter-count {
-  font-size:12px; font-weight:600; color:var(--muted);
+/* ════════════════════════════════════════════
+   BARRA DE FILTROS + BUSCA
+════════════════════════════════════════════ */
+.leader-name-select {
   background:var(--surface); border:1px solid var(--border);
-  border-radius:8px; padding:6px 12px;
+  border-radius:9px; color:var(--text); font-family:var(--font-body);
+  font-size:13px; padding:8px 14px; outline:none; cursor:pointer;
+  transition:border-color .2s; min-width:220px;
+}
+.leader-name-select:focus { border-color:var(--accent); }
+.leader-name-select option { background:var(--surface2); }
+
+.filter-bar {
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:22px; flex-wrap:wrap;
 }
 
-/* ══ HIERARQUIA SEPARADORES ══ */
-.hier-sep {
-  grid-column:1/-1; display:flex; align-items:center; gap:12px;
-  margin-top:8px; margin-bottom:2px;
+/* Campo de busca — mesmo padrão de employees.html */
+.search-wrap { position:relative; }
+.search-icon {
+  position:absolute; left:11px; top:50%; transform:translateY(-50%);
+  color:var(--muted); font-size:14px; pointer-events:none;
 }
-.hier-sep:first-child { margin-top:0; }
-.hier-label {
-  font-family:var(--font-head); font-size:10px; font-weight:800;
-  text-transform:uppercase; letter-spacing:2px; white-space:nowrap;
-  padding:4px 13px; border-radius:20px;
+.search-input {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:9px; color:var(--text); font-family:var(--font-body);
+  font-size:13px; padding:8px 12px 8px 34px; outline:none;
+  transition:border-color .2s; width:220px;
 }
-.hier-line { flex:1; height:1px; background:var(--border); opacity:.5; }
-.hier-count { font-size:11px; color:var(--muted); white-space:nowrap; }
+.search-input:focus { border-color:var(--accent); }
+.search-input::placeholder { color:var(--muted); }
+body.light-theme .search-input { background:#fff; border-color:#B0C4D4; color:#04152E; }
+body.light-theme .search-input::placeholder { color:#7A9AB5; }
+body.light-theme .search-input:focus { border-color:#D40138; }
 
-.hier-label.diretoria   { background:rgba(251,146,60,.12);  color:#fb923c; border:1px solid rgba(251,146,60,.3);  }
-.hier-label.gerencia    { background:rgba(251,191,36,.12);  color:#fbbf24; border:1px solid rgba(251,191,36,.3);  }
-.hier-label.coordenacao { background:rgba(167,139,250,.12); color:#a78bfa; border:1px solid rgba(167,139,250,.3); }
-.hier-label.encarregado { background:rgba(34,211,238,.12);  color:#22d3ee; border:1px solid rgba(34,211,238,.3);  }
-.hier-label.lider       { background:rgba(79,142,247,.12);  color:#4f8ef7; border:1px solid rgba(79,142,247,.3);  }
+/* Chips de departamento */
+.dept-chip {
+  padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600;
+  cursor:pointer; border:1px solid var(--border); background:var(--surface);
+  color:var(--muted); transition:all .15s; user-select:none; white-space:nowrap;
+}
+.dept-chip:hover  { border-color:var(--accent); color:var(--text); }
+.dept-chip.active { background:rgba(79,142,247,.15); border-color:var(--accent); color:var(--accent); }
 
-/* ══ LEADERS GRID ══ */
+/* ════════════════════════════════════════════
+   HIERARQUIA — SEÇÕES
+════════════════════════════════════════════ */
+.hierarquia-secao {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 10px; margin-bottom: 4px;
+}
+.hierarquia-secao:first-child { margin-top: 0; }
+.hierarquia-label {
+  font-family: var(--font-head); font-size: 11px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 2px; white-space: nowrap;
+  padding: 4px 14px; border-radius: 20px;
+}
+.hierarquia-linha {
+  flex: 1; height: 1px; background: var(--border); opacity: 0.6;
+}
+.hierarquia-label.diretoria  { background:rgba(251,146,60,.15);  color:#fb923c; border:1px solid rgba(251,146,60,.35); }
+.hierarquia-label.gerencia   { background:rgba(167,139,250,.15); color:#a78bfa; border:1px solid rgba(167,139,250,.35); }
+.hierarquia-label.coordenacao{ background:rgba(251,191,36,.15);  color:#fbbf24; border:1px solid rgba(251,191,36,.35); }
+.hierarquia-label.encarregado{ background:rgba(52,211,153,.15);  color:#34d399; border:1px solid rgba(52,211,153,.35); }
+.hierarquia-label.lider      { background:rgba(255,255,255,.08); color:#e2e8f0; border:1px solid rgba(255,255,255,.2); }
+
+/* ════════════════════════════════════════════
+   LEADERS GRID
+════════════════════════════════════════════ */
 .leaders-grid {
   display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(300px,1fr));
-  gap:16px;
+  grid-template-columns:repeat(auto-fill, minmax(320px,1fr));
+  gap:18px;
 }
 
-/* ══ LEADER CARD — novo design ══ */
-.lcard {
-  background:var(--surface);
-  border:1.5px solid var(--border);
-  border-radius:16px;
-  overflow:hidden;
-  cursor:pointer;
-  transition:transform .2s, box-shadow .2s, border-color .2s;
+/* ── Card ── */
+.leader-card {
+  background:var(--surface); border:1.5px solid var(--border);
+  border-radius:16px; overflow:hidden;
+  transition:border-color .2s, transform .2s, box-shadow .2s;
   display:flex; flex-direction:column;
-  position:relative;
 }
-.lcard:hover { transform:translateY(-3px); }
+.leader-card.nivel-diretoria   { border-color:rgba(251,146,60,.6);  }
+.leader-card.nivel-gerencia    { border-color:rgba(167,139,250,.6); }
+.leader-card.nivel-coordenacao { border-color:rgba(251,191,36,.6);  }
+.leader-card.nivel-encarregado { border-color:rgba(52,211,153,.6);  }
+.leader-card.nivel-lider       { border-color:rgba(255,255,255,.25);}
 
-/* Faixas de cor por nível */
-.lcard.lvl-diretoria   { border-color:rgba(251,146,60,.5); }
-.lcard.lvl-gerencia    { border-color:rgba(251,191,36,.5); }
-.lcard.lvl-coordenacao { border-color:rgba(167,139,250,.5); }
-.lcard.lvl-encarregado { border-color:rgba(34,211,238,.5); }
-.lcard.lvl-lider       { border-color:rgba(79,142,247,.4); }
+.leader-card.nivel-diretoria:hover   { border-color:#fb923c; box-shadow:0 8px 28px rgba(251,146,60,.2);  transform:translateY(-3px); }
+.leader-card.nivel-gerencia:hover    { border-color:#a78bfa; box-shadow:0 8px 28px rgba(167,139,250,.2); transform:translateY(-3px); }
+.leader-card.nivel-coordenacao:hover { border-color:#fbbf24; box-shadow:0 8px 28px rgba(251,191,36,.2);  transform:translateY(-3px); }
+.leader-card.nivel-encarregado:hover { border-color:#34d399; box-shadow:0 8px 28px rgba(52,211,153,.2);  transform:translateY(-3px); }
+.leader-card.nivel-lider:hover       { border-color:rgba(255,255,255,.6); box-shadow:0 8px 28px rgba(255,255,255,.08); transform:translateY(-3px); }
 
-.lcard.lvl-diretoria:hover   { border-color:#fb923c; box-shadow:0 8px 32px rgba(251,146,60,.2); }
-.lcard.lvl-gerencia:hover    { border-color:#fbbf24; box-shadow:0 8px 32px rgba(251,191,36,.2); }
-.lcard.lvl-coordenacao:hover { border-color:#a78bfa; box-shadow:0 8px 32px rgba(167,139,250,.2); }
-.lcard.lvl-encarregado:hover { border-color:#22d3ee; box-shadow:0 8px 32px rgba(34,211,238,.2); }
-.lcard.lvl-lider:hover       { border-color:#4f8ef7; box-shadow:0 8px 32px rgba(79,142,247,.2); }
-
-/* Header colorido */
-.lcard-header {
-  position:relative; height:58px; flex-shrink:0;
-}
-.lcard-header-bg {
-  position:absolute; inset:0;
-  opacity:.18;
-}
-.lcard.lvl-diretoria   .lcard-header-bg { background:linear-gradient(135deg,#fb923c,#ef4444); }
-.lcard.lvl-gerencia    .lcard-header-bg { background:linear-gradient(135deg,#fbbf24,#f59e0b); }
-.lcard.lvl-coordenacao .lcard-header-bg { background:linear-gradient(135deg,#a78bfa,#7c3aed); }
-.lcard.lvl-encarregado .lcard-header-bg { background:linear-gradient(135deg,#22d3ee,#0891b2); }
-.lcard.lvl-lider       .lcard-header-bg { background:linear-gradient(135deg,#4f8ef7,#3b6fd4); }
-
-/* Stripe top */
-.lcard-stripe {
-  position:absolute; top:0; left:0; right:0; height:3px;
-}
-.lcard.lvl-diretoria   .lcard-stripe { background:linear-gradient(90deg,#fb923c,#ef4444); }
-.lcard.lvl-gerencia    .lcard-stripe { background:linear-gradient(90deg,#fbbf24,#f59e0b); }
-.lcard.lvl-coordenacao .lcard-stripe { background:linear-gradient(90deg,#a78bfa,#7c3aed); }
-.lcard.lvl-encarregado .lcard-stripe { background:linear-gradient(90deg,#22d3ee,#0891b2); }
-.lcard.lvl-lider       .lcard-stripe { background:linear-gradient(90deg,#4f8ef7,#3b6fd4); }
-
-/* Nível badge no header */
-.lcard-lvl-badge {
-  position:absolute; right:14px; top:50%; transform:translateY(-50%);
-  font-size:10px; font-weight:700; padding:3px 10px; border-radius:20px;
-  backdrop-filter:blur(4px);
+/* Card destacado (resultado de busca) */
+.leader-card.highlight {
+  box-shadow:0 0 0 2px var(--accent), 0 8px 28px rgba(79,142,247,.3) !important;
+  border-color:var(--accent) !important;
+  transform:translateY(-2px) !important;
 }
 
-/* ── Identidade ── */
-.lcard-identity {
-  display:flex; align-items:center; gap:14px;
-  padding:14px 16px 12px;
+/* ── Card do líder com aptidões pendentes — pulsante ── */
+.leader-card.apt-pendente {
+  border-color: rgba(244,114,182,.7) !important;
+  animation: leader-apt-pulse 2.6s ease-in-out infinite;
+  position: relative;
 }
-.lcard-avatar {
+.leader-card.apt-pendente::after {
+  content: '🎯';
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 16px;
+  animation: leader-apt-badge-pulse 2.6s ease-in-out infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+@keyframes leader-apt-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(244,114,182,.55); }
+  60%  { box-shadow: 0 0 0 10px rgba(244,114,182,.0);  }
+  100% { box-shadow: 0 0 0 0   rgba(244,114,182,.0);  }
+}
+@keyframes leader-apt-badge-pulse {
+  0%,100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(1.3); opacity: .7; }
+}
+/* Faixa superior do card pulsante — rosa/pink em vez da cor padrão do nível */
+.leader-card.apt-pendente::before {
+  background: linear-gradient(90deg,#f472b6,#a78bfa) !important;
+  animation: stripe-flow 1.8s linear infinite;
+  background-size: 200% 100% !important;
+}
+@keyframes stripe-flow {
+  0%   { background-position: 0%   }
+  100% { background-position: 200% }
+}
+/* Tooltip do badge */
+.apt-pendente-tooltip {
+  position: absolute; top: -34px; right: 0;
+  background: #1a1e2e; border: 1px solid rgba(244,114,182,.5);
+  border-radius: 8px; padding: 4px 10px;
+  font-size: 10px; font-weight: 700; color: #f472b6;
+  white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity .2s;
+  z-index: 10;
+}
+.leader-card.apt-pendente:hover .apt-pendente-tooltip { opacity: 1; }
+
+/* Tema claro */
+body.light-theme .leader-card.apt-pendente { border-color: rgba(219,39,119,.5) !important; }
+body.light-theme .leader-card.apt-pendente::after { filter: none; }
+@keyframes leader-apt-pulse-light {
+  0%   { box-shadow: 0 0 0 0   rgba(219,39,119,.4); }
+  60%  { box-shadow: 0 0 0 10px rgba(219,39,119,.0);  }
+  100% { box-shadow: 0 0 0 0   rgba(219,39,119,.0);  }
+}
+body.light-theme .leader-card.apt-pendente {
+  animation: leader-apt-pulse-light 2.6s ease-in-out infinite;
+}
+
+/* Banner inline no card (sem depender de ::after) */
+.leader-apt-banner {
+  display: flex; align-items: center; gap: 7px;
+  margin: 0 18px 10px;
+  padding: 7px 12px; border-radius: 8px;
+  background: rgba(244,114,182,.12);
+  border: 1px solid rgba(244,114,182,.35);
+  font-size: 11px; font-weight: 700; color: #f472b6;
+  cursor: pointer;
+  transition: background .15s;
+}
+.leader-apt-banner:hover { background: rgba(244,114,182,.22); }
+body.light-theme .leader-apt-banner {
+  background: rgba(219,39,119,.08); border-color: rgba(219,39,119,.3); color: #db2777;
+}
+
+.leader-card::before {
+  content:''; display:block; height:3px; background:var(--border); flex-shrink:0;
+}
+.leader-card.nivel-diretoria::before   { background:linear-gradient(90deg,#fb923c,#f97316); }
+.leader-card.nivel-gerencia::before    { background:linear-gradient(90deg,#a78bfa,#7c3aed); }
+.leader-card.nivel-coordenacao::before { background:linear-gradient(90deg,#fbbf24,#d97706); }
+.leader-card.nivel-encarregado::before { background:linear-gradient(90deg,#34d399,#059669); }
+.leader-card.nivel-lider::before       { background:linear-gradient(90deg,rgba(255,255,255,.4),rgba(255,255,255,.1)); }
+
+/* ── Card header ── */
+.card-header { padding:18px 18px 14px; display:flex; align-items:flex-start; gap:14px; }
+.leader-avatar {
   width:52px; height:52px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
   display:flex; align-items:center; justify-content:center;
   font-family:var(--font-head); font-size:17px; font-weight:800; color:#fff;
-  border:2.5px solid var(--border); overflow:hidden;
-  transition:border-color .2s;
 }
-.lcard:hover .lcard-avatar { border-color:transparent; }
-.lcard-info { flex:1; min-width:0; }
-.lcard-name {
-  font-family:var(--font-head); font-size:16px; font-weight:800; color:var(--text);
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; letter-spacing:-.4px;
+.leader-info { flex:1; min-width:0; }
+.leader-name { font-family:var(--font-head); font-size:17px; font-weight:800; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.leader-role { font-size:12px; color:var(--muted); margin-top:3px; }
+.leader-badge {
+  flex-shrink:0; display:inline-flex; align-items:center; gap:5px;
+  padding:4px 10px; border-radius:20px; font-size:10px; font-weight:700; white-space:nowrap;
 }
-.lcard-role { font-size:11.5px; color:var(--muted); margin-top:3px; }
 
-/* ── Metrics strip ── */
-.lcard-metrics {
-  display:flex; gap:0; border-top:1px solid var(--border); border-bottom:1px solid var(--border);
-}
-.lcard-metric {
-  flex:1; display:flex; flex-direction:column; align-items:center;
-  padding:10px 8px; position:relative;
-}
-.lcard-metric + .lcard-metric::before {
-  content:''; position:absolute; left:0; top:20%; bottom:20%;
-  width:1px; background:var(--border);
-}
-.lcard-metric-val {
-  font-family:var(--font-head); font-size:20px; font-weight:800; letter-spacing:-1px; line-height:1;
-}
-.lcard-metric-val.v-team   { color:var(--text); }
-.lcard-metric-val.v-desemp { color:var(--green); }
-.lcard-metric-val.v-score  { color:var(--accent2); }
-.lcard-metric-lbl { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-top:4px; }
-
-/* ── Stats row ── */
-.lcard-stats { display:flex; gap:6px; padding:10px 16px; flex-wrap:wrap; }
-.lcard-stat {
-  flex:1; min-width:80px; background:var(--surface2); border:1px solid var(--border);
-  border-radius:8px; padding:8px 10px;
-}
-.lcard-stat-lbl { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); margin-bottom:3px; }
-.lcard-stat-val { font-family:var(--font-head); font-size:17px; font-weight:800; letter-spacing:-1px; }
-.stat-green { color:var(--green); }
-.stat-red   { color:var(--red);   }
-.stat-warn  { color:var(--yellow);}
-.stat-text  { color:var(--text);  }
+/* ── Métricas ── */
+.card-metrics { padding:0 18px 14px; display:flex; gap:20px; align-items:flex-end; }
+.metric-big { display:flex; flex-direction:column; gap:2px; }
+.metric-big-val { font-family:var(--font-head); font-size:22px; font-weight:800; letter-spacing:-1px; }
+.metric-big-val.time   { color:var(--text); }
+.metric-big-val.desemp { color:var(--green); }
+.metric-big-val.score  { color:var(--accent2); }
+.metric-big-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; color:var(--muted); }
 
 /* ── Team avatars ── */
-.lcard-team { display:flex; align-items:center; gap:5px; padding:0 16px 12px; flex-wrap:wrap; }
-.lcard-team-lbl { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); width:100%; margin-bottom:6px; }
-.av-bubble {
-  width:28px; height:28px; border-radius:50%; background:var(--surface3); border:1.5px solid var(--border);
+.team-section { padding:0 18px 14px; }
+.team-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; color:var(--muted); margin-bottom:8px; }
+.team-avatars { display:flex; gap:5px; flex-wrap:wrap; align-items:center; }
+.avatar-bubble {
+  width:30px; height:30px; border-radius:50%;
+  background:var(--surface3); border:1.5px solid var(--border);
   display:flex; align-items:center; justify-content:center;
-  font-size:9px; font-weight:800; color:var(--muted); font-family:var(--font-head);
+  font-size:10px; font-weight:700; color:var(--muted); font-family:var(--font-head);
 }
-.av-more {
-  padding:0 7px; height:28px; border-radius:14px; background:var(--surface3); border:1.5px solid var(--border);
+.avatar-more {
+  padding:0 8px; height:30px; border-radius:15px;
+  background:var(--surface3); border:1.5px solid var(--border);
   display:flex; align-items:center; justify-content:center;
   font-size:10px; font-weight:700; color:var(--muted);
 }
 
-/* ── Tags (filial/turno) ── */
-.lcard-tags { display:flex; gap:5px; padding:0 16px 12px; flex-wrap:wrap; }
-.tag {
-  padding:3px 10px; border-radius:20px; font-size:10px; font-weight:700;
-  white-space:nowrap;
-}
-.tag-filial  { background:rgba(79,142,247,.1);  color:var(--accent);  border:1px solid rgba(79,142,247,.2);  }
-.tag-turno   { background:rgba(167,139,250,.1); color:var(--accent2); border:1px solid rgba(167,139,250,.2); }
-.tag-promo   { background:rgba(52,211,153,.1);  color:var(--green);   border:1px solid rgba(52,211,153,.2);  }
-.tag-risk    { background:rgba(248,113,113,.1); color:var(--red);     border:1px solid rgba(248,113,113,.2); }
+/* ── Stat boxes ── */
+.card-stats { padding:0 18px 14px; display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.stat-box { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:10px 14px; }
+.stat-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; color:var(--muted); margin-bottom:5px; }
+.stat-val { font-family:var(--font-head); font-size:20px; font-weight:800; letter-spacing:-1px; }
+.stat-val.assid  { color:var(--green); }
+.stat-val.faltas { color:var(--text); }
+.stat-val.promo  { color:var(--green); }
+.stat-val.risco  { color:var(--red); }
+.stat-val.assid.low { color:var(--yellow); }
 
-/* ── Apt banner ── */
-.lcard-apt {
-  display:flex; align-items:center; gap:7px;
-  margin:0 16px 10px; padding:7px 12px; border-radius:8px;
-  background:rgba(244,114,182,.1); border:1px solid rgba(244,114,182,.3);
-  font-size:11px; font-weight:700; color:#f472b6; cursor:pointer;
-  transition:background .15s;
+/* ── Score footer ── */
+.score-footer {
+  margin:0 18px 18px; padding:10px 16px;
+  background:rgba(79,142,247,.08); border:1px solid rgba(79,142,247,.2);
+  border-radius:10px; display:flex; align-items:center; gap:8px;
 }
-.lcard-apt:hover { background:rgba(244,114,182,.18); }
+.score-footer-label { font-size:12px; font-weight:600; color:var(--muted); flex:1; }
+.score-footer span  { font-family:var(--font-head); font-size:18px; font-weight:800; color:var(--accent2); }
 
-/* ── Org hint ── */
-.lcard-org-hint {
-  display:flex; align-items:center; justify-content:center; gap:7px;
-  margin:0 16px 12px; padding:7px 12px; border-radius:8px;
-  background:rgba(79,142,247,.06); border:1px solid rgba(79,142,247,.15);
-  font-size:11px; font-weight:600; color:var(--muted);
-  transition:background .15s, color .15s, border-color .15s;
-}
-.lcard:hover .lcard-org-hint {
-  background:rgba(79,142,247,.14); color:var(--accent); border-color:rgba(79,142,247,.35);
-}
+/* ── Ações admin ── */
+.card-actions { padding:0 18px 16px; display:flex; gap:8px; flex-wrap:wrap; }
 
-/* ── Admin actions ── */
-.lcard-actions {
-  display:flex; gap:6px; padding:0 16px 14px; flex-wrap:wrap;
-}
-.lcard-actions .btn { font-size:11px; padding:5px 10px; }
-
-/* ── Apt pendente animation ── */
-.lcard.apt-pendente { animation:card-apt-pulse 2.8s ease-in-out infinite; }
-.lcard.apt-pendente .lcard-stripe { animation:stripe-flow 1.8s linear infinite; background-size:200% !important; }
-@keyframes card-apt-pulse {
-  0%  { box-shadow:0 0 0 0 rgba(244,114,182,.5); }
-  60% { box-shadow:0 0 0 10px rgba(244,114,182,.0); }
-  100%{ box-shadow:0 0 0 0 rgba(244,114,182,.0); }
-}
-@keyframes stripe-flow { 0%{background-position:0%} 100%{background-position:200%} }
-
-/* ══ ORGANOGRAMA MODAL ══ */
-.ov {
-  position:fixed; inset:0; background:rgba(0,0,0,.78);
-  backdrop-filter:blur(5px); z-index:300;
-  display:none; align-items:center; justify-content:center; padding:16px;
-}
-.ov.open { display:flex; }
-
-.org-modal {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:20px; width:min(1100px, 97vw);
-  height:min(700px, 94vh);
-  display:flex; flex-direction:column;
-  animation:fadeUp .28s ease; overflow:hidden;
-}
-@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
-
-.org-hdr {
-  display:flex; align-items:center; gap:14px;
-  padding:16px 22px; border-bottom:1px solid var(--border);
-  flex-shrink:0;
-}
-.org-hdr-av {
-  width:44px; height:44px; border-radius:50%; flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-head); font-size:15px; font-weight:800; color:#fff; overflow:hidden;
-}
-.org-hdr-name { font-family:var(--font-head); font-size:17px; font-weight:800; color:var(--text); }
-.org-hdr-sub  { font-size:11px; color:var(--muted); margin-top:2px; }
-.org-close {
-  margin-left:auto; background:var(--surface2); border:1px solid var(--border);
-  border-radius:8px; padding:7px 14px; color:var(--muted); font-size:12px;
-  font-weight:600; cursor:pointer; transition:all .15s; font-family:var(--font-body);
-}
-.org-close:hover { border-color:var(--red); color:var(--red); }
-
-.org-hint-bar {
-  padding:6px 22px; font-size:10px; color:var(--muted);
-  background:var(--surface2); border-bottom:1px solid var(--border);
-  flex-shrink:0;
-}
-
-/* ── Painel de colunas ── */
-#org-panels {
-  flex:1; display:flex; flex-direction:row; align-items:stretch;
-  overflow-x:auto; overflow-y:hidden;
-  background:var(--border); gap:1px;
-}
-.org-panel {
-  width:258px; min-width:258px; background:var(--surface);
-  display:flex; flex-direction:column; flex-shrink:0;
-}
-.org-panel-hdr {
-  padding:13px 14px 11px; background:var(--surface2);
-  display:flex; align-items:center; gap:10px;
-  flex-shrink:0; border-bottom:2px solid var(--border);
-}
-.org-panel-av {
-  width:34px; height:34px; border-radius:50%; flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-head); font-size:12px; font-weight:800; color:#fff; overflow:hidden;
-}
-.org-panel-nm { font-family:var(--font-head); font-size:12px; font-weight:800; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.org-panel-rl { font-size:9.5px; color:var(--muted); margin-top:1px; }
-.org-panel-body { flex:1; overflow-y:auto; }
-
-.org-sec-lbl {
-  font-size:9px; font-weight:700; text-transform:uppercase;
-  letter-spacing:1.5px; color:var(--muted); padding:10px 14px 5px; user-select:none;
-}
-
-.org-item {
-  display:flex; align-items:center; gap:10px;
-  padding:9px 10px 9px 11px; cursor:pointer;
-  transition:background .12s; border-left:3px solid transparent;
-}
-.org-item:hover { background:var(--surface2); }
-.org-item.org-emp { cursor:default; border-left-color:rgba(79,142,247,.35); }
-.org-item.org-emp:hover { background:transparent; }
-
-.org-item-av {
-  width:30px; height:30px; border-radius:50%; flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-head); font-size:10px; font-weight:800;
-  color:#fff; overflow:hidden;
-}
-.org-item-av.emp-av { background:linear-gradient(135deg,#4f8ef7,#3b6fd4); }
-.org-item-info { flex:1; min-width:0; }
-.org-item-nm { font-size:12px; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.org-item-rl { font-size:9.5px; color:var(--muted); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.org-item-cnt { font-size:9px; color:var(--muted); margin-top:2px; }
-.org-item-arr { font-size:20px; color:var(--muted); flex-shrink:0; line-height:1; transition:all .12s; }
-.org-item:hover .org-item-arr { color:var(--accent); transform:translateX(2px); }
-.org-item-arr.sel { color:var(--accent); }
-
-/* ══ MODAL GENÉRICO ══ */
-.ov2 {
-  position:fixed; inset:0; background:rgba(0,0,0,.72);
-  backdrop-filter:blur(4px); z-index:400;
+/* ════════════════════════════════════════════
+   MODAL ÁRVORE HIERÁRQUICA
+════════════════════════════════════════════ */
+.overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.75);
+  backdrop-filter:blur(4px); z-index:200;
   display:none; align-items:center; justify-content:center; padding:20px;
 }
-.ov2.open { display:flex; }
+.overlay.open { display:flex; }
+
+/* Modal padrão */
 .modal {
   background:var(--surface); border:1px solid var(--border);
   border-radius:16px; padding:28px; width:500px;
   max-width:95vw; max-height:90vh; overflow-y:auto;
   animation:fadeUp .25s ease;
 }
-.modal-wide { width:560px; }
-.modal-title { font-family:var(--font-head); font-size:18px; font-weight:800; margin-bottom:20px; color:var(--text); }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.modal-title { font-family:var(--font-head); font-size:18px; font-weight:800; margin-bottom:22px; color:var(--text); }
 .modal-footer { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
 .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .form-group { display:flex; flex-direction:column; gap:6px; }
@@ -401,15 +360,176 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .form-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(79,142,247,.1); }
 .form-input option { background:var(--surface2); }
 
-/* ── Foto upload ── */
-.foto-wrap { display:flex; align-items:center; gap:14px; margin-bottom:4px; }
-.foto-prev {
-  width:64px; height:64px; border-radius:50%; border:2px solid var(--border); flex-shrink:0;
+/* Modal da árvore hierárquica — mais largo */
+.modal-tree {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; width:780px; max-width:96vw;
+  max-height:92vh; overflow:hidden;
+  display:flex; flex-direction:column;
+  animation:fadeUp .25s ease;
+}
+.modal-tree-header {
+  padding:20px 24px 16px; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:14px; flex-shrink:0;
+}
+.modal-tree-avatar {
+  width:46px; height:46px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:16px; font-weight:800; color:#fff;
+}
+.modal-tree-info { flex:1; }
+.modal-tree-name { font-family:var(--font-head); font-size:18px; font-weight:800; color:var(--text); }
+.modal-tree-sub  { font-size:12px; color:var(--muted); margin-top:3px; }
+.modal-tree-close {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; padding:6px 12px; color:var(--muted);
+  font-size:12px; font-weight:600; cursor:pointer;
+  transition:all .15s; display:flex; align-items:center; gap:5px;
+  font-family:var(--font-body);
+}
+.modal-tree-close:hover { border-color:var(--red); color:var(--red); }
+
+/* Breadcrumb de navegação */
+.tree-breadcrumb {
+  padding:10px 24px; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+  background:var(--surface2); flex-shrink:0; min-height:42px;
+}
+.tree-breadcrumb:empty { display:none; }
+.bc-item {
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:12px; font-weight:600; color:var(--accent);
+  cursor:pointer; padding:3px 8px; border-radius:6px;
+  transition:background .12s;
+}
+.bc-item:hover { background:rgba(79,142,247,.12); }
+.bc-item.current { color:var(--text); cursor:default; }
+.bc-item.current:hover { background:transparent; }
+.bc-sep { color:var(--muted); font-size:11px; }
+
+/* Corpo da árvore */
+.modal-tree-body { padding:20px 24px; overflow-y:auto; flex:1; }
+
+/* Nó raiz — o líder selecionado */
+.tree-root-card {
+  background:rgba(79,142,247,.06); border:1.5px solid rgba(79,142,247,.3);
+  border-radius:12px; padding:14px 18px; margin-bottom:20px;
+  display:flex; align-items:center; gap:14px;
+}
+.tree-root-avatar {
+  width:46px; height:46px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:15px; font-weight:800; color:#fff;
+}
+.tree-root-info { flex:1; }
+.tree-root-name { font-family:var(--font-head); font-size:16px; font-weight:800; color:var(--text); }
+.tree-root-meta { font-size:12px; color:var(--muted); margin-top:3px; }
+
+/* Linha conectora vertical */
+.tree-connector {
+  display:flex; flex-direction:column; gap:0;
+  padding-left:20px; margin-bottom:16px;
+  border-left:2px dashed rgba(79,142,247,.25);
+  margin-left:22px;
+}
+.tree-connector-label {
+  font-size:9px; font-weight:700; text-transform:uppercase;
+  letter-spacing:1.5px; color:var(--muted); margin-bottom:8px;
+  padding-left:14px; padding-top:8px;
+  display:flex; align-items:center; gap:6px;
+}
+.tree-connector-label::before {
+  content:''; display:inline-block; width:10px; height:2px;
+  background:rgba(79,142,247,.35); margin-left:-14px; margin-right:4px; flex-shrink:0;
+}
+
+/* Cards dos subordinados (líderes abaixo) */
+.tree-sub-card {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:10px; padding:12px 14px; margin-bottom:8px;
+  display:flex; align-items:center; gap:12px;
+  cursor:pointer; transition:all .15s; position:relative;
+}
+.tree-sub-card:hover { background:var(--surface3); border-color:var(--accent); transform:translateX(2px); }
+.tree-sub-card.clickable::after {
+  content:'›'; position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  color:var(--accent); font-size:18px; font-weight:800; opacity:.7;
+}
+.tree-sub-avatar {
+  width:34px; height:34px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:11px; font-weight:800; color:#fff;
+}
+.tree-sub-info { flex:1; min-width:0; }
+.tree-sub-name { font-size:13px; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.tree-sub-meta { font-size:11px; color:var(--muted); }
+.tree-sub-badge {
+  font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px;
+  white-space:nowrap; flex-shrink:0; margin-right:20px;
+}
+.tree-sub-stats {
+  display:flex; gap:10px; flex-shrink:0; margin-right:20px;
+}
+.tree-sub-stat { font-size:11px; font-weight:600; }
+
+/* Cards dos funcionários operacionais */
+.tree-emp-cards {
+  display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:4px;
+}
+.tree-emp-card {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:9px; padding:10px 12px;
+  display:flex; align-items:center; gap:10px;
+}
+.tree-emp-avatar {
+  width:28px; height:28px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,#4f8ef7,#3b6fd4);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:9px; font-weight:800; color:#fff;
+}
+.tree-emp-info { flex:1; min-width:0; }
+.tree-emp-name { font-size:12px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.tree-emp-meta { font-size:10px; color:var(--muted); }
+
+/* Estado vazio da árvore */
+.tree-empty {
+  text-align:center; padding:40px 20px; color:var(--muted);
+}
+.tree-empty-icon { font-size:36px; margin-bottom:10px; }
+
+/* Estatísticas resumidas no topo da árvore */
+.tree-stats-row {
+  display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;
+}
+.tree-stat-pill {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:5px 12px; border-radius:20px; font-size:11px; font-weight:600;
+  background:var(--surface2); border:1px solid var(--border);
+}
+
+/* ── Empty state ── */
+.empty-state { text-align:center; padding:60px 20px; color:var(--muted); grid-column:1/-1; }
+.empty-icon  { font-size:52px; margin-bottom:14px; }
+
+/* ── Toast ── */
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+.toast { padding:10px 18px; border-radius:10px; font-size:12px; font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4); animation:fadeUp .25s ease; max-width:320px; pointer-events:auto; }
+.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
+.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
+.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
+
+/* ── Foto do líder ── */
+.foto-upload-wrap { display:flex; align-items:center; gap:14px; margin-bottom:4px; }
+.foto-preview-lider {
+  width:64px; height:64px; border-radius:50%; object-fit:cover;
+  border:2px solid var(--border); flex-shrink:0;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   display:flex; align-items:center; justify-content:center;
   font-family:var(--font-head); font-size:20px; font-weight:800; color:#fff; overflow:hidden;
 }
-.foto-prev img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.foto-preview-lider img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
 .foto-btns { display:flex; flex-direction:column; gap:6px; }
 .btn-foto {
   padding:6px 14px; border-radius:8px; border:1px solid var(--border);
@@ -417,82 +537,165 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
   font-size:11px; font-weight:600; cursor:pointer; transition:all .15s;
 }
 .btn-foto:hover { border-color:var(--accent); color:var(--accent); }
-.btn-foto.rm:hover { border-color:var(--red); color:var(--red); }
+.btn-foto.remove:hover { border-color:var(--red); color:var(--red); }
 
-/* ══ TOAST ══ */
-.toast-cnt { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
-.toast {
-  padding:10px 18px; border-radius:10px; font-size:12px;
-  font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4);
-  animation:fadeUp .25s ease; max-width:320px; pointer-events:auto;
+/* ════════════════════════════════════════════
+   MODAL ORGANOGRAMA — PAINÉIS DESLIZANTES
+════════════════════════════════════════════ */
+.modal-org-circular {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:20px; width:820px; max-width:96vw;
+  max-height:94vh; overflow:hidden;
+  display:flex; flex-direction:column;
+  animation:fadeUp .3s ease;
 }
-.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
-.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
-.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
-
-/* ══ EMPTY ══ */
-.empty-state { text-align:center; padding:60px 20px; color:var(--muted); grid-column:1/-1; }
-.empty-icon  { font-size:52px; margin-bottom:14px; }
-
-/* ══ LIGHT THEME ══ */
-body.light-theme .lcard { background:#fff; border-color:#E2E8F0; }
-body.light-theme .lcard.lvl-diretoria   { border-color:rgba(251,146,60,.5); }
-body.light-theme .lcard.lvl-gerencia    { border-color:rgba(251,191,36,.5); }
-body.light-theme .lcard.lvl-coordenacao { border-color:rgba(167,139,250,.5); }
-body.light-theme .lcard.lvl-encarregado { border-color:rgba(34,211,238,.5); }
-body.light-theme .lcard.lvl-lider       { border-color:rgba(79,142,247,.4); }
-body.light-theme .lcard-name { color:#0f172a; }
-body.light-theme .lcard-stat { background:#F4F7FB; border-color:#E2E8F0; }
-body.light-theme .lcard-metrics { border-color:#E2E8F0; }
-body.light-theme .lcard-metric + .lcard-metric::before { background:#E2E8F0; }
-body.light-theme .av-bubble, body.light-theme .av-more { background:#E2E8F0; border-color:#CBD5E1; }
-body.light-theme .leader-select { background:#fff; border-color:#CBD5E1; color:#0f172a; }
-body.light-theme .filter-count { background:#fff; border-color:#CBD5E1; color:#475569; }
-body.light-theme .org-modal { background:#fff; }
+.modal-org-header {
+  display:flex; align-items:center; gap:14px;
+  padding:18px 22px; border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.modal-org-avatar {
+  width:42px; height:42px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:15px; font-weight:800; color:#fff;
+}
+.modal-org-info { flex:1; }
+.modal-org-name { font-family:var(--font-head); font-size:17px; font-weight:800; color:var(--text); }
+.modal-org-sub  { font-size:11px; color:var(--muted); margin-top:2px; }
+.modal-org-close {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; padding:6px 12px; color:var(--muted);
+  font-size:12px; font-weight:600; cursor:pointer;
+  transition:all .15s; font-family:var(--font-body);
+}
+.modal-org-close:hover { border-color:var(--red); color:var(--red); }
+.org-nav-hint {
+  padding:5px 22px; font-size:10px; color:var(--muted);
+  background:var(--surface2); border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+#org-chart-container {
+  flex:1; overflow-x:auto; overflow-y:hidden;
+  display:flex; flex-direction:row; align-items:stretch;
+  background:var(--border); min-height:420px; gap:1px;
+}
+.org-panel {
+  width:250px; min-width:250px;
+  background:var(--surface);
+  display:flex; flex-direction:column; flex-shrink:0;
+}
+.org-panel-hdr {
+  padding:13px 14px 11px; background:var(--surface2);
+  display:flex; align-items:center; gap:10px;
+  flex-shrink:0; border-bottom:2px solid var(--border);
+}
+.org-panel-av {
+  width:34px; height:34px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:12px; font-weight:800;
+  color:#fff; overflow:hidden;
+}
+.org-panel-nm {
+  font-family:var(--font-head); font-size:12px; font-weight:800;
+  color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.org-panel-rl { font-size:9.5px; color:var(--muted); margin-top:2px; }
+.org-panel-body { flex:1; overflow-y:auto; }
+.org-sec-lbl {
+  font-size:9px; font-weight:700; text-transform:uppercase;
+  letter-spacing:1.5px; color:var(--muted); padding:10px 14px 5px; user-select:none;
+}
+.org-item {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 10px 9px 11px; cursor:pointer;
+  transition:background .12s; border-left:3px solid transparent;
+}
+.org-item:hover { background:var(--surface2); }
+.org-item.org-emp { cursor:default; border-left-color:rgba(79,142,247,.35); }
+.org-item.org-emp:hover { background:transparent; }
+.org-item-av {
+  width:30px; height:30px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-head); font-size:10px; font-weight:800;
+  color:#fff; overflow:hidden;
+}
+.org-item-av.emp-av { background:linear-gradient(135deg,#4f8ef7,#3b6fd4); }
+.org-item-info { flex:1; min-width:0; }
+.org-item-nm {
+  font-size:12px; font-weight:700; color:var(--text);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.org-item-rl { font-size:9.5px; color:var(--muted); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.org-item-cnt { font-size:9px; color:var(--muted); margin-top:2px; }
+.org-item-arr {
+  font-size:20px; color:var(--muted); flex-shrink:0;
+  line-height:1; transition:all .12s; margin-right:2px;
+}
+.org-item:hover .org-item-arr { color:var(--accent); transform:translateX(2px); }
+.org-item-arr.arr-sel { color:var(--accent); }
 body.light-theme .org-panel { background:#fff; }
 body.light-theme .org-panel-hdr { background:#F4F7FB; }
-body.light-theme .org-item-nm { color:#0f172a; }
-body.light-theme .org-panel-nm { color:#0f172a; }
+body.light-theme #org-chart-container { background:#CBD5E1; }
 body.light-theme .org-item:hover { background:#F4F7FB; }
 body.light-theme .org-item.org-emp:hover { background:transparent; }
-body.light-theme #org-panels { background:#CBD5E1; }
-body.light-theme .modal { background:#fff; border-color:#E2E8F0; }
-body.light-theme .form-input { background:#F4F7FB; border-color:#CBD5E1; color:#0f172a; }
-body.light-theme .modal-title { color:#0f172a; }
-body.light-theme .org-hint-bar { background:#F4F7FB; border-color:#E2E8F0; }
+body.light-theme .org-item-nm { color:#0f172a; }
+body.light-theme .org-panel-nm { color:#0f172a; }
 
-/* ══ RESPONSIVE ══ */
-@media(max-width:1024px) { :root { --sidebar-w:56px; } }
+/* Botão Organograma — aparece durante busca ativa */
+#btn-organograma {
+  background:rgba(34,211,238,.12); color:var(--cyan);
+  border:1px solid rgba(34,211,238,.35);
+  transition:all .2s; white-space:nowrap;
+}
+#btn-organograma:hover {
+  background:rgba(34,211,238,.22);
+  box-shadow:0 4px 14px rgba(34,211,238,.25);
+  transform:translateY(-1px);
+}
+body.light-theme #btn-organograma { background:rgba(6,182,212,.1); color:#0891b2; border-color:rgba(6,182,212,.3); }
+
+/* ── Responsive ── */
+@media(max-width:1024px) {
+  :root { --sidebar-w:56px; }
+  .tree-emp-cards { grid-template-columns:1fr; }
+}
 @media(max-width:768px) {
   :root { --sidebar-w:0px; }
   .main { margin-left:0; padding:16px; }
   .leaders-grid { grid-template-columns:1fr; }
   .form-grid { grid-template-columns:1fr; }
-  .org-modal { width:99vw; height:96vh; border-radius:12px; }
+  .search-input { width:180px; }
+  .tree-emp-cards { grid-template-columns:1fr; }
+  .modal-tree { width:98vw; }
 }
 </style>
 </head>
 <body>
 
-<div class="toast-cnt" id="toast-cnt"></div>
+<div class="toast-container" id="toast-container"></div>
 <nav id="app-sidebar"></nav>
 
 <main class="main">
 
   <!-- Topbar -->
   <div class="topbar">
-    <div class="page-title">👔 Organograma</div>
-    <button class="btn btn-primary" id="btn-novo" style="display:none" onclick="openModal()">＋ Novo Líder</button>
+    <div class="page-title">Organograma</div>
+    <button class="btn btn-primary" id="btn-novo" onclick="openModal()">＋ Novo Líder</button>
   </div>
 
-  <!-- Filtro -->
+  <!-- Filtros: Busca + chips de dept -->
   <div class="filter-bar">
-    <div class="leader-select-wrap">
-      <select class="leader-select" id="ldr-select" onchange="onSelectChange()">
-        <option value="">👥 Todos os líderes</option>
-      </select>
-    </div>
-    <div class="filter-count" id="filter-count">—</div>
+
+    <!-- Dropdown de líderes por nome -->
+    <select class="leader-name-select" id="leader-name-select" onchange="renderLeaders()">
+      <option value="">👥 Todos os líderes</option>
+    </select>
+
+    <!-- Botão Organograma Circular (aparece quando líder selecionado) -->
+    <button class="btn btn-sm" id="btn-organograma" style="display:none" onclick="openCircularOrg()">
+      🔵 Organograma Circular
+    </button>
+
   </div>
 
   <!-- Grid de cards -->
@@ -500,37 +703,37 @@ body.light-theme .org-hint-bar { background:#F4F7FB; border-color:#E2E8F0; }
 
 </main>
 
-<!-- ══ MODAL ORGANOGRAMA (painéis deslizantes) ══ -->
-<div class="ov" id="ov-org">
-  <div class="org-modal">
-    <div class="org-hdr">
-      <div class="org-hdr-av" id="org-hdr-av"></div>
-      <div>
-        <div class="org-hdr-name" id="org-hdr-name">Organograma</div>
-        <div class="org-hdr-sub"  id="org-hdr-sub">Hierarquia e equipe</div>
+<!-- ══ MODAL ÁRVORE HIERÁRQUICA ══ -->
+<div class="overlay" id="modal-tree-overlay">
+  <div class="modal-tree">
+    <div class="modal-tree-header">
+      <div class="modal-tree-avatar" id="tree-root-avatar-header"></div>
+      <div class="modal-tree-info">
+        <div class="modal-tree-name" id="tree-modal-name">Hierarquia</div>
+        <div class="modal-tree-sub"  id="tree-modal-sub">Árvore de responsabilidades</div>
       </div>
-      <button class="org-close" onclick="closeOrg()">✕ Fechar</button>
+      <button class="modal-tree-close" onclick="closeTreeModal()">✕ Fechar</button>
     </div>
-    <div class="org-hint-bar">👆 Clique em um líder para expandir os subordinados dele na próxima coluna</div>
-    <div id="org-panels">
-      <div style="color:var(--muted);padding:60px;text-align:center">Carregando...</div>
-    </div>
+    <div class="tree-breadcrumb" id="tree-breadcrumb"></div>
+    <div class="modal-tree-body" id="tree-modal-body"></div>
   </div>
 </div>
 
 <!-- ══ MODAL NOVO/EDITAR LÍDER ══ -->
-<div class="ov2" id="ov-edit">
+<div class="overlay" id="modal-overlay">
   <div class="modal">
-    <div class="modal-title" id="edit-title">Novo Líder</div>
+    <div class="modal-title" id="modal-title">Novo Líder</div>
     <div class="form-grid">
       <div class="form-group full">
         <label class="form-label">📷 Foto do Líder</label>
-        <div class="foto-wrap">
-          <div class="foto-prev" id="foto-prev"><span id="foto-ini">?</span></div>
+        <div class="foto-upload-wrap">
+          <div class="foto-preview-lider" id="foto-preview-lider">
+            <span id="foto-ini-lider">?</span>
+          </div>
           <div class="foto-btns">
-            <input type="file" id="foto-input" accept="image/*" style="display:none" onchange="processarFoto(this)">
-            <button type="button" class="btn-foto" onclick="document.getElementById('foto-input').click()">📷 Selecionar</button>
-            <button type="button" class="btn-foto rm" onclick="removerFoto()">✕ Remover</button>
+            <input type="file" id="foto-input-lider" accept="image/*" style="display:none" onchange="processarFotoLider(this)">
+            <button type="button" class="btn-foto" onclick="document.getElementById('foto-input-lider').click()">📷 Selecionar Foto</button>
+            <button type="button" class="btn-foto remove" onclick="removerFotoLider()">✕ Remover</button>
           </div>
         </div>
       </div>
@@ -541,8 +744,9 @@ body.light-theme .org-hint-bar { background:#F4F7FB; border-color:#E2E8F0; }
       </div>
       <div class="form-group full">
         <label class="form-label">🪪 ID de Acesso (login)</label>
-        <input class="form-input" type="text" id="f-id" placeholder="Ex: roberto ou (11)99999"
-          autocomplete="off" oninput="this.value=this.value.toLowerCase()">
+        <input class="form-input" type="text" id="f-id" placeholder="Ex: roberto@email.com ou (11)99999"
+          autocomplete="off"
+          oninput="this.value=this.value.toLowerCase()">
       </div>
       <div class="form-group">
         <label class="form-label">💼 Cargo / Função</label>
@@ -570,7 +774,7 @@ body.light-theme .org-hint-bar { background:#F4F7FB; border-color:#E2E8F0; }
         <label class="form-label">🏢 Departamentos que gerencia</label>
         <div id="f-depts-list" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
       </div>
-      <div class="form-group" id="pass-wrap">
+      <div class="form-group" id="nova-senha-wrap">
         <label class="form-label">🔑 Senha inicial</label>
         <input class="form-input" type="password" id="f-pass" placeholder="Mín. 6 caracteres" autocomplete="new-password">
       </div>
@@ -579,17 +783,17 @@ body.light-theme .org-hint-bar { background:#F4F7FB; border-color:#E2E8F0; }
       <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
       <button class="btn btn-primary" onclick="saveLeader()">💾 Salvar</button>
     </div>
-    <input type="hidden" id="f-edit-id">
-    <input type="hidden" id="f-foto">
+    <input type="hidden" id="f-edit-id" value="">
+    <input type="hidden" id="f-foto-lider" value="">
   </div>
 </div>
 
-<!-- ══ MODAL TRANSFERIR ══ -->
-<div class="ov2" id="ov-transfer">
-  <div class="modal modal-wide">
+<!-- MODAL TRANSFERIR LÍDER -->
+<div class="overlay" id="modal-leader-transfer">
+  <div class="modal" style="width:520px">
     <div class="modal-title">🔀 Transferir / Atualizar Líder</div>
     <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--text)">
-      🧑‍💼 <strong id="ltr-name"></strong>
+      🧑‍💼 <strong id="ltr-leader-name"></strong>
     </div>
     <div class="form-group" style="margin-bottom:12px">
       <label class="form-label">🏭 Filiais que gerencia</label>
@@ -603,25 +807,25 @@ body.light-theme .org-hint-bar { background:#F4F7FB; border-color:#E2E8F0; }
       <label class="form-label">🏢 Departamentos responsáveis</label>
       <div id="ltr-depts" style="display:flex;flex-direction:column;gap:6px;margin-top:6px"></div>
     </div>
-    <input type="hidden" id="ltr-id">
+    <input type="hidden" id="ltr-edit-id">
     <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeTransfer()">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveTransfer()">💾 Salvar</button>
+      <button class="btn btn-ghost" onclick="closeLeaderTransferModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveLeaderTransfer()">💾 Salvar</button>
     </div>
   </div>
 </div>
 
-<!-- ══ MODAL OCORRÊNCIA ══ -->
-<div class="ov2" id="ov-oc">
-  <div class="modal">
+<!-- MODAL OCORRÊNCIA LÍDER -->
+<div class="overlay" id="modal-leader-ocorrencia">
+  <div class="modal" style="width:500px">
     <div class="modal-title">📝 Registrar Ocorrência</div>
     <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--text)">
-      🧑‍💼 Líder: <strong id="oc-name"></strong>
+      🧑‍💼 Líder: <strong id="loc-leader-name"></strong>
     </div>
     <div class="form-grid">
       <div class="form-group">
-        <label class="form-label">📋 Tipo</label>
-        <select class="form-input" id="oc-tipo">
+        <label class="form-label">📋 Tipo de Ocorrência</label>
+        <select class="form-input" id="loc-tipo">
           <option value="">— Selecione —</option>
           <option value="Justificativa">📄 Justificativa</option>
           <option value="Ajuste">🔧 Ajuste</option>
@@ -634,25 +838,60 @@ body.light-theme .org-hint-bar { background:#F4F7FB; border-color:#E2E8F0; }
       </div>
       <div class="form-group">
         <label class="form-label">📅 Data</label>
-        <input class="form-input" type="datetime-local" id="oc-data">
+        <input class="form-input" type="datetime-local" id="loc-data">
       </div>
       <div class="form-group full">
         <label class="form-label">📝 Descrição</label>
-        <textarea class="form-input" id="oc-desc" rows="4" placeholder="Descreva a ocorrência..." style="resize:vertical;min-height:90px"></textarea>
+        <textarea class="form-input" id="loc-desc" rows="4"
+          placeholder="Descreva a ocorrência..."
+          style="resize:vertical;min-height:90px"></textarea>
       </div>
     </div>
-    <input type="hidden" id="oc-id">
+    <input type="hidden" id="loc-edit-id">
     <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeOcorrencia()">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveOcorrencia()">📝 Salvar Ocorrência</button>
+      <button class="btn btn-ghost" onclick="closeLeaderOcorrencia()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveLeaderOcorrencia()">📝 Salvar Ocorrência</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL ORGANOGRAMA CIRCULAR ══ -->
+<div class="overlay" id="modal-org-overlay">
+  <div class="modal-org-circular">
+    <div class="modal-org-header">
+      <div class="modal-org-avatar" id="org-modal-avatar"></div>
+      <div class="modal-org-info">
+        <div class="modal-org-name" id="org-modal-name">Organograma</div>
+        <div class="modal-org-sub"  id="org-modal-sub">Visão circular da equipe</div>
+      </div>
+      <button class="modal-org-close" onclick="closeCircularOrg()">✕ Fechar</button>
+    </div>
+    <div class="org-nav-hint">👆 Clique em qualquer líder para ver os subordinados dele na próxima coluna</div>
+    <div id="org-chart-container">
+      <div style="color:var(--muted);padding:60px;text-align:center">Carregando organograma...</div>
     </div>
   </div>
 </div>
 
 <script>
 // ════════════════════════════════════════════════════════
-// CONSTANTES
+// ESTADO
 // ════════════════════════════════════════════════════════
+let currentUser      = null;
+let activeDeptFilter = '';
+let _store           = null;
+let _allPonto        = {};
+
+// Estado da busca de líder (texto simples)
+let _searchLeaderQuery = '';     // Texto atual no campo de busca
+
+// Estado da árvore hierárquica
+let _treeRootId   = null;        // líder raiz do modal de árvore
+let _treePath     = [];          // trilha de navegação: [{ id, name }]
+let _currentSearchLeaderId = null; // líder alvo do organograma circular
+let _orgRootId    = null;
+let _orgPanelPath = [];  // [leaderId, ...] caminho de seleção
+
 const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
 
 const NIVEL_META = {
@@ -663,25 +902,9 @@ const NIVEL_META = {
   encarregado:  { label:'Encarregado',  emoji:'🔰', cor:'#22d3ee' },
   lider:        { label:'Líder',        emoji:'👷', cor:'#4f8ef7' },
 };
+
 const HIERARQUIA_ORDER = ['diretoria','gerencia','coordenacao','encarregado','lider'];
 const ORDEM_IDX        = ['lider','encarregado','coordenacao','gerencia','diretoria'];
-
-const HIER_LABEL = {
-  diretoria:   { text:'🏢 Diretoria',           cls:'diretoria'   },
-  gerencia:    { text:'📊 Gerência',            cls:'gerencia'    },
-  coordenacao: { text:'📋 Coordenação',         cls:'coordenacao' },
-  encarregado: { text:'🔰 Encarregado',         cls:'encarregado' },
-  lider:       { text:'👷 Liderança Operacional', cls:'lider'     },
-};
-
-// ════════════════════════════════════════════════════════
-// ESTADO
-// ════════════════════════════════════════════════════════
-let currentUser   = null;
-let _store        = null;
-let _allPonto     = {};
-let _orgRootId    = null;
-let _orgPanelPath = [];
 
 // ════════════════════════════════════════════════════════
 // INIT
@@ -689,16 +912,20 @@ let _orgPanelPath = [];
 document.addEventListener('DOMContentLoaded', async () => {
   currentUser = await requireSession();
   if (!currentUser) return;
+
   initTheme();
   initSidebar('leaders', currentUser);
-  const isAdmin = getUserPerfil(currentUser) === 'admin_master';
+
+  const perfil  = getUserPerfil(currentUser);
   const btnNovo = document.getElementById('btn-novo');
-  if (btnNovo) btnNovo.style.display = isAdmin ? '' : 'none';
+  if (btnNovo) btnNovo.style.display = perfil === 'admin_master' ? '' : 'none';
+
+  buildDeptChips();
   renderLeaders();
 });
 
 // ════════════════════════════════════════════════════════
-// SCORE HELPERS (síncronos — usam cache _store/_allPonto)
+// SCORE HELPERS (síncronos, usam cache _store/_allPonto)
 // ════════════════════════════════════════════════════════
 function getWeights() {
   const cfg = _store?.config || {};
@@ -708,7 +935,7 @@ function getWeights() {
 }
 function calcAptMedia(emp) {
   const c = emp.competencies || {};
-  return APT_KEYS.reduce((s,k)=>s+(c[k]||0),0) / APT_KEYS.length;
+  return APT_KEYS.reduce((s,k)=>s+(c[k]||0),0)/APT_KEYS.length;
 }
 function getTotalFaltasEmp(emp) {
   try {
@@ -729,7 +956,7 @@ function calcAssid(emp) {
   if (emp.afastado) return 100;
   const total  = getTotalFaltasEmp(emp);
   const maxAbs = _store?.config?.maxAbs || 36;
-  return Math.max(0, 100 - (total / maxAbs) * 100);
+  return Math.max(0, 100-(total/maxAbs)*100);
 }
 function calcBonus(emp) {
   const BONUS_POR_DIA = 0.5, BONUS_MAX = 5;
@@ -758,9 +985,15 @@ function calcScore(emp) {
   const base = emp.perf*(w.perf/100)+calcAptMedia(emp)*10*(w.apt/100)+calcAssid(emp)*(w.abs/100);
   return Math.min(100, Math.round(base + calcBonus(emp)));
 }
+function getEmpStatus(score) {
+  if (score>=85) return { label:'🏆 Promoção', cls:'tag-promo' };
+  if (score>=70) return { label:'✅ Regular',  cls:'tag-ok'   };
+  if (score>=55) return { label:'⚠️ Atenção',  cls:'tag-watch'};
+  return               { label:'🔴 Risco',    cls:'tag-risk' };
+}
 
 // ════════════════════════════════════════════════════════
-// HELPERS DE ESCOPO
+// HELPERS DE ESCOPO DO LÍDER
 // ════════════════════════════════════════════════════════
 function getMeusDepts(leader) {
   const depts = leader.perfil?.depts || [];
@@ -768,6 +1001,7 @@ function getMeusDepts(leader) {
   return [...new Set([...depts, ...(setor ? [setor] : [])])];
 }
 function getMeusFiliais(leader) {
+  // Array vazio é truthy em JS, então verificamos length antes de usar
   const arr = leader.perfil?.filiais;
   if (arr && arr.length) return arr;
   return leader.perfil?.filial ? [leader.perfil.filial] : [];
@@ -777,34 +1011,74 @@ function getMeusTurnos(leader) {
   if (arr && arr.length) return arr;
   return leader.perfil?.turno ? [leader.perfil.turno] : [];
 }
+
+/**
+ * Retorna as filiais EFETIVAS de um líder.
+ * Prioridade:
+ *   1. Filiais explícitas no perfil (campo perfil.filiais / perfil.filial)
+ *   2. Filiais inferidas pelos funcionários com owner_id == leader.id
+ *   3. Filiais inferidas pelos funcionários no mesmo dept+turno (sem filtro de filial)
+ *   4. [] — sem restrição (fallback)
+ *
+ * Esse mecanismo resolve o caso onde o líder não tem filial cadastrada no perfil,
+ * mas seus funcionários (ou os funcionários do seu dept+turno) estão todos em uma
+ * filial específica — evitando que líderes de filiais diferentes apareçam na mesma
+ * árvore hierárquica só por compartilharem o mesmo departamento.
+ */
 function getEffectiveFiliais(leader, allEmps) {
+  // 1. Usa explícitas se disponíveis
   const explicit = getMeusFiliais(leader);
   if (explicit.length) return explicit;
+
+  // 2. Infere via funcionários com owner_id
   const ownedFiliais = [...new Set(
-    allEmps.filter(e => e.filial && (e.owner_id||e.ownerId)===leader.id).map(e=>e.filial)
+    allEmps
+      .filter(e => e.filial && (e.owner_id || e.ownerId) === leader.id)
+      .map(e => e.filial)
   )];
   if (ownedFiliais.length) return ownedFiliais;
+
+  // 3. Infere via dept+turno (sem filtro de filial)
   const depts  = getMeusDepts(leader);
   const turnos = getMeusTurnos(leader);
   if (!depts.length) return [];
-  return [...new Set(
-    allEmps.filter(e => {
-      const dOk = depts.includes(e.dept);
-      const tOk = turnos.length ? turnos.includes(e.turno) : true;
-      return dOk && tOk && e.filial;
-    }).map(e=>e.filial)
+
+  const deptFiliais = [...new Set(
+    allEmps
+      .filter(e => {
+        const dOk = depts.includes(e.dept);
+        const tOk = turnos.length ? turnos.includes(e.turno) : true;
+        return dOk && tOk && e.filial;
+      })
+      .map(e => e.filial)
   )];
+  return deptFiliais;
 }
+
 function getTeamEmps(leader, allEmps) {
-  const depts  = getMeusDepts(leader);
-  const turnos = getMeusTurnos(leader);
+  const depts   = getMeusDepts(leader);
+  const turnos  = getMeusTurnos(leader);
+
   if (!depts.length) return allEmps.filter(e=>(e.owner_id||e.ownerId)===leader.id);
+
+  // Filiais a usar: apenas EXPLÍCITAS no perfil ou inferidas via owner_id direto.
+  // NÃO usa inferência por dept+turno aqui — ela retornaria todas as filiais que
+  // compartilham o mesmo departamento, misturando CD1 e CD2 indevidamente.
   let filiais = getMeusFiliais(leader);
   if (!filiais.length) {
-    filiais = [...new Set(allEmps.filter(e=>e.filial&&(e.owner_id||e.ownerId)===leader.id).map(e=>e.filial))];
+    // Tenta inferir apenas pelos funcionários que têm vínculo direto (owner_id)
+    filiais = [...new Set(
+      allEmps
+        .filter(e => e.filial && (e.owner_id || e.ownerId) === leader.id)
+        .map(e => e.filial)
+    )];
   }
+
+  // Em sistema multi-filial: se o líder não tem filial definida de forma alguma,
+  // retorna vazio — força o administrador a configurar a filial corretamente.
   const sistemMultiFilial = new Set(allEmps.filter(e=>e.filial).map(e=>e.filial)).size > 1;
-  const filialOkSemDef    = !sistemMultiFilial;
+  const filialOkSemDef    = !sistemMultiFilial; // mono-filial → sem restrição
+
   return allEmps.filter(e => {
     const deptOk   = depts.includes(e.dept);
     const turnoOk  = turnos.length  ? turnos.includes(e.turno)   : true;
@@ -812,90 +1086,133 @@ function getTeamEmps(leader, allEmps) {
     return deptOk && turnoOk && filialOk;
   });
 }
+// allEmps é opcional — quando fornecido, usa getEffectiveFiliais para inferir
+// filiais de líderes que não têm filial explícita no perfil, evitando que líderes
+// de filiais diferentes apareçam na mesma árvore só por terem o mesmo departamento.
 function getSubordinados(leader, allUsers, allEmps) {
-  const meuIdx      = ORDEM_IDX.indexOf(leader.nivel||'lider');
+  const meuIdx      = ORDEM_IDX.indexOf(leader.nivel || 'lider');
   const meusDepts   = getMeusDepts(leader);
   const meusTurnos  = getMeusTurnos(leader);
+  // Usa filial efetiva (com inferência) quando allEmps for fornecido
   const meusFiliais = allEmps ? getEffectiveFiliais(leader, allEmps) : getMeusFiliais(leader);
+
   return allUsers.filter(u => {
-    if (u.id===ADMIN_ID||u.nivel==='admin_master'||u.id===leader.id) return false;
+    if (u.id === ADMIN_ID || u.nivel === 'admin_master' || u.id === leader.id) return false;
+    const uIdx = ORDEM_IDX.indexOf(u.nivel || 'lider');
+    if (uIdx >= meuIdx) return false;
+    if (!meusDepts.length) return false;
+    // Deve compartilhar ao menos um departamento
+    const deptOk = meusDepts.some(d => getMeusDepts(u).includes(d));
+    if (!deptOk) return false;
+    // Turno: se QUALQUER lado tem turno definido, ambos devem ter E compartilhar ao menos um
+    const uTurnos = getMeusTurnos(u);
+    if (meusTurnos.length || uTurnos.length) {
+      if (!meusTurnos.length || !uTurnos.length || !meusTurnos.some(t => uTurnos.includes(t))) return false;
+    }
+    // Filial: usa filial efetiva (explícita + inferida) para ambos os lados.
+    // Isso garante que líderes sem filial no perfil mas com equipe em filiais
+    // distintas não apareçam na árvore uns dos outros.
+    const uFiliais = allEmps ? getEffectiveFiliais(u, allEmps) : getMeusFiliais(u);
+    const filialPass = !(meusFiliais.length || uFiliais.length) ||
+                       (meusFiliais.length && uFiliais.length && meusFiliais.some(f => uFiliais.includes(f)));
+    if (!filialPass) return false;
+    return true;
+  });
+}
+function getTeamTotal(leader, store) {
+  const allEmps   = store.employees || [];
+  const allUsers  = Object.values(store.users||{}).filter(u=>u.id!==ADMIN_ID&&u.nivel!=='admin_master'&&u.id!==leader.id);
+  const meuIdx    = ORDEM_IDX.indexOf(leader.nivel||'lider');
+  const meusDepts = getMeusDepts(leader);
+  const meusTurnos= getMeusTurnos(leader);
+
+  // Mesma lógica de getTeamEmps: usa apenas filiais explícitas ou via owner_id.
+  // NÃO infere por dept+turno para evitar cruzamento entre filiais distintas.
+  let meusFiliais = getMeusFiliais(leader);
+  if (!meusFiliais.length) {
+    meusFiliais = [...new Set(
+      allEmps.filter(e=>e.filial&&(e.owner_id||e.ownerId)===leader.id).map(e=>e.filial)
+    )];
+  }
+  const sistemMultiFilial = new Set(allEmps.filter(e=>e.filial).map(e=>e.filial)).size > 1;
+  const filialOkSemDef    = !sistemMultiFilial;
+
+  let totalFuncionarios;
+  if (!meusDepts.length) {
+    totalFuncionarios = allEmps.filter(e=>(e.owner_id||e.ownerId)===leader.id).length;
+  } else {
+    totalFuncionarios = allEmps.filter(e => {
+      const deptOk   = meusDepts.includes(e.dept);
+      const turnoOk  = meusTurnos.length  ? meusTurnos.includes(e.turno)   : true;
+      const filialOk = meusFiliais.length ? meusFiliais.includes(e.filial) : filialOkSemDef;
+      return deptOk && turnoOk && filialOk;
+    }).length;
+  }
+  const subordinados = allUsers.filter(u => {
     const uIdx = ORDEM_IDX.indexOf(u.nivel||'lider');
     if (uIdx >= meuIdx) return false;
     if (!meusDepts.length) return false;
     const deptOk = meusDepts.some(d=>getMeusDepts(u).includes(d));
     if (!deptOk) return false;
     const uTurnos = getMeusTurnos(u);
-    if (meusTurnos.length||uTurnos.length) {
-      if (!meusTurnos.length||!uTurnos.length||!meusTurnos.some(t=>uTurnos.includes(t))) return false;
-    }
-    const uFiliais = allEmps ? getEffectiveFiliais(u, allEmps) : getMeusFiliais(u);
-    const filialPass = !(meusFiliais.length||uFiliais.length)||
-      (meusFiliais.length&&uFiliais.length&&meusFiliais.some(f=>uFiliais.includes(f)));
-    return filialPass;
-  });
-}
-function getTeamTotal(leader, store) {
-  const allEmps  = store.employees || [];
-  const allUsers = Object.values(store.users||{}).filter(u=>u.id!==ADMIN_ID&&u.nivel!=='admin_master'&&u.id!==leader.id);
-  const meuIdx   = ORDEM_IDX.indexOf(leader.nivel||'lider');
-  const meusDepts= getMeusDepts(leader);
-  const meusTurnos=getMeusTurnos(leader);
-  let meusFiliais = getMeusFiliais(leader);
-  if (!meusFiliais.length) {
-    meusFiliais = [...new Set(allEmps.filter(e=>e.filial&&(e.owner_id||e.ownerId)===leader.id).map(e=>e.filial))];
-  }
-  const sistemMultiFilial = new Set(allEmps.filter(e=>e.filial).map(e=>e.filial)).size > 1;
-  const filialOkSemDef    = !sistemMultiFilial;
-  let totalFuncionarios;
-  if (!meusDepts.length) {
-    totalFuncionarios = allEmps.filter(e=>(e.owner_id||e.ownerId)===leader.id).length;
-  } else {
-    totalFuncionarios = allEmps.filter(e=>{
-      const deptOk   = meusDepts.includes(e.dept);
-      const turnoOk  = meusTurnos.length ? meusTurnos.includes(e.turno) : true;
-      const filialOk = meusFiliais.length ? meusFiliais.includes(e.filial) : filialOkSemDef;
-      return deptOk && turnoOk && filialOk;
-    }).length;
-  }
-  const subordinados = allUsers.filter(u=>{
-    const uIdx = ORDEM_IDX.indexOf(u.nivel||'lider');
-    if (uIdx>=meuIdx) return false;
-    if (!meusDepts.length) return false;
-    const deptOk = meusDepts.some(d=>getMeusDepts(u).includes(d));
-    if (!deptOk) return false;
-    const uTurnos = getMeusTurnos(u);
-    const turnoOk = (meusTurnos.length&&uTurnos.length) ? meusTurnos.some(t=>uTurnos.includes(t)) : true;
+    const turnoOk = (meusTurnos.length && uTurnos.length)
+      ? meusTurnos.some(t=>uTurnos.includes(t)) : true;
+    // Usa filial efetiva do subordinado também
     const uFiliais = getEffectiveFiliais(u, allEmps);
-    if (meusFiliais.length||uFiliais.length) {
-      if (!meusFiliais.length||!uFiliais.length||!meusFiliais.some(f=>uFiliais.includes(f))) return false;
+    if (meusFiliais.length || uFiliais.length) {
+      if (!meusFiliais.length || !uFiliais.length || !meusFiliais.some(f=>uFiliais.includes(f))) return false;
     }
     return turnoOk;
   });
   return totalFuncionarios + subordinados.length;
 }
-function getDirectSubsOrgChart(ldr, allLeaders, allEmps) {
-  const myIdx     = ORDEM_IDX.indexOf(ldr.nivel||'lider');
-  const myDepts   = getMeusDepts(ldr);
-  const myTurnos  = getMeusTurnos(ldr);
-  const myFiliais = allEmps ? getEffectiveFiliais(ldr, allEmps) : getMeusFiliais(ldr);
-  for (let t = myIdx - 1; t >= 0; t--) {
-    const found = allLeaders.filter(u => {
-      if (ORDEM_IDX.indexOf(u.nivel||'lider') !== t) return false;
-      const deptOk = myDepts.some(d=>getMeusDepts(u).includes(d));
-      if (!deptOk) return false;
-      const uTurnos = getMeusTurnos(u);
-      if (myTurnos.length||uTurnos.length) {
-        if (!myTurnos.length||!uTurnos.length||!myTurnos.some(t2=>uTurnos.includes(t2))) return false;
-      }
-      const uFiliais = allEmps ? getEffectiveFiliais(u, allEmps) : getMeusFiliais(u);
-      if (myFiliais.length||uFiliais.length) {
-        if (!myFiliais.length||!uFiliais.length||!myFiliais.some(f=>uFiliais.includes(f))) return false;
-      }
-      return true;
+function getLiderDoFuncionario(emp, store) {
+  const users = Object.values(store.users||{});
+  const dept = emp.dept||'', turno = emp.turno||'', filial = emp.filial||'';
+  for (const nivel of HIERARQUIA_ORDER.slice().reverse()) {
+    const match = users.find(u => {
+      if (u.id===ADMIN_ID||u.nivel==='admin_master') return false;
+      if ((u.nivel||'lider')!==nivel) return false;
+      const depts      = getMeusDepts(u);
+      const liderTurno = u.perfil?.turno||'';
+      const liderFiliais= getMeusFiliais(u);
+      const deptOk    = depts.length ? depts.includes(dept) : (emp.owner_id||emp.ownerId)===u.id;
+      const turnoOk   = liderTurno ? liderTurno===turno : true;
+      const filialOk  = liderFiliais.length ? liderFiliais.includes(filial) : true;
+      return deptOk && turnoOk && filialOk;
     });
-    if (found.length) return found;
+    if (match) return match;
   }
-  return [];
+  return null;
+}
+function calcLeaderScore(teamEmps) {
+  if (!teamEmps.length) return 0;
+  return +(teamEmps.reduce((s,e)=>s+calcAptMedia(e),0)/teamEmps.length).toFixed(1);
+}
+
+// ════════════════════════════════════════════════════════
+// CHIPS DE DEPARTAMENTO
+// ════════════════════════════════════════════════════════
+async function buildDeptChips() {
+  const wrap = document.getElementById('dept-chips');
+  if (!wrap) return; // elemento removido do layout — sai silenciosamente
+  const store = _store || await getStore();
+  const emps  = store.employees || [];
+  const depts = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
+
+  wrap.innerHTML = [
+    { label:'Todos', val:'' },
+    ...depts.map(d=>({ label:d, val:d }))
+  ].map(({ label, val }) => `
+    <div class="dept-chip ${val===activeDeptFilter?'active':''}"
+      onclick="setDeptFilter('${val}')">${label}</div>
+  `).join('');
+}
+
+function setDeptFilter(val) {
+  activeDeptFilter = val;
+  buildDeptChips();
+  renderLeaders();
 }
 
 // ════════════════════════════════════════════════════════
@@ -907,373 +1224,479 @@ async function renderLeaders() {
     _allPonto = await LS.get('rh_ponto', {});
   }
   const store   = _store;
-  const isAdmin = getUserPerfil(currentUser) === 'admin_master';
+  const perfil  = getUserPerfil(currentUser);
+  const isAdmin = perfil === 'admin_master';
 
+  // Todos os líderes (exceto admin_master), ordenados por nome
   const allLeaders = Object.values(store.users||{})
     .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master')
     .sort((a,b) => (a.name||'').localeCompare(b.name||'', 'pt-BR'));
 
-  // Popula dropdown
-  const sel = document.getElementById('ldr-select');
-  const cur = sel?.value || '';
+  // ── Popula o dropdown de nomes ──────────────────────────────────────
+  const sel = document.getElementById('leader-name-select');
   if (sel) {
+    const cur = sel.value;
     sel.innerHTML = '<option value="">👥 Todos os líderes</option>' +
-      allLeaders.map(u=>`<option value="${u.id}"${u.id===cur?' selected':''}>${u.name}</option>`).join('');
+      allLeaders.map(u => `<option value="${u.id}"${u.id===cur?' selected':''}>${u.name}</option>`).join('');
     if (cur) sel.value = cur;
   }
   const selectedId = sel?.value || '';
 
-  let leaders = selectedId ? allLeaders.filter(u=>u.id===selectedId) : allLeaders;
-
-  const countEl = document.getElementById('filter-count');
-  if (countEl) countEl.textContent = `${leaders.length} ${leaders.length===1?'líder':'líderes'}`;
+  // ── Filtra: todos ou somente o selecionado ──────────────────────────
+  let leaders = selectedId
+    ? allLeaders.filter(u => u.id === selectedId)
+    : allLeaders;
 
   const grid = document.getElementById('leaders-grid');
+
+  // ── Botão organograma circular ──────────────────────────────────────
+  const btnOrg = document.getElementById('btn-organograma');
+  if (btnOrg) {
+    if (selectedId && leaders.length) {
+      _currentSearchLeaderId = leaders[0].id;
+      const firstName = leaders[0].name.split(' ')[0];
+      btnOrg.innerHTML = `🔵 Organograma de ${firstName}`;
+      btnOrg.style.display = '';
+    } else {
+      _currentSearchLeaderId = null;
+      btnOrg.style.display = 'none';
+    }
+  }
+
   if (!leaders.length) {
-    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🧑‍💼</div>
-      <p style="font-size:14px">Nenhum líder encontrado</p>
-      <p style="font-size:12px;margin-top:6px">Cadastre novos líderes pelo botão acima.</p></div>`;
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🧑‍💼</div>
+        <p style="font-size:14px">${searchText ? 'Nenhum resultado para esta busca' : 'Nenhum líder encontrado'}</p>
+        <p style="font-size:12px;margin-top:6px">${searchText ? 'Tente limpar o filtro.' : 'Cadastre novos usuários pelo botão acima.'}</p>
+      </div>`;
     return;
   }
+
+  // Agrupa por nível
+  const HIERARQUIA_META = {
+    diretoria:   { label:'🏢 Diretoria',    cls:'diretoria'   },
+    gerencia:    { label:'📊 Gerência',     cls:'gerencia'    },
+    coordenacao: { label:'📋 Coordenação',  cls:'coordenacao' },
+    encarregado: { label:'🔰 Encarregado',  cls:'encarregado' },
+    lider:       { label:'👷 Liderança Operacional', cls:'lider' },
+  };
 
   const grupos = {};
   HIERARQUIA_ORDER.forEach(n => grupos[n] = []);
   leaders.forEach(u => {
-    const n = u.nivel||'lider';
-    if (grupos[n]) grupos[n].push(u); else grupos['lider'].push(u);
+    const nivel = u.nivel||'lider';
+    if (grupos[nivel]) grupos[nivel].push(u);
+    else grupos['lider'].push(u);
   });
 
   let html = '';
   HIERARQUIA_ORDER.forEach(nivel => {
     const lista = grupos[nivel];
     if (!lista.length) return;
-    const meta = HIER_LABEL[nivel];
-    html += `<div class="hier-sep">
-      <span class="hier-label ${meta.cls}">${meta.text}</span>
-      <div class="hier-line"></div>
-      <span class="hier-count">${lista.length} ${lista.length===1?'pessoa':'pessoas'}</span>
-    </div>`;
-    lista.forEach(u => { html += buildCard(u, store, isAdmin); });
+    const meta = HIERARQUIA_META[nivel];
+    html += `
+      <div class="hierarquia-secao">
+        <span class="hierarquia-label ${meta.cls}">${meta.label}</span>
+        <div class="hierarquia-linha"></div>
+        <span style="font-size:11px;color:var(--muted);white-space:nowrap">${lista.length} ${lista.length===1?'pessoa':'pessoas'}</span>
+      </div>`;
+    lista.forEach(u => { html += buildCard(u, store, isAdmin, u.id===highlightId); });
   });
 
+  // Seção operacional
+  let emps = store.employees || [];
+  if (activeDeptFilter) emps = emps.filter(e=>e.dept===activeDeptFilter);
+
+  if (emps.length) {
+    html += `
+      <div class="hierarquia-secao">
+        <span class="hierarquia-label" style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25)">
+          👥 Operacional
+        </span>
+        <div class="hierarquia-linha"></div>
+        <span style="font-size:11px;color:var(--muted);white-space:nowrap">${emps.length} ${emps.length===1?'funcionário':'funcionários'}</span>
+      </div>`;
+
+    emps.forEach(emp => {
+      const lider = getLiderDoFuncionario(emp, store);
+      const ini   = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+      const score = calcScore(emp);
+      const st    = getEmpStatus(score);
+
+      html += `
+      <div class="leader-card nivel-lider" style="border-color:rgba(79,142,247,.35)">
+        <div style="height:3px;background:linear-gradient(90deg,rgba(79,142,247,.6),rgba(79,142,247,.2));flex-shrink:0"></div>
+        <div class="card-header">
+          <div class="leader-avatar" style="background:linear-gradient(135deg,#4f8ef7,#3b6fd4);font-size:13px">${ini}</div>
+          <div class="leader-info">
+            <div class="leader-name">${emp.name}</div>
+            <div class="leader-role">${[emp.role||'',emp.dept||''].filter(Boolean).join(' · ')}</div>
+          </div>
+          <div class="leader-badge" style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25)">
+            👤 Operacional
+          </div>
+        </div>
+        <div class="card-metrics">
+          <div class="metric-item"><div class="metric-label">Desempenho</div><div class="metric-val" style="color:var(--accent)">${emp.perf||0}%</div></div>
+          <div class="metric-item"><div class="metric-label">Score</div><div class="metric-val" style="color:${score>=85?'#34d399':score>=70?'#4f8ef7':score>=55?'#fbbf24':'#f87171'}">${score}</div></div>
+          <div class="metric-item"><div class="metric-label">Líder</div><div class="metric-val" style="font-size:11px;color:var(--muted)">${lider?lider.name.split(' ')[0]:'—'}</div></div>
+        </div>
+        ${emp.filial||emp.turno?`<div style="display:flex;gap:5px;flex-wrap:wrap;padding:0 18px 14px">
+          ${emp.filial?`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.2)">🏭 ${emp.filial}</span>`:''}
+          ${emp.turno?`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(167,139,250,.12);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">🕐 ${emp.turno}</span>`:''}
+        </div>`:''}
+      </div>`;
+    });
+  }
+
   grid.innerHTML = html;
+}
+
+// Retorna todos os subordinados recursivamente
+function getSubordinadosRecursivo(leaderId, allLeaders, allEmps) {
+  const leader = _store?.users?.[leaderId];
+  if (!leader) return [];
+  const diretos = getSubordinados(leader, allLeaders, allEmps);
+  const result  = [...diretos];
+  diretos.forEach(sub => {
+    result.push(...getSubordinadosRecursivo(sub.id, allLeaders, allEmps));
+  });
+  return result;
 }
 
 // ════════════════════════════════════════════════════════
 // BUILD CARD
 // ════════════════════════════════════════════════════════
-function buildCard(leader, store, isAdmin) {
-  const allEmps  = store.employees || [];
-  const team     = getTeamEmps(leader, allEmps);
-  const nivel    = leader.nivel || 'lider';
-  const meta     = NIVEL_META[nivel] || NIVEL_META['lider'];
+function buildCard(leader, store, isAdmin, isHighlight=false) {
+  const allEmps = store.employees || [];
+  const team    = getTeamEmps(leader, allEmps);
+  const nivel   = leader.nivel || 'lider';
+  const meta    = NIVEL_META[nivel] || NIVEL_META['lider'];
 
   const totalTime   = team.length;
-  const totalHier   = getTeamTotal(leader, store);
   const avgDesemp   = totalTime ? Math.round(team.reduce((s,e)=>s+e.perf,0)/totalTime) : 0;
   const avgAssid    = totalTime ? Math.round(team.reduce((s,e)=>s+calcAssid(e),0)/totalTime) : 0;
-  const totalFaltas = Math.round(team.reduce((s,e)=>s+getTotalFaltasEmp(e),0));
+  const totalFaltas = team.reduce((s,e)=>s+getTotalFaltasEmp(e),0);
   const promos      = team.filter(e=>calcScore(e)>=85).length;
   const riscos      = team.filter(e=>calcScore(e)<55).length;
-  const leaderScore = totalTime ? +(team.reduce((s,e)=>s+calcAptMedia(e),0)/totalTime).toFixed(1) : 0;
+  const leaderScore = calcLeaderScore(team);
+  const totalHierarquico = getTeamTotal(leader, store);
 
-  const ini      = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-  const rolePart = [leader.perfil?.funcao||'', leader.setor||(leader.perfil?.depts||[])[0]||''].filter(Boolean).join(' · ');
-  const filiais  = getMeusFiliais(leader);
-  const turnos   = getMeusTurnos(leader);
+  const ini = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const roleParts = [leader.perfil?.funcao||'', leader.setor||(leader.perfil?.depts||[])[0]||''].filter(Boolean).join(' · ');
 
-  // Apt pendente
-  const mesKey   = (() => { const n=new Date(); return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`; })();
-  const aptPend  = team.filter(e=>!e.afastado&&!e.demitido&&!(e.competencies_history||{})[mesKey]);
-  const temApt   = aptPend.length > 0;
+  // ── Detecta funcionários sem avaliação de aptidões este mês ──
+  const mesAtualKey = (() => {
+    const n = new Date();
+    return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+  })();
+  const aptPendentesTeam = team.filter(e => !e.afastado && !e.demitido && !(e.competencies_history||{})[mesAtualKey]);
+  const temAptPendente   = aptPendentesTeam.length > 0;
+  const aptBanner = temAptPendente ? `
+    <div class="leader-apt-banner" onclick="window.location.href='aptidoes.html'" title="Clique para avaliar aptidões">
+      🎯 ${aptPendentesTeam.length} funcionário${aptPendentesTeam.length>1?'s':''} sem avaliação este mês
+      <span style="margin-left:auto;font-size:10px;opacity:.7">→ Avaliar</span>
+    </div>` : '';
 
-  // Avatars da equipe
   const shown  = team.slice(0,5);
   const extras = team.length - shown.length;
-  const avBubs = shown.map(e=>{
+  const avatarBubbles = shown.map(e => {
     const i = e.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-    return `<div class="av-bubble" title="${e.name}">${i}</div>`;
-  }).join('') + (extras>0 ? `<div class="av-more">+${extras}</div>` : '');
+    return `<div class="avatar-bubble">${i}</div>`;
+  }).join('') + (extras>0 ? `<div class="avatar-more">+${extras}</div>` : '');
 
   const podTransfer = isAdmin || (typeof can==='function' && can(currentUser,'leaders','transfer'));
   const podOcorr    = typeof can==='function' && can(currentUser,'leaders','ocorrencia');
 
-  const adminBtns = (isAdmin || podTransfer || podOcorr) ? `
-    <div class="lcard-actions" onclick="event.stopPropagation()">
+  const adminBtns = (isAdmin || podOcorr) ? `
+    <div class="card-actions" onclick="event.stopPropagation()">
       ${isAdmin ? `<button class="btn btn-ghost btn-sm" onclick="editLeader('${leader.id}')">✏️ Editar</button>` : ''}
-      ${isAdmin ? `<button class="btn btn-ghost btn-sm" onclick="resetLeaderPass('${leader.id}','${leader.name.replace(/'/g,"\\'")}')">🔑</button>` : ''}
-      ${isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteLeader('${leader.id}')">✕</button>` : ''}
-      ${podTransfer ? `<button class="btn btn-sm" style="background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.25)" onclick="openTransfer('${leader.id}')">🔀 Transferir</button>` : ''}
-      ${podOcorr    ? `<button class="btn btn-sm" style="background:rgba(167,139,250,.1);color:var(--accent2);border:1px solid rgba(167,139,250,.25)" onclick="openOcorrencia('${leader.id}')">📝 Ocorrência</button>` : ''}
-    </div>` : '';
+      ${isAdmin ? `<button class="btn btn-ghost btn-sm" onclick="resetLeaderPass('${leader.id}','${leader.name.replace(/'/g,"\\'")}')">🔑 Senha</button>` : ''}
+      ${isAdmin ? `<button class="btn btn-danger btn-sm" onclick="deleteLeader('${leader.id}')">✕ Remover</button>` : ''}
+      ${podTransfer ? `<button class="btn btn-sm" style="background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.3)" onclick="openLeaderTransferModal('${leader.id}')">🔀 Transferir</button>` : ''}
+      ${podOcorr    ? `<button class="btn btn-sm" style="background:rgba(167,139,250,.1);color:var(--accent2);border:1px solid rgba(167,139,250,.3)" onclick="openLeaderOcorrencia('${leader.id}')">📝 Ocorrência</button>` : ''}
+      <button class="btn btn-sm" style="background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.3)"
+        onclick="openTreeModal('${leader.id}')">🌳 Hierarquia</button>
+    </div>` : `
+    <div class="card-actions" onclick="event.stopPropagation()">
+      <button class="btn btn-sm" style="background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.3)"
+        onclick="openTreeModal('${leader.id}')">🌳 Hierarquia</button>
+    </div>`;
 
   return `
-  <div class="lcard lvl-${nivel}${temApt?' apt-pendente':''}"
-       onclick="openOrg('${leader.id}')"
-       title="${leader.name} — clique para ver o organograma">
-    <div class="lcard-header">
-      <div class="lcard-header-bg"></div>
-      <div class="lcard-stripe"></div>
-      <div class="lcard-lvl-badge" style="background:${meta.cor}22;color:${meta.cor};border:1px solid ${meta.cor}44">
+  <div class="leader-card nivel-${nivel}${isHighlight?' highlight':''}${temAptPendente?' apt-pendente':''}"
+       style="cursor:pointer"
+       onclick="openTreeModal('${leader.id}')"
+       title="${leader.name} — clique para ver a hierarquia">
+    <div class="card-header">
+      <div class="leader-avatar">${leader.foto?`<img src="${leader.foto}" style="width:52px;height:52px;border-radius:50%;object-fit:cover">`:ini}</div>
+      <div class="leader-info">
+        <div class="leader-name">${leader.name}</div>
+        <div class="leader-role">${roleParts||nivel}</div>
+      </div>
+      <div class="leader-badge" style="background:${meta.cor}18;color:${meta.cor};border:1px solid ${meta.cor}33">
         ${meta.emoji} ${meta.label}
       </div>
     </div>
-    <div class="lcard-identity">
-      <div class="lcard-avatar" style="background:${leader.foto?'transparent':`linear-gradient(135deg,${meta.cor},${meta.cor}88)`}">
-        ${leader.foto?`<img src="${leader.foto}" style="width:52px;height:52px;border-radius:50%;object-fit:cover">`:ini}
-      </div>
-      <div class="lcard-info">
-        <div class="lcard-name">${leader.name}</div>
-        <div class="lcard-role">${rolePart||nivel}</div>
-      </div>
+    <div class="card-metrics">
+      <div class="metric-big"><div class="metric-big-val time">${totalHierarquico}</div><div class="metric-big-label">Time</div></div>
+      <div class="metric-big"><div class="metric-big-val desemp">${avgDesemp}%</div><div class="metric-big-label">Desemp. Médio</div></div>
+      <div class="metric-big"><div class="metric-big-val score">${leaderScore}</div><div class="metric-big-label">Score</div></div>
     </div>
-    <div class="lcard-metrics">
-      <div class="lcard-metric">
-        <div class="lcard-metric-val v-team">${totalHier}</div>
-        <div class="lcard-metric-lbl">Time</div>
+    ${totalHierarquico > 0 ? `
+    <div class="team-section">
+      <div class="team-label">Equipe · ${totalHierarquico} ${totalHierarquico===1?'pessoa':'pessoas'}
+        ${totalHierarquico>totalTime&&totalTime>0?`<span style="font-weight:400;opacity:.6"> (${totalTime} operac.)</span>`:''}
       </div>
-      <div class="lcard-metric">
-        <div class="lcard-metric-val v-desemp">${avgDesemp}%</div>
-        <div class="lcard-metric-lbl">Desempenho</div>
-      </div>
-      <div class="lcard-metric">
-        <div class="lcard-metric-val v-score">${leaderScore}</div>
-        <div class="lcard-metric-lbl">Score</div>
-      </div>
+      <div class="team-avatars">${avatarBubbles}</div>
+    </div>` : `
+    <div class="team-section">
+      <div class="team-label" style="color:var(--muted);font-style:italic">Sem funcionários cadastrados</div>
+    </div>`}
+    <div class="card-stats">
+      <div class="stat-box"><div class="stat-label">Assiduidade</div><div class="stat-val assid ${avgAssid<70?'low':''}">${totalTime?avgAssid+'%':'—'}</div></div>
+      <div class="stat-box"><div class="stat-label">Faltas/Mês</div><div class="stat-val faltas">${totalFaltas}</div></div>
+      <div class="stat-box"><div class="stat-label">Promoção</div><div class="stat-val promo">${promos}</div></div>
+      <div class="stat-box"><div class="stat-label">Risco</div><div class="stat-val risco">${riscos}</div></div>
     </div>
-    <div class="lcard-stats">
-      <div class="lcard-stat">
-        <div class="lcard-stat-lbl">Assiduidade</div>
-        <div class="lcard-stat-val ${avgAssid>=80?'stat-green':avgAssid>=60?'stat-warn':'stat-red'}">${totalTime?avgAssid+'%':'—'}</div>
-      </div>
-      <div class="lcard-stat">
-        <div class="lcard-stat-lbl">Faltas</div>
-        <div class="lcard-stat-val stat-text">${totalFaltas}</div>
-      </div>
-      <div class="lcard-stat">
-        <div class="lcard-stat-lbl">Promoção</div>
-        <div class="lcard-stat-val stat-green">${promos}</div>
-      </div>
-      <div class="lcard-stat">
-        <div class="lcard-stat-lbl">Risco</div>
-        <div class="lcard-stat-val ${riscos>0?'stat-red':'stat-text'}">${riscos}</div>
-      </div>
+    <div class="score-footer">
+      <div class="score-footer-label">⭐ Score Liderança:</div>
+      <span>${leaderScore}</span>
     </div>
-    ${totalTime>0 ? `
-    <div class="lcard-team">
-      <div class="lcard-team-lbl">Equipe · ${totalHier} ${totalHier===1?'pessoa':'pessoas'}</div>
-      ${avBubs}
-    </div>` : ''}
-    ${filiais.length||turnos.length ? `
-    <div class="lcard-tags">
-      ${filiais.map(f=>`<span class="tag tag-filial">🏭 ${f}</span>`).join('')}
-      ${turnos.map(t=>`<span class="tag tag-turno">🕐 ${t}</span>`).join('')}
-    </div>` : ''}
-    ${temApt ? `
-    <div class="lcard-apt" onclick="event.stopPropagation();window.location.href='aptidoes.html'">
-      🎯 ${aptPend.length} funcionário${aptPend.length>1?'s':''} sem avaliação este mês
-      <span style="margin-left:auto;font-size:10px;opacity:.7">→ Avaliar</span>
-    </div>` : ''}
-    <div class="lcard-org-hint">
-      <span>🌳</span> Clique para ver o organograma
-    </div>
+    ${!['gerencia','diretoria'].includes(nivel)&&(getMeusFiliais(leader).length||getMeusTurnos(leader).length)?`
+    <div style="display:flex;gap:5px;flex-wrap:wrap;padding:0 18px 14px">
+      ${getMeusFiliais(leader).map(f=>`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.2)">🏭 ${f}</span>`).join('')}
+      ${getMeusTurnos(leader).map(t=>`<span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(167,139,250,.12);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">🕐 ${t}</span>`).join('')}
+    </div>`:''}
+    ${aptBanner}
     ${adminBtns}
   </div>`;
 }
 
 // ════════════════════════════════════════════════════════
-// DROPDOWN — quando seleciona pelo dropdown abre direto
+// ★ MODAL ÁRVORE HIERÁRQUICA
 // ════════════════════════════════════════════════════════
-async function onSelectChange() {
-  const sel = document.getElementById('ldr-select');
-  const id  = sel?.value || '';
-  await renderLeaders();
-  if (id) openOrg(id);
+function openTreeModal(leaderId) {
+  _treeRootId = leaderId;
+  _treePath   = [];
+  renderTreeModal(leaderId);
+  document.getElementById('modal-tree-overlay').classList.add('open');
 }
 
-// ════════════════════════════════════════════════════════
-// ORGANOGRAMA — painéis deslizantes
-// ════════════════════════════════════════════════════════
-function openOrg(leaderId) {
-  _orgRootId    = leaderId;
-  _orgPanelPath = [];
-  renderOrg(leaderId);
-  document.getElementById('ov-org').classList.add('open');
-}
-function closeOrg() {
-  document.getElementById('ov-org').classList.remove('open');
-  _orgPanelPath = [];
+function closeTreeModal() {
+  document.getElementById('modal-tree-overlay').classList.remove('open');
+  _treeRootId = null;
+  _treePath   = [];
 }
 
-function selectOrgNode(leaderId, panelIdx) {
-  _orgPanelPath = _orgPanelPath.slice(0, panelIdx);
-  _orgPanelPath.push(leaderId);
-  renderOrg(_orgRootId);
-}
-
-function renderOrg(leaderId) {
-  _orgRootId = leaderId;
+function renderTreeModal(leaderId) {
   const store  = _store;
   const leader = store?.users?.[leaderId];
   if (!leader) return;
 
-  const lm  = NIVEL_META[leader.nivel||'lider'] || NIVEL_META.lider;
-  const ini = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const meta = NIVEL_META[leader.nivel||'lider']||NIVEL_META.lider;
+  const ini  = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
 
-  // Header do modal
-  const hAv = document.getElementById('org-hdr-av');
-  hAv.style.background = leader.foto ? 'transparent' : `linear-gradient(135deg,${lm.cor},${lm.cor}88)`;
-  hAv.innerHTML = leader.foto
-    ? `<img src="${leader.foto}" style="width:44px;height:44px;border-radius:50%;object-fit:cover">` : ini;
-  document.getElementById('org-hdr-name').textContent = leader.name;
-  document.getElementById('org-hdr-sub').textContent  = `${lm.emoji} ${lm.label} · Organograma da equipe`;
+  // Atualiza cabeçalho
+  document.getElementById('tree-modal-name').textContent = leader.name;
+  document.getElementById('tree-modal-sub').textContent  = `${meta.emoji} ${meta.label} · Árvore de responsabilidades`;
+  const headerAvatar = document.getElementById('tree-root-avatar-header');
+  headerAvatar.innerHTML = leader.foto
+    ? `<img src="${leader.foto}" style="width:46px;height:46px;border-radius:50%;object-fit:cover">`
+    : ini;
+  headerAvatar.style.background = leader.foto ? 'transparent' : `linear-gradient(135deg,${meta.cor},${meta.cor}99)`;
 
-  const allLeaders = Object.values(store.users||{}).filter(u=>u.id!==ADMIN_ID&&u.nivel!=='admin_master');
-  const allEmps    = store.employees || [];
-  const container  = document.getElementById('org-panels');
-  container.innerHTML = '';
+  // Breadcrumb
+  renderTreeBreadcrumb(leaderId);
 
-  const panelIds = [leaderId, ..._orgPanelPath];
+  // Corpo da árvore
+  renderTreeBody(leaderId);
+}
 
-  panelIds.forEach((lid, panelIdx) => {
-    const pl = store.users?.[lid];
-    if (!pl) return;
+function renderTreeBreadcrumb(currentId) {
+  const bc = document.getElementById('tree-breadcrumb');
+  if (!_treePath.length) { bc.innerHTML = ''; return; }
 
-    const pm   = NIVEL_META[pl.nivel||'lider'] || NIVEL_META.lider;
-    const pIni = pl.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-
-    const dirSubs    = getDirectSubsOrgChart(pl, allLeaders, allEmps);
-    const teamEmps   = getTeamEmps(pl, allEmps);
-    const subEmpIds  = new Set(dirSubs.flatMap(s=>getTeamEmps(s, allEmps).map(e=>e.id)));
-    const directEmps = teamEmps.filter(e=>!subEmpIds.has(e.id));
-    const selectedId = _orgPanelPath[panelIdx];
-
-    const panel = document.createElement('div');
-    panel.className = 'org-panel';
-
-    // Header
-    const hdr = document.createElement('div');
-    hdr.className = 'org-panel-hdr';
-    hdr.style.borderBottomColor = pm.cor + '66';
-    hdr.innerHTML = `
-      <div class="org-panel-av" style="background:${pl.foto?'transparent':`linear-gradient(135deg,${pm.cor},${pm.cor}77)`}">
-        ${pl.foto?`<img src="${pl.foto}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`:pIni}
-      </div>
-      <div style="flex:1;min-width:0">
-        <div class="org-panel-nm">${pl.name.split(' ').slice(0,2).join(' ')}</div>
-        <div class="org-panel-rl">${pm.emoji} ${pm.label}</div>
-      </div>`;
-    panel.appendChild(hdr);
-
-    const body = document.createElement('div');
-    body.className = 'org-panel-body';
-
-    // Sub-líderes
-    if (dirSubs.length) {
-      const sec = document.createElement('div');
-      sec.className = 'org-sec-lbl';
-      sec.textContent = `👔 Líderes (${dirSubs.length})`;
-      body.appendChild(sec);
-
-      dirSubs.forEach(sub => {
-        const sm       = NIVEL_META[sub.nivel||'lider'] || NIVEL_META.lider;
-        const isSelected = sub.id === selectedId;
-        const sIni     = sub.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-        const hasSubs  = getDirectSubsOrgChart(sub, allLeaders, allEmps).length>0 || getTeamEmps(sub, allEmps).length>0;
-        const total    = getTeamTotal(sub, store);
-
-        const item = document.createElement('div');
-        item.className = 'org-item';
-        item.style.borderLeftColor = sm.cor + (isSelected?'':' 55');
-        if (isSelected) item.style.background = sm.cor + '1a';
-        item.onclick = () => selectOrgNode(sub.id, panelIdx);
-        item.innerHTML = `
-          <div class="org-item-av" style="background:${sub.foto?'transparent':`linear-gradient(135deg,${sm.cor},${sm.cor}77)`}">
-            ${sub.foto?`<img src="${sub.foto}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`:sIni}
-          </div>
-          <div class="org-item-info">
-            <div class="org-item-nm">${sub.name.split(' ').slice(0,2).join(' ')}</div>
-            <div class="org-item-rl" style="color:${sm.cor}cc">${sm.emoji} ${sm.label}</div>
-            ${total?`<div class="org-item-cnt">👥 ${total} ${total===1?'pessoa':'pessoas'}</div>`:''}
-          </div>
-          ${hasSubs?`<div class="org-item-arr${isSelected?' sel':''}">›</div>`:''}`;
-        body.appendChild(item);
-      });
-    }
-
-    // Funcionários diretos
-    if (directEmps.length) {
-      const sec = document.createElement('div');
-      sec.className = 'org-sec-lbl';
-      sec.textContent = `👥 Operacional (${directEmps.length})`;
-      body.appendChild(sec);
-
-      directEmps.slice(0, 20).forEach(emp => {
-        const eIni = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-        const item = document.createElement('div');
-        item.className = 'org-item org-emp';
-        item.innerHTML = `
-          <div class="org-item-av emp-av">
-            ${emp.foto?`<img src="${emp.foto}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`:eIni}
-          </div>
-          <div class="org-item-info">
-            <div class="org-item-nm">${emp.name.split(' ').slice(0,2).join(' ')}</div>
-            <div class="org-item-rl">${(emp.role||emp.dept||'Operacional').slice(0,24)}</div>
-          </div>`;
-        body.appendChild(item);
-      });
-
-      if (directEmps.length > 20) {
-        const more = document.createElement('div');
-        more.style.cssText = 'text-align:center;padding:8px 0 12px;font-size:10px;color:var(--muted)';
-        more.textContent = `+ ${directEmps.length-20} mais`;
-        body.appendChild(more);
-      }
-    }
-
-    // Vazio
-    if (!dirSubs.length && !directEmps.length) {
-      const empty = document.createElement('div');
-      empty.style.cssText = 'padding:36px 16px;text-align:center;color:var(--muted);font-size:12px';
-      empty.innerHTML = '<div style="font-size:30px;margin-bottom:8px">👤</div>Sem subordinados';
-      body.appendChild(empty);
-    }
-
-    panel.appendChild(body);
-    container.appendChild(panel);
+  const parts = _treePath.map((node, i) => {
+    const isLast = i === _treePath.length - 1;
+    if (isLast) return `<span class="bc-item current">${node.name}</span>`;
+    return `<span class="bc-item" onclick="navigateTreeTo('${node.id}', ${i})">${node.name}</span>
+            <span class="bc-sep">›</span>`;
   });
 
-  setTimeout(() => { container.scrollLeft = container.scrollWidth; }, 30);
+  // Adiciona a raiz no início se não estiver no path
+  const rootLeader = _store?.users?.[_treeRootId];
+  if (rootLeader && _treePath[0]?.id !== _treeRootId) {
+    bc.innerHTML = `<span class="bc-item" onclick="navigateTreeTo('${_treeRootId}', -1)">${rootLeader.name}</span>
+                    <span class="bc-sep">›</span>` + parts.join('');
+  } else {
+    bc.innerHTML = parts.join('');
+  }
+}
+
+function navigateTreeTo(id, pathIdx) {
+  if (pathIdx === -1) {
+    _treePath = [];
+  } else {
+    _treePath = _treePath.slice(0, pathIdx + 1);
+  }
+  renderTreeModal(id);
+}
+
+function navigateTreeDown(leaderId) {
+  const leader = _store?.users?.[leaderId];
+  if (!leader) return;
+  _treePath.push({ id: leaderId, name: leader.name });
+  renderTreeModal(leaderId);
+}
+
+function renderTreeBody(leaderId) {
+  const store  = _store;
+  const leader = store?.users?.[leaderId];
+  const body   = document.getElementById('tree-modal-body');
+  if (!leader) { body.innerHTML = '<div class="tree-empty"><div class="tree-empty-icon">🔍</div><p>Líder não encontrado.</p></div>'; return; }
+
+  const allLeaders = Object.values(store.users||{})
+    .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
+  const allEmps    = store.employees || [];
+
+  const meta        = NIVEL_META[leader.nivel||'lider']||NIVEL_META.lider;
+  const ini         = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const team        = getTeamEmps(leader, allEmps);
+  const subordinados= getSubordinados(leader, allLeaders, allEmps);
+  const totalTime   = getTeamTotal(leader, store);
+  const avgScore    = team.length ? Math.round(team.reduce((s,e)=>s+calcScore(e),0)/team.length) : 0;
+  const promos      = team.filter(e=>calcScore(e)>=85).length;
+  const riscos      = team.filter(e=>calcScore(e)<55).length;
+
+  let html = '';
+
+  // ── Nó raiz ──
+  html += `
+  <div class="tree-root-card">
+    <div class="tree-root-avatar" style="background:${leader.foto?'transparent':`linear-gradient(135deg,${meta.cor},${meta.cor}88)`}">
+      ${leader.foto?`<img src="${leader.foto}" style="width:46px;height:46px;border-radius:50%;object-fit:cover">`:ini}
+    </div>
+    <div class="tree-root-info">
+      <div class="tree-root-name">${leader.name}</div>
+      <div class="tree-root-meta">${meta.emoji} ${meta.label}${leader.perfil?.funcao?' · '+leader.perfil.funcao:''}</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-family:var(--font-head);font-size:22px;font-weight:800;color:var(--accent2)">${totalTime}</div>
+      <div style="font-size:10px;color:var(--muted)">sob responsabilidade</div>
+    </div>
+  </div>`;
+
+  // ── Pills de estatísticas ──
+  if (team.length) {
+    html += `
+    <div class="tree-stats-row">
+      <div class="tree-stat-pill">👥 ${team.length} operac.</div>
+      <div class="tree-stat-pill" style="color:var(--accent2)">⭐ Score médio: ${avgScore}</div>
+      ${promos ? `<div class="tree-stat-pill" style="color:var(--green)">🏆 ${promos} promoção</div>` : ''}
+      ${riscos ? `<div class="tree-stat-pill" style="color:var(--red)">🔴 ${riscos} em risco</div>` : ''}
+    </div>`;
+  }
+
+  // ── Subordinados líderes (clicáveis) ──
+  if (subordinados.length) {
+    html += `<div class="tree-connector">
+      <div class="tree-connector-label">👔 Líderes subordinados (${subordinados.length})</div>`;
+
+    subordinados.sort((a,b) => ORDEM_IDX.indexOf(b.nivel||'lider') - ORDEM_IDX.indexOf(a.nivel||'lider'))
+      .forEach(sub => {
+        const subMeta  = NIVEL_META[sub.nivel||'lider']||NIVEL_META.lider;
+        const subIni   = sub.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+        const subTeam  = getTeamEmps(sub, allEmps);
+        const subTotal = getTeamTotal(sub, store);
+
+        html += `
+        <div class="tree-sub-card clickable" onclick="navigateTreeDown('${sub.id}')">
+          <div class="tree-sub-avatar" style="background:${sub.foto?'transparent':`linear-gradient(135deg,${subMeta.cor},${subMeta.cor}88)`}">
+            ${sub.foto?`<img src="${sub.foto}" style="width:34px;height:34px;border-radius:50%;object-fit:cover">`:subIni}
+          </div>
+          <div class="tree-sub-info">
+            <div class="tree-sub-name">${sub.name}</div>
+            <div class="tree-sub-meta">${subMeta.emoji} ${subMeta.label}${sub.perfil?.funcao?' · '+sub.perfil.funcao:''}</div>
+          </div>
+          <div class="tree-sub-stats">
+            <span class="tree-sub-stat" style="color:var(--muted)">${subTotal} pessoas</span>
+          </div>
+          <span class="tree-sub-badge" style="background:${subMeta.cor}18;color:${subMeta.cor};border:1px solid ${subMeta.cor}33">
+            ${subMeta.emoji} ${subMeta.label}
+          </span>
+        </div>`;
+      });
+
+    html += `</div>`;
+  }
+
+  // ── Funcionários operacionais ──
+  if (team.length) {
+    html += `<div class="tree-connector">
+      <div class="tree-connector-label">👷 Funcionários operacionais (${team.length})</div>
+      <div class="tree-emp-cards">`;
+
+    team.forEach(emp => {
+      const empIni = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+      const score  = calcScore(emp);
+      const scoreColor = score>=85?'#34d399':score>=70?'#4f8ef7':score>=55?'#fbbf24':'#f87171';
+      html += `
+        <div class="tree-emp-card">
+          <div class="tree-emp-avatar">${emp.foto?`<img src="${emp.foto}" style="width:28px;height:28px;border-radius:50%;object-fit:cover">`:empIni}</div>
+          <div class="tree-emp-info">
+            <div class="tree-emp-name">${emp.name}</div>
+            <div class="tree-emp-meta">${emp.role||emp.dept||'—'}</div>
+          </div>
+          <span style="font-family:var(--font-head);font-size:14px;font-weight:800;color:${scoreColor};flex-shrink:0">${score}</span>
+        </div>`;
+    });
+
+    html += `</div></div>`;
+  }
+
+  // Estado vazio
+  if (!subordinados.length && !team.length) {
+    html += `
+    <div class="tree-empty">
+      <div class="tree-empty-icon">🏝️</div>
+      <p style="font-size:14px;margin-bottom:6px">Nenhuma equipe ainda</p>
+      <p style="font-size:12px;color:var(--muted)">Este líder ainda não tem subordinados ou funcionários associados.</p>
+    </div>`;
+  }
+
+  body.innerHTML = html;
 }
 
 // ════════════════════════════════════════════════════════
-// MODAL NOVO/EDITAR LÍDER
+// MODAL EDITAR/CRIAR LÍDER
 // ════════════════════════════════════════════════════════
 async function openModal(leader) {
   const store = await getStore();
-  document.getElementById('edit-title').textContent = leader ? 'Editar Líder' : 'Novo Líder';
+  document.getElementById('modal-title').textContent = leader ? 'Editar Líder' : 'Novo Líder';
   document.getElementById('f-edit-id').value = leader?.id || '';
-
-  const fotoVal = leader?.foto || '';
-  document.getElementById('f-foto').value = fotoVal;
-  const prev = document.getElementById('foto-prev');
-  if (fotoVal) {
-    prev.innerHTML = `<img src="${fotoVal}" alt="foto">`;
+  if (!leader) { document.getElementById('f-foto-lider').value=''; document.getElementById('foto-preview-lider').innerHTML='<span id="foto-ini-lider">?</span>'; }
+  const fotoValLider = leader?.foto || '';
+  document.getElementById('f-foto-lider').value = fotoValLider;
+  const prevLider = document.getElementById('foto-preview-lider');
+  if (fotoValLider) {
+    prevLider.innerHTML = `<img src="${fotoValLider}" alt="foto">`;
   } else {
     const nm  = leader?.name||'';
     const ini = nm.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase()||'?';
-    prev.innerHTML = `<span id="foto-ini">${ini}</span>`;
+    prevLider.innerHTML = `<span id="foto-ini-lider">${ini}</span>`;
   }
-
   document.getElementById('f-name').value  = leader?.name||'';
   document.getElementById('f-id').value    = leader?.id||'';
   document.getElementById('f-role').value  = leader?.perfil?.funcao||'';
   document.getElementById('f-nivel').value = leader?.nivel||'lider';
   document.getElementById('f-pass').value  = '';
 
-  const idInp = document.getElementById('f-id');
-  idInp.disabled = !!leader; idInp.style.opacity = leader?'.5':'1';
-  document.getElementById('pass-wrap').style.display = leader?'none':'';
+  const idInput = document.getElementById('f-id');
+  idInput.disabled = !!leader;
+  idInput.style.opacity = leader?'.5':'1';
+  document.getElementById('nova-senha-wrap').style.display = leader?'none':'';
 
   const checks = (listId, items, selectedArr, emoji) => {
     const el = document.getElementById(listId);
@@ -1290,15 +1713,15 @@ async function openModal(leader) {
   const selTurnos  = leader?.perfil?.turnos ||(leader?.perfil?.turno ?[leader.perfil.turno] :[]);
   const selDepts   = leader?.perfil?.depts  ||[];
 
-  checks('f-filiais-list', store.filiais||[], selFiliais, '🏭');
-  checks('f-turnos-list',  store.turnos||[],  selTurnos,  '🕐');
-  checks('f-depts-list',   store.depts||[],   selDepts,   '🏢');
+  checks('f-filiais-list', store.filiais, selFiliais, '🏭');
+  checks('f-turnos-list',  store.turnos,  selTurnos,  '🕐');
+  checks('f-depts-list',   store.depts,   selDepts,   '🏢');
 
-  document.getElementById('ov-edit').classList.add('open');
+  document.getElementById('modal-overlay').classList.add('open');
   document.getElementById('f-name').focus();
 }
 
-function closeModal() { document.getElementById('ov-edit').classList.remove('open'); }
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
 
 async function editLeader(id) {
   const store  = await getStore();
@@ -1307,14 +1730,17 @@ async function editLeader(id) {
   openModal(leader);
 }
 
+// ════════════════════════════════════════════════════════
+// SALVAR LÍDER
+// ════════════════════════════════════════════════════════
 async function saveLeader() {
   const name   = document.getElementById('f-name').value.trim();
   const id     = document.getElementById('f-id').value.trim();
   const nivel  = document.getElementById('f-nivel').value;
   const editId = document.getElementById('f-edit-id').value;
 
-  if (!name)          { showToast('⚠️ Nome é obrigatório.','warn'); return; }
-  if (!editId && !id) { showToast('⚠️ ID de acesso é obrigatório.','warn'); return; }
+  if (!name)             { showToast('⚠️ Nome é obrigatório.','warn'); return; }
+  if (!editId && !id)    { showToast('⚠️ ID de acesso é obrigatório.','warn'); return; }
 
   const store = await getStore();
   const pass  = document.getElementById('f-pass').value;
@@ -1324,17 +1750,18 @@ async function saveLeader() {
   const depts   = [...document.querySelectorAll('#f-depts-list input:checked')].map(c=>c.value);
   const filiais = [...document.querySelectorAll('#f-filiais-list input:checked')].map(c=>c.value);
   const turnos  = [...document.querySelectorAll('#f-turnos-list input:checked')].map(c=>c.value);
-  const perfil  = { filiais, turnos, filial:filiais[0]||'', turno:turnos[0]||'', funcao:document.getElementById('f-role').value, depts };
+
+  const perfil = { filiais, turnos, filial:filiais[0]||'', turno:turnos[0]||'', funcao:document.getElementById('f-role').value, depts };
 
   if (editId) {
     if (!store.users[editId]) { showToast('❌ Usuário não encontrado.','error'); return; }
-    const fotoLider = document.getElementById('f-foto').value || store.users[editId].foto || null;
+    const fotoLider = document.getElementById('f-foto-lider').value||store.users[editId].foto||null;
     store.users[editId] = { ...store.users[editId], name, nivel, perfil, foto:fotoLider };
     await registrarLog('editou','Líderes',`Editou: <strong>${name}</strong>`);
     showToast('✅ Líder atualizado!');
   } else {
-    const fotoNovo = document.getElementById('f-foto').value || null;
-    store.users[id] = { id, name, pass, nivel, setor:depts[0]||'', perfil, foto:fotoNovo };
+    const fotoLiderNovo = document.getElementById('f-foto-lider').value||null;
+    store.users[id] = { id, name, pass, nivel, setor:depts[0]||'', perfil, foto:fotoLiderNovo };
     await registrarLog('criou','Líderes',`Novo líder: <strong>${name}</strong> (${nivel})`);
     showToast('✅ Líder cadastrado!');
   }
@@ -1345,6 +1772,9 @@ async function saveLeader() {
   renderLeaders();
 }
 
+// ════════════════════════════════════════════════════════
+// AÇÕES ADMIN
+// ════════════════════════════════════════════════════════
 async function resetLeaderPass(id, nome) {
   const nova = prompt(`Nova senha para "${nome}" (mín. 6 caracteres):`);
   if (!nova) return;
@@ -1373,7 +1803,7 @@ async function deleteLeader(id) {
 // ════════════════════════════════════════════════════════
 // TRANSFERIR LÍDER
 // ════════════════════════════════════════════════════════
-async function openTransfer(id) {
+async function openLeaderTransferModal(id) {
   const store  = await getStore();
   const leader = store.users?.[id];
   if (!leader) return;
@@ -1393,18 +1823,20 @@ async function openTransfer(id) {
   const selTurnos  = leader.perfil?.turnos ||(leader.perfil?.turno ?[leader.perfil.turno] :[]);
   const selDepts   = leader.perfil?.depts  ||[];
 
-  document.getElementById('ltr-name').textContent = leader.name;
-  document.getElementById('ltr-id').value         = id;
+  document.getElementById('ltr-leader-name').textContent = leader.name;
+  document.getElementById('ltr-edit-id').value           = id;
+
   checks('ltr-filiais', store.filiais||[], selFiliais, '🏭');
   checks('ltr-turnos',  store.turnos||[],  selTurnos,  '🕐');
   checks('ltr-depts',   store.depts||[],   selDepts,   '🏢');
 
-  document.getElementById('ov-transfer').classList.add('open');
+  document.getElementById('modal-leader-transfer').classList.add('open');
 }
-function closeTransfer() { document.getElementById('ov-transfer').classList.remove('open'); }
 
-async function saveTransfer() {
-  const id    = document.getElementById('ltr-id').value;
+function closeLeaderTransferModal() { document.getElementById('modal-leader-transfer').classList.remove('open'); }
+
+async function saveLeaderTransfer() {
+  const id    = document.getElementById('ltr-edit-id').value;
   const store = await getStore();
   if (!store.users?.[id]) { showToast('❌ Usuário não encontrado.','error'); return; }
 
@@ -1421,59 +1853,286 @@ async function saveTransfer() {
   store.users[id].setor          = depts[0]  ||'';
 
   await saveStore(store);
-  closeTransfer();
+  closeLeaderTransferModal();
   _store = null;
   renderLeaders();
   await registrarLog('editou','Líderes',`Atualizou responsabilidades: <strong>${store.users[id]?.name||id}</strong>`);
   showToast('✅ Responsabilidades atualizadas!');
 }
 
+document.getElementById('modal-leader-transfer').addEventListener('click', e=>{
+  if (e.target===e.currentTarget) closeLeaderTransferModal();
+});
+
 // ════════════════════════════════════════════════════════
 // OCORRÊNCIA DO LÍDER
 // ════════════════════════════════════════════════════════
-async function openOcorrencia(id) {
+async function openLeaderOcorrencia(id) {
   const store  = await getStore();
   const leader = store.users?.[id];
   if (!leader) return;
-  document.getElementById('oc-name').textContent = leader.name;
-  document.getElementById('oc-id').value         = id;
-  document.getElementById('oc-tipo').value        = '';
-  document.getElementById('oc-desc').value        = '';
-  const agora = new Date();
-  agora.setMinutes(agora.getMinutes() - agora.getTimezoneOffset());
-  document.getElementById('oc-data').value = agora.toISOString().slice(0,16);
-  document.getElementById('ov-oc').classList.add('open');
-}
-function closeOcorrencia() { document.getElementById('ov-oc').classList.remove('open'); }
 
-async function saveOcorrencia() {
-  const refId = document.getElementById('oc-id').value;
-  const tipo  = document.getElementById('oc-tipo').value;
-  const desc  = document.getElementById('oc-desc').value.trim();
-  const data  = document.getElementById('oc-data').value;
+  document.getElementById('loc-leader-name').textContent = leader.name;
+  document.getElementById('loc-edit-id').value = id;
+  document.getElementById('loc-tipo').value    = '';
+  document.getElementById('loc-desc').value    = '';
+  const _agora = new Date();
+  _agora.setMinutes(_agora.getMinutes() - _agora.getTimezoneOffset());
+  document.getElementById('loc-data').value = _agora.toISOString().slice(0,16);
+
+  document.getElementById('modal-leader-ocorrencia').classList.add('open');
+}
+
+function closeLeaderOcorrencia() { document.getElementById('modal-leader-ocorrencia').classList.remove('open'); }
+
+async function saveLeaderOcorrencia() {
+  const refId = document.getElementById('loc-edit-id').value;
+  const tipo  = document.getElementById('loc-tipo').value;
+  const desc  = document.getElementById('loc-desc').value.trim();
+  const data  = document.getElementById('loc-data').value;
+
   if (!tipo) { showToast('⚠️ Selecione o tipo de ocorrência.','warn'); return; }
-  if (!desc) { showToast('⚠️ Descreva a ocorrência.','warn'); document.getElementById('oc-desc').focus(); return; }
+  if (!desc) { showToast('⚠️ Descreva a ocorrência.','warn'); document.getElementById('loc-desc').focus(); return; }
 
   const store  = await getStore();
   const leader = store.users?.[refId];
-  const lista  = await LS.get('rh_ocorrencias', []);
+
+  const lista = await LS.get('rh_ocorrencias', []);
   lista.unshift({
-    id:      uid(), ts:(()=>{ if(!data) return new Date().toISOString(); const d=new Date(data); return isNaN(d)?new Date().toISOString():d.toISOString(); })(),
-    empId:   refId, empName:leader?.name||'—', empDept:leader?.setor||leader?.perfil?.depts?.[0]||'—',
+    id:        uid(),
+    ts:        (()=>{ if(!data) return new Date().toISOString(); const d=new Date(data); return isNaN(d)?new Date().toISOString():d.toISOString(); })(),
+    empId:     refId,
+    empName:   leader?.name||'—',
+    empDept:   leader?.setor||leader?.perfil?.depts?.[0]||'—',
     tipo, desc, obs:'', status:'pendente',
-    respName:currentUser.name, respId:currentUser.id,
-    createdAt:new Date().toISOString(), _isLider:true,
+    respName:  currentUser.name, respId: currentUser.id,
+    createdAt: new Date().toISOString(), _isLider: true,
   });
   await LS.set('rh_ocorrencias', lista);
   await registrarLog('criou','Ocorrências',`Ocorrência <strong>${tipo}</strong> para líder <strong>${leader?.name||'—'}</strong>`);
-  closeOcorrencia();
-  showToast('✅ Ocorrência registrada!');
+  closeLeaderOcorrencia();
+  showToast('✅ Ocorrência do líder registrada!');
 }
 
+document.getElementById('modal-leader-ocorrencia').addEventListener('click', e=>{
+  if (e.target===e.currentTarget) closeLeaderOcorrencia();
+});
+
 // ════════════════════════════════════════════════════════
-// FOTO
+// FECHAR MODAIS
 // ════════════════════════════════════════════════════════
-function processarFoto(input) {
+document.getElementById('modal-overlay').addEventListener('click', e=>{
+  if (e.target===e.currentTarget) closeModal();
+});
+document.getElementById('modal-tree-overlay').addEventListener('click', e=>{
+  if (e.target===e.currentTarget) closeTreeModal();
+});
+document.addEventListener('keydown', e=>{
+  if (e.key==='Escape') {
+    closeModal(); closeTreeModal(); closeLeaderOcorrencia(); closeLeaderTransferModal(); closeCircularOrg();
+  }
+});
+
+// ════════════════════════════════════════════════════════
+// ★ ORGANOGRAMA CIRCULAR
+// ════════════════════════════════════════════════════════
+function openCircularOrg() {
+  if (!_currentSearchLeaderId) return;
+  _orgRootId    = _currentSearchLeaderId;
+  _orgPanelPath = [];
+  document.getElementById('modal-org-overlay').classList.add('open');
+  renderCircularOrgChart(_currentSearchLeaderId);
+}
+
+function closeCircularOrg() {
+  document.getElementById('modal-org-overlay').classList.remove('open');
+  _orgPanelPath = [];
+}
+
+document.getElementById('modal-org-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeCircularOrg();
+});
+
+// Subordinados diretos para o organograma (apenas o nível imediatamente abaixo)
+// allEmps é opcional — quando fornecido, usa getEffectiveFiliais para inferir filiais.
+function getDirectSubsOrgChart(ldr, allLeaders, allEmps) {
+  const myIdx     = ORDEM_IDX.indexOf(ldr.nivel||'lider');
+  const myDepts   = getMeusDepts(ldr);
+  const myTurnos  = getMeusTurnos(ldr);
+  const myFiliais = allEmps ? getEffectiveFiliais(ldr, allEmps) : getMeusFiliais(ldr);
+  for (let t = myIdx - 1; t >= 0; t--) {
+    const found = allLeaders.filter(u => {
+      if (ORDEM_IDX.indexOf(u.nivel||'lider') !== t) return false;
+      // Deve compartilhar ao menos um departamento
+      const deptOk = myDepts.some(d => getMeusDepts(u).includes(d));
+      if (!deptOk) return false;
+      // Turno: se QUALQUER lado tem turno definido, ambos devem ter E compartilhar ao menos um
+      const uTurnos = getMeusTurnos(u);
+      if (myTurnos.length || uTurnos.length) {
+        if (!myTurnos.length || !uTurnos.length || !myTurnos.some(t2 => uTurnos.includes(t2))) return false;
+      }
+      // Filial: usa filial efetiva (explícita + inferida) para ambos os lados.
+      const uFiliais = allEmps ? getEffectiveFiliais(u, allEmps) : getMeusFiliais(u);
+      if (myFiliais.length || uFiliais.length) {
+        if (!myFiliais.length || !uFiliais.length || !myFiliais.some(f => uFiliais.includes(f))) return false;
+      }
+      return true;
+    });
+    if (found.length) return found;
+  }
+  return [];
+}
+
+// Chamado pelo onclick dos itens do painel
+function selectOrgNode(leaderId, panelIdx) {
+  _orgPanelPath = _orgPanelPath.slice(0, panelIdx);
+  _orgPanelPath.push(leaderId);
+  renderCircularOrgChart(_orgRootId);
+}
+
+function renderCircularOrgChart(leaderId) {
+  _orgRootId = leaderId;
+  const store = _store;
+  const leader = store?.users?.[leaderId];
+  if (!leader) return;
+
+  // ── Header do modal ──
+  const lm  = NIVEL_META[leader.nivel||'lider'] || NIVEL_META.lider;
+  const ini = leader.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const hAv = document.getElementById('org-modal-avatar');
+  hAv.style.background = leader.foto ? 'transparent' : `linear-gradient(135deg,${lm.cor},${lm.cor}88)`;
+  hAv.innerHTML = leader.foto
+    ? `<img src="${leader.foto}" style="width:42px;height:42px;border-radius:50%;object-fit:cover">` : ini;
+  document.getElementById('org-modal-name').textContent = leader.name;
+  document.getElementById('org-modal-sub').textContent  = `${lm.emoji} ${lm.label} · Organograma`;
+
+  const allLeaders = Object.values(store.users||{}).filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
+  const allEmps    = store.employees || [];
+  const container  = document.getElementById('org-chart-container');
+  container.innerHTML = '';
+
+  // Sequência de painéis: [root, ...path selecionado]
+  const panelIds = [leaderId, ..._orgPanelPath];
+
+  panelIds.forEach((lid, panelIdx) => {
+    const pl = store.users?.[lid];
+    if (!pl) return;
+
+    const pm   = NIVEL_META[pl.nivel||'lider'] || NIVEL_META.lider;
+    const pIni = pl.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+
+    const dirSubs    = getDirectSubsOrgChart(pl, allLeaders, allEmps);
+    const teamEmps   = getTeamEmps(pl, allEmps);
+    const subEmpIds  = new Set(dirSubs.flatMap(s => getTeamEmps(s, allEmps).map(e => e.id)));
+    const directEmps = teamEmps.filter(e => !subEmpIds.has(e.id));
+    const selectedId = _orgPanelPath[panelIdx];
+
+    // ── Painel ──
+    const panel = document.createElement('div');
+    panel.className = 'org-panel';
+
+    // Header do painel
+    const hdr = document.createElement('div');
+    hdr.className = 'org-panel-hdr';
+    hdr.style.borderBottomColor = pm.cor + '66';
+    hdr.innerHTML = `
+      <div class="org-panel-av" style="background:${pl.foto ? 'transparent' : `linear-gradient(135deg,${pm.cor},${pm.cor}77)`}">
+        ${pl.foto ? `<img src="${pl.foto}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">` : pIni}
+      </div>
+      <div style="flex:1;min-width:0">
+        <div class="org-panel-nm">${pl.name.split(' ').slice(0,2).join(' ')}</div>
+        <div class="org-panel-rl">${pm.emoji} ${pm.label}</div>
+      </div>
+    `;
+    panel.appendChild(hdr);
+
+    const body = document.createElement('div');
+    body.className = 'org-panel-body';
+
+    // ── Sub-líderes ──
+    if (dirSubs.length) {
+      const sec = document.createElement('div');
+      sec.className = 'org-sec-lbl';
+      sec.textContent = `👔 Líderes (${dirSubs.length})`;
+      body.appendChild(sec);
+
+      dirSubs.forEach(sub => {
+        const sm      = NIVEL_META[sub.nivel||'lider'] || NIVEL_META.lider;
+        const isSelected = sub.id === selectedId;
+        const sIni    = sub.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+        const hasSubs = getDirectSubsOrgChart(sub, allLeaders, allEmps).length > 0 || getTeamEmps(sub, allEmps).length > 0;
+        const total   = getTeamTotal(sub, store);
+
+        const item = document.createElement('div');
+        item.className = 'org-item';
+        item.style.borderLeftColor = sm.cor + (isSelected ? '' : '55');
+        if (isSelected) item.style.background = sm.cor + '1a';
+        item.onclick = () => selectOrgNode(sub.id, panelIdx);
+
+        item.innerHTML = `
+          <div class="org-item-av" style="background:${sub.foto ? 'transparent' : `linear-gradient(135deg,${sm.cor},${sm.cor}77)`}">
+            ${sub.foto ? `<img src="${sub.foto}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">` : sIni}
+          </div>
+          <div class="org-item-info">
+            <div class="org-item-nm">${sub.name.split(' ').slice(0,2).join(' ')}</div>
+            <div class="org-item-rl" style="color:${sm.cor}cc">${sm.emoji} ${sm.label}</div>
+            ${total ? `<div class="org-item-cnt">👥 ${total} ${total===1?'pessoa':'pessoas'}</div>` : ''}
+          </div>
+          ${hasSubs ? `<div class="org-item-arr${isSelected?' arr-sel':''}">›</div>` : ''}
+        `;
+        body.appendChild(item);
+      });
+    }
+
+    // ── Funcionários diretos ──
+    if (directEmps.length) {
+      const sec = document.createElement('div');
+      sec.className = 'org-sec-lbl';
+      sec.textContent = `👥 Operacional (${directEmps.length})`;
+      body.appendChild(sec);
+
+      directEmps.slice(0, 18).forEach(emp => {
+        const eIni = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+        const item = document.createElement('div');
+        item.className = 'org-item org-emp';
+        item.innerHTML = `
+          <div class="org-item-av emp-av">
+            ${emp.foto ? `<img src="${emp.foto}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">` : eIni}
+          </div>
+          <div class="org-item-info">
+            <div class="org-item-nm">${emp.name.split(' ').slice(0,2).join(' ')}</div>
+            <div class="org-item-rl">${(emp.role||emp.dept||'Operacional').slice(0,22)}</div>
+          </div>
+        `;
+        body.appendChild(item);
+      });
+
+      if (directEmps.length > 18) {
+        const more = document.createElement('div');
+        more.style.cssText = 'text-align:center;padding:8px 0 12px;font-size:10px;color:var(--muted)';
+        more.textContent = `+ ${directEmps.length - 18} mais`;
+        body.appendChild(more);
+      }
+    }
+
+    // ── Vazio ──
+    if (!dirSubs.length && !directEmps.length) {
+      const empty = document.createElement('div');
+      empty.style.cssText = 'padding:36px 16px;text-align:center;color:var(--muted);font-size:12px';
+      empty.innerHTML = '<div style="font-size:30px;margin-bottom:8px">👤</div>Sem subordinados';
+      body.appendChild(empty);
+    }
+
+    panel.appendChild(body);
+    container.appendChild(panel);
+  });
+
+  // Auto-scroll para mostrar o painel mais recente
+  setTimeout(() => { container.scrollLeft = container.scrollWidth; }, 30);
+}
+
+// ── Foto do líder ────────────────────────────────────
+function processarFotoLider(input) {
   const file = input.files[0];
   if (!file) return;
   const reader = new FileReader();
@@ -1483,12 +2142,12 @@ function processarFoto(input) {
       const canvas = document.createElement('canvas');
       canvas.width = 80; canvas.height = 80;
       const ctx  = canvas.getContext('2d');
-      const size = Math.min(img.width, img.height);
+      const size = Math.min(img.width,img.height);
       const sx   = (img.width-size)/2, sy=(img.height-size)/2;
       ctx.drawImage(img, sx, sy, size, size, 0, 0, 80, 80);
       const base64 = canvas.toDataURL('image/jpeg', 0.65);
-      document.getElementById('f-foto').value = base64;
-      document.getElementById('foto-prev').innerHTML = `<img src="${base64}" alt="foto">`;
+      document.getElementById('f-foto-lider').value = base64;
+      document.getElementById('foto-preview-lider').innerHTML = `<img src="${base64}" alt="foto">`;
     };
     img.src = e.target.result;
   };
@@ -1496,23 +2155,12 @@ function processarFoto(input) {
   input.value = '';
 }
 
-function removerFoto() {
-  document.getElementById('f-foto').value = '';
+function removerFotoLider() {
+  document.getElementById('f-foto-lider').value = '';
   const nm  = document.getElementById('f-name').value.trim();
   const ini = nm.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase()||'?';
-  document.getElementById('foto-prev').innerHTML = `<span id="foto-ini">${ini}</span>`;
+  document.getElementById('foto-preview-lider').innerHTML = `<span id="foto-ini-lider">${ini}</span>`;
 }
-
-// ════════════════════════════════════════════════════════
-// FECHAR MODAIS (overlay click + ESC)
-// ════════════════════════════════════════════════════════
-document.getElementById('ov-org').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeOrg(); });
-document.getElementById('ov-edit').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeModal(); });
-document.getElementById('ov-transfer').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeTransfer(); });
-document.getElementById('ov-oc').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeOcorrencia(); });
-document.addEventListener('keydown', e=>{
-  if(e.key==='Escape') { closeOrg(); closeModal(); closeTransfer(); closeOcorrencia(); }
-});
 </script>
 </body>
 </html>
