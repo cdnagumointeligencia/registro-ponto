@@ -1289,7 +1289,7 @@ async function renderLeaders() {
     });
   }
 
-  // ── Filtra por busca de texto (igual a employees.html) ──
+  // ── Filtra por busca de texto ──────────────────────────────────────
   const searchText = (document.getElementById('search-leader-input')?.value || '').toLowerCase().trim();
   let highlightId = null;
   if (searchText) {
@@ -1300,22 +1300,54 @@ async function renderLeaders() {
     );
   }
 
-  // Filtro por departamento
+  // Filtro por departamento (mantém líderes que têm funcionários nesse dept)
   if (activeDeptFilter) {
     leaders = leaders.filter(u => {
-      const teamEmps = getTeamEmps(u, store.employees||[]);
-      return teamEmps.some(e=>e.dept===activeDeptFilter);
+      const teamEmps = getTeamEmps(u, allEmpsRef);
+      return teamEmps.some(e => e.dept === activeDeptFilter);
     });
+  }
+
+  // ── Expansão hierárquica ─────────────────────────────────────────────
+  // Quando qualquer filtro está ativo, expande a lista para incluir toda a
+  // árvore hierárquica dos líderes encontrados — igual ao modal de hierarquia.
+  // Isso garante que o grid mostre APENAS quem está sob o líder/encarregado
+  // encontrado, sem misturar líderes de outras filiais ou fora da hierarquia.
+  const anyFilterActive = searchText || filialFilter || turnoFilter || activeDeptFilter;
+  if (anyFilterActive && leaders.length) {
+    const allLeadersGlobal = Object.values(store.users||{})
+      .filter(u => u.id !== ADMIN_ID && u.nivel !== 'admin_master');
+
+    // Encontra os líderes de mais alto nível dentro do resultado filtrado
+    const rootSet = new Set(leaders.map(u => u.id));
+    const roots   = leaders.filter(u => {
+      // É raiz se nenhum dos outros líderes filtrados é seu superior direto
+      const idx = ORDEM_IDX.indexOf(u.nivel||'lider');
+      return !leaders.some(other =>
+        other.id !== u.id &&
+        ORDEM_IDX.indexOf(other.nivel||'lider') > idx &&
+        getSubordinados(other, allLeadersGlobal, allEmpsRef).some(s => s.id === u.id)
+      );
+    });
+
+    // Expande cada raiz com toda a sua árvore hierárquica
+    const treeIds = new Set(roots.map(r => r.id));
+    roots.forEach(root => {
+      getSubordinadosRecursivo(root.id, allLeadersGlobal, allEmpsRef)
+        .forEach(s => treeIds.add(s.id));
+    });
+
+    // Lista final: apenas líderes na árvore das raízes encontradas
+    leaders = allLeadersGlobal.filter(u => treeIds.has(u.id));
   }
 
   const grid = document.getElementById('leaders-grid');
 
   // ── Botão organograma circular ──
-  // Usa a mesma ordem de exibição do grid (HIERARQUIA_ORDER) para garantir
-  // que o botão aponte para quem aparece PRIMEIRO na tela
   const btnOrg = document.getElementById('btn-organograma');
   if (btnOrg) {
-    if (searchText && leaders.length) {
+    if (anyFilterActive && leaders.length) {
+      // Aponta para o líder de maior nível hierárquico no resultado
       let firstVisible = null;
       for (const nivel of HIERARQUIA_ORDER) {
         firstVisible = leaders.find(u => (u.nivel||'lider') === nivel);
@@ -1336,13 +1368,13 @@ async function renderLeaders() {
     grid.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">🧑‍💼</div>
-        <p style="font-size:14px">${searchText ? 'Nenhum resultado para esta busca' : 'Nenhum líder encontrado'}</p>
-        <p style="font-size:12px;margin-top:6px">${searchText ? 'Tente limpar o filtro.' : 'Cadastre novos usuários pelo botão acima.'}</p>
+        <p style="font-size:14px">${anyFilterActive ? 'Nenhum resultado para este filtro' : 'Nenhum líder encontrado'}</p>
+        <p style="font-size:12px;margin-top:6px">${anyFilterActive ? 'Tente limpar os filtros.' : 'Cadastre novos usuários pelo botão acima.'}</p>
       </div>`;
     return;
   }
 
-  // Agrupa por nível
+  // Agrupa por nível hierárquico
   const HIERARQUIA_META = {
     diretoria:   { label:'🏢 Diretoria',    cls:'diretoria'   },
     gerencia:    { label:'📊 Gerência',     cls:'gerencia'    },
@@ -1373,8 +1405,17 @@ async function renderLeaders() {
     lista.forEach(u => { html += buildCard(u, store, isAdmin, u.id===highlightId); });
   });
 
-  // Seção operacional — filtrada por filial, turno e departamento
-  let emps = store.employees || [];
+  // ── Seção operacional ────────────────────────────────────────────────
+  // Quando filtro ativo: mostra apenas funcionários da equipe dos líderes visíveis.
+  // Sem filtro: respeita dept/filial/turno da seleção manual.
+  let emps;
+  if (anyFilterActive) {
+    // Pega apenas os funcionários que pertencem aos líderes da árvore atual
+    const visibleTeamIds = new Set(leaders.flatMap(u => getTeamEmps(u, allEmpsRef).map(e => e.id)));
+    emps = allEmpsRef.filter(e => visibleTeamIds.has(e.id));
+  } else {
+    emps = [...allEmpsRef];
+  }
   if (activeDeptFilter) emps = emps.filter(e => e.dept   === activeDeptFilter);
   if (filialFilter)     emps = emps.filter(e => e.filial === filialFilter);
   if (turnoFilter)      emps = emps.filter(e => e.turno  === turnoFilter);
