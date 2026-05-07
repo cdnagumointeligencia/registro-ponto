@@ -673,7 +673,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
         <div style="display:flex;gap:14px;flex-wrap:wrap">
           <div>
             <label class="form-label" style="margin-bottom:6px">📅 Início das Férias</label>
-            <input class="form-input" type="date" id="f-ferias-inicio" style="border-color:#22d3ee;width:200px">
+            <input class="form-input" type="date" id="f-ferias-inicio" style="border-color:#22d3ee;width:200px" onchange="calcFimFerias()">
           </div>
           <div>
             <label class="form-label" style="margin-bottom:6px">📅 Fim das Férias</label>
@@ -1682,6 +1682,15 @@ function toggleAfastado() {
   }
 }
 
+function calcFimFerias() {
+  const inicioVal = document.getElementById('f-ferias-inicio').value;
+  if (!inicioVal) return;
+  const inicio = new Date(inicioVal + 'T00:00:00');
+  const fim = new Date(inicio);
+  fim.setDate(fim.getDate() + 29); // 30 dias corridos = início + 29
+  document.getElementById('f-ferias-fim').value = fim.toISOString().split('T')[0];
+}
+
 function toggleFerias() {
   const checked = document.getElementById('f-ferias').checked;
   document.getElementById('ferias-date-wrap').style.display = checked ? 'block' : 'none';
@@ -1689,10 +1698,8 @@ function toggleFerias() {
     const hoje = new Date();
     if (!document.getElementById('f-ferias-inicio').value)
       document.getElementById('f-ferias-inicio').value = hoje.toISOString().split('T')[0];
-    if (!document.getElementById('f-ferias-fim').value) {
-      const fim = new Date(); fim.setDate(fim.getDate()+29);
-      document.getElementById('f-ferias-fim').value = fim.toISOString().split('T')[0];
-    }
+    // Sempre recalcula o fim com base no início informado
+    calcFimFerias();
   }
 }
 
