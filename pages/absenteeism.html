@@ -571,11 +571,11 @@ function renderHeatmap(emps, mes) {
     const key  = `${emp.id}_${year}_${String(mes+1).padStart(2,'0')}`;
     const dias = (_allPonto || {})[key] || {};
     Object.entries(dias).forEach(([diaStr, s]) => {
-      if (s !== 'falta' && s !== 'atestado') return;
+      if (s !== 'falta') return; // apenas faltas reais — atestado é ausência justificada
       const diaN = parseInt(diaStr);
       const dow  = new Date(year, mes, diaN).getDay(); // 0=dom … 6=sáb
       if (dow === 0) return; // domingo nunca conta
-      vals[dow] += (s === 'falta') ? 1 : 0.5;
+      vals[dow] += 1;
     });
   });
   const valsRnd = vals.map(v => Math.round(v));
