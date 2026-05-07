@@ -1044,17 +1044,21 @@ function getTotalFaltasEmp(emp) {
   try {
     const allPonto = _allPonto;
     const ano      = emp.year || new Date().getFullYear();
-    let   total    = 0;
+    let   total        = 0;
+    let   temDadosPonto = false; // true se há QUALQUER registro no ponto (presente, folga, falta...)
     for (let m = 1; m <= 12; m++) {
       const key  = `${emp.id}_${ano}_${String(m).padStart(2,'0')}`;
       const dias = allPonto[key] || {};
+      if (Object.keys(dias).length > 0) temDadosPonto = true;
       Object.values(dias).forEach(s => {
         if (s === 'falta')    total += 1;
         if (s === 'atestado') total += 0.5;
       });
     }
-    // Se encontrou dados no ponto, usa esse total; caso contrário, cai no absences do store
-    return total > 0 ? total : (emp.absences||[]).reduce((a,b)=>a+b, 0);
+    // Só usa emp.absences se não há NENHUM dado no ponto.
+    // Antes usava o fallback quando total===0, mas isso mostrava faltas antigas
+    // de funcionários que tinham ponto registrado mas sem faltas (só presentes/folgas).
+    return temDadosPonto ? total : (emp.absences||[]).reduce((a,b)=>a+b, 0);
   } catch(e) {
     return (emp.absences||[]).reduce((a,b)=>a+b, 0);
   }
@@ -1213,9 +1217,11 @@ function buildCard(emp) {
       return Array.from({length:12}, (_, m) => {
         const key  = `${emp.id}_${ano}_${String(m+1).padStart(2,'0')}`;
         const dias = allPonto[key] || {};
+        const temDados = Object.keys(dias).length > 0; // qualquer registro no ponto neste mês
         let f = 0;
         Object.values(dias).forEach(s => { if(s==='falta') f+=1; if(s==='atestado') f+=0.5; });
-        return f || (emp.absences?.[m] || 0);
+        // Só usa absences manual se não há NENHUM dado do ponto neste mês
+        return temDados ? f : (emp.absences?.[m] || 0);
       });
     } catch(e) { return emp.absences || Array(12).fill(0); }
   })();
