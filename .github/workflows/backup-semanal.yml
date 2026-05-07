@@ -1,9 +1,9 @@
-name: Backup Semanal — CD Nagumo Performance
+name: Backup Semanal
 
 on:
   schedule:
-    - cron: '0 3,7,11,15,19,23 * * *'   # 00h, 04h, 08h, 12h, 16h e 20h (Brasília)
-  workflow_dispatch:                      # Permite rodar manualmente
+    - cron: '5 3,7,11,15,19,23 * * *'
+  workflow_dispatch:
 
 jobs:
   backup:
@@ -22,3 +22,10 @@ jobs:
           EMAILJS_PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}
           EMAILJS_PRIVATE_KEY: ${{ secrets.EMAILJS_PRIVATE_KEY }}
         run: node scripts/backup.js
+
+      - name: Manter repositório ativo
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git commit --allow-empty -m "chore: keep-alive [skip ci]"
+          git push
