@@ -980,7 +980,7 @@ async function renderTabela() {
     return;
   }
 
-  const sortedList = list.sort((a,b)=>calcAptMedia(b)-calcAptMedia(a));
+  const sortedList = list.sort((a,b)=>(a.name||'').localeCompare(b.name||'','pt-BR'));
   tbody.innerHTML = sortedList.map(emp => buildRow(emp, sortedList)).join('');
 }
 
