@@ -316,6 +316,70 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
 .toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
 
+/* ══ SCORE PICKER FLUTUANTE ══════════════════════════════ */
+.score-picker {
+  position: fixed;
+  z-index: 9999;
+  background: var(--surface);
+  border: 1.5px solid var(--accent);
+  border-radius: 14px;
+  padding: 10px 10px 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.6);
+  animation: fadeUp .15s ease;
+  user-select: none;
+}
+.score-picker-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .9px;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 7px;
+}
+.score-picker-btns {
+  display: flex;
+  gap: 4px;
+}
+.score-picker-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--muted);
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .12s;
+  flex-shrink: 0;
+}
+.score-picker-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  background: var(--surface3);
+  transform: translateY(-2px);
+}
+.score-picker-btn.current {
+  border-color: var(--accent);
+  background: rgba(79,142,247,.2);
+  color: var(--accent);
+}
+.score-picker-btn[data-v="0"]:hover,
+.score-picker-btn[data-v="1"]:hover,
+.score-picker-btn[data-v="2"]:hover { border-color:#f87171; color:#f87171; background:rgba(248,113,113,.12); }
+.score-picker-btn[data-v="3"]:hover,
+.score-picker-btn[data-v="4"]:hover { border-color:#fb923c; color:#fb923c; background:rgba(251,146,60,.12); }
+.score-picker-btn[data-v="5"]:hover,
+.score-picker-btn[data-v="6"]:hover { border-color:#fbbf24; color:#fbbf24; background:rgba(251,191,36,.12); }
+.score-picker-btn[data-v="7"]:hover,
+.score-picker-btn[data-v="8"]:hover { border-color:#93C5FD; color:#93C5FD; background:rgba(79,142,247,.12); }
+.score-picker-btn[data-v="9"]:hover,
+.score-picker-btn[data-v="10"]:hover { border-color:#34d399; color:#34d399; background:rgba(52,211,153,.12); }
 /* ── Responsive ── */
 @media(max-width:1024px) {
   :root { --sidebar-w:56px; }
@@ -1058,11 +1122,31 @@ function buildRow(emp, lista) {
 }
 
 // ════════════════════════════════════════════════════════
-// EDIÇÃO INLINE — clique na bubble
+// SCORE PICKER — clique na bubble abre painel com botões 0-10
 // ════════════════════════════════════════════════════════
+let _pickerEmpId = null;
+let _pickerKey   = null;
+
+function dismissPicker() {
+  const existing = document.getElementById('_score-picker');
+  if (existing) existing.remove();
+  document.removeEventListener('mousedown', _pickerOutside, true);
+  document.removeEventListener('keydown',   _pickerEsc,     true);
+  _pickerEmpId = null;
+  _pickerKey   = null;
+}
+
+function _pickerOutside(e) {
+  const picker = document.getElementById('_score-picker');
+  if (picker && !picker.contains(e.target)) dismissPicker();
+}
+
+function _pickerEsc(e) {
+  if (e.key === 'Escape') dismissPicker();
+}
+
 async function startEdit(empId, key, cell) {
   if (!podeEditar) return;
-  if (cell.querySelector('.apt-input')) return;
 
   const store = await getStore();
   const emp   = (store.employees||[]).find(e=>e.id===empId);
@@ -1086,21 +1170,53 @@ async function startEdit(empId, key, cell) {
     return;
   }
 
+  // Fecha picker anterior se aberto
+  dismissPicker();
+
+  _pickerEmpId = empId;
+  _pickerKey   = key;
   const cur = (emp.competencies||{})[key] ?? 5;
-  const { color } = bubbleColor(cur);
+  const meta = APT_META[key];
 
-  cell.innerHTML = `<input class="apt-input" type="number" min="0" max="10"
-    value="${cur}" style="color:${color}"
-    onblur="commitEdit(${empId},'${key}',this)"
-    onkeydown="if(event.key==='Enter')this.blur();if(event.key==='Escape'){this.dataset.cancel='1';this.blur();}">`;
+  // Cria o picker
+  const picker = document.createElement('div');
+  picker.id = '_score-picker';
+  picker.className = 'score-picker';
+  picker.innerHTML = `
+    <div class="score-picker-label">${meta.emoji} ${meta.label}</div>
+    <div class="score-picker-btns">
+      ${Array.from({length:11},(_,i)=>`
+        <button class="score-picker-btn ${i===cur?'current':''}" data-v="${i}"
+          onclick="selectScore(${empId},'${key}',${i})">${i}</button>`).join('')}
+    </div>`;
 
-  const inp = cell.querySelector('input');
-  inp.focus(); inp.select();
+  document.body.appendChild(picker);
+
+  // Posicionamento — alinha acima/abaixo da célula
+  const rect = cell.getBoundingClientRect();
+  const pw = picker.offsetWidth || 360;
+  const ph = picker.offsetHeight || 70;
+  let left = rect.left + rect.width/2 - pw/2;
+  let top  = rect.top - ph - 10;
+  if (top < 8)         top  = rect.bottom + 10;
+  if (left < 8)        left = 8;
+  if (left + pw > window.innerWidth - 8) left = window.innerWidth - pw - 8;
+  picker.style.left = left + 'px';
+  picker.style.top  = top  + 'px';
+
+  // Foca o botão atual para acessibilidade
+  picker.querySelector(`[data-v="${cur}"]`)?.focus();
+
+  // Fecha ao clicar fora ou apertar Esc
+  setTimeout(() => {
+    document.addEventListener('mousedown', _pickerOutside, true);
+    document.addEventListener('keydown',   _pickerEsc,     true);
+  }, 0);
 }
 
-async function commitEdit(empId, key, input) {
-  if (input.dataset.cancel) { renderTabela(); return; }
-  const v     = Math.min(10, Math.max(0, parseFloat(input.value)||0));
+async function selectScore(empId, key, v) {
+  dismissPicker();
+
   const store = await getStore();
   const emps  = store.employees||[];
   const idx   = emps.findIndex(e=>e.id===empId);
@@ -1109,7 +1225,7 @@ async function commitEdit(empId, key, input) {
 
   // Só salva e loga se o valor realmente mudou
   const anterior = emps[idx].competencies[key] ?? null;
-  if (anterior === v) { renderTabela(); return; }
+  if (anterior === v) { return; }
 
   emps[idx].competencies[key] = v;
 
@@ -1120,6 +1236,7 @@ async function commitEdit(empId, key, input) {
   emps[idx].competencies_history[currentMonthKey()][key] = v;
 
   store.employees = emps;
+  _store = null; // invalida cache
   await saveStore(store);
   renderTabela();
   await registrarLog('editou', 'Aptidões', `<strong>${emps[idx]?.name||empId}</strong> — ${key}: <span class="de">${anterior??'—'}</span><span class="seta">→</span><span class="para">${v}</span>`);
@@ -1159,6 +1276,7 @@ async function resetMesAtual(empId) {
 // MODAL NOVA AVALIAÇÃO
 // ════════════════════════════════════════════════════════
 async function openModal(empId) {
+  dismissPicker();
   const store = await getStore();
   const emps  = getMyEmployees();  // sync
   const emp   = empId ? emps.find(e=>e.id===empId) : null;
@@ -1233,6 +1351,7 @@ function onModalEmpChange() {
 }
 
 function closeModal() {
+  dismissPicker();
   document.getElementById('modal-overlay').classList.remove('open');
 }
 
