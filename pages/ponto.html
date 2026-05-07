@@ -686,7 +686,7 @@ function getEmpsDoDepto() {
   if (filialAtiva) list = list.filter(e=>e.filial===filialAtiva);
   list = list.filter(e=>e.dept===deptAtivo);
   if (turnoAtivo) list = list.filter(e=>e.turno===turnoAtivo);
-  return list;
+  return list.sort((a,b)=>(a.name||'').localeCompare(b.name||'','pt-BR'));
 }
 
 
