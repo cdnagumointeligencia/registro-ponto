@@ -850,25 +850,14 @@ function pontoKey(empId) {
 }
 
 async function getPontoEmp(empId) {
-  try {
-    const all = await LS.get(PONTO_KEY, {});
-    return all[pontoKey(empId)] || {};
-  } catch(e) {
-    console.error('[getPontoEmp] Falha ao ler:', e);
-    return {};
-  }
+  const all = await LS.get(PONTO_KEY, {});
+  return all[pontoKey(empId)] || {};
 }
 
 async function setPontoEmp(empId, diaMap) {
-  try {
-    const all = await LS.get(PONTO_KEY, {});
-    all[pontoKey(empId)] = diaMap;
-    await LS.set(PONTO_KEY, all);
-  } catch(e) {
-    console.error('[setPontoEmp] Falha ao salvar:', e);
-    showToast('❌ Falha ao salvar ponto! Verifique sua conexão.', 'err');
-    throw e;
-  }
+  const all = await LS.get(PONTO_KEY, {});
+  all[pontoKey(empId)] = diaMap;
+  await LS.set(PONTO_KEY, all);
 }
 
 async function setStatus(empId, dia, status) {
@@ -895,9 +884,12 @@ async function syncAbsencesToStore(empId) {
     const key  = `${empId}_${ano}_${String(m+1).padStart(2,'0')}`;
     const dias = allPonto[key] || {};
     let faltas = 0;
-    Object.values(dias).forEach(s => {
-      if (s === 'falta')   faltas += 1;
-      if (s === 'atestado') faltas += 0.5;
+    Object.entries(dias).forEach(([diaStr, s]) => {
+      // Ignora domingos — não são dias de trabalho obrigatório
+      const dow = new Date(ano, m, parseInt(diaStr)).getDay();
+      if (dow === 0) return;
+      if (s === 'falta')    faltas += 1;
+      // atestado = ausência justificada → não penaliza o absenteísmo
     });
     return faltas;
   });
@@ -1028,6 +1020,7 @@ async function gravarHistoricoAfastamento(emps, allPonto) {
 
       for (let d = 1; d <= diasMes; d++) {
         const dt = new Date(anoAtivo, mesAtivo, d); dt.setHours(0,0,0,0);
+        if (dt.getDay() === 0) continue; // pula domingos — não são dias úteis
         // Só grava dias passados e de hoje (não futuros — afastamento ativo)
         if (dt < inicio || dt > hoje) continue;
         // Só grava se o dia ainda está vazio ou já era 'afastado'
@@ -1053,6 +1046,7 @@ async function gravarHistoricoAfastamento(emps, allPonto) {
 
       for (let d = 1; d <= diasMes; d++) {
         const dt = new Date(anoAtivo, mesAtivo, d); dt.setHours(0,0,0,0);
+        if (dt.getDay() === 0) continue; // pula domingos
         if (dt < ini || dt > fim) continue;
         // Só grava se vazio ou já era 'ferias'
         if (!mPonto[d] || mPonto[d] === 'ferias') {
@@ -1079,6 +1073,7 @@ async function gravarHistoricoAfastamento(emps, allPonto) {
 
       for (let d = 1; d <= diasMes; d++) {
         const dt = new Date(anoAtivo, mesAtivo, d); dt.setHours(0,0,0,0);
+        if (dt.getDay() === 0) continue; // pula domingos
         if (dt < ini || dt > fim) continue;
         if (!mPonto[d] || mPonto[d] === 'maternidade') {
           if (mPonto[d] !== 'maternidade') {
@@ -1332,14 +1327,17 @@ async function renderGrade() {
       // ── SÁBADO (não bloqueado) ──
       if (isSab) {
         if (statusSalvo === 'presente') {
-          cP++; cBonus++;
+          cP++;
           tbody += `<td class="day-cell sabado-col">
             <div class="status-dot presente-bonus"
-              title="Presente no Sábado (+bônus)"
+              title="Presente no Sábado"
               ${canEdit ? `onclick="showCtxMenu(event,${emp.id},${d},'presente')"` : ''}>✅</div>
           </td>`;
         } else if (statusSalvo && statusSalvo !== 'vazio') {
           const sm = STATUS_META[statusSalvo] || {};
+          // Sábado é dia útil obrigatório — contabiliza faltas e atestados
+          if (statusSalvo === 'falta')    cF++;
+          if (statusSalvo === 'atestado') cAt++;
           tbody += `<td class="day-cell sabado-col">
             <div class="status-dot ${statusSalvo}"
               style="background:${sm.bg};border-color:${sm.border};color:${sm.cor}"

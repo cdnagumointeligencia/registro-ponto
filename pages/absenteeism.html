@@ -362,15 +362,19 @@ function getMesIndex() {
 const PONTO_KEY = 'rh_ponto';
 
 // Retorna faltas do funcionário em um mês específico (0-based) lendo o rh_ponto
+// Ignora domingos (getDay()===0) pois não são dias de trabalho obrigatório
 function getFaltasMes(emp, mesIdx, ano) {
   try {
     const allPonto = _allPonto || {};
     const key  = `${emp.id}_${ano}_${String(mesIdx+1).padStart(2,'0')}`;
     const dias = allPonto[key] || {};
     let f = 0;
-    Object.values(dias).forEach(s => {
+    Object.entries(dias).forEach(([diaStr, s]) => {
+      const diaN = parseInt(diaStr);
+      const dow  = new Date(ano, mesIdx, diaN).getDay(); // 0=dom, 6=sáb
+      if (dow === 0) return; // domingo nunca conta como falta
       if (s === 'falta')    f += 1;
-      if (s === 'atestado') f += 0.5;
+      // atestado = ausência justificada → não penaliza o absenteísmo
     });
     // Fallback: usa emp.absences se não houver dados no rh_ponto
     if (f === 0) return (emp.absences||[])[mesIdx] || 0;
@@ -443,7 +447,14 @@ function renderKPIs(emps, mes) {
   const total       = emps.length;
   const faltasMes   = emps.reduce((s,e) => s + getFaltasMes(e, mes, ano), 0);
   const faltasMesAnt= emps.reduce((s,e) => s + getFaltasMes(e, mes>0?mes-1:11, ano), 0);
-  const diasUteis   = 22;
+
+  // Dias úteis reais do mês (exclui domingos)
+  const diasNoMes = new Date(ano, mes+1, 0).getDate();
+  let diasUteis = 0;
+  for (let d = 1; d <= diasNoMes; d++) {
+    const dow = new Date(ano, mes, d).getDay();
+    if (dow !== 0) diasUteis++; // exclui domingo
+  }
   const taxaAbs     = total ? ((faltasMes / (total * diasUteis)) * 100).toFixed(1) : '0.0';
   const afetados    = emps.filter(e => getFaltasMes(e, mes, ano) > 0).length;
   const pctAfetados = total ? Math.round((afetados/total)*100) : 0;
@@ -546,26 +557,39 @@ function renderBarras(emps) {
 // com base em simulação proporcional
 // ════════════════════════════════════════════════════════
 function renderHeatmap(emps, mes) {
-  const now        = new Date();
-  const year       = now.getFullYear();
-  const faltasMes  = emps.reduce((s,e) => s + getFaltasMes(e, mes, year), 0);
+  const now  = new Date();
+  const year = now.getFullYear();
 
-  // Pesos simulados por dia da semana (seg/sex têm mais faltas tipicamente)
-  const pesos = [0.06, 0.19, 0.17, 0.16, 0.17, 0.19, 0.06]; // dom→sáb
-  const vals  = pesos.map(p => Math.round(faltasMes * p));
+  // Conta faltas reais por dia da semana a partir do rh_ponto (0=Dom … 6=Sáb)
+  const vals = [0, 0, 0, 0, 0, 0, 0];
+  emps.forEach(emp => {
+    const key  = `${emp.id}_${year}_${String(mes+1).padStart(2,'0')}`;
+    const dias = (_allPonto || {})[key] || {};
+    Object.entries(dias).forEach(([diaStr, s]) => {
+      if (s !== 'falta' && s !== 'atestado') return;
+      const diaN = parseInt(diaStr);
+      const dow  = new Date(year, mes, diaN).getDay(); // 0=dom … 6=sáb
+      if (dow === 0) return; // domingo nunca conta
+      vals[dow] += (s === 'falta') ? 1 : 0.5;
+    });
+  });
+  const valsRnd = vals.map(v => Math.round(v));
 
-  const maxVal = Math.max(...vals, 1);
+  const maxVal = Math.max(...valsRnd, 1);
 
   function heatColor(v) {
+    if (v === 0) return { bg:'rgba(42,47,69,.4)', color:'var(--muted)' };
     const t = v / maxVal;
     if (t > .6) return { bg:'rgba(248,113,113,.35)', color:'#f87171' };
     if (t > .3) return { bg:'rgba(251,191,36,.28)',  color:'#fbbf24' };
     return             { bg:'rgba(52,211,153,.22)',  color:'#34d399' };
   }
 
-  document.getElementById('heatmap-days').innerHTML = vals.map(v => {
+  document.getElementById('heatmap-days').innerHTML = valsRnd.map((v, i) => {
     const { bg, color } = heatColor(v);
-    return `<div class="heat-cell" style="background:${bg};color:${color}">${v}</div>`;
+    // Domingo: tom mais apagado para reforçar visualmente que não é dia útil
+    const domStyle = i === 0 ? 'opacity:0.5;' : '';
+    return `<div class="heat-cell" style="background:${bg};color:${color};${domStyle}">${v}</div>`;
   }).join('');
 }
 
@@ -575,8 +599,12 @@ function renderHeatmap(emps, mes) {
 function renderTabela(emps, mes) {
   const agora   = new Date();
   const ano     = agora.getFullYear();
-  const diasMes = new Date(ano, mes+1, 0).getDate();
-  const diasUteis = Math.round(diasMes * (5/7));
+  // Dias úteis reais do mês (exclui domingos)
+  const diasNoMes = new Date(ano, mes+1, 0).getDate();
+  let diasUteis = 0;
+  for (let d = 1; d <= diasNoMes; d++) {
+    if (new Date(ano, mes, d).getDay() !== 0) diasUteis++;
+  }
 
   // Ordena por faltas no mês selecionado
   const sorted = [...emps]
