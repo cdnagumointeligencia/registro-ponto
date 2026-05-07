@@ -695,7 +695,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
         <div style="display:flex;gap:14px;flex-wrap:wrap">
           <div>
             <label class="form-label" style="margin-bottom:6px">📅 Início da Licença</label>
-            <input class="form-input" type="date" id="f-data-maternidade" style="border-color:#f59e0b;width:200px">
+            <input class="form-input" type="date" id="f-data-maternidade" style="border-color:#f59e0b;width:200px" onchange="calcRetornoMaternidade()">
           </div>
           <div>
             <label class="form-label" style="margin-bottom:6px">📅 Previsão de Retorno</label>
@@ -1696,6 +1696,15 @@ function toggleFerias() {
   }
 }
 
+function calcRetornoMaternidade() {
+  const inicioVal = document.getElementById('f-data-maternidade').value;
+  if (!inicioVal) return;
+  const inicio = new Date(inicioVal + 'T00:00:00');
+  const retorno = new Date(inicio);
+  retorno.setDate(retorno.getDate() + 120);
+  document.getElementById('f-data-maternidade-fim').value = retorno.toISOString().split('T')[0];
+}
+
 function toggleMaternidade() {
   const checked = document.getElementById('f-maternidade').checked;
   document.getElementById('maternidade-date-wrap').style.display = checked ? 'block' : 'none';
@@ -1703,11 +1712,8 @@ function toggleMaternidade() {
     const hoje = new Date();
     if (!document.getElementById('f-data-maternidade').value)
       document.getElementById('f-data-maternidade').value = hoje.toISOString().split('T')[0];
-    if (!document.getElementById('f-data-maternidade-fim').value) {
-      // Licença maternidade padrão: 120 dias (4 meses)
-      const retorno = new Date(); retorno.setDate(retorno.getDate() + 120);
-      document.getElementById('f-data-maternidade-fim').value = retorno.toISOString().split('T')[0];
-    }
+    // Sempre recalcula o retorno com base no início informado
+    calcRetornoMaternidade();
   }
 }
 
