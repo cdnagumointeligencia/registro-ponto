@@ -3,824 +3,595 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard · RH Nagumo</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<link rel="stylesheet" href="sidebar.css">
-<link rel="stylesheet" href="light-theme.css">
-<link rel="stylesheet" href="responsive.css">
-<!-- Firebase Compat SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="firebase.js"></script>
-<script src="permissions.js"></script>
-<script src="shared.js"></script>
+<title>Manutenção · RH Nagumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#0b0d14; --surface:#12151f; --surface2:#1a1e2e; --surface3:#222638;
-  --border:#2a2f45; --accent:#4f8ef7; --accent2:#a78bfa;
-  --green:#34d399; --yellow:#fbbf24; --red:#f87171; --orange:#fb923c;
-  --cyan:#22d3ee; --pink:#f472b6; --text:#ffffff; --muted:#94a3b8;
-  --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
-  --sidebar-w:220px;
-}
-/* [light-theme.css] body.light-theme {
-  --bg:#EEF2F8; --surface:#fff; --surface2:#F4F7FB; --surface3:#E8EDF5;
-  --border:#D6DDE8; --accent:#2563eb; --accent2:#7c3aed; --green:#059669;
-  --yellow:#d97706; --red:#dc2626; --orange:#ea580c; --cyan:#0891b2;
-  --pink:#db2777; --text:#0f172a; --muted:#64748b;
-} */
-/* [light-theme.css] body.light-theme 
-body.light-theme 
-body.light-theme 
-body.light-theme 
+  :root {
+    --bg: #0b0d14;
+    --surface: #12151f;
+    --surface2: #1a1e2e;
+    --border: #2a2f45;
+    --accent: #4f8ef7;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --green: #34d399;
+    --text: #ffffff;
+    --muted: #64748b;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
 
-body.light-theme .main            { background:#EEF2F8; } */
-/* [light-theme.css] body.light-theme .card            { background:#fff; border-color:#E2E8F0; box-shadow:0 1px 6px rgba(15,23,42,.06); } */
-/* [light-theme.css] body.light-theme .page-title      { color:#0f172a; } */
-/* [light-theme.css] body.light-theme .page-title span { color:#2563eb; } */
-/* [light-theme.css] body.light-theme .top5-name       { color:#0f172a; } */
-/* [light-theme.css] body.light-theme .top5-dept       { color:#64748b; } */
-/* [light-theme.css] body.light-theme .kpi-card.blue   { background:#EEF4FF; border-color:#C7D8FB; } */
-/* [light-theme.css] body.light-theme .kpi-card.green  { background:#EAFBF4; border-color:#B8EDD8; } */
-/* [light-theme.css] body.light-theme .kpi-card.cyan   { background:#EEF9FD; border-color:#BAE6FD; } */
-/* [light-theme.css] body.light-theme .kpi-card.purple { background:#F3EEFF; border-color:#D8C8FC; } */
-/* [light-theme.css] body.light-theme .kpi-card.yellow { background:#EAFBF4; border-color:#B8EDD8; } */
-/* [light-theme.css] body.light-theme .kpi-card.red    { background:#FEF1F1; border-color:#FBCBCB; } */
-/* [light-theme.css] body.light-theme .kpi-card.blue   .kpi-value { color:#1D4ED8; } */
-/* [light-theme.css] body.light-theme .kpi-card.green  .kpi-value { color:#059669; } */
-/* [light-theme.css] body.light-theme .kpi-card.cyan   .kpi-value { color:#0891b2; } */
-/* [light-theme.css] body.light-theme .kpi-card.purple .kpi-value { color:#6D28D9; } */
-/* [light-theme.css] body.light-theme .kpi-card.yellow .kpi-value { color:#059669; } */
-/* [light-theme.css] body.light-theme .kpi-card.red    .kpi-value { color:#DC2626; } */
-/* [light-theme.css] body.light-theme .kpi-card.orange { background:#FFF4EE; border-color:#FDDCC8; } */
-/* [light-theme.css] body.light-theme .kpi-card.orange .kpi-value { color:#ea580c; } */
-/* [light-theme.css] body.light-theme .kpi-label { color:#64748b; } */
-/* [light-theme.css] body.light-theme .kpi-sub   { color:#94a3b8; } */
-/* [light-theme.css] body.light-theme ::-webkit-scrollbar-track { background:#F1F5F9; } */
-/* [light-theme.css] body.light-theme ::-webkit-scrollbar-thumb { background:#CBD5E1; } */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── Base ── */
-* { box-sizing:border-box; margin:0; padding:0; }
-html { font-size:14px; }
-body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
-::-webkit-scrollbar { width:6px; height:6px; }
-::-webkit-scrollbar-track { background:var(--surface); }
-::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
 
-/* ── Sidebar ── */
+  /* ── Fundo animado ── */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(79,142,247,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,142,247,.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-/* ── Main ── */
-.main { margin-left:var(--sidebar-w); padding:24px 28px; min-height:100vh; }
-.topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; flex-wrap:wrap; gap:12px; }
-.page-title { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; }
-.page-title span { color:var(--accent); }
-.page-date { font-size:12px; color:var(--muted); margin-top:3px; }
+  .bg-glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(248,113,113,.06) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
 
-/* ── Botões ── */
-.btn {
-  display:inline-flex; align-items:center; gap:7px; padding:9px 16px;
-  border-radius:8px; border:none; font-family:var(--font-body);
-  font-size:12px; font-weight:600; cursor:pointer; transition:all .2s; text-decoration:none;
-}
-.btn-primary       { background:var(--accent); color:#fff; }
-.btn-primary:hover { background:#3a7ae0; transform:translateY(-1px); box-shadow:0 4px 16px rgba(79,142,247,.4); }
-.btn-cyan          { background:rgba(34,211,238,.12); color:var(--cyan);   border:1px solid rgba(34,211,238,.3); }
-.btn-cyan:hover    { background:rgba(34,211,238,.22); transform:translateY(-1px); }
-.btn-purple        { background:rgba(167,139,250,.12); color:var(--accent2); border:1px solid rgba(167,139,250,.3); }
-.btn-purple:hover  { background:rgba(167,139,250,.22); transform:translateY(-1px); }
-.btn-green         { background:rgba(52,211,153,.12); color:var(--green); border:1px solid rgba(52,211,153,.3); }
-.btn-green:hover   { background:rgba(52,211,153,.22); transform:translateY(-1px); }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: .6; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+  }
 
-/* ── KPI Grid ── */
-.kpi-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:10px; margin-bottom:22px; }
-.kpi-card {
-  border-radius:12px; padding:14px 16px; border:1px solid var(--border);
-  background:var(--surface); position:relative; overflow:hidden;
-  transition:transform .2s, box-shadow .2s; cursor:default;
-}
-.kpi-card:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(0,0,0,.2); }
-.kpi-card::before { content:''; position:absolute; inset:0; opacity:.07; pointer-events:none; }
-.kpi-card.blue::before   { background:linear-gradient(135deg,#4f8ef7,transparent 70%); }
-.kpi-card.green::before  { background:linear-gradient(135deg,#34d399,transparent 70%); }
-.kpi-card.cyan::before   { background:linear-gradient(135deg,#22d3ee,transparent 70%); }
-.kpi-card.purple::before { background:linear-gradient(135deg,#a78bfa,transparent 70%); }
-.kpi-card.yellow::before { background:linear-gradient(135deg,#34d399,transparent 70%); }
-.kpi-card.orange::before { background:linear-gradient(135deg,#fb923c,transparent 70%); }
-.kpi-card.orange .kpi-value { color:#fdba74; }
-.kpi-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:6px; }
-.kpi-value { font-family:var(--font-head); font-size:30px; font-weight:800; letter-spacing:-1.5px; line-height:1; margin-bottom:4px; }
-.kpi-card.blue   .kpi-value { color:#93C5FD; }
-.kpi-card.green  .kpi-value { color:#6EE7B7; }
-.kpi-card.cyan   .kpi-value { color:#67E8F9; }
-.kpi-card.purple .kpi-value { color:#C4B5FD; }
-.kpi-card.yellow .kpi-value { color:#6EE7B7; }
-.kpi-card.red    .kpi-value { color:#FCA5A5; }
-.kpi-sub { font-size:10px; color:var(--muted); margin-top:2px; }
+  /* ── Container principal ── */
+  .container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 580px;
+    padding: 40px 24px;
+    animation: fade-in .6s ease both;
+  }
 
-/* ── KPI com alerta pulsante ── */
-.kpi-card.alerta-pendente {
-  border-color: rgba(167,139,250,.6) !important;
-  box-shadow: 0 0 0 0 rgba(167,139,250,.5);
-  animation: kpi-pulse 2.4s ease-in-out infinite;
-  cursor: pointer;
-}
-.kpi-card.alerta-pendente .kpi-sub { color: #f472b6; font-weight: 700; }
-@keyframes kpi-pulse {
-  0%   { box-shadow: 0 0 0 0   rgba(167,139,250,.55); }
-  60%  { box-shadow: 0 0 0 8px rgba(167,139,250,.0);  }
-  100% { box-shadow: 0 0 0 0   rgba(167,139,250,.0);  }
-}
-/* tema claro */
-body.light-theme .kpi-card.alerta-pendente {
-  border-color: rgba(109,40,217,.5) !important;
-  animation: kpi-pulse-light 2.4s ease-in-out infinite;
-}
-body.light-theme .kpi-card.alerta-pendente .kpi-sub { color: #7c3aed; }
-@keyframes kpi-pulse-light {
-  0%   { box-shadow: 0 0 0 0   rgba(109,40,217,.4); }
-  60%  { box-shadow: 0 0 0 8px rgba(109,40,217,.0); }
-  100% { box-shadow: 0 0 0 0   rgba(109,40,217,.0); }
-}
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-/* ── Cards/Gráficos ── */
-.dash-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
-.card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; transition:box-shadow .2s; }
-.card:hover { box-shadow:0 4px 20px rgba(0,0,0,.15); }
-.card-title { font-family:var(--font-head); font-size:14px; font-weight:700; letter-spacing:-.4px; margin-bottom:16px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; color:var(--text); }
-.card-badge { font-family:var(--font-body); font-size:10px; font-weight:500; background:rgba(79,142,247,.15); color:var(--accent); padding:2px 8px; border-radius:20px; }
-.chart-wrap { position:relative; height:220px; }
+  /* ── Logo ── */
+  .logo-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #4f8ef7;
+    border-radius: 16px;
+    padding: 8px 20px;
+    box-shadow: 0 2px 20px rgba(79,142,247,.4);
+    margin-bottom: 28px;
+  }
 
-/* ── Top 5 ── */
-.top5-item { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(42,47,69,.5); }
-.top5-item:last-child { border-bottom:none; }
-.top5-medal { font-size:20px; width:28px; text-align:center; flex-shrink:0; }
-.top5-avatar { width:34px; height:34px; border-radius:50%; flex-shrink:0; background:linear-gradient(135deg,var(--accent),var(--accent2)); display:flex; align-items:center; justify-content:center; font-family:var(--font-head); font-size:11px; font-weight:800; color:#fff; }
-.top5-info { flex:1; min-width:0; }
-.top5-name { font-size:13px; font-weight:600; color:var(--text); }
-.top5-dept { font-size:11px; color:var(--muted); margin-top:1px; }
-.top5-score { font-family:var(--font-head); font-size:26px; font-weight:800; color:var(--accent2); flex-shrink:0; }
-.tag { display:inline-block; padding:2px 8px; border-radius:20px; font-size:10px; font-weight:600; margin-top:2px; }
-.tag-promo  { background:rgba(52,211,153,.15);  color:var(--green);  }
-.tag-ok     { background:rgba(79,142,247,.15);  color:var(--accent); }
-.tag-watch  { background:rgba(251,191,36,.15);  color:var(--yellow); }
-.tag-risk   { background:rgba(248,113,113,.15); color:var(--red);    }
+  .logo-wrap span {
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
 
-/* ── Toast ── */
-.toast-container { position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
-.toast { padding:10px 18px; border-radius:10px; font-size:12px; font-family:var(--font-body); box-shadow:0 4px 20px rgba(0,0,0,.4); animation:fadeUp .25s ease; max-width:320px; pointer-events:auto; }
-.toast.ok    { background:#0f2a1a; border:1px solid #22c55e; color:#86efac; }
-.toast.warn  { background:#422006; border:1px solid #f97316; color:#fdba74; }
-.toast.error { background:#2a0a0a; border:1px solid #f87171; color:#fca5a5; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  /* ── Ícone engrenagem ── */
+  .gear-wrap {
+    margin-bottom: 24px;
+    position: relative;
+    display: inline-block;
+  }
 
-/* ── Painel fullscreen iframe ── */
-#page-panel {
-  position:fixed; inset:0; z-index:200;
-  background:var(--bg);
-  opacity:0; visibility:hidden;
-  transition:opacity .25s ease, visibility .25s ease;
-  display:flex; flex-direction:column;
-}
-#page-panel.open { opacity:1; visibility:visible; }
-#page-panel iframe { flex:1; width:100%; border:none; display:block; }
+  .gear-outer {
+    width: 80px;
+    height: 80px;
+    border: 3px solid rgba(248,113,113,.25);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background: rgba(248,113,113,.06);
+    animation: rotate-outer 12s linear infinite;
+  }
 
-#panel-close-btn {
-  position:fixed; top:14px; right:18px; z-index:300;
-  display:none; align-items:center; gap:7px;
-  background:var(--surface2); border:1px solid var(--border);
-  color:var(--muted); font-family:var(--font-body);
-  font-size:12px; font-weight:700;
-  padding:7px 14px; border-radius:9px; cursor:pointer;
-  box-shadow:0 4px 20px rgba(0,0,0,.5);
-  transition:background .15s, border-color .15s, color .15s;
-}
-#panel-close-btn:hover { background:rgba(248,113,113,.15); border-color:#f87171; color:#f87171; }
+  @keyframes rotate-outer {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
 
-/* ── Responsive ── */
-@media(max-width:1280px) { .kpi-grid { grid-template-columns:repeat(4,1fr); } }
-@media(max-width:1024px) {
-  :root { --sidebar-w:56px; }
-  
-  
-  
-  
-  .logo-img-wrap span, .logo + small { display:none; }
-  .dash-grid { grid-template-columns:1fr; }
-  .kpi-grid  { grid-template-columns:repeat(3,1fr); }
-}
-@media(max-width:768px) {
-  :root { --sidebar-w:0px; }
-  
-  .main { margin-left:0; padding:16px; }
-  .kpi-grid  { grid-template-columns:repeat(2,1fr); }
-  .dash-grid { grid-template-columns:1fr; }
-}
+  .gear-icon {
+    font-size: 36px;
+    animation: rotate-inner 12s linear infinite reverse;
+  }
 
-/* ── Sidebar Padrão ── */
+  @keyframes rotate-inner {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
 
-/* [light-theme.css] body.light-theme 
+  /* ── Status badge ── */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(248,113,113,.15);
+    color: var(--red);
+    border: 1px solid rgba(248,113,113,.3);
+    margin-bottom: 20px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
 
-body.light-theme 
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: blink 1.2s ease-in-out infinite;
+  }
 
-body.light-theme 
-body.light-theme 
-body.light-theme 
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .2; }
+  }
 
-body.light-theme 
+  /* ── Textos ── */
+  h1 {
+    font-family: var(--font-head);
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
 
-body.light-theme 
-.main { margin-left:220px; } */
-@media(max-width:1024px) {
-  
-  
-  
-  
-  
-  
-  .main { margin-left:56px; }
-}
-@media(max-width:768px) {
-  
-  .main { margin-left:0; }
-}
+  h1 span { color: var(--red); }
 
-.dash-filter-select {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:9px; color:var(--text);
-  font-family:var(--font-body); font-size:12px;
-  padding:6px 12px; cursor:pointer; outline:none;
-  transition:border-color .2s;
-}
-.dash-filter-select:hover,
-.dash-filter-select:focus { border-color:var(--accent); }
-/* [light-theme.css] body.light-theme .dash-filter-select { background:#fff; } */
+  .subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 32px;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-/* ── Modal Alerta Aptidões Pendentes ── */
-.apt-alert-overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,.82);
-  backdrop-filter:blur(6px); z-index:500;
-  display:flex; align-items:center; justify-content:center;
-  padding:20px;
-  animation:fadeIn .3s ease;
-}
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
-.apt-alert-modal {
-  background:var(--surface); border:2px solid rgba(167,139,250,.5);
-  border-radius:20px; width:500px; max-width:96vw;
-  box-shadow:0 0 60px rgba(167,139,250,.25), 0 24px 60px rgba(0,0,0,.6);
-  animation:slideUp .35s ease;
-  overflow:hidden;
-}
-@keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  /* ── Card de info ── */
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    text-align: left;
+  }
 
-/* Faixa superior roxa pulsante */
-.apt-alert-stripe {
-  height:4px;
-  background:linear-gradient(90deg,#a78bfa,#f472b6,#a78bfa);
-  background-size:200% 100%;
-  animation:stripeMove 2s linear infinite;
-}
-@keyframes stripeMove {
-  0%{background-position:0%} 100%{background-position:200%}
-}
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(42,47,69,.5);
+  }
 
-.apt-alert-body { padding:28px 28px 24px; }
-.apt-alert-icon {
-  width:64px; height:64px; border-radius:50%;
-  background:rgba(167,139,250,.15); border:2px solid rgba(167,139,250,.4);
-  display:flex; align-items:center; justify-content:center;
-  font-size:28px; margin:0 auto 18px;
-  animation:iconPulse 2s ease-in-out infinite;
-}
-@keyframes iconPulse {
-  0%,100%{box-shadow:0 0 0 0 rgba(167,139,250,.4)}
-  50%{box-shadow:0 0 0 12px rgba(167,139,250,.0)}
-}
-.apt-alert-title {
-  font-family:var(--font-head); font-size:20px; font-weight:800;
-  text-align:center; color:var(--text); margin-bottom:8px; letter-spacing:-.5px;
-}
-.apt-alert-sub {
-  font-size:13px; color:var(--muted); text-align:center; margin-bottom:20px; line-height:1.6;
-}
-.apt-alert-list {
-  background:var(--surface2); border:1px solid rgba(167,139,250,.25);
-  border-radius:12px; padding:14px 16px; margin-bottom:20px;
-  max-height:180px; overflow-y:auto;
-}
-.apt-alert-emp {
-  display:flex; align-items:center; gap:10px;
-  padding:7px 0; border-bottom:1px solid rgba(42,47,69,.4);
-}
-.apt-alert-emp:last-child { border-bottom:none; }
-.apt-alert-emp-avatar {
-  width:30px; height:30px; border-radius:50%; flex-shrink:0;
-  background:linear-gradient(135deg,#a78bfa,#4f8ef7);
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-head); font-size:10px; font-weight:800; color:#fff;
-}
-.apt-alert-emp-name { font-size:13px; font-weight:600; color:var(--text); flex:1; }
-.apt-alert-emp-dept { font-size:11px; color:var(--muted); }
-.apt-alert-emp-badge {
-  font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px;
-  background:rgba(248,113,113,.15); color:#f87171; border:1px solid rgba(248,113,113,.3);
-  white-space:nowrap; flex-shrink:0;
-}
-.apt-alert-footer { display:flex; gap:10px; }
-.apt-alert-btn-skip {
-  flex:1; padding:11px; border-radius:10px;
-  border:1px solid var(--border); background:var(--surface2);
-  color:var(--muted); font-family:var(--font-body);
-  font-size:13px; font-weight:600; cursor:pointer; transition:all .2s;
-}
-.apt-alert-btn-skip:hover { background:var(--surface3); color:var(--text); }
-.apt-alert-btn-go {
-  flex:2; padding:11px; border-radius:10px; border:none;
-  background:linear-gradient(135deg,#a78bfa,#7c3aed);
-  color:#fff; font-family:var(--font-body);
-  font-size:13px; font-weight:700; cursor:pointer; transition:all .2s;
-  box-shadow:0 4px 16px rgba(167,139,250,.35);
-}
-.apt-alert-btn-go:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(167,139,250,.5); }
+  .info-row:last-child { border-bottom: none; }
 
-/* Tema claro */
-body.light-theme .apt-alert-modal { background:#fff; border-color:rgba(109,40,217,.4); box-shadow:0 0 40px rgba(109,40,217,.15),0 24px 60px rgba(2,54,101,.2); }
-body.light-theme .apt-alert-icon  { background:rgba(109,40,217,.08); border-color:rgba(109,40,217,.3); }
-body.light-theme .apt-alert-list  { background:#F4F7FB; border-color:rgba(109,40,217,.2); }
-body.light-theme .apt-alert-emp   { border-bottom-color:#E8EDF5; }
-body.light-theme .apt-alert-btn-skip { background:#fff; border-color:#C8D6E3; color:#4D6680; }
-body.light-theme .apt-alert-btn-skip:hover { background:#EBF1F7; }
+  .info-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .info-text { flex: 1; }
+
+  .info-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    margin-bottom: 2px;
+  }
+
+  .info-val {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* ── Barra de progresso fictícia ── */
+  .progress-wrap {
+    background: var(--surface2);
+    border-radius: 20px;
+    height: 6px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--red), var(--yellow), var(--accent));
+    border-radius: 20px;
+    animation: progress-loop 3s ease-in-out infinite;
+    background-size: 200% 100%;
+  }
+
+  @keyframes progress-loop {
+    0%   { background-position: 0% 0%; width: 30%; }
+    50%  { background-position: 100% 0%; width: 70%; }
+    100% { background-position: 200% 0%; width: 30%; }
+  }
+
+  /* ── Rodapé ── */
+  .footer-text {
+    font-size: 11px;
+    color: rgba(100,116,139,.5);
+    margin-top: 8px;
+  }
+
+  /* ════════════════════════════════════════════
+     PAINEL ADMIN SECRETO
+  ════════════════════════════════════════════ */
+  .admin-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.92);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .admin-overlay.open { display: flex; }
+
+  .admin-modal {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    padding: 32px;
+    width: 420px;
+    max-width: 95vw;
+    animation: modal-up .3s ease both;
+    box-shadow: 0 0 60px rgba(79,142,247,.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  @keyframes modal-up {
+    from { opacity: 0; transform: translateY(20px) scale(.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .admin-stripe {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #a78bfa, var(--accent));
+    background-size: 200%;
+    animation: stripe 2s linear infinite;
+  }
+
+  @keyframes stripe {
+    from { background-position: 0% }
+    to   { background-position: 200% }
+  }
+
+  .admin-modal h2 {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .admin-modal p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 22px;
+    line-height: 1.6;
+  }
+
+  .admin-input-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .admin-input-wrap label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .admin-input {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color .2s;
+    text-align: center;
+  }
+
+  .admin-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,142,247,.12); }
+
+  .admin-btns { display: flex; gap: 10px; }
+
+  .btn-admin-cancel {
+    flex: 1;
+    padding: 11px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-admin-cancel:hover { background: var(--surface); color: var(--text); }
+
+  .btn-admin-go {
+    flex: 2;
+    padding: 11px;
+    border-radius: 10px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .2s;
+    box-shadow: 0 4px 14px rgba(79,142,247,.35);
+  }
+  .btn-admin-go:hover { background: #3a7ae0; transform: translateY(-1px); }
+
+  .admin-error {
+    font-size: 12px;
+    color: var(--red);
+    text-align: center;
+    margin-top: 10px;
+    min-height: 18px;
+  }
+
+  /* dica discreta no rodapé */
+  .hint-footer {
+    position: fixed;
+    bottom: 16px;
+    right: 20px;
+    font-size: 10px;
+    color: rgba(100,116,139,.2);
+    font-family: var(--font-body);
+    letter-spacing: .3px;
+    user-select: none;
+    z-index: 1;
+  }
 </style>
 </head>
 <body>
 
-<div class="toast-container" id="toast-container"></div>
-<nav class="sidebar" id="app-sidebar"></nav>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
 
-<!-- Modal Alerta Aptidões Pendentes -->
-<div id="apt-alert-overlay" class="apt-alert-overlay" style="display:none">
-  <div class="apt-alert-modal">
-    <div class="apt-alert-stripe"></div>
-    <div class="apt-alert-body">
-      <div class="apt-alert-icon">🎯</div>
-      <div class="apt-alert-title">Avaliações de Aptidão Pendentes</div>
-      <div class="apt-alert-sub" id="apt-alert-sub">
-        Os funcionários abaixo ainda não foram avaliados neste mês.<br>
-        Avalie as competências para manter os scores atualizados.
-      </div>
-      <div class="apt-alert-list" id="apt-alert-list"></div>
-      <div class="apt-alert-footer">
-        <button class="apt-alert-btn-skip" onclick="fecharAlertaApt()">Depois</button>
-        <button class="apt-alert-btn-go" onclick="irParaAptidoes()">🎯 Avaliar Agora</button>
+<!-- ══ CONTEÚDO PRINCIPAL ══ -->
+<div class="container">
+
+  <div class="logo-wrap"><span>CD Nagumo</span></div>
+
+  <div class="gear-wrap">
+    <div class="gear-outer">
+      <span class="gear-icon">⚙️</span>
+    </div>
+  </div>
+
+  <div class="status-badge">
+    <div class="status-dot"></div>
+    Fora do Ar
+  </div>
+
+  <h1>Sistema em <span>Manutenção</span></h1>
+
+  <p class="subtitle">
+    Estamos realizando uma manutenção técnica no sistema de RH.
+    Pedimos desculpas pelo inconveniente. Em breve estaremos de volta.
+  </p>
+
+  <div class="info-card">
+    <div class="info-row">
+      <div class="info-icon">🔧</div>
+      <div class="info-text">
+        <div class="info-label">Motivo</div>
+        <div class="info-val">Manutenção técnica preventiva e verificação de integridade dos dados</div>
       </div>
     </div>
+    <div class="info-row">
+      <div class="info-icon">⏰</div>
+      <div class="info-text">
+        <div class="info-label">Previsão de retorno</div>
+        <div class="info-val">Em breve — acompanhe com o administrador do sistema</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-icon">📞</div>
+      <div class="info-text">
+        <div class="info-label">Dúvidas</div>
+        <div class="info-val">Entre em contato com o Departamento de Inteligência</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-fill"></div>
+  </div>
+
+  <div class="footer-text">CD Nagumo Performance · Sistema Integrado de Gestão de Ponto</div>
+
+</div>
+
+<!-- ══ PAINEL ADMIN SECRETO ══ -->
+<div class="admin-overlay" id="admin-overlay">
+  <div class="admin-modal">
+    <div class="admin-stripe"></div>
+    <h2>🔐 Acesso Administrativo</h2>
+    <p>Digite a senha de administrador para acessar o sistema durante a manutenção.</p>
+
+    <div class="admin-input-wrap">
+      <label>Senha de acesso</label>
+      <input
+        class="admin-input"
+        type="password"
+        id="admin-pass"
+        placeholder="••••••••"
+        autocomplete="off"
+        onkeydown="if(event.key==='Enter') tentarAcesso()"
+      >
+    </div>
+
+    <div class="admin-btns">
+      <button class="btn-admin-cancel" onclick="fecharAdmin()">Cancelar</button>
+      <button class="btn-admin-go" onclick="tentarAcesso()">▶ Entrar no Sistema</button>
+    </div>
+
+    <div class="admin-error" id="admin-error"></div>
   </div>
 </div>
 
-<!-- Painel fullscreen -->
-<div id="page-panel">
-  <iframe id="page-iframe" src="" title="Página"></iframe>
-</div>
-<button id="panel-close-btn" onclick="closePanel()">✕ Fechar</button>
-
-<main class="main">
-  <div class="topbar">
-    <div>
-      <div class="page-title">Visão <span>Geral</span></div>
-      <div class="page-date" id="dash-date"></div>
-    </div>
-    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap" id="topbar-actions"></div>
-  </div>
-
-  <div class="kpi-grid" id="kpi-grid"></div>
-
-  <div class="dash-grid">
-    <div class="card">
-      <div class="card-title">Desempenho Médio por Departamento <span class="card-badge">Barras</span></div>
-      <div class="chart-wrap"><canvas id="chart-dept"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Assiduidade Mensal <span class="card-badge">Linha</span></div>
-      <div class="chart-wrap"><canvas id="chart-monthly"></canvas></div>
-    </div>
-  </div>
-
-  <div class="dash-grid">
-    <div class="card">
-      <div class="card-title">Distribuição de Status</div>
-      <div class="chart-wrap" style="height:240px"><canvas id="chart-status"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Top 5 Funcionários <span class="card-badge">Score Tri-Pilar</span></div>
-      <div id="top5-list"></div>
-    </div>
-  </div>
-</main>
+<!-- dica ultra-discreta — só admin vai notar -->
+<div class="hint-footer">admin access: Ctrl+Alt+A</div>
 
 <script>
 // ════════════════════════════════════════════════════════
-// PAINEL IFRAME FULLSCREEN
+// SENHA DE ACESSO ADMIN DURANTE MANUTENÇÃO
+// Altere para algo que apenas você saiba.
 // ════════════════════════════════════════════════════════
-function openPage(url) {
-  const panel  = document.getElementById('page-panel');
-  const iframe = document.getElementById('page-iframe');
-  const btn    = document.getElementById('panel-close-btn');
-  iframe.src   = url;
-  panel.classList.add('open');
-  btn.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
+const ADMIN_MAINTENANCE_PASS = 'nagumo2025';
 
-function closePanel() {
-  const panel  = document.getElementById('page-panel');
-  const iframe = document.getElementById('page-iframe');
-  const btn    = document.getElementById('panel-close-btn');
-  panel.classList.remove('open');
-  btn.style.display = 'none';
-  document.body.style.overflow = '';
-  setTimeout(() => { iframe.src = ''; }, 280);
-}
+// Página real do sistema (pode ser relativa ou absoluta)
+const SISTEMA_URL = 'index.html';
 
-// ESC fecha o painel
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
-
-// ════════════════════════════════════════════════════════
-// ESTADO
-// ════════════════════════════════════════════════════════
-let currentUser    = null;
-let chartInstances = {};
-let _store         = null;  // cache do store — carregado uma vez por render
-
-const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
-const MONTHS   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-const DEPT_COLORS = ['#4f8ef7','#34d399','#f472b6','#fb923c','#a78bfa','#22d3ee','#fbbf24','#f87171','#60a5fa','#4ade80'];
-
-// ════════════════════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', async () => {
-  await ensureAdmin();
-
-  const id    = LS_LOCAL.get('rh_session');
-  const store = await getStore();
-  if (!id || !store.users[id]) { window.location.href = 'login.html'; return; }
-  currentUser = store.users[id];
-
-  initTheme();
-  initSidebar('dashboard', currentUser);
-  await renderDashboard();
-
-  // Exibe modal de aviso se houver aptidões pendentes (só para quem pode editar)
-  const podeAvaliar = (typeof can==='function') ? can(currentUser,'aptidoes','edit') : true;
-  if (podeAvaliar) await verificarAlertaAptidoes();
+// ── Detector do atalho Ctrl+Alt+A ──────────────────────
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.altKey && e.key.toLowerCase() === 'a') {
+    e.preventDefault();
+    abrirAdmin();
+  }
 });
 
-// ════════════════════════════════════════════════════════
-// ALERTA DE APTIDÕES PENDENTES — modal ao carregar
-// Só exibe uma vez por sessão de navegação (sessionStorage)
-// ════════════════════════════════════════════════════════
-async function verificarAlertaAptidoes() {
-  // Não mostra de novo se o usuário já viu nesta sessão
-  if (sessionStorage.getItem('apt_alerta_visto')) return;
-
-  const mesAtualKey = (() => {
-    const n = new Date();
-    return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
-  })();
-
-  // Carrega os funcionários que são de responsabilidade deste usuário
-  _store = _store || await getStore();
-  let meusFuncs = getMyEmployees().filter(e => !e.afastado && !e.maternidade && !e.demitido);
-
-  // Filtra apenas os sem avaliação neste mês
-  const pendentes = meusFuncs.filter(e => !(e.competencies_history||{})[mesAtualKey]);
-  if (!pendentes.length) return;
-
-  // Monta a lista
-  const lista = document.getElementById('apt-alert-list');
-  const sub   = document.getElementById('apt-alert-sub');
-
-  sub.innerHTML = `<strong style="color:var(--accent2)">${pendentes.length} funcionário${pendentes.length>1?'s':''}</strong> sem avaliação de aptidões em ${new Date().toLocaleString('pt-BR',{month:'long'})}.
-    <br>Avalie as competências para manter os scores atualizados.`;
-
-  lista.innerHTML = pendentes.map(e => {
-    const ini = e.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-    const temAlguma = !!(e.competencies_history && Object.keys(e.competencies_history).length);
-    return `
-    <div class="apt-alert-emp">
-      <div class="apt-alert-emp-avatar">${ini}</div>
-      <div style="flex:1;min-width:0">
-        <div class="apt-alert-emp-name">${e.name}</div>
-        <div class="apt-alert-emp-dept">${e.dept||''}${e.role?' · '+e.role:''}</div>
-      </div>
-      <div class="apt-alert-emp-badge">${temAlguma ? '📅 Mês pendente' : '🆕 Nunca avaliado'}</div>
-    </div>`;
-  }).join('');
-
-  document.getElementById('apt-alert-overlay').style.display = 'flex';
-}
-
-function fecharAlertaApt() {
-  sessionStorage.setItem('apt_alerta_visto', '1');
-  document.getElementById('apt-alert-overlay').style.display = 'none';
-}
-
-function irParaAptidoes() {
-  sessionStorage.setItem('apt_alerta_visto', '1');
-  document.getElementById('apt-alert-overlay').style.display = 'none';
-  window.location.href = 'pages/aptidoes.html';
-}
-
-// ── Sidebar do dashboard (raiz) ──────────────────────
-
-
-function sair() {
-  if (!confirm('Deseja sair?')) return;
-  LS_LOCAL.remove('rh_session');
-  window.close();
-  // Fallback: se window.close() for bloqueado, redireciona para login
-  setTimeout(() => { window.location.href = 'login.html'; }, 300);
-}
-
-// Sobrescreve doLogout do shared.js para funcionar na raiz
-function doLogout() { sair(); }
-
-// ════════════════════════════════════════════════════════
-// SCORE HELPERS — leem do cache _store (síncrono)
-// _store é carregado uma vez no início de renderDashboard()
-// ════════════════════════════════════════════════════════
-function getWeights() {
-  const cfg = _store?.config || {};
-  const pw  = Math.min(100, Math.max(0, parseInt(cfg.perfWeight)||40));
-  const aw  = Math.min(100, Math.max(0, parseInt(cfg.aptWeight) ||35));
-  return { perf:pw, apt:aw, abs:Math.max(0,100-pw-aw) };
-}
-function calcAptMedia(emp) {
-  const c = emp.competencies || {};
-  return APT_KEYS.reduce((s,k) => s+(c[k]||0), 0) / APT_KEYS.length;
-}
-function calcAssid(emp) {
-  if (emp.afastado || emp.maternidade) return 100;
-  const total  = (emp.absences||[]).reduce((a,b)=>a+b,0);
-  const maxAbs = _store?.config?.maxAbs || 36;
-  return Math.max(0, 100-(total/maxAbs)*100);
-}
-function calcScore(emp) {
-  const w = getWeights();
-  return Math.min(100, Math.round(
-    emp.perf*(w.perf/100) + calcAptMedia(emp)*10*(w.apt/100) + calcAssid(emp)*(w.abs/100)
-  ));
-}
-function getStatus(score) {
-  if (score>=85) return { tag:'promo', label:'🏆 Promoção', cls:'tag-promo' };
-  if (score>=70) return { tag:'ok',    label:'✅ Regular',  cls:'tag-ok'    };
-  if (score>=55) return { tag:'watch', label:'⚠️ Atenção',  cls:'tag-watch' };
-  return               { tag:'risk',  label:'🔴 Risco',    cls:'tag-risk'  };
-}
-function getMyEmployees() {
-  const all   = (_store?.employees || []).filter(e => !e.demitido);
-  const scope = (typeof dataScope==='function') ? dataScope(currentUser) : { all:true };
-  if (scope.all) return all;
-  if (scope.sector) {
-    const depts = currentUser?.perfil?.depts || [];
-    const setor = currentUser?.setor || '';
-    return all.filter(e => depts.includes(e.dept) || e.dept===setor);
+// ── Também funciona com toque triplo no logo (mobile) ──
+let tapCount = 0;
+let tapTimer = null;
+document.querySelector('.logo-wrap').addEventListener('click', () => {
+  tapCount++;
+  clearTimeout(tapTimer);
+  tapTimer = setTimeout(() => { tapCount = 0; }, 800);
+  if (tapCount >= 3) {
+    tapCount = 0;
+    abrirAdmin();
   }
-  return all.filter(e => (e.owner_id||e.ownerId)===currentUser?.id);
+});
+
+// ── Funções do painel ───────────────────────────────────
+function abrirAdmin() {
+  document.getElementById('admin-overlay').classList.add('open');
+  document.getElementById('admin-pass').value = '';
+  document.getElementById('admin-error').textContent = '';
+  setTimeout(() => document.getElementById('admin-pass').focus(), 100);
 }
 
-// ════════════════════════════════════════════════════════
-// RENDER DASHBOARD
-// ════════════════════════════════════════════════════════
-async function renderDashboard() {
-  document.getElementById('dash-date').textContent =
-    new Date().toLocaleDateString('pt-BR',{ weekday:'long', year:'numeric', month:'long', day:'numeric' });
-
-  // Carrega store uma única vez e guarda no cache global
-  _store = await getStore();
-  const store = _store;
-
-  const pPonto  = (typeof can==='function') ? can(currentUser,'ponto','edit')      : true;
-  const pApt    = (typeof can==='function') ? can(currentUser,'aptidoes','edit')   : true;
-  const pReport = (typeof can==='function') ? canSee(currentUser,'report')         : true;
-  const pCreate = (typeof can==='function') ? can(currentUser,'employees','create'): true;
-
-  // Opções de filial e turno
-  const filiais = (store.filiais||[]).map(f=>f.nome).filter(Boolean);
-  const turnos  = (store.turnos||[]).map(t=>t.nome).filter(Boolean);
-
-  const optFilial = `<option value="">🏭 Todas as filiais</option>` +
-    filiais.map(f=>`<option value="${f}">${f}</option>`).join('');
-  const optTurno = `<option value="">🕐 Todos os turnos</option>` +
-    turnos.map(t=>`<option value="${t}">${t}</option>`).join('');
-
-  // Preserva seleção atual
-  const prevFilial = document.getElementById('dash-filter-filial')?.value || '';
-  const prevTurno  = document.getElementById('dash-filter-turno')?.value  || '';
-
-  document.getElementById('topbar-actions').innerHTML = `
-    ${filiais.length ? `<select class="dash-filter-select" id="dash-filter-filial" onchange="renderDashboard()">${optFilial}</select>` : ''}
-    ${turnos.length  ? `<select class="dash-filter-select" id="dash-filter-turno"  onchange="renderDashboard()">${optTurno}</select>`  : ''}
-    ${pPonto  ? `<a class="btn btn-cyan"    href="pages/ponto.html"      onclick="">🗓️ Ponto Diário</a>`        : ''}
-    ${pApt    ? `<a class="btn btn-purple"  href="pages/aptidoes.html"   onclick="">🎯 Aptidões</a>`            : ''}
-    ${pReport ? `<a class="btn btn-green"   href="pages/report.html"     onclick="">📄 Relatório</a>`            : ''}
-    ${pCreate ? `<a class="btn btn-primary" href="pages/employees.html"  onclick="">＋ Novo Funcionário</a>`     : ''}`;
-
-  // Restaura seleção
-  if (prevFilial && document.getElementById('dash-filter-filial'))
-    document.getElementById('dash-filter-filial').value = prevFilial;
-  if (prevTurno && document.getElementById('dash-filter-turno'))
-    document.getElementById('dash-filter-turno').value = prevTurno;
-
-  // Lê filtros ativos e filtra funcionários
-  const filialFiltro = document.getElementById('dash-filter-filial')?.value || '';
-  const turnoFiltro  = document.getElementById('dash-filter-turno')?.value  || '';
-
-  let emps = getMyEmployees();
-  if (filialFiltro) emps = emps.filter(e => e.filial === filialFiltro);
-  if (turnoFiltro)  emps = emps.filter(e => e.turno  === turnoFiltro);
-
-  await renderKPIs(emps);
-  renderCharts(emps);
-  renderTop5(emps);
+function fecharAdmin() {
+  document.getElementById('admin-overlay').classList.remove('open');
 }
 
-async function getPendentesCount() {
-  const filialFiltro = document.getElementById('dash-filter-filial')?.value || '';
-  const turnoFiltro  = document.getElementById('dash-filter-turno')?.value  || '';
+function tentarAcesso() {
+  const pass = document.getElementById('admin-pass').value;
+  const err  = document.getElementById('admin-error');
 
-  // Obtém apenas os funcionários visíveis para este usuário (respeita escopo de permissão)
-  let meusEmps = getMyEmployees();
-  if (filialFiltro) meusEmps = meusEmps.filter(e => e.filial === filialFiltro);
-  if (turnoFiltro)  meusEmps = meusEmps.filter(e => e.turno  === turnoFiltro);
-
-  const meusIds = new Set(meusEmps.map(e => String(e.id)));
-
-  // Filtra ocorrências pendentes apenas dos funcionários do escopo do usuário
-  const todasOcs = await LS.get('rh_ocorrencias', []);
-  const ocs = todasOcs.filter(o => o.status === 'pendente' && meusIds.has(String(o.empId)));
-
-  return ocs.length;
-}
-
-// ── KPIs ──────────────────────────────────────────────
-async function renderKPIs(emps) {
-  const total    = emps.length;
-  const avgPerf  = total ? Math.round(emps.reduce((s,e)=>s+e.perf,0)/total) : 0;
-  const avgAssid = total ? Math.round(emps.reduce((s,e)=>s+calcAssid(e),0)/total) : 0;
-  const totalAbs = emps.reduce((s,e)=>s+(e.absences||[]).reduce((a,b)=>a+b,0),0);
-  const avgApt   = total ? (emps.reduce((s,e)=>s+calcAptMedia(e),0)/total).toFixed(1) : '0.0';
-  const promos   = emps.filter(e=>calcScore(e)>=85).length;
-  const hoje = new Date(); hoje.setHours(0,0,0,0);
-  const afas = emps.filter(e => {
-    if (e.afastado) {
-      if (e.data_afastamento) return new Date(e.data_afastamento+'T00:00:00') <= hoje;
-      return true;
-    }
-    if (e.maternidade) {
-      if (e.data_maternidade) return new Date(e.data_maternidade+'T00:00:00') <= hoje;
-      return true;
-    }
-    return false;
-  });
-  const pendentes = await getPendentesCount();
-
-  // Conta funcionários sem avaliação de aptidões neste mês
-  const mesAtualKey = (() => {
-    const n = new Date();
-    return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
-  })();
-  const aptPendentes = emps.filter(e => !e.afastado && !e.maternidade && !(e.competencies_history||{})[mesAtualKey]).length;
-  const aptSubText = aptPendentes > 0
-    ? `⚠️ ${aptPendentes} pendente${aptPendentes > 1 ? 's' : ''} este mês`
-    : '✅ todos avaliados';
-
-  // Monta os KPIs — aptidões com classe pulsante se houver pendentes
-  const kpiItems = [
-    { cls:'blue',   label:'Funcionários',       value:total,     sub:'equipe total' },
-    { cls:'green',  label:'Desempenho Médio',   value:avgPerf+'%', sub:'geral da equipe' },
-    { cls:'cyan',   label:'Assiduidade Média',  value:avgAssid+'%', sub:`${totalAbs} faltas no ano` },
-    { cls:'purple', label:'Aptidões Médias',    value:avgApt+'/10', sub:aptSubText,
-      alerta: aptPendentes > 0, onclick: aptPendentes > 0 ? "irParaAptidoes()" : "" },
-    { cls:'yellow', label:'Candidatos Promoção', value:promos,   sub:'score ≥ 85' },
-    { cls:'red',    label:'🚫 Afastados / 🤰 Mat.', value:afas.length,
-      sub:afas.length ? afas.slice(0,2).map(e=>e.name.split(' ')[0]).join(', ')+(afas.length>2?'…':'') : 'nenhum afastado' },
-    { cls:'orange', label:'📝 Ocorrências',     value:pendentes, sub:'pendentes de aprovação' },
-  ];
-
-  document.getElementById('kpi-grid').innerHTML = kpiItems.map(k => {
-    const alertCls = k.alerta ? ' alerta-pendente' : '';
-    const onclk    = k.onclick ? ` onclick="${k.onclick}"` : '';
-    return `
-    <div class="kpi-card ${k.cls}${alertCls}"${onclk}${k.alerta?' title="Clique para avaliar aptidões pendentes"':''}>
-      <div class="kpi-label">${k.label}</div>
-      <div class="kpi-value">${k.value}</div>
-      <div class="kpi-sub">${k.sub}</div>
-    </div>`;
-  }).join('');
-}
-
-// ── Charts ────────────────────────────────────────────
-function destroyChart(id) {
-  if (chartInstances[id]) { chartInstances[id].destroy(); delete chartInstances[id]; }
-}
-const TOOLTIP_BASE = {
-  backgroundColor:'#1a1e2e', borderColor:'#2a2f45', borderWidth:1,
-  titleColor:'#e2e8f0', bodyColor:'#94a3b8',
-};
-const SCALES_BASE = {
-  x:{ grid:{ color:'rgba(42,47,69,.6)' }, ticks:{ color:'#64748b', font:{ size:10 } } },
-  y:{ grid:{ color:'rgba(42,47,69,.6)' }, ticks:{ color:'#64748b', font:{ size:10 } } },
-};
-function renderCharts(emps) {
-  const depts    = [...new Set(emps.map(e=>e.dept))].filter(Boolean).sort();
-  const deptAvgs = depts.map(d => {
-    const a = emps.filter(e=>e.dept===d);
-    return Math.round(a.reduce((s,e)=>s+e.perf,0)/a.length);
-  });
-  destroyChart('chart-dept');
-  chartInstances['chart-dept'] = new Chart(document.getElementById('chart-dept'), {
-    type:'bar',
-    data:{ labels:depts, datasets:[{ data:deptAvgs,
-      backgroundColor:depts.map((_,i)=>DEPT_COLORS[i%DEPT_COLORS.length]+'B3'),
-      borderColor:    depts.map((_,i)=>DEPT_COLORS[i%DEPT_COLORS.length]),
-      borderWidth:2, borderRadius:6 }] },
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ display:false }, tooltip:{ ...TOOLTIP_BASE, callbacks:{ label:ctx=>` ${ctx.parsed.y}%` } } },
-      scales:{ ...SCALES_BASE, y:{ ...SCALES_BASE.y, max:100, ticks:{ ...SCALES_BASE.y.ticks, callback:v=>v+'%' } } } },
-  });
-
-  const mAbs = Array(12).fill(0);
-  emps.forEach(e => (e.absences||[]).forEach((v,i)=>mAbs[i]+=v));
-  const mo = new Date().getMonth();
-  destroyChart('chart-monthly');
-  chartInstances['chart-monthly'] = new Chart(document.getElementById('chart-monthly'), {
-    type:'line',
-    data:{ labels:MONTHS, datasets:[{ data:mAbs,
-      borderColor:'#f87171', backgroundColor:'rgba(248,113,113,.1)',
-      fill:true, tension:0.4,
-      pointRadius:         mAbs.map((_,i)=>i===mo?7:4),
-      pointBackgroundColor:mAbs.map((_,i)=>i===mo?'#fbbf24':'#f87171') }] },
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ display:false }, tooltip:{ ...TOOLTIP_BASE, callbacks:{ label:ctx=>` ${ctx.parsed.y} faltas` } } },
-      scales:SCALES_BASE },
-  });
-
-  const sc = { promo:0, ok:0, watch:0, risk:0 };
-  emps.forEach(e => sc[getStatus(calcScore(e)).tag]++);
-  destroyChart('chart-status');
-  chartInstances['chart-status'] = new Chart(document.getElementById('chart-status'), {
-    type:'doughnut',
-    data:{ labels:['🏆 Promoção','✅ Regular','⚠️ Atenção','🔴 Risco'],
-      datasets:[{ data:[sc.promo,sc.ok,sc.watch,sc.risk],
-        backgroundColor:['rgba(52,211,153,.8)','rgba(79,142,247,.8)','rgba(251,191,36,.8)','rgba(248,113,113,.8)'],
-        borderColor:['#34d399','#4f8ef7','#fbbf24','#f87171'], borderWidth:2 }] },
-    options:{ responsive:true, maintainAspectRatio:false, cutout:'65%',
-      plugins:{ legend:{ labels:{ color:'#94a3b8', font:{ size:11 }, padding:16 }, position:'top' },
-        tooltip:{ ...TOOLTIP_BASE, callbacks:{ label:ctx=>{
-          const pct = emps.length ? Math.round((ctx.parsed/emps.length)*100) : 0;
-          return ` ${ctx.parsed} funcionário(s) — ${pct}%`;
-        }}}}},
-  });
-}
-
-// ── Top 5 ─────────────────────────────────────────────
-function renderTop5(emps) {
-  const sorted = [...emps].sort((a,b)=>calcScore(b)-calcScore(a)).slice(0,5);
-  const medals = ['🥇','🥈','🥉','4°','5°'];
-  const cores  = ['#fbbf24','#94a3b8','#c2855a','#64748b','#64748b'];
-  if (!sorted.length) {
-    document.getElementById('top5-list').innerHTML =
-      '<div style="color:var(--muted);padding:30px;text-align:center;font-size:13px">Nenhum funcionário cadastrado ainda.</div>';
+  if (!pass) {
+    err.textContent = '⚠️ Digite a senha de acesso.';
     return;
   }
-  document.getElementById('top5-list').innerHTML = sorted.map((e,i) => {
-    const score  = calcScore(e);
-    const st     = getStatus(score);
-    const assid  = Math.round(calcAssid(e));
-    const aptAvg = calcAptMedia(e).toFixed(1);
-    const ini    = e.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-    return `
-    <div class="top5-item">
-      <div class="top5-medal" style="color:${cores[i]}">${medals[i]}</div>
-      <div class="top5-avatar">${ini}</div>
-      <div class="top5-info">
-        <div class="top5-name">${e.name}</div>
-        <div class="top5-dept">${e.dept}</div>
-        <div style="display:flex;gap:8px;margin-top:3px;font-size:10px">
-          <span style="color:#4f8ef7">🎯 ${e.perf}%</span>
-          <span style="color:#a78bfa">⭐ ${aptAvg}</span>
-          <span style="color:${assid>=70?'#34d399':'#f87171'}">📅 ${assid}%</span>
-        </div>
-      </div>
-      <div style="text-align:right;flex-shrink:0">
-        <div class="top5-score">${score}</div>
-        <span class="tag ${st.cls}">${st.label}</span>
-      </div>
-    </div>`;
-  }).join('');
+
+  if (pass === ADMIN_MAINTENANCE_PASS) {
+    err.textContent = '✅ Acesso liberado! Redirecionando...';
+    err.style.color = '#34d399';
+
+    // Redireciona após breve delay visual
+    setTimeout(() => {
+      window.location.href = SISTEMA_URL;
+    }, 800);
+  } else {
+    err.textContent = '❌ Senha incorreta. Tente novamente.';
+    err.style.color = '#f87171';
+    document.getElementById('admin-pass').value = '';
+    document.getElementById('admin-pass').focus();
+
+    // Animação de erro no input
+    const inp = document.getElementById('admin-pass');
+    inp.style.borderColor = '#f87171';
+    inp.style.boxShadow = '0 0 0 3px rgba(248,113,113,.15)';
+    setTimeout(() => {
+      inp.style.borderColor = '';
+      inp.style.boxShadow = '';
+    }, 1200);
+  }
 }
+
+// Fecha ao clicar fora do modal
+document.getElementById('admin-overlay').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) fecharAdmin();
+});
+
+// ESC também fecha
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') fecharAdmin();
+});
 </script>
+
 </body>
 </html>
