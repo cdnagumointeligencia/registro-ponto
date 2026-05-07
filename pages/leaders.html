@@ -768,16 +768,19 @@ function calcAptMedia(emp) {
 function getTotalFaltasEmp(emp) {
   try {
     const ano = emp.year || new Date().getFullYear();
-    let total = 0;
+    let total    = 0;
+    let temDados = false;
     for (let m = 1; m <= 12; m++) {
       const key  = `${emp.id}_${ano}_${String(m).padStart(2,'0')}`;
       const dias = _allPonto[key] || {};
-      Object.values(dias).forEach(s => {
-        if (s === 'falta')    total += 1;
-        if (s === 'atestado') total += 0.5;
+      if (Object.keys(dias).length > 0) temDados = true;
+      Object.entries(dias).forEach(([diaStr, s]) => {
+        if (new Date(ano, m-1, parseInt(diaStr)).getDay() === 0) return; // ignora domingo
+        if (s === 'falta') total += 1;
+        // atestado não penaliza
       });
     }
-    return total > 0 ? total : (emp.absences||[]).reduce((a,b)=>a+b, 0);
+    return temDados ? total : (emp.absences||[]).reduce((a,b)=>a+b, 0);
   } catch(e) { return (emp.absences||[]).reduce((a,b)=>a+b, 0); }
 }
 function calcAssid(emp) {

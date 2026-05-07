@@ -1042,28 +1042,21 @@ function getLiderDoFuncionario(emp) {
 // ── Lê faltas reais do rh_ponto (mais atualizado que emp.absences) ──
 function getTotalFaltasEmp(emp) {
   try {
-    const allPonto  = _allPonto;
-    const ano       = emp.year || new Date().getFullYear();
-    let   total        = 0;
-    let   temDadosPonto = false;
+    const allPonto = _allPonto;
+    const ano      = emp.year || new Date().getFullYear();
+    let   total    = 0;
+    let   temDados = false;
     for (let m = 1; m <= 12; m++) {
       const key  = `${emp.id}_${ano}_${String(m).padStart(2,'0')}`;
       const dias = allPonto[key] || {};
-      if (Object.keys(dias).length > 0) temDadosPonto = true;
-      Object.values(dias).forEach(s => {
-        if (s === 'falta')    total += 1;
-        if (s === 'atestado') total += 0.5;
+      if (Object.keys(dias).length > 0) temDados = true;
+      Object.entries(dias).forEach(([diaStr, s]) => {
+        if (new Date(ano, m-1, parseInt(diaStr)).getDay() === 0) return; // ignora domingo
+        if (s === 'falta') total += 1;
+        // atestado = ausência justificada → não penaliza
       });
     }
-    // Tem dados no ponto → usa o ponto (fonte de verdade)
-    if (temDadosPonto) return total;
-    // Sem dados no ponto: feriados são exibidos visualmente mas NÃO gravados em rh_ponto,
-    // então um funcionário pode ter "zero entradas" mesmo usando o sistema normalmente.
-    // Regra: se admitido no ano corrente, não pode ter faltas históricas → retorna 0.
-    // Só usa emp.absences para funcionários de anos anteriores (dados legados pré-ponto).
-    const anoAdmissao = emp.data_admissao ? parseInt(emp.data_admissao.slice(0,4)) : null;
-    if (anoAdmissao && anoAdmissao >= ano) return 0;
-    return (emp.absences||[]).reduce((a,b)=>a+b, 0);
+    return temDados ? total : (emp.absences||[]).reduce((a,b)=>a+b, 0);
   } catch(e) {
     return (emp.absences||[]).reduce((a,b)=>a+b, 0);
   }
@@ -1217,19 +1210,18 @@ function buildCard(emp) {
   // Sparkline — lê faltas mês a mês direto do rh_ponto
   const sparkData = (() => {
     try {
-      const allPonto    = _allPonto;
-      const ano         = emp.year || new Date().getFullYear();
-      const anoAdmissao = emp.data_admissao ? parseInt(emp.data_admissao.slice(0,4)) : null;
-      const empNovo     = anoAdmissao && anoAdmissao >= ano; // admitido neste ano → sem histórico manual
+      const allPonto  = _allPonto;
+      const ano       = emp.year || new Date().getFullYear();
       return Array.from({length:12}, (_, m) => {
-        const key     = `${emp.id}_${ano}_${String(m+1).padStart(2,'0')}`;
-        const dias    = allPonto[key] || {};
-        const temDados = Object.keys(dias).length > 0;
+        const key  = `${emp.id}_${ano}_${String(m+1).padStart(2,'0')}`;
+        const dias = allPonto[key] || {};
         let f = 0;
-        Object.values(dias).forEach(s => { if(s==='falta') f+=1; if(s==='atestado') f+=0.5; });
-        if (temDados) return f;          // tem dados no ponto → usa ponto
-        if (empNovo)  return 0;          // admitido este ano sem dados → 0 (feriados não gravam)
-        return emp.absences?.[m] || 0;   // funcionário antigo → usa histórico manual
+        Object.entries(dias).forEach(([diaStr, s]) => {
+          if (new Date(ano, m, parseInt(diaStr)).getDay() === 0) return; // ignora domingo
+          if (s === 'falta') f += 1;
+          // atestado não penaliza
+        });
+        return Object.keys(dias).length > 0 ? f : (emp.absences?.[m] || 0);
       });
     } catch(e) { return emp.absences || Array(12).fill(0); }
   })();

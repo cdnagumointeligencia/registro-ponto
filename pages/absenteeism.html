@@ -368,16 +368,21 @@ function getFaltasMes(emp, mesIdx, ano) {
     const allPonto = _allPonto || {};
     const key  = `${emp.id}_${ano}_${String(mesIdx+1).padStart(2,'0')}`;
     const dias = allPonto[key] || {};
+
+    // Só usa fallback se não existe NENHUM dado no ponto para este mês
+    // (evita retornar valores antigos quando o mês tem apenas atestados)
+    if (Object.keys(dias).length === 0) {
+      return (emp.absences||[])[mesIdx] || 0;
+    }
+
     let f = 0;
     Object.entries(dias).forEach(([diaStr, s]) => {
       const diaN = parseInt(diaStr);
-      const dow  = new Date(ano, mesIdx, diaN).getDay(); // 0=dom, 6=sáb
-      if (dow === 0) return; // domingo nunca conta como falta
-      if (s === 'falta')    f += 1;
-      // atestado = ausência justificada → não penaliza o absenteísmo
+      const dow  = new Date(ano, mesIdx, diaN).getDay();
+      if (dow === 0) return; // ignora domingo
+      if (s === 'falta') f += 1;
+      // atestado = ausência justificada → não penaliza
     });
-    // Fallback: usa emp.absences se não houver dados no rh_ponto
-    if (f === 0) return (emp.absences||[])[mesIdx] || 0;
     return f;
   } catch(e) {
     return (emp.absences||[])[mesIdx] || 0;
