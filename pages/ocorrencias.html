@@ -405,8 +405,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ════════════════════════════════════════════════════════
 // DADOS
 // ════════════════════════════════════════════════════════
-async function getOcorrencias() { return await LS.get(OC_KEY, []); }
-async function saveOcorrencias(list) { await LS.set(OC_KEY, list); }
+async function getOcorrencias() {
+  try {
+    return await LS.get(OC_KEY, []);
+  } catch(e) {
+    console.error('[getOcorrencias] Falha ao ler:', e);
+    showToast('📡 Falha de conexão ao carregar ocorrências.', 'err');
+    return [];
+  }
+}
+async function saveOcorrencias(list) {
+  try {
+    await LS.set(OC_KEY, list);
+  } catch(e) {
+    console.error('[saveOcorrencias] Falha ao salvar:', e);
+    showToast('❌ Falha ao salvar ocorrência! Verifique sua conexão.', 'err');
+    throw e;
+  }
+}
 
 // ════════════════════════════════════════════════════════
 // FILTROS

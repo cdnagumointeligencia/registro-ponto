@@ -821,9 +821,9 @@ async function startEdit(tipo, id, oldNome) {
           showToast('✅ Atualizado!');
         }
       }
-      renderLista(tipo, await getStore()[tipo]);
+      renderLista(tipo, (await getStore())[tipo]);
     }
-    if (ev.key === 'Escape') renderLista(tipo, await getStore()[tipo]);
+    if (ev.key === 'Escape') renderLista(tipo, (await getStore())[tipo]);
   });
   span.innerHTML = '';
   span.appendChild(inp);

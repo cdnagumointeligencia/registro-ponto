@@ -850,14 +850,25 @@ function pontoKey(empId) {
 }
 
 async function getPontoEmp(empId) {
-  const all = await LS.get(PONTO_KEY, {});
-  return all[pontoKey(empId)] || {};
+  try {
+    const all = await LS.get(PONTO_KEY, {});
+    return all[pontoKey(empId)] || {};
+  } catch(e) {
+    console.error('[getPontoEmp] Falha ao ler:', e);
+    return {};
+  }
 }
 
 async function setPontoEmp(empId, diaMap) {
-  const all = await LS.get(PONTO_KEY, {});
-  all[pontoKey(empId)] = diaMap;
-  await LS.set(PONTO_KEY, all);
+  try {
+    const all = await LS.get(PONTO_KEY, {});
+    all[pontoKey(empId)] = diaMap;
+    await LS.set(PONTO_KEY, all);
+  } catch(e) {
+    console.error('[setPontoEmp] Falha ao salvar:', e);
+    showToast('❌ Falha ao salvar ponto! Verifique sua conexão.', 'err');
+    throw e;
+  }
 }
 
 async function setStatus(empId, dia, status) {

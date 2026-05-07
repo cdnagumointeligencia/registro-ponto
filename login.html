@@ -267,7 +267,13 @@ async function doLogin() {
   const id   = document.getElementById('li-id').value.trim();
   const pass = document.getElementById('li-pass').value;
   if (!id || !pass) { showMsg('login-msg','⚠️ Preencha todos os campos.','error'); return; }
-  const store = await getStore();
+  let store;
+  try {
+    store = await getStore();
+  } catch(e) {
+    showMsg('login-msg','📡 Falha de conexão. Verifique sua internet e tente novamente.','error');
+    return;
+  }
   const user  = store.users[id];
   if (!user)            { showMsg('login-msg','❌ Usuário não encontrado.','error');  return; }
   if (user.pass !== pass) { showMsg('login-msg','❌ Senha incorreta.','error');        return; }

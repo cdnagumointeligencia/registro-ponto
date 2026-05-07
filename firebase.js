@@ -37,13 +37,11 @@ window.DB = {
    * @param {*}      padrao - valor retornado se não existir
    */
   get: async (chave, padrao = null) => {
-    try {
-      const snap = await _db.collection(_COL).doc(chave).get();
-      return snap.exists ? snap.data().valor : padrao;
-    } catch (e) {
-      console.error("[DB.get] Erro na chave:", chave, e);
-      return padrao;
-    }
+    // ⚠️ IMPORTANTE: Não captura o erro aqui — propaga para o chamador.
+    // Se capturarmos e retornarmos `padrao`, funções como ensureAdmin()
+    // podem interpretar uma falha de rede como "store vazio" e apagar todos os dados.
+    const snap = await _db.collection(_COL).doc(chave).get();
+    return snap.exists ? snap.data().valor : padrao;
   },
 
   /**
@@ -52,11 +50,9 @@ window.DB = {
    * @param {*}      valor - qualquer valor serializável em JSON
    */
   set: async (chave, valor) => {
-    try {
-      await _db.collection(_COL).doc(chave).set({ valor });
-    } catch (e) {
-      console.error("[DB.set] Erro na chave:", chave, e);
-    }
+    // ⚠️ IMPORTANTE: Não captura o erro aqui — propaga para o chamador
+    // para que erros de escrita sejam visíveis ao usuário via toast.
+    await _db.collection(_COL).doc(chave).set({ valor });
   },
 
   /**

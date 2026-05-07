@@ -45,24 +45,57 @@ const LS = {
 // STORE — objeto principal de dados (Firestore)
 // ════════════════════════════════════════════════════════
 async function getStore() {
-  return await LS.get('rh_store', {
-    users:    {},
-    config:   { perfWeight:40, aptWeight:35, maxAbs:36, feriadosCustom:[] },
-    filiais:  [], turnos:[], depts:[], funcoes:[],
-    authCode: AUTH_CODE_DEFAULT,
-  });
+  // Erros propagados intencionalmente — retornar store vazio em caso de falha
+  // fazia ensureAdmin() interpretar erro de rede como "sistema novo" e apagar tudo.
+  try {
+    return await LS.get('rh_store', {
+      users:    {},
+      config:   { perfWeight:40, aptWeight:35, maxAbs:36, feriadosCustom:[] },
+      filiais:  [], turnos:[], depts:[], funcoes:[],
+      authCode: AUTH_CODE_DEFAULT,
+    });
+  } catch(e) {
+    console.error('[getStore] Falha ao ler Firestore:', e.message || e);
+    throw e;
+  }
 }
-async function saveStore(store) { await LS.set('rh_store', store); }
+async function saveStore(store) {
+  try {
+    await LS.set('rh_store', store);
+  } catch(e) {
+    console.error('[saveStore] Erro crítico ao salvar:', e);
+    if (typeof showToast === 'function') {
+      showToast('❌ Falha ao salvar dados! Verifique sua conexão e atualize a página.', 'err');
+    }
+    throw e;
+  }
+}
 
 async function ensureAdmin() {
-  const store = await getStore();
-  if (!store.users[ADMIN_ID]) {
-    store.users[ADMIN_ID] = {
-      id:'admin', name:'Administrador', pass:'admin123',
-      nivel:'admin_master', setor:'',
-      perfil:{ filial:'', turno:'', depts:[] },
-    };
-    await saveStore(store);
+  // ⚠️ CORREÇÃO CRÍTICA — leia o comentário completo:
+  // Esta função é chamada em TODA navegação de página via requireSession().
+  // BUG ANTERIOR: DB.get() capturava erros de rede e retornava store VAZIO.
+  // Então esta função via "admin ausente" → salvava store vazio → APAGAVA TUDO.
+  // CORREÇÃO: (1) DB.get() agora propaga erros — o catch aqui não salva nada.
+  //           (2) Mesmo em leitura ok, só cria admin se sistema for genuinamente novo.
+  try {
+    const store = await getStore();
+    if (!store.users[ADMIN_ID]) {
+      const temFuncionarios   = (store.employees || []).length > 0;
+      const temOutrosUsuarios = Object.keys(store.users || {}).filter(id => id !== ADMIN_ID).length > 0;
+      if (temFuncionarios || temOutrosUsuarios) {
+        console.warn('[ensureAdmin] Admin ausente mas sistema tem dados — não sobrescrevendo. Verifique o Firestore.');
+        return;
+      }
+      store.users[ADMIN_ID] = {
+        id:'admin', name:'Administrador', pass:'admin123',
+        nivel:'admin_master', setor:'',
+        perfil:{ filial:'', turno:'', depts:[] },
+      };
+      await saveStore(store);
+    }
+  } catch(e) {
+    console.warn('[ensureAdmin] Falha ao verificar admin — não salvando nada:', e.message || e);
   }
 }
 
@@ -72,7 +105,7 @@ async function ensureAdmin() {
 async function getSession() {
   const id = LS_LOCAL.get('rh_session');   // síncrono — localStorage
   if (!id) return null;
-  const store = await getStore();
+  const store = await getStore(); // pode lançar exceção — tratada em requireSession()
   return store.users[id] || null;
 }
 
@@ -85,10 +118,35 @@ function _redirectLogin() {
 }
 
 async function requireSession() {
-  await ensureAdmin();
-  const user = await getSession();
-  if (!user) { _redirectLogin(); return null; }
-  return user;
+  try {
+    await ensureAdmin();
+    const user = await getSession();
+    if (!user) { _redirectLogin(); return null; }
+    return user;
+  } catch(e) {
+    // Firestore falhou ao carregar — exibe tela de erro amigável em vez de página quebrada.
+    // NÃO redireciona para login: o usuário pode estar logado, é só falha de rede momentânea.
+    console.error('[requireSession] Falha ao carregar sessão:', e);
+    _mostrarTelaErroConexao();
+    return null;
+  }
+}
+
+function _mostrarTelaErroConexao() {
+  document.body.style.cssText = 'margin:0;background:#0b0d14;display:flex;align-items:center;justify-content:center;height:100vh;';
+  document.body.innerHTML = `
+    <div style="text-align:center;font-family:'DM Sans',sans-serif;color:#e2e8f0;padding:32px;">
+      <div style="font-size:3.5rem;margin-bottom:16px;">📡</div>
+      <h2 style="margin:0 0 8px;font-size:1.4rem;color:#f87171;">Falha de conexão</h2>
+      <p style="color:#94a3b8;margin:0 0 24px;font-size:0.95rem;max-width:300px;">
+        Não foi possível conectar ao servidor.<br>Verifique sua internet e tente novamente.
+      </p>
+      <button onclick="location.reload()"
+        style="padding:10px 28px;background:#4f8ef7;color:#fff;border:none;border-radius:10px;
+               font-size:0.95rem;cursor:pointer;font-weight:600;">
+        🔄 Tentar novamente
+      </button>
+    </div>`;
 }
 
 function doLogout() {
