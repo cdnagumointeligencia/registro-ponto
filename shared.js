@@ -360,6 +360,9 @@ function isEmpBloqueado(emp) {
       return { bloqueado:true, motivo:'afastado' };
     }
   }
+  if (emp.maternidade) {
+    return { bloqueado:true, motivo:'maternidade' };
+  }
   if (emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim) {
     const ini = new Date(emp.data_ferias_inicio + 'T00:00:00');
     const fim = new Date(emp.data_ferias_fim    + 'T00:00:00');
