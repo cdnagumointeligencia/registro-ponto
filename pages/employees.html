@@ -1036,6 +1036,14 @@ function getLiderDoFuncionario(emp) {
     // Senão, retorna o primeiro candidato (ordem estável por ID)
     return candidatos[0];
   }
+
+  // Fallback: nenhum candidato encontrado pela lógica de dept/turno.
+  // Retorna diretamente o owner do funcionário (quem o cadastrou),
+  // mesmo que seja admin_master — para exibição do "Resp." no card.
+  if (ownerId) {
+    const owner = users.find(u => String(u.id) === ownerId);
+    if (owner) return owner;
+  }
   return null;
 }
 
@@ -1205,7 +1213,7 @@ function buildCard(emp) {
   const lider     = getLiderDoFuncionario(emp);  // sync - uses _store
   const liderNome = lider ? lider.name : null;
   const liderNivel = lider ? (lider.nivel || 'lider') : null;
-  const NIVEL_COR = { diretoria:'#fb923c', gerencia:'#a78bfa', coordenacao:'#fbbf24', encarregado:'#34d399', lider:'rgba(255,255,255,0.5)' };
+  const NIVEL_COR = { admin_master:'#4f8ef7', diretoria:'#fb923c', gerencia:'#a78bfa', coordenacao:'#fbbf24', encarregado:'#34d399', lider:'rgba(255,255,255,0.5)' };
 
   // Sparkline — lê faltas mês a mês direto do rh_ponto
   const sparkData = (() => {
