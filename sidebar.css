@@ -303,7 +303,7 @@ body.sb-collapsed #app-sidebar .sb-item.active::after {
 /* ══ TEMA CLARO — variáveis do efeito aba ══════════════ */
 body.light-theme {
   --page-bg: #F0F4F8;
-  --sb-bg: #e8849a;
+  --sb-bg: #5b9bd5;
   --sb-border: rgba(0,0,0,.10);
 }
 
@@ -316,7 +316,7 @@ body.light-theme #app-sidebar .sb-item.active {
 
 body.light-theme #app-sidebar .sb-item.active::before,
 body.light-theme #app-sidebar .sb-item.active::after {
-  background: #e8849a;
+  background: #5b9bd5;
   box-shadow: 5px 5px 0 5px #F0F4F8;
 }
 body.light-theme #app-sidebar .sb-item.active::after {
