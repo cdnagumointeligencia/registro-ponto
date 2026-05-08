@@ -7,9 +7,9 @@
 /* ── Variáveis locais do sidebar ── */
 :root {
   --sb-w: 220px;
-  --sb-bg: #0d1f3c;
-  --sb-border: #1a3254;
-  --sb-text: #7da3c8;
+  --sb-bg: #1c1e24;
+  --sb-border: #2a2c35;
+  --sb-text: #94a3b8;
   --sb-text-hover: #ffffff;
   --sb-bg-hover: rgba(255,255,255,.06);
   --sb-active-color: #93C5FD;
@@ -65,7 +65,7 @@
 
 #app-sidebar .sb-logo small {
   font-size: 9px;
-  color: #4a7aaa;
+  color: #8a9ab0;
   letter-spacing: 2px;
   text-transform: uppercase;
   text-align: center;
@@ -93,7 +93,7 @@
 
 #app-sidebar .sb-user-role {
   font-size: 10px;
-  color: #4a7aaa;
+  color: #8a9ab0;
   padding-left: 2px;
 }
 
@@ -199,7 +199,7 @@
 
 #app-sidebar .sb-brand {
   font-size: 10px;
-  color: #4a7aaa;
+  color: #8a9ab0;
   margin-bottom: 8px;
   line-height: 1.5;
 }
@@ -213,7 +213,7 @@
   border-radius: 8px;
   border: 1px solid var(--sb-border);
   background: transparent;
-  color: #4a7aaa;
+  color: #8a9ab0;
   font-family: var(--sb-font);
   font-size: 11px;
   font-weight: 600;
@@ -303,8 +303,8 @@ body.sb-collapsed #app-sidebar .sb-item.active::after {
 /* ══ TEMA CLARO — variáveis do efeito aba ══════════════ */
 body.light-theme {
   --page-bg: #F0F4F8;
-  --sb-bg: #c0394b;
-  --sb-border: rgba(0,0,0,.12);
+  --sb-bg: #e8849a;
+  --sb-border: rgba(0,0,0,.10);
 }
 
 body.light-theme #app-sidebar .sb-item.active {
@@ -316,7 +316,7 @@ body.light-theme #app-sidebar .sb-item.active {
 
 body.light-theme #app-sidebar .sb-item.active::before,
 body.light-theme #app-sidebar .sb-item.active::after {
-  background: #c0394b;
+  background: #e8849a;
   box-shadow: 5px 5px 0 5px #F0F4F8;
 }
 body.light-theme #app-sidebar .sb-item.active::after {

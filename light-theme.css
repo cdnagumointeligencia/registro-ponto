@@ -431,15 +431,15 @@ body.light-theme .toast.error { border-left: 4px solid #D40138; }
 body.light-theme .toast.warn  { border-left: 4px solid #B45309; }
 
 /* ══════════════════════════════════════════
-   SIDEBAR — Tema Claro · Rosa Avermelhado
+   SIDEBAR — Tema Claro · Rosa Suave
    Com efeito de aba ativa conectada ao conteúdo
 ══════════════════════════════════════════ */
 body.light-theme {
-  --sb-bg:           #c0394b;        /* vermelho rosado escuro */
-  --sb-border:       rgba(0,0,0,.12);
-  --sb-text:         rgba(255,255,255,.75);
+  --sb-bg:           #e8849a;        /* rosa claro suave */
+  --sb-border:       rgba(0,0,0,.10);
+  --sb-text:         rgba(255,255,255,.8);
   --sb-text-hover:   #ffffff;
-  --sb-bg-hover:     rgba(255,255,255,.12);
+  --sb-bg-hover:     rgba(255,255,255,.15);
   --sb-active-color: #ffffff;
   --sb-active-bg:    #F0F4F8;        /* === var(--bg) do tema claro === efeito aba */
   --page-bg:         #F0F4F8;        /* bg da página no tema claro */
@@ -460,7 +460,7 @@ body.light-theme #app-sidebar .sb-item.active {
 }
 body.light-theme #app-sidebar .sb-item.active::before,
 body.light-theme #app-sidebar .sb-item.active::after {
-  background: #c0394b;              /* mesma cor do sidebar claro */
+  background: #e8849a;              /* mesma cor do sidebar rosa */
 }
 
 /* Texto padrão dos itens não ativos */
