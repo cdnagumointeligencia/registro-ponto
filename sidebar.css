@@ -144,37 +144,38 @@
   border-left: 3px solid #4f8ef7;
   border-radius: 14px 0 0 14px;
   position: relative;
-  /* Sombra que cobre a borda direita do sidebar para fundir */
-  box-shadow: 1px 0 0 0 var(--page-bg);
+  /* Cobre qualquer pixel de borda residual entre sidebar e conteúdo */
+  box-shadow: 2px 0 0 0 var(--page-bg);
 }
 
 /* Canto superior externo */
 #app-sidebar .sb-item.active::before {
   content: '';
   position: absolute;
-  right: 0;
-  top: -16px;
-  width: 18px;
-  height: 18px;
+  right: -1px;          /* -1px para sobrepor qualquer borda residual */
+  top: -18px;
+  width: 20px;
+  height: 20px;
   pointer-events: none;
-  /* Fundo do sidebar cobre a área, box-shadow "recorta" o canto */
   background: var(--sb-bg);
   border-bottom-right-radius: 14px;
-  box-shadow: 4px 4px 0 4px var(--page-bg);
+  box-shadow: 5px 5px 0 5px var(--page-bg);
+  z-index: 1;
 }
 
 /* Canto inferior externo */
 #app-sidebar .sb-item.active::after {
   content: '';
   position: absolute;
-  right: 0;
-  bottom: -16px;
-  width: 18px;
-  height: 18px;
+  right: -1px;          /* -1px para sobrepor qualquer borda residual */
+  bottom: -18px;
+  width: 20px;
+  height: 20px;
   pointer-events: none;
   background: var(--sb-bg);
   border-top-right-radius: 14px;
-  box-shadow: 4px -4px 0 4px var(--page-bg);
+  box-shadow: 5px -5px 0 5px var(--page-bg);
+  z-index: 1;
 }
 
 #app-sidebar .sb-icon {
@@ -310,14 +311,14 @@ body.light-theme #app-sidebar .sb-item.active {
   color: #D40138;
   background: #F0F4F8;
   border-left-color: #D40138;
-  box-shadow: 1px 0 0 0 #F0F4F8;
+  box-shadow: 2px 0 0 0 #F0F4F8;
 }
 
 body.light-theme #app-sidebar .sb-item.active::before,
 body.light-theme #app-sidebar .sb-item.active::after {
   background: #c0394b;
-  box-shadow: 4px 4px 0 4px #F0F4F8; /* before */
+  box-shadow: 5px 5px 0 5px #F0F4F8;
 }
 body.light-theme #app-sidebar .sb-item.active::after {
-  box-shadow: 4px -4px 0 4px #F0F4F8;
+  box-shadow: 5px -5px 0 5px #F0F4F8;
 }
