@@ -861,34 +861,29 @@ async function setPontoEmp(empId, diaMap) {
 }
 
 async function setStatus(empId, dia, status) {
-  // Carrega allPonto uma única vez — evita 3 leituras separadas (getPontoEmp + setPontoEmp interno)
-  const allPonto = await LS.get(PONTO_KEY, {});
-  const key      = pontoKey(empId);
-  const m        = allPonto[key] || {};
+  const m        = await getPontoEmp(empId);
   const anterior = m[dia] || 'vazio';
 
   // Sem mudança real — não salva nem loga
   if (anterior === status) return;
   if (status === 'vazio') delete m[dia];
   else m[dia] = status;
-  allPonto[key] = m;
-
-  await LS.set(PONTO_KEY, allPonto);
-
-  // Atualiza _pontoCache com dado fresco — syncAbsencesToStore e renderGrade usam sem nova leitura
-  _pontoCache = allPonto;
-
+  await setPontoEmp(empId, m);
   await syncAbsencesToStore(empId);
 }
 
 // Recalcula emp.absences[mes] com base no rh_ponto para o ano atual
+// Versão individual — usada pelo setStatus (clique em célula única)
 async function syncAbsencesToStore(empId) {
-  const store = await getStore();
+  const store = _store || await getStore();
   const idx   = (store.employees||[]).findIndex(e=>String(e.id)===String(empId));
   if (idx < 0) return;
 
   const ano      = anoAtivo;
-  const allPonto = await LS.get(PONTO_KEY, {});
+  // Usa _pontoCache se disponível — evita leitura extra ao Firestore
+  const allPonto = (_pontoCache && Object.keys(_pontoCache).length > 0)
+    ? _pontoCache
+    : await LS.get(PONTO_KEY, {});
   const absences = Array.from({length:12}, (_, m) => {
     const key  = `${empId}_${ano}_${String(m+1).padStart(2,'0')}`;
     const dias = allPonto[key] || {};
@@ -905,6 +900,40 @@ async function syncAbsencesToStore(empId) {
 
   store.employees[idx].absences = absences;
   await saveStore(store);
+  _store = null; // invalida cache após salvar
+}
+
+// Versão batch — usada pelo lancamentoRapido (múltiplos funcionários de uma vez)
+// Opera sobre dados já em memória: 1 write de store no total, independente de quantos funcionários
+async function syncAbsencesEmLote(emps, allPontoAtualizado) {
+  const store = _store || await getStore();
+  const ano   = anoAtivo;
+  let   mudou = false;
+
+  emps.forEach(emp => {
+    const idx = (store.employees||[]).findIndex(e=>String(e.id)===String(emp.id));
+    if (idx < 0) return;
+
+    const absences = Array.from({length:12}, (_, m) => {
+      const key  = `${emp.id}_${ano}_${String(m+1).padStart(2,'0')}`;
+      const dias = allPontoAtualizado[key] || {};
+      let faltas = 0;
+      Object.entries(dias).forEach(([diaStr, s]) => {
+        const dow = new Date(ano, m, parseInt(diaStr)).getDay();
+        if (dow === 0) return;
+        if (s === 'falta') faltas += 1;
+      });
+      return faltas;
+    });
+
+    store.employees[idx].absences = absences;
+    mudou = true;
+  });
+
+  if (mudou) {
+    await saveStore(store);
+    _store = null; // invalida cache após salvar
+  }
 }
 
 // ════════════════════════════════════════════════════════
@@ -1108,11 +1137,15 @@ async function gravarHistoricoAfastamento(emps, allPonto) {
 // RENDER GRADE
 // ════════════════════════════════════════════════════════
 async function renderGrade() {
-  _store = await getStore();
+  // Usa cache quando disponível — evita round-trip desnecessário ao Firestore
+  if (!_store) _store = await getStore();
 
   // Pré-carrega todo o ponto e grava histórico de afastamentos/férias ativos
   // antes de renderizar — garante que os dados estejam no rh_ponto
-  let _allPonto = await LS.get(PONTO_KEY, {});
+  // Usa _pontoCache se já estiver populado (ex: logo após lancamentoRapido)
+  let _allPonto = (_pontoCache && Object.keys(_pontoCache).length > 0)
+    ? _pontoCache
+    : await LS.get(PONTO_KEY, {});
   const empsParaHistorico = getEmpsDoDepto();
   _allPonto = await gravarHistoricoAfastamento(empsParaHistorico, _allPonto);
 
@@ -1486,14 +1519,13 @@ async function setStatusCtx(status) {
     return;
   }
 
-  // Usa _pontoCache para checar anterior — sem leitura extra ao Firestore
-  const anterior = (_pontoCache[pontoKey(ctxEmpId)] || {})[ctxDia] || 'vazio';
+  const anterior = (await getPontoEmp(ctxEmpId))[ctxDia] || 'vazio';
 
   // Sem mudança — apenas fecha o menu
   if (anterior === status) { closeCtx(); return; }
 
   const sm = STATUS_META[status];
-  await setStatus(ctxEmpId, ctxDia, status); // aguarda write concluir; setStatus atualiza _pontoCache
+  setStatus(ctxEmpId, ctxDia, status);
   await registrarLog('editou', 'Ponto', `<strong>${emp?.name||ctxEmpId}</strong> dia ${ctxDia} → ${sm?.emoji||''} ${sm?.label||status}`);
   closeCtx();
   renderGrade();
@@ -1589,8 +1621,13 @@ async function lancamentoRapido(status) {
   });
   await LS.set(PONTO_KEY, allPonto);
 
-  // Sincroniza absences após salvar tudo
-  emps.forEach(emp => syncAbsencesToStore(emp.id));
+  // Atualiza grade imediatamente com os dados em memória (sem esperar o Firestore)
+  // O usuário vê a mudança na hora; o save já ocorreu acima
+  _pontoCache = allPonto;
+  renderGrade();
+
+  // Sincroniza absences em um único write de store (batch — evita N escritas)
+  await syncAbsencesEmLote(emps, allPonto);
 
   const sm = STATUS_META[status];
   const dept = document.getElementById('filter-dept')?.value || 'todos';
@@ -1702,8 +1739,8 @@ async function confirmarResetPonto() {
   await LS.set(PONTO_KEY, allPonto);
   _pontoCache = allPonto;
 
-  // Sincroniza absences de todos os funcionários afetados
-  emps.forEach(emp => syncAbsencesToStore(emp.id));
+  // Sincroniza absences em batch — 1 write de store no total
+  await syncAbsencesEmLote(emps, allPonto);
 
   const MESES_SH_LOC = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   const label = `${MESES_SH_LOC[mesAtivo]}/${anoAtivo}`;
