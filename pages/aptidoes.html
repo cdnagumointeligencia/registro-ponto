@@ -948,9 +948,7 @@ function setFiltro(el, val) {
 // RENDER TABELA
 // ════════════════════════════════════════════════════════
 async function renderTabela() {
-  // Usa cache quando disponível — evita round-trip desnecessário ao Firestore
-  // (chamado por oninput da busca, onchange dos selects e filtros de chip)
-  if (!_store) _store = await getStore();
+  _store = await getStore();
   buildFilialSelect();
   buildDeptSelect();
   const search = document.getElementById('search-input').value.toLowerCase();
@@ -1150,7 +1148,7 @@ function _pickerEsc(e) {
 async function startEdit(empId, key, cell) {
   if (!podeEditar) return;
 
-  const store = _store || await getStore();
+  const store = await getStore();
   const emp   = (store.employees||[]).find(e=>e.id===empId);
   if (!emp) return;
 
@@ -1219,7 +1217,7 @@ async function startEdit(empId, key, cell) {
 async function selectScore(empId, key, v) {
   dismissPicker();
 
-  const store = _store || await getStore();
+  const store = await getStore();
   const emps  = store.employees||[];
   const idx   = emps.findIndex(e=>e.id===empId);
   if (idx<0) { renderTabela(); return; }
@@ -1238,14 +1236,9 @@ async function selectScore(empId, key, v) {
   emps[idx].competencies_history[currentMonthKey()][key] = v;
 
   store.employees = emps;
-
-  // Atualiza _store com dado modificado e re-renderiza imediatamente (sem esperar save)
-  _store = store;
-  renderTabela();
-
-  // Salva no Firestore em seguida
-  await saveStore(store);
-  _store = null; // invalida cache após persistir
+  await saveStore(store); // salva primeiro — garante persistência antes de exibir
+  _store = null;          // invalida cache após confirmação do save
+  renderTabela();         // só atualiza a UI após o dado estar seguro no Firestore
   await registrarLog('editou', 'Aptidões', `<strong>${emps[idx]?.name||empId}</strong> — ${key}: <span class="de">${anterior??'—'}</span><span class="seta">→</span><span class="para">${v}</span>`);
   showToast('✅ Competência atualizada!');
 }
@@ -1254,7 +1247,7 @@ async function selectScore(empId, key, v) {
 // RESET MÊS ATUAL
 // ════════════════════════════════════════════════════════
 async function resetMesAtual(empId) {
-  const store = _store || await getStore();
+  const store = await getStore();
   const emps  = store.employees || [];
   const idx   = emps.findIndex(e => e.id === empId);
   if (idx < 0) { showToast('❌ Funcionário não encontrado.', 'error'); return; }
@@ -1270,7 +1263,6 @@ async function resetMesAtual(empId) {
   if (emps[idx].competencies_history && emps[idx].competencies_history[mes]) {
     delete emps[idx].competencies_history[mes];
     store.employees = emps;
-    _store = null; // invalida cache após salvar
     await saveStore(store);
     renderTabela();
     await registrarLog('editou', 'Aptidões', `Reset de avaliações de <strong>${empName}</strong> — mês ${label} desbloqueado`);
@@ -1285,7 +1277,7 @@ async function resetMesAtual(empId) {
 // ════════════════════════════════════════════════════════
 async function openModal(empId) {
   dismissPicker();
-  const store = _store || await getStore();
+  const store = await getStore();
   const emps  = getMyEmployees();  // sync
   const emp   = empId ? emps.find(e=>e.id===empId) : null;
 
@@ -1370,7 +1362,7 @@ async function saveAvaliacao() {
 
   if (!empId) { showToast('⚠️ Selecione um funcionário.','warn'); return; }
 
-  const store = _store || await getStore();
+  const store = await getStore();
   const emps  = store.employees||[];
   const idx   = emps.findIndex(e=>String(e.id)===String(empId));
   if (idx<0) { showToast('❌ Funcionário não encontrado.','error'); return; }
@@ -1412,7 +1404,6 @@ async function saveAvaliacao() {
   editableKeys.forEach(k => { novoSnap[k] = competencies[k]; });
   store.employees[idx].competencies_history[currentMonthKey()] = novoSnap;
 
-  _store = null; // invalida cache após persistir
   await saveStore(store);
   closeModal();
   renderTabela();
@@ -1425,7 +1416,7 @@ async function saveAvaliacao() {
 // MODAL HISTÓRICO DE AVALIAÇÕES
 // ════════════════════════════════════════════════════════
 async function openHistorico(empId) {
-  const store = _store || await getStore();
+  const store = await getStore();
   const emp   = (store.employees||[]).find(e=>e.id===empId);
   if (!emp) return;
 
