@@ -24,7 +24,7 @@
   top: 0; left: 0; bottom: 0;
   width: var(--sb-w);
   background: var(--sb-bg);
-  border-right: 1px solid var(--sb-border);
+  border-right: 0px solid var(--sb-border);
   display: flex;
   flex-direction: column;
   z-index: 100;
