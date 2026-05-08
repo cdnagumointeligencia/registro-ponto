@@ -7,21 +7,16 @@
 /* ── Variáveis locais do sidebar ── */
 :root {
   --sb-w: 220px;
-  --sb-bg: #0d1f3c;           /* azul marinho escuro */
-  --sb-border: #1a3254;       /* borda azul escuro */
-  --sb-text: #7da3c8;         /* texto azulado suave */
+  --sb-bg: #0d1f3c;
+  --sb-border: #1a3254;
+  --sb-text: #7da3c8;
   --sb-text-hover: #ffffff;
   --sb-bg-hover: rgba(255,255,255,.06);
-  --sb-active-color: #93C5FD; /* azul claro destaque */
-  --sb-active-bg: #0b0d14;    /* === var(--bg) da página === efeito aba conectada */
+  --sb-active-color: #93C5FD;
   --sb-font: 'DM Sans', sans-serif;
   --sb-font-head: 'Syne', sans-serif;
-
-  /* cor do bg da página — usada para o efeito aba */
   --page-bg: #0b0d14;
 }
-
-/* Light theme sidebar vars → definidos em light-theme.css */
 
 /* ── Container ── */
 #app-sidebar {
@@ -34,7 +29,7 @@
   flex-direction: column;
   z-index: 100;
   font-family: var(--sb-font);
-  overflow: hidden;
+  /* SEM overflow:hidden — necessário para os pseudo-elementos saírem */
 }
 
 /* ── Logo ── */
@@ -46,6 +41,7 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
+  overflow: hidden; /* contém só o logo */
 }
 
 #app-sidebar .sb-logo-box {
@@ -76,11 +72,12 @@
   line-height: 1.4;
 }
 
-/* ── Usuário (entre logo e nav) ── */
+/* ── Usuário ── */
 #app-sidebar .sb-user {
   padding: 10px 18px 6px;
   border-bottom: 1px solid var(--sb-border);
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 #app-sidebar .sb-user-badge {
@@ -100,25 +97,23 @@
   padding-left: 2px;
 }
 
-/* ── Nav ── */
+/* ── Nav — scrollbar oculta, overflow para permitir pseudo-elementos ── */
 #app-sidebar .sb-nav {
   flex: 1;
   overflow-y: auto;
-  padding: 8px 0 4px;
+  overflow-x: visible; /* permite pseudo-elementos saírem */
+  padding: 6px 0;
+  /* scrollbar ultrafina, quase invisível */
+  scrollbar-width: none; /* Firefox */
 }
+#app-sidebar .sb-nav::-webkit-scrollbar { width: 0; } /* Chrome/Safari */
 
-#app-sidebar .sb-nav::-webkit-scrollbar { width: 3px; }
-#app-sidebar .sb-nav::-webkit-scrollbar-thumb {
-  background: var(--sb-border);
-  border-radius: 3px;
-}
-
-/* ── Item ── */
+/* ── Item base ── */
 #app-sidebar .sb-item {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 9px 18px;
+  padding: 9px 18px 9px 15px;
   font-size: 12.5px;
   font-weight: 500;
   color: var(--sb-text);
@@ -136,52 +131,50 @@
   background: var(--sb-bg-hover);
 }
 
-/* ══ EFEITO ABA ATIVA CONECTADA ══════════════════════════
-   O item ativo recebe o mesmo fundo da página principal,
-   criando ilusão de continuidade (aba conectada ao conteúdo)
+/* ══ EFEITO ABA ATIVA — técnica com pseudo-elementos no item
+   Os pseudo-elementos ficam no item (que tem position:relative)
+   e o sb-nav tem overflow-x: visible para não cortá-los.
+   Os cantos externos são simulados com box-shadow colorido
+   da cor do sidebar, sobre fundo da página.
 ════════════════════════════════════════════════════════ */
 #app-sidebar .sb-item.active {
   color: #4f8ef7;
   font-weight: 700;
-  background: var(--page-bg);      /* mesmo fundo da página */
-  border-left: 3px solid #4f8ef7;  /* linha azul à esquerda */
-  border-radius: 12px 0 0 12px;   /* cantos arredondados apenas à esquerda */
-  margin-right: 0;
+  background: var(--page-bg);
+  border-left: 3px solid #4f8ef7;
+  border-radius: 14px 0 0 14px;
   position: relative;
-  /* remove a borda direita do item para fundir com o conteúdo */
-  box-shadow: none;
+  /* Sombra que cobre a borda direita do sidebar para fundir */
+  box-shadow: 1px 0 0 0 var(--page-bg);
 }
 
-/* Pseudo-elemento: canto arredondado superior externo */
+/* Canto superior externo */
 #app-sidebar .sb-item.active::before {
   content: '';
   position: absolute;
   right: 0;
   top: -16px;
-  width: 16px;
-  height: 16px;
-  background: var(--sb-bg);
-  border-radius: 0;
-  /* cria o canto arredondado externo superior */
-  box-shadow: 4px 4px 0 4px var(--page-bg);
-  border-bottom-right-radius: 12px;
+  width: 18px;
+  height: 18px;
   pointer-events: none;
+  /* Fundo do sidebar cobre a área, box-shadow "recorta" o canto */
+  background: var(--sb-bg);
+  border-bottom-right-radius: 14px;
+  box-shadow: 4px 4px 0 4px var(--page-bg);
 }
 
-/* Pseudo-elemento: canto arredondado inferior externo */
+/* Canto inferior externo */
 #app-sidebar .sb-item.active::after {
   content: '';
   position: absolute;
   right: 0;
   bottom: -16px;
-  width: 16px;
-  height: 16px;
-  background: var(--sb-bg);
-  border-radius: 0;
-  /* cria o canto arredondado externo inferior */
-  box-shadow: 4px -4px 0 4px var(--page-bg);
-  border-top-right-radius: 12px;
+  width: 18px;
+  height: 18px;
   pointer-events: none;
+  background: var(--sb-bg);
+  border-top-right-radius: 14px;
+  box-shadow: 4px -4px 0 4px var(--page-bg);
 }
 
 #app-sidebar .sb-icon {
@@ -200,6 +193,7 @@
   flex-shrink: 0;
   padding: 12px 18px 14px;
   border-top: 1px solid var(--sb-border);
+  overflow: hidden;
 }
 
 #app-sidebar .sb-brand {
@@ -252,7 +246,6 @@
   #app-sidebar .sb-logout { justify-content: center; padding: 8px 0; }
   #app-sidebar .sb-footer { padding: 8px 0; }
 
-  /* No modo colapsado o efeito de aba é simplificado */
   #app-sidebar .sb-item.active {
     border-radius: 10px 0 0 10px;
   }
@@ -267,10 +260,10 @@
   .main { margin-left: 0; }
 }
 
-/* ── Modo Fullscreen (aberto via dashboard) ── */
-body.from-dashboard #app-sidebar { display:none; }
+/* ── Modo Fullscreen ── */
+body.from-dashboard #app-sidebar { display: none; }
 body.from-dashboard .main,
-body.from-dashboard main { margin-left:0 !important; }
+body.from-dashboard main { margin-left: 0 !important; }
 
 /* ── Grupo de botões do topbar ── */
 .topbar-btns {
@@ -280,8 +273,7 @@ body.from-dashboard main { margin-left:0 !important; }
   flex-wrap: wrap;
 }
 
-
-/* ── Sidebar colapsado nas páginas filhas (só ícones) ── */
+/* ── Sidebar colapsado nas páginas filhas ── */
 body.sb-collapsed #app-sidebar { width: 56px; }
 body.sb-collapsed #app-sidebar .sb-label,
 body.sb-collapsed #app-sidebar .sb-brand,
@@ -299,11 +291,33 @@ body.sb-collapsed #app-sidebar .sb-logout { justify-content: center; padding: 8p
 body.sb-collapsed #app-sidebar .sb-footer { padding: 8px 0; }
 body.sb-collapsed .main { margin-left: 56px !important; }
 
-/* Colapsado: simplifica o efeito aba */
 body.sb-collapsed #app-sidebar .sb-item.active {
   border-radius: 10px 0 0 10px;
 }
 body.sb-collapsed #app-sidebar .sb-item.active::before,
 body.sb-collapsed #app-sidebar .sb-item.active::after {
   display: none;
+}
+
+/* ══ TEMA CLARO — variáveis do efeito aba ══════════════ */
+body.light-theme {
+  --page-bg: #F0F4F8;
+  --sb-bg: #c0394b;
+  --sb-border: rgba(0,0,0,.12);
+}
+
+body.light-theme #app-sidebar .sb-item.active {
+  color: #D40138;
+  background: #F0F4F8;
+  border-left-color: #D40138;
+  box-shadow: 1px 0 0 0 #F0F4F8;
+}
+
+body.light-theme #app-sidebar .sb-item.active::before,
+body.light-theme #app-sidebar .sb-item.active::after {
+  background: #c0394b;
+  box-shadow: 4px 4px 0 4px #F0F4F8; /* before */
+}
+body.light-theme #app-sidebar .sb-item.active::after {
+  box-shadow: 4px -4px 0 4px #F0F4F8;
 }
