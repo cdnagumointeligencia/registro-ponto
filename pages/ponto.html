@@ -861,14 +861,23 @@ async function setPontoEmp(empId, diaMap) {
 }
 
 async function setStatus(empId, dia, status) {
-  const m        = await getPontoEmp(empId);
+  // Carrega allPonto uma única vez — evita 3 leituras separadas (getPontoEmp + setPontoEmp interno)
+  const allPonto = await LS.get(PONTO_KEY, {});
+  const key      = pontoKey(empId);
+  const m        = allPonto[key] || {};
   const anterior = m[dia] || 'vazio';
 
   // Sem mudança real — não salva nem loga
   if (anterior === status) return;
   if (status === 'vazio') delete m[dia];
   else m[dia] = status;
-  await setPontoEmp(empId, m);
+  allPonto[key] = m;
+
+  await LS.set(PONTO_KEY, allPonto);
+
+  // Atualiza _pontoCache com dado fresco — syncAbsencesToStore e renderGrade usam sem nova leitura
+  _pontoCache = allPonto;
+
   await syncAbsencesToStore(empId);
 }
 
@@ -1477,14 +1486,14 @@ async function setStatusCtx(status) {
     return;
   }
 
-  const anterior = (await getPontoEmp(ctxEmpId))[ctxDia] || 'vazio';
+  // Usa _pontoCache para checar anterior — sem leitura extra ao Firestore
+  const anterior = (_pontoCache[pontoKey(ctxEmpId)] || {})[ctxDia] || 'vazio';
 
   // Sem mudança — apenas fecha o menu
   if (anterior === status) { closeCtx(); return; }
 
   const sm = STATUS_META[status];
-  await setStatus(ctxEmpId, ctxDia, status); // aguarda o write no Firestore concluir
-  _pontoCache = {};                           // invalida cache para renderGrade ler dado atualizado
+  await setStatus(ctxEmpId, ctxDia, status); // aguarda write concluir; setStatus atualiza _pontoCache
   await registrarLog('editou', 'Ponto', `<strong>${emp?.name||ctxEmpId}</strong> dia ${ctxDia} → ${sm?.emoji||''} ${sm?.label||status}`);
   closeCtx();
   renderGrade();
