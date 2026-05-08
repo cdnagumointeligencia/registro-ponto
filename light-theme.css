@@ -431,42 +431,70 @@ body.light-theme .toast.error { border-left: 4px solid #D40138; }
 body.light-theme .toast.warn  { border-left: 4px solid #B45309; }
 
 /* ══════════════════════════════════════════
-   SIDEBAR — Tema Claro Institucional
+   SIDEBAR — Tema Claro · Rosa Avermelhado
+   Com efeito de aba ativa conectada ao conteúdo
 ══════════════════════════════════════════ */
 body.light-theme {
-  --sb-bg:           #FFFFFF;
-  --sb-border:       #C8D6E3;
-  --sb-text:         #4D6680;
-  --sb-text-hover:   #04152E;
-  --sb-bg-hover:     #EBF1F7;
-  --sb-active-color: #D40138;
-  --sb-active-bg:    rgba(212, 1, 56, .08);
+  --sb-bg:           #c0394b;        /* vermelho rosado escuro */
+  --sb-border:       rgba(0,0,0,.12);
+  --sb-text:         rgba(255,255,255,.75);
+  --sb-text-hover:   #ffffff;
+  --sb-bg-hover:     rgba(255,255,255,.12);
+  --sb-active-color: #ffffff;
+  --sb-active-bg:    #F0F4F8;        /* === var(--bg) do tema claro === efeito aba */
+  --page-bg:         #F0F4F8;        /* bg da página no tema claro */
 }
 
-/* Logo do sidebar no modo claro */
+/* Logo do sidebar no modo claro — mantém gradiente institucional */
 body.light-theme #app-sidebar .sb-logo-box {
   background: linear-gradient(135deg, #D40138 0%, #023665 100%);
-  box-shadow: 0 2px 10px rgba(212, 1, 56, .3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .3);
 }
-body.light-theme #app-sidebar .sb-logo small { color: #4D6680; }
+body.light-theme #app-sidebar .sb-logo small { color: rgba(255,255,255,.6); }
+
+/* Item ativo — efeito aba conectada no tema claro */
+body.light-theme #app-sidebar .sb-item.active {
+  color: #D40138;
+  background: #F0F4F8;              /* fundo da página */
+  border-left-color: #D40138;
+}
+body.light-theme #app-sidebar .sb-item.active::before,
+body.light-theme #app-sidebar .sb-item.active::after {
+  background: #c0394b;              /* mesma cor do sidebar claro */
+}
+
+/* Texto padrão dos itens não ativos */
+body.light-theme #app-sidebar .sb-item {
+  color: rgba(255,255,255,.75);
+}
+body.light-theme #app-sidebar .sb-item:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,.12);
+}
 
 /* Botão de logout */
 body.light-theme #app-sidebar .sb-logout {
-  border-color: #C8D6E3;
-  color: #4D6680;
+  border-color: rgba(255,255,255,.25);
+  color: rgba(255,255,255,.7);
 }
 body.light-theme #app-sidebar .sb-logout:hover {
-  background: rgba(212, 1, 56, .08);
-  color: #D40138;
-  border-color: rgba(212, 1, 56, .3);
+  background: rgba(255,255,255,.15);
+  color: #ffffff;
+  border-color: rgba(255,255,255,.5);
 }
 
-/* User role text */
-body.light-theme #app-sidebar .sb-user-role { color: #4D6680; }
-body.light-theme #app-sidebar .sb-brand     { color: #7A9AB5; }
+/* Textos do usuário e brand */
+body.light-theme #app-sidebar .sb-user-role { color: rgba(255,255,255,.6); }
+body.light-theme #app-sidebar .sb-brand     { color: rgba(255,255,255,.5); }
+body.light-theme #app-sidebar .sb-logo small { color: rgba(255,255,255,.55); }
+
+/* Bordas internas */
+body.light-theme #app-sidebar .sb-logo { border-bottom-color: rgba(255,255,255,.15); }
+body.light-theme #app-sidebar .sb-user { border-bottom-color: rgba(255,255,255,.15); }
+body.light-theme #app-sidebar .sb-footer { border-top-color: rgba(255,255,255,.15); }
 
 /* Scrollbar do sidebar */
-body.light-theme #app-sidebar .sb-nav::-webkit-scrollbar-thumb { background: #B0C4D4; }
+body.light-theme #app-sidebar .sb-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,.25); }
 
 /* ══════════════════════════════════════════
    LOGIN PAGE

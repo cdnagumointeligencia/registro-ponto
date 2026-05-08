@@ -7,15 +7,18 @@
 /* ── Variáveis locais do sidebar ── */
 :root {
   --sb-w: 220px;
-  --sb-bg: #12151f;
-  --sb-border: #2a2f45;
-  --sb-text: #94a3b8;
+  --sb-bg: #0d1f3c;           /* azul marinho escuro */
+  --sb-border: #1a3254;       /* borda azul escuro */
+  --sb-text: #7da3c8;         /* texto azulado suave */
   --sb-text-hover: #ffffff;
-  --sb-bg-hover: #1a1e2e;
-  --sb-active-color: #4f8ef7;
-  --sb-active-bg: rgba(79,142,247,.08);
+  --sb-bg-hover: rgba(255,255,255,.06);
+  --sb-active-color: #93C5FD; /* azul claro destaque */
+  --sb-active-bg: #0b0d14;    /* === var(--bg) da página === efeito aba conectada */
   --sb-font: 'DM Sans', sans-serif;
   --sb-font-head: 'Syne', sans-serif;
+
+  /* cor do bg da página — usada para o efeito aba */
+  --page-bg: #0b0d14;
 }
 
 /* Light theme sidebar vars → definidos em light-theme.css */
@@ -66,7 +69,7 @@
 
 #app-sidebar .sb-logo small {
   font-size: 9px;
-  color: #64748b;
+  color: #4a7aaa;
   letter-spacing: 2px;
   text-transform: uppercase;
   text-align: center;
@@ -93,7 +96,7 @@
 
 #app-sidebar .sb-user-role {
   font-size: 10px;
-  color: #64748b;
+  color: #4a7aaa;
   padding-left: 2px;
 }
 
@@ -101,7 +104,7 @@
 #app-sidebar .sb-nav {
   flex: 1;
   overflow-y: auto;
-  padding: 6px 0 4px;
+  padding: 8px 0 4px;
 }
 
 #app-sidebar .sb-nav::-webkit-scrollbar { width: 3px; }
@@ -124,6 +127,8 @@
   border-left: 3px solid transparent;
   transition: color .15s, background .15s, border-color .15s;
   white-space: nowrap;
+  position: relative;
+  margin-right: 0;
 }
 
 #app-sidebar .sb-item:hover {
@@ -131,11 +136,52 @@
   background: var(--sb-bg-hover);
 }
 
+/* ══ EFEITO ABA ATIVA CONECTADA ══════════════════════════
+   O item ativo recebe o mesmo fundo da página principal,
+   criando ilusão de continuidade (aba conectada ao conteúdo)
+════════════════════════════════════════════════════════ */
 #app-sidebar .sb-item.active {
-  color: var(--sb-active-color);
-  border-left-color: var(--sb-active-color);
-  background: var(--sb-active-bg);
-  font-weight: 600;
+  color: #4f8ef7;
+  font-weight: 700;
+  background: var(--page-bg);      /* mesmo fundo da página */
+  border-left: 3px solid #4f8ef7;  /* linha azul à esquerda */
+  border-radius: 12px 0 0 12px;   /* cantos arredondados apenas à esquerda */
+  margin-right: 0;
+  position: relative;
+  /* remove a borda direita do item para fundir com o conteúdo */
+  box-shadow: none;
+}
+
+/* Pseudo-elemento: canto arredondado superior externo */
+#app-sidebar .sb-item.active::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -16px;
+  width: 16px;
+  height: 16px;
+  background: var(--sb-bg);
+  border-radius: 0;
+  /* cria o canto arredondado externo superior */
+  box-shadow: 4px 4px 0 4px var(--page-bg);
+  border-bottom-right-radius: 12px;
+  pointer-events: none;
+}
+
+/* Pseudo-elemento: canto arredondado inferior externo */
+#app-sidebar .sb-item.active::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -16px;
+  width: 16px;
+  height: 16px;
+  background: var(--sb-bg);
+  border-radius: 0;
+  /* cria o canto arredondado externo inferior */
+  box-shadow: 4px -4px 0 4px var(--page-bg);
+  border-top-right-radius: 12px;
+  pointer-events: none;
 }
 
 #app-sidebar .sb-icon {
@@ -158,7 +204,7 @@
 
 #app-sidebar .sb-brand {
   font-size: 10px;
-  color: #64748b;
+  color: #4a7aaa;
   margin-bottom: 8px;
   line-height: 1.5;
 }
@@ -172,7 +218,7 @@
   border-radius: 8px;
   border: 1px solid var(--sb-border);
   background: transparent;
-  color: #64748b;
+  color: #4a7aaa;
   font-family: var(--sb-font);
   font-size: 11px;
   font-weight: 600;
@@ -205,6 +251,15 @@
   #app-sidebar .sb-user-badge { padding: 4px 6px; }
   #app-sidebar .sb-logout { justify-content: center; padding: 8px 0; }
   #app-sidebar .sb-footer { padding: 8px 0; }
+
+  /* No modo colapsado o efeito de aba é simplificado */
+  #app-sidebar .sb-item.active {
+    border-radius: 10px 0 0 10px;
+  }
+  #app-sidebar .sb-item.active::before,
+  #app-sidebar .sb-item.active::after {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -243,3 +298,12 @@ body.sb-collapsed #app-sidebar .sb-user-badge { padding: 4px 6px; }
 body.sb-collapsed #app-sidebar .sb-logout { justify-content: center; padding: 8px 0; }
 body.sb-collapsed #app-sidebar .sb-footer { padding: 8px 0; }
 body.sb-collapsed .main { margin-left: 56px !important; }
+
+/* Colapsado: simplifica o efeito aba */
+body.sb-collapsed #app-sidebar .sb-item.active {
+  border-radius: 10px 0 0 10px;
+}
+body.sb-collapsed #app-sidebar .sb-item.active::before,
+body.sb-collapsed #app-sidebar .sb-item.active::after {
+  display: none;
+}
