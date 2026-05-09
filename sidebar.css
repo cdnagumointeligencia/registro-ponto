@@ -7,7 +7,7 @@
 /* ── Variáveis locais do sidebar ── */
 :root {
   --sb-w: 220px;
-  --sb-bg: #1c1e24;
+  --sb-bg: #1a2540;
   --sb-border: #2a2c35;
   --sb-text: #94a3b8;
   --sb-text-hover: #ffffff;
@@ -24,13 +24,17 @@
   top: 0; left: 0; bottom: 0;
   width: var(--sb-w);
   background: var(--sb-bg);
-  border-right: 0px solid var(--sb-border);
+  border-right: 1px solid rgba(79,142,247,.15);
   display: flex;
   flex-direction: column;
   z-index: 100;
   font-family: var(--sb-font);
   /* SEM overflow:hidden — necessário para os pseudo-elementos saírem */
+  transition: opacity 0.12s ease;
 }
+
+/* Oculta o sidebar vazio enquanto o JS ainda não o populou */
+#app-sidebar:empty { opacity: 0; pointer-events: none; }
 
 /* ── Logo ── */
 #app-sidebar .sb-logo {
@@ -301,24 +305,24 @@ body.sb-collapsed #app-sidebar .sb-item.active::after {
 }
 
 /* ══ TEMA CLARO — variáveis do efeito aba ══════════════ */
-body.light-theme {
+html.light-theme {
   --page-bg: #F0F4F8;
-  --sb-bg: #5b9bd5;
-  --sb-border: rgba(0,0,0,.10);
+  --sb-bg: #023665;
+  --sb-border: rgba(255,255,255,.15);
 }
 
-body.light-theme #app-sidebar .sb-item.active {
+html.light-theme #app-sidebar .sb-item.active {
   color: #D40138;
   background: #F0F4F8;
   border-left-color: #D40138;
   box-shadow: 2px 0 0 0 #F0F4F8;
 }
 
-body.light-theme #app-sidebar .sb-item.active::before,
-body.light-theme #app-sidebar .sb-item.active::after {
-  background: #5b9bd5;
+html.light-theme #app-sidebar .sb-item.active::before,
+html.light-theme #app-sidebar .sb-item.active::after {
+  background: #023665;
   box-shadow: 5px 5px 0 5px #F0F4F8;
 }
-body.light-theme #app-sidebar .sb-item.active::after {
+html.light-theme #app-sidebar .sb-item.active::after {
   box-shadow: 5px -5px 0 5px #F0F4F8;
 }
