@@ -30,7 +30,11 @@
   z-index: 100;
   font-family: var(--sb-font);
   /* SEM overflow:hidden — necessário para os pseudo-elementos saírem */
+  transition: opacity 0.12s ease;
 }
+
+/* Oculta o sidebar vazio enquanto o JS ainda não o populou */
+#app-sidebar:empty { opacity: 0; pointer-events: none; }
 
 /* ── Logo ── */
 #app-sidebar .sb-logo {
@@ -301,24 +305,24 @@ body.sb-collapsed #app-sidebar .sb-item.active::after {
 }
 
 /* ══ TEMA CLARO — variáveis do efeito aba ══════════════ */
-body.light-theme {
+html.light-theme {
   --page-bg: #F0F4F8;
   --sb-bg: #5b9bd5;
   --sb-border: rgba(0,0,0,.10);
 }
 
-body.light-theme #app-sidebar .sb-item.active {
+html.light-theme #app-sidebar .sb-item.active {
   color: #D40138;
   background: #F0F4F8;
   border-left-color: #D40138;
   box-shadow: 2px 0 0 0 #F0F4F8;
 }
 
-body.light-theme #app-sidebar .sb-item.active::before,
-body.light-theme #app-sidebar .sb-item.active::after {
+html.light-theme #app-sidebar .sb-item.active::before,
+html.light-theme #app-sidebar .sb-item.active::after {
   background: #5b9bd5;
   box-shadow: 5px 5px 0 5px #F0F4F8;
 }
-body.light-theme #app-sidebar .sb-item.active::after {
+html.light-theme #app-sidebar .sb-item.active::after {
   box-shadow: 5px -5px 0 5px #F0F4F8;
 }
