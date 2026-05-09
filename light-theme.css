@@ -5,6 +5,8 @@
 ════════════════════════════════════════════════════════ */
 
 /* ── Variáveis globais do tema claro ── */
+/* html.light-theme: aplicado pelo script inline do <head> para evitar flash */
+html.light-theme,
 body.light-theme {
   /* Backgrounds */
   --bg:       #F0F4F8;

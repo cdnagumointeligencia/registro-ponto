@@ -203,13 +203,22 @@ function showToast(msg, type='ok') {
 // TEMA — usa LS_LOCAL (síncrono, preferência local por dispositivo)
 // ════════════════════════════════════════════════════════
 function initTheme() {
-  if (LS_LOCAL.get('rh_theme') === 'light') document.body.classList.add('light-theme');
-  else document.body.classList.remove('light-theme');
+  const isLight = LS_LOCAL.get('rh_theme') === 'light';
+  // Aplica no <html> (para compatibilidade com o script anti-flash do <head>)
+  // e no <body> (para os seletores CSS body.light-theme)
+  if (isLight) {
+    document.documentElement.classList.add('light-theme');
+    document.body.classList.add('light-theme');
+  } else {
+    document.documentElement.classList.remove('light-theme');
+    document.body.classList.remove('light-theme');
+  }
   syncThemeButtons();
 }
 
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light-theme');
+  document.documentElement.classList.toggle('light-theme', isLight);
   LS_LOCAL.set('rh_theme', isLight ? 'light' : 'dark');
   syncThemeButtons();
 }
@@ -232,11 +241,8 @@ function initSidebar(activeId, user) {
 
   const inPages = window.location.pathname.includes('/pages/');
 
-  if (inPages) {
-    document.body.classList.add('sb-collapsed');
-  } else {
-    document.body.classList.remove('sb-collapsed');
-  }
+  // Sempre colapsado — evita expansão ao navegar entre páginas
+  document.body.classList.add('sb-collapsed');
 
   const dashHref = inPages ? '../index.html' : 'index.html';
 

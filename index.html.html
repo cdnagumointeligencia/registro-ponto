@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<script>!function(){try{var t=localStorage.getItem("rh_theme");if(t&&JSON.parse(t)==="light"){document.documentElement.classList.add("light-theme");document.documentElement.style.colorScheme="light";}}catch(e){}}();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard · RH Nagumo</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -71,7 +72,8 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 /* ── Sidebar ── */
 
 /* ── Main ── */
-.main { margin-left:var(--sidebar-w); padding:24px 28px; min-height:100vh; }
+/* Sidebar sempre colapsada (56px) em todas as páginas */
+.main { margin-left:56px; padding:24px 28px; min-height:100vh; }
 .topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; flex-wrap:wrap; gap:12px; }
 .page-title { font-family:var(--font-head); font-size:28px; font-weight:800; letter-spacing:-1.5px; }
 .page-title span { color:var(--accent); }
@@ -200,50 +202,17 @@ body.light-theme .kpi-card.alerta-pendente .kpi-sub { color: #7c3aed; }
 /* ── Responsive ── */
 @media(max-width:1280px) { .kpi-grid { grid-template-columns:repeat(4,1fr); } }
 @media(max-width:1024px) {
-  :root { --sidebar-w:56px; }
-  
-  
-  
-  
   .logo-img-wrap span, .logo + small { display:none; }
   .dash-grid { grid-template-columns:1fr; }
   .kpi-grid  { grid-template-columns:repeat(3,1fr); }
 }
 @media(max-width:768px) {
-  :root { --sidebar-w:0px; }
-  
   .main { margin-left:0; padding:16px; }
   .kpi-grid  { grid-template-columns:repeat(2,1fr); }
   .dash-grid { grid-template-columns:1fr; }
 }
 
-/* ── Sidebar Padrão ── */
-
-/* [light-theme.css] body.light-theme 
-
-body.light-theme 
-
-body.light-theme 
-body.light-theme 
-body.light-theme 
-
-body.light-theme 
-
-body.light-theme 
-.main { margin-left:220px; } */
-@media(max-width:1024px) {
-  
-  
-  
-  
-  
-  
-  .main { margin-left:56px; }
-}
-@media(max-width:768px) {
-  
-  .main { margin-left:0; }
-}
+/* ── Sidebar sempre colapsada — margem definida acima ── */
 
 .dash-filter-select {
   background:var(--surface); border:1px solid var(--border);
