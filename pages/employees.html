@@ -5,6 +5,10 @@
 <script>!function(){try{var t=localStorage.getItem("rh_theme");if(t&&JSON.parse(t)==="light"){document.documentElement.classList.add("light-theme");document.documentElement.style.colorScheme="light";}}catch(e){}}();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Funcionários · RH Nagumo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.gstatic.com">
+<link rel="dns-prefetch" href="https://firestore.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../sidebar.css">
 <link rel="stylesheet" href="../responsive.css">
@@ -337,6 +341,30 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 .emp-tag.filial  { background:rgba(79,142,247,.12); color:var(--accent); border:1px solid rgba(79,142,247,.2); }
 .emp-tag.turno   { background:rgba(167,139,250,.12); color:var(--accent2); border:1px solid rgba(167,139,250,.2); }
 
+/* paginação */
+.pagination {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  margin:24px 0 8px; flex-wrap:wrap;
+}
+.pagination .page-btn {
+  padding:6px 14px; border-radius:8px; border:1px solid var(--border);
+  background:var(--surface2); color:var(--muted); cursor:pointer;
+  font-family:var(--font-body); font-size:12px; font-weight:600;
+  transition:all .15s; min-width:36px; text-align:center;
+}
+.pagination .page-btn:hover {
+  background:var(--surface3); color:var(--text); border-color:var(--accent);
+}
+.pagination .page-btn.active {
+  background:rgba(79,142,247,.2); color:var(--accent); border-color:var(--accent);
+}
+.pagination .page-btn:disabled {
+  opacity:.4; cursor:default; pointer-events:none;
+}
+.pagination .page-info {
+  font-size:12px; color:var(--muted); padding:0 4px;
+}
+
 /* empty state */
 .empty-state { text-align:center; padding:60px 20px; color:var(--muted); grid-column:1/-1; }
 .empty-icon  { font-size:52px; margin-bottom:14px; }
@@ -470,6 +498,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 
 <div class="toast-container" id="toast-container"></div>
 <nav id="app-sidebar"></nav>
+<script>!function(){try{var c=localStorage.getItem('rh_sb_cache_v2');if(c)document.getElementById('app-sidebar').innerHTML=c;}catch(e){}}();</script>
 
 <main class="main">
 
@@ -484,12 +513,12 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
       <input class="search-input" type="text" id="search-input"
-        placeholder="Buscar nome..." oninput="renderCards()">
+        placeholder="Buscar nome..." oninput="debouncedRender()">
     </div>
-    <select class="dept-select" id="filial-select" onchange="renderCards()">
+    <select class="dept-select" id="filial-select" onchange="debouncedRender()">
       <option value="">Todas as filiais</option>
     </select>
-    <select class="dept-select" id="dept-select" onchange="renderCards()">
+    <select class="dept-select" id="dept-select" onchange="debouncedRender()">
       <option value="">Todos os departamentos</option>
     </select>
     <div class="filter-chip active" data-filter="" onclick="setFilter(this,'')">Todos</div>
@@ -501,6 +530,9 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 
   <!-- Grid de cards -->
   <div class="emp-grid" id="emp-grid"></div>
+
+  <!-- Paginação -->
+  <div class="pagination" id="pagination"></div>
 
   <!-- Seção funcionários desligados (visível apenas para coordenação e acima) -->
   <div id="demitidos-section" style="display:none">
@@ -849,13 +881,54 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 // ════════════════════════════════════════════════════════
 let currentUser  = null;
 let activeFilter = '';
-let _store       = null;  // cache do store — carregado antes de renderCards()
-let _allPonto    = {};    // cache do ponto — carregado antes de renderCards()
+let _store       = null;
+let _allPonto    = {};
 let _resolvePromocao    = null;
 let _admissaoVerificada = false;
+let _page        = 1;
+const PAGE_SIZE  = 50;
+let _debounceTimer = null;
+let _metricsCache  = {};
 
 const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
 const MONTHS   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+function debounce(fn, ms) {
+  return function(...args) {
+    clearTimeout(_debounceTimer);
+    _debounceTimer = setTimeout(() => fn.apply(this, args), ms);
+  };
+}
+
+function computeMetricsCache(emp) {
+  const id = emp.id;
+  if (_metricsCache[id]) return _metricsCache[id];
+  const score    = calcScore(emp);
+  const st       = getStatus(score);
+  const assid    = Math.round(calcAssid(emp));
+  const aptAvg   = calcAptMedia(emp).toFixed(1);
+  const totalAbs = getTotalFaltasEmp(emp);
+  const lider    = getLiderDoFuncionario(emp);
+  const alert    = hasAlert(emp);
+  const sparkData = (() => {
+    try {
+      const allPonto  = _allPonto;
+      const ano       = emp.year || new Date().getFullYear();
+      return Array.from({length:12}, (_, m) => {
+        const key  = `${emp.id}_${ano}_${String(m+1).padStart(2,'0')}`;
+        const dias = allPonto[key] || {};
+        let f = 0;
+        Object.entries(dias).forEach(([diaStr, s]) => {
+          if (new Date(ano, m, parseInt(diaStr)).getDay() === 0) return;
+          if (s === 'falta') f += 1;
+        });
+        return Object.keys(dias).length > 0 ? f : (emp.absences?.[m] || 0);
+      });
+    } catch(e) { return emp.absences || Array(12).fill(0); }
+  })();
+  _metricsCache[id] = { score, st, assid, aptAvg, totalAbs, lider, alert, sparkData };
+  return _metricsCache[id];
+}
 
 // ════════════════════════════════════════════════════════
 // INIT
@@ -1120,18 +1193,19 @@ function setFilter(el, val) {
 // ════════════════════════════════════════════════════════
 // RENDER CARDS
 // ════════════════════════════════════════════════════════
-async function renderCards() {
-  // Carrega store e ponto uma vez — helpers usam cache sincronamente
+async function renderCards(fromPageNav = false) {
   if (!_store) {
     _store    = await getStore();
     _allPonto = await LS.get('rh_ponto', {});
+    _metricsCache = {};
   }
 
-  // Verificar admissões faltando — apenas uma vez por sessão
   if (!_admissaoVerificada) {
     _admissaoVerificada = true;
     await verificarAdmissaoFaltando();
   }
+
+  if (!fromPageNav) _page = 1;
 
   const search    = document.getElementById('search-input').value.toLowerCase();
   const filialSel = document.getElementById('filial-select').value;
@@ -1141,22 +1215,20 @@ async function renderCards() {
   let   ativos   = todos.filter(e => !e.demitido);
   const demitidos = todos.filter(e => !!e.demitido);
 
-  // Atualiza selects (usa apenas ativos)
   populateFilialSelect();
   if (filialSel) document.getElementById('filial-select').value = filialSel;
   populateDeptSelect();
   if (deptSel) document.getElementById('dept-select').value = deptSel;
 
-  // Aplica filtros sobre ativos
   ativos = ativos.filter(e => {
     const matchName   = e.name.toLowerCase().includes(search);
     const matchFilial = !filialSel || e.filial === filialSel;
     const matchDept   = !deptSel   || e.dept   === deptSel;
-    const matchStatus = !activeFilter || getStatus(calcScore(e)).tag === activeFilter;
+    const c = computeMetricsCache(e);
+    const matchStatus = !activeFilter || c.st.tag === activeFilter;
     return matchName && matchFilial && matchDept && matchStatus;
   });
 
-  // Ordena: ativos normais primeiro (A→Z), depois afastados/maternidade/férias (A→Z)
   const hoje = new Date(); hoje.setHours(0,0,0,0);
   const estaEmFerias = e =>
     e.ferias && e.data_ferias_inicio && e.data_ferias_fim &&
@@ -1167,9 +1239,14 @@ async function renderCards() {
   ativos.sort((a, b) => {
     const aIrreg = isIrregular(a) ? 1 : 0;
     const bIrreg = isIrregular(b) ? 1 : 0;
-    if (aIrreg !== bIrreg) return aIrreg - bIrreg;       // irregulares vão para o fim
+    if (aIrreg !== bIrreg) return aIrreg - bIrreg;
     return (a.name || '').localeCompare(b.name || '', 'pt-BR', { sensitivity: 'base' });
   });
+
+  const totalPages = Math.max(1, Math.ceil(ativos.length / PAGE_SIZE));
+  if (_page > totalPages) _page = totalPages;
+  const start = (_page - 1) * PAGE_SIZE;
+  const pageEmps = ativos.slice(start, start + PAGE_SIZE);
 
   const grid = document.getElementById('emp-grid');
   if (!ativos.length) {
@@ -1180,10 +1257,11 @@ async function renderCards() {
         <p style="font-size:12px;margin-top:6px">Tente mudar os filtros ou cadastre um novo funcionário.</p>
       </div>`;
   } else {
-    grid.innerHTML = ativos.map(emp => buildCard(emp)).join('');
+    grid.innerHTML = pageEmps.map(emp => buildCard(emp)).join('');
   }
 
-  // Seção de demitidos — somente para quem tem permissão
+  renderPagination(totalPages, ativos.length);
+
   const secDemitidos  = document.getElementById('demitidos-section');
   const podeDemitidos = canVerDemitidos();
   if (podeDemitidos && demitidos.length) {
@@ -1195,56 +1273,41 @@ async function renderCards() {
   }
 }
 
+function goToPage(p) {
+  _page = p;
+  renderCards(true);
+}
+
+function renderPagination(totalPages, totalEmps) {
+  const el = document.getElementById('pagination');
+  if (totalPages <= 1) { el.innerHTML = ''; return; }
+  let html = `<span class="page-info">${totalEmps} funcionários · Página ${_page} de ${totalPages}</span>`;
+  html += `<button class="page-btn" onclick="goToPage(${_page-1})" ${_page<=1?'disabled':''}>‹ Anterior</button>`;
+  for (let i = Math.max(1, _page-2); i <= Math.min(totalPages, _page+2); i++) {
+    html += `<button class="page-btn ${i===_page?'active':''}" onclick="goToPage(${i})">${i}</button>`;
+  }
+  html += `<button class="page-btn" onclick="goToPage(${_page+1})" ${_page>=totalPages?'disabled':''}>Próximo ›</button>`;
+  el.innerHTML = html;
+}
+
 function buildCard(emp) {
-  const score    = calcScore(emp);
-  const st       = getStatus(score);
-  const assid    = Math.round(calcAssid(emp));
-  const aptAvg   = calcAptMedia(emp).toFixed(1);
-  const ini      = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const c = computeMetricsCache(emp);
+  const ini = emp.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
   const podEdit     = canEditEmp(emp);
   const podDel      = canDeleteEmp(emp);
   const podTransfer = canTransferEmp();
   const podOcorr    = canOcorrenciaEmp();
-  const alert       = hasAlert(emp);
-
-  // Lê faltas do rh_ponto (fonte real) — fallback para emp.absences
-  const totalAbs = getTotalFaltasEmp(emp);
-
-  // Líder responsável pelo funcionário
-  const lider     = getLiderDoFuncionario(emp);  // sync - uses _store
-  const liderNome = lider ? lider.name : null;
-  const liderNivel = lider ? (lider.nivel || 'lider') : null;
   const NIVEL_COR = { admin_master:'#4f8ef7', diretoria:'#fb923c', gerencia:'#a78bfa', coordenacao:'#fbbf24', encarregado:'#34d399', lider:'rgba(255,255,255,0.5)' };
 
-  // Sparkline — lê faltas mês a mês direto do rh_ponto
-  const sparkData = (() => {
-    try {
-      const allPonto  = _allPonto;
-      const ano       = emp.year || new Date().getFullYear();
-      return Array.from({length:12}, (_, m) => {
-        const key  = `${emp.id}_${ano}_${String(m+1).padStart(2,'0')}`;
-        const dias = allPonto[key] || {};
-        let f = 0;
-        Object.entries(dias).forEach(([diaStr, s]) => {
-          if (new Date(ano, m, parseInt(diaStr)).getDay() === 0) return; // ignora domingo
-          if (s === 'falta') f += 1;
-          // atestado não penaliza
-        });
-        return Object.keys(dias).length > 0 ? f : (emp.absences?.[m] || 0);
-      });
-    } catch(e) { return emp.absences || Array(12).fill(0); }
-  })();
-  const maxAbs = Math.max(...sparkData, 1);
-  const spark  = sparkData.map(v => {
+  const maxAbs = Math.max(...c.sparkData, 1);
+  const spark  = c.sparkData.map(v => {
     const h   = v===0 ? 3 : Math.round((v/maxAbs)*22)+2;
     const cor = getHeatColor(v);
     return `<div class="sparkline-bar" style="height:${h}px;background:${cor}"></div>`;
   }).join('');
 
-  // Barra score
-  const barColor = score>=85?'#34d399':score>=70?'#4f8ef7':score>=55?'#fbbf24':'#f87171';
+  const barColor = c.score>=85?'#34d399':c.score>=70?'#4f8ef7':c.score>=55?'#fbbf24':'#f87171';
 
-  // Banner topo
   const hoje       = new Date(); hoje.setHours(0,0,0,0);
   const emFerias   = emp.ferias && emp.data_ferias_inicio && emp.data_ferias_fim &&
     new Date(emp.data_ferias_inicio+'T00:00:00') <= hoje &&
@@ -1267,10 +1330,9 @@ function buildCard(emp) {
         <div class="emp-name">${emp.name}</div>
         <div class="emp-role">${emp.role||''}${emp.dept?' · '+emp.dept:''}</div>
       </div>
-
     </div>
 
-    ${alert ? `<div class="emp-alert">⚠️ Alta aptidão, baixa assiduidade</div>` : ''}
+    ${c.alert ? `<div class="emp-alert">⚠️ Alta aptidão, baixa assiduidade</div>` : ''}
 
     <div class="emp-metrics">
       <div class="emp-metric">
@@ -1278,24 +1340,23 @@ function buildCard(emp) {
         <div class="emp-metric-label">Desemp.</div>
       </div>
       <div class="emp-metric">
-        <div class="emp-metric-val apt">${aptAvg}</div>
+        <div class="emp-metric-val apt">${c.aptAvg}</div>
         <div class="emp-metric-label">Apt./10</div>
       </div>
       <div class="emp-metric">
-        <div class="emp-metric-val assid ${assid<70?'low':''}">${assid}%</div>
+        <div class="emp-metric-val assid ${c.assid<70?'low':''}">${c.assid}%</div>
         <div class="emp-metric-label">Assid.</div>
       </div>
       <div class="emp-metric">
-        <div class="emp-metric-val faltas">${totalAbs}</div>
+        <div class="emp-metric-val faltas">${c.totalAbs}</div>
         <div class="emp-metric-label">Faltas</div>
       </div>
     </div>
 
     <div class="emp-card-footer">
-      <div class="emp-score">${score}</div>
-      <span class="tag ${st.cls}">${st.label}</span>
+      <div class="emp-score">${c.score}</div>
+      <span class="tag ${c.st.cls}">${c.st.label}</span>
     </div>
-
 
     ${emp.filial||emp.turno ? `
     <div class="emp-tags">
@@ -1313,22 +1374,45 @@ function buildCard(emp) {
       📅 Desde ${new Date(emp.data_admissao+'T00:00:00').toLocaleDateString('pt-BR')}
     </div>` : ''}
 
-    ${liderNome ? `
+    ${c.lider ? `
     <div class="emp-lider" style="margin:0 12px 12px;padding:7px 12px;border-radius:8px;
       background:var(--surface2);border:1px solid var(--border);
       display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)">
-      <span style="width:8px;height:8px;border-radius:50%;background:${NIVEL_COR[liderNivel]||'var(--muted)'};flex-shrink:0"></span>
-      <span>Resp.: <strong style="color:var(--text)">${liderNome}</strong></span>
+      <span style="width:8px;height:8px;border-radius:50%;background:${NIVEL_COR[c.lider.nivel]||'var(--muted)'};flex-shrink:0"></span>
+      <span>Resp.: <strong style="color:var(--text)">${c.lider.name}</strong></span>
     </div>` : ''}
     <div class="emp-actions-bottom">
-      ${podEdit     ? `<button class="emp-btn edit"     onclick="editEmployee(${emp.id})"     title="Editar">✏️</button>` : ''}
-      ${podDel      ? `<button class="emp-btn del"      onclick="deleteEmployee(${emp.id})"   title="Excluir">✕</button>` : ''}
-      ${podTransfer ? `<button class="emp-btn transfer" onclick="openTransferModal(${emp.id})" title="Transferir">🔀</button>` : ''}
-      ${podOcorr    ? `<button class="emp-btn ocorr"    onclick="openOcorrenciaModal(${emp.id},'emp')" title="Ocorrência">📝</button>` : ''}
+      ${podEdit     ? `<button class="emp-btn edit"     data-action="edit"     data-id="${emp.id}" title="Editar">✏️</button>` : ''}
+      ${podDel      ? `<button class="emp-btn del"      data-action="del"      data-id="${emp.id}" title="Excluir">✕</button>` : ''}
+      ${podTransfer ? `<button class="emp-btn transfer" data-action="transfer" data-id="${emp.id}" title="Transferir">🔀</button>` : ''}
+      ${podOcorr    ? `<button class="emp-btn ocorr"    data-action="ocorr"    data-id="${emp.id}" title="Ocorrência">📝</button>` : ''}
     </div>
-
   </div>`;
 }
+
+const debouncedRender = debounce(renderCards, 250);
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('emp-grid')?.addEventListener('click', e => {
+    const btn = e.target.closest('.emp-btn[data-action]');
+    if (!btn) return;
+    const id   = parseInt(btn.dataset.id);
+    const act  = btn.dataset.action;
+    if      (act === 'edit')     editEmployee(id);
+    else if (act === 'del')      deleteEmployee(id);
+    else if (act === 'transfer') openTransferModal(id);
+    else if (act === 'ocorr')    openOcorrenciaModal(id, 'emp');
+    else if (act === 'pdf')      gerarRelatorioPDF(id);
+  });
+  document.getElementById('demitidos-grid')?.addEventListener('click', e => {
+    const btn = e.target.closest('.emp-btn[data-action]');
+    if (!btn) return;
+    const id   = parseInt(btn.dataset.id);
+    const act  = btn.dataset.action;
+    if      (act === 'del') deleteEmployee(id);
+    else if (act === 'pdf') gerarRelatorioPDF(id);
+  });
+});
 
 // ════════════════════════════════════════════════════════
 // MODAL — ABRIR / FECHAR
@@ -2022,10 +2106,8 @@ function renderHistoricoCargos(historico) {
 // CARD DEMITIDO
 // ════════════════════════════════════════════════════════
 function buildCardDemitido(emp) {
+  const c = computeMetricsCache(emp);
   const ini      = (emp.name||'?').split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
-  const totalAbs = getTotalFaltasEmp(emp);
-  const aptAvg   = calcAptMedia(emp).toFixed(1);
-  const score    = calcScore(emp);
   const dtAdm    = emp.data_admissao ? new Date(emp.data_admissao+'T00:00:00').toLocaleDateString('pt-BR') : '—';
   const dtDem    = emp.data_demissao ? new Date(emp.data_demissao+'T00:00:00').toLocaleDateString('pt-BR') : '—';
   const promos   = (emp.historico_cargos||[]).filter(h=>h.tipo==='promocao').length;
@@ -2063,16 +2145,16 @@ function buildCardDemitido(emp) {
       </div>
     </div>
     <div class="emp-metrics" style="opacity:.7">
-      <div class="emp-metric"><div class="emp-metric-val apt">${aptAvg}</div><div class="emp-metric-label">Apt./10</div></div>
-      <div class="emp-metric"><div class="emp-metric-val faltas">${totalAbs}</div><div class="emp-metric-label">Faltas</div></div>
+      <div class="emp-metric"><div class="emp-metric-val apt">${c.aptAvg}</div><div class="emp-metric-label">Apt./10</div></div>
+      <div class="emp-metric"><div class="emp-metric-val faltas">${c.totalAbs}</div><div class="emp-metric-label">Faltas</div></div>
       <div class="emp-metric"><div class="emp-metric-val" style="color:var(--green)">${promos}</div><div class="emp-metric-label">Promoções</div></div>
-      <div class="emp-metric"><div class="emp-metric-val" style="color:var(--accent2)">${score}</div><div class="emp-metric-label">Score</div></div>
+      <div class="emp-metric"><div class="emp-metric-val" style="color:var(--accent2)">${c.score}</div><div class="emp-metric-label">Score</div></div>
     </div>
     ${emp.motivo_demissao?`<div style="margin:6px 0;padding:7px 10px;border-radius:8px;background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.15);font-size:11px;color:var(--muted)"><strong style="color:#f87171">Motivo:</strong> ${emp.motivo_demissao.length>80?emp.motivo_demissao.slice(0,80)+'…':emp.motivo_demissao}</div>`:''}
     ${emp.matricula?`<div class="emp-matricula" style="opacity:.6">🪪 <strong>${emp.matricula}</strong></div>`:''}
     <div class="emp-actions-bottom">
-      ${canDeleteEmp(emp) ? `<button class="emp-btn del" onclick="deleteEmployee(${emp.id})" title="Excluir permanentemente" style="margin-right:auto">✕ Excluir</button>` : ''}
-      <button class="emp-btn pdf" onclick="gerarRelatorioPDF(${emp.id})" style="width:auto;padding:0 12px;font-size:11px;font-weight:600;gap:5px" title="Relatório PDF">
+      ${canDeleteEmp(emp) ? `<button class="emp-btn del" data-action="del" data-id="${emp.id}" title="Excluir permanentemente" style="margin-right:auto">✕ Excluir</button>` : ''}
+      <button class="emp-btn pdf" data-action="pdf" data-id="${emp.id}" style="width:auto;padding:0 12px;font-size:11px;font-weight:600;gap:5px" title="Relatório PDF">
         📋 Relatório PDF
       </button>
     </div>

@@ -5,6 +5,10 @@
 <script>!function(){try{var t=localStorage.getItem("rh_theme");if(t&&JSON.parse(t)==="light"){document.documentElement.classList.add("light-theme");document.documentElement.style.colorScheme="light";}}catch(e){}}();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aptidões · RH Nagumo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.gstatic.com">
+<link rel="dns-prefetch" href="https://firestore.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../sidebar.css">
 <link rel="stylesheet" href="../light-theme.css">
@@ -575,6 +579,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font-body); mi
 
 <div class="toast-container" id="toast-container"></div>
 <nav id="app-sidebar"></nav>
+<script>!function(){try{var c=localStorage.getItem('rh_sb_cache_v2');if(c)document.getElementById('app-sidebar').innerHTML=c;}catch(e){}}();</script>
 
 <main class="main">
 
@@ -1087,7 +1092,7 @@ function buildRow(emp, lista) {
       onmouseout="this.style.background='rgba(248,113,113,.1)'">🔄</button>` : '';
 
   return `
-  <tr style="${bloqueado?'opacity:.75':''}">
+  <tr data-emp-id="${emp.id}" style="${bloqueado?'opacity:.75':''}">
     <td class="td-emp">
       <div class="emp-cell">
         <div class="emp-mini-avatar"
@@ -1120,6 +1125,16 @@ function buildRow(emp, lista) {
       </span>
     </td>
   </tr>`;
+}
+
+// Re-renderiza apenas a linha de um funcionário (sem recarregar a tabela inteira)
+function updateRow(empId) {
+  const row = document.querySelector(`tr[data-emp-id="${empId}"]`);
+  if (!row || !_store) return;
+  const emp = (_store.employees||[]).find(e=>e.id===empId);
+  if (!emp) return;
+  const allEmps = getMyEmployees().sort((a,b)=>(a.name||'').localeCompare(b.name||'','pt-BR'));
+  row.outerHTML = buildRow(emp, allEmps);
 }
 
 // ════════════════════════════════════════════════════════
@@ -1224,24 +1239,28 @@ async function selectScore(empId, key, v) {
   if (idx<0) { renderTabela(); return; }
   if (!emps[idx].competencies) emps[idx].competencies = {};
 
-  // Só salva e loga se o valor realmente mudou
   const anterior = emps[idx].competencies[key] ?? null;
-  if (anterior === v) { return; }
+  if (anterior === v) return;
 
+  // ── Atualiza store local imediatamente (sem esperar Firestore) ──
   emps[idx].competencies[key] = v;
-
-  // ── Registra APENAS esta chave no histórico do mês atual ──
-  // (salvar o snapshot completo travaria todas as outras competências)
   if (!emps[idx].competencies_history) emps[idx].competencies_history = {};
   if (!emps[idx].competencies_history[currentMonthKey()]) emps[idx].competencies_history[currentMonthKey()] = {};
   emps[idx].competencies_history[currentMonthKey()][key] = v;
-
   store.employees = emps;
-  await saveStore(store); // salva primeiro — garante persistência antes de exibir
-  _store = null;          // invalida cache após confirmação do save
-  renderTabela();         // só atualiza a UI após o dado estar seguro no Firestore
-  await registrarLog('editou', 'Aptidões', `<strong>${emps[idx]?.name||empId}</strong> — ${key}: <span class="de">${anterior??'—'}</span><span class="seta">→</span><span class="para">${v}</span>`);
+  _store = store;
+
+  // ── Re-renderiza apenas a linha afetada (instantâneo) ──
+  updateRow(empId);
   showToast('✅ Competência atualizada!');
+
+  // ── Grava no Firestore em background ──
+  const empName = emps[idx]?.name || String(empId);
+  saveStore(store).then(() => {
+    registrarLog('editou', 'Aptidões',
+      `<strong>${empName}</strong> — ${key}: <span class="de">${anterior??'—'}</span><span class="seta">→</span><span class="para">${v}</span>`
+    );
+  });
 }
 
 // ════════════════════════════════════════════════════════
@@ -1405,12 +1424,21 @@ async function saveAvaliacao() {
   editableKeys.forEach(k => { novoSnap[k] = competencies[k]; });
   store.employees[idx].competencies_history[currentMonthKey()] = novoSnap;
 
-  await saveStore(store);
+  // ── Atualiza cache local e UI imediatamente ──
+  _store = store;
   closeModal();
-  renderTabela();
-  const qtd = editableKeys.length;
-  await registrarLog('editou', 'Aptidões', `Avaliação de <strong>${store.employees[idx]?.name||empId}</strong> — ${qtd} competência${qtd>1?'s':''} avaliada${qtd>1?'s':''}`);
+  updateRow(parseInt(empId) || empId);
+
+  const qtd     = editableKeys.length;
+  const empName = store.employees[idx]?.name || String(empId);
   showToast(`✅ ${qtd} competência${qtd>1?'s':''} avaliada${qtd>1?'s':''} com sucesso!`);
+
+  // ── Grava no Firestore em background ──
+  saveStore(store).then(() => {
+    registrarLog('editou', 'Aptidões',
+      `Avaliação de <strong>${empName}</strong> — ${qtd} competência${qtd>1?'s':''} avaliada${qtd>1?'s':''}`
+    );
+  });
 }
 
 // ════════════════════════════════════════════════════════

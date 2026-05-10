@@ -446,13 +446,10 @@ html.light-theme {
   --page-bg:         #F0F4F8;        /* bg da página no tema claro */
 }
 
-/* Logo do sidebar no modo claro — mantém gradiente institucional */
-html.light-theme #app-sidebar .sb-logo-box {
-  background: linear-gradient(135deg, #D40138 0%, #1a5fa8 100%);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, .4);
-  border: 1px solid rgba(255,255,255,.2);
+/* Brand icon no modo claro */
+html.light-theme #app-sidebar .sb-brand-icon {
+  border-bottom-color: rgba(255,255,255,.15);
 }
-html.light-theme #app-sidebar .sb-logo small { color: rgba(255,255,255,.6); }
 
 /* Item ativo — efeito aba conectada no tema claro */
 html.light-theme #app-sidebar .sb-item.active {
@@ -485,14 +482,10 @@ html.light-theme #app-sidebar .sb-logout:hover {
   border-color: rgba(255,255,255,.5);
 }
 
-/* Textos do usuário e brand */
-html.light-theme #app-sidebar .sb-user-role { color: rgba(255,255,255,.6); }
-html.light-theme #app-sidebar .sb-brand     { color: rgba(255,255,255,.5); }
-html.light-theme #app-sidebar .sb-logo small { color: rgba(255,255,255,.55); }
+/* Brand */
+html.light-theme #app-sidebar .sb-brand { color: rgba(255,255,255,.5); }
 
 /* Bordas internas */
-html.light-theme #app-sidebar .sb-logo { border-bottom-color: rgba(255,255,255,.15); }
-html.light-theme #app-sidebar .sb-user { border-bottom-color: rgba(255,255,255,.15); }
 html.light-theme #app-sidebar .sb-footer { border-top-color: rgba(255,255,255,.15); }
 
 /* Scrollbar do sidebar */

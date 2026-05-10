@@ -5,6 +5,10 @@
 <script>!function(){try{var t=localStorage.getItem("rh_theme");if(t&&JSON.parse(t)==="light"){document.documentElement.classList.add("light-theme");document.documentElement.style.colorScheme="light";}}catch(e){}}();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard · RH Nagumo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.gstatic.com">
+<link rel="dns-prefetch" href="https://firestore.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
 <link rel="stylesheet" href="sidebar.css">
@@ -326,6 +330,7 @@ body.light-theme .apt-alert-btn-skip:hover { background:#EBF1F7; }
 
 <div class="toast-container" id="toast-container"></div>
 <nav class="sidebar" id="app-sidebar"></nav>
+<script>!function(){try{var c=localStorage.getItem('rh_sb_cache_v2');if(c)document.getElementById('app-sidebar').innerHTML=c;}catch(e){}}();</script>
 
 <!-- Modal Alerta Aptidões Pendentes -->
 <div id="apt-alert-overlay" class="apt-alert-overlay" style="display:none">
@@ -419,7 +424,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel()
 // ════════════════════════════════════════════════════════
 let currentUser    = null;
 let chartInstances = {};
-let _store         = null;  // cache do store — carregado uma vez por render
+let _store         = null;
+let _debounceTimer = null;
+let _metricsCache  = {};
 
 const APT_KEYS = ['qual','prio','know','comm','prod','assid','org','equip','cria','motv'];
 const MONTHS   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
@@ -515,9 +522,25 @@ function sair() {
 // Sobrescreve doLogout do shared.js para funcionar na raiz
 function doLogout() { sair(); }
 
+function debounce(fn, ms) {
+  return function(...args) {
+    clearTimeout(_debounceTimer);
+    _debounceTimer = setTimeout(() => fn.apply(this, args), ms);
+  };
+}
+
+function computeMetrics(emps) {
+  _metricsCache = {};
+  emps.forEach(e => {
+    const score  = calcScore(e);
+    const assid  = Math.round(calcAssid(e));
+    const aptAvg = calcAptMedia(e).toFixed(1);
+    _metricsCache[e.id] = { score, assid, aptAvg };
+  });
+}
+
 // ════════════════════════════════════════════════════════
 // SCORE HELPERS — leem do cache _store (síncrono)
-// _store é carregado uma vez no início de renderDashboard()
 // ════════════════════════════════════════════════════════
 function getWeights() {
   const cfg = _store?.config || {};
@@ -589,8 +612,8 @@ async function renderDashboard() {
   const prevTurno  = document.getElementById('dash-filter-turno')?.value  || '';
 
   document.getElementById('topbar-actions').innerHTML = `
-    ${filiais.length ? `<select class="dash-filter-select" id="dash-filter-filial" onchange="renderDashboard()">${optFilial}</select>` : ''}
-    ${turnos.length  ? `<select class="dash-filter-select" id="dash-filter-turno"  onchange="renderDashboard()">${optTurno}</select>`  : ''}
+    ${filiais.length ? `<select class="dash-filter-select" id="dash-filter-filial" onchange="debouncedRender()">${optFilial}</select>` : ''}
+    ${turnos.length  ? `<select class="dash-filter-select" id="dash-filter-turno"  onchange="debouncedRender()">${optTurno}</select>`  : ''}
     ${pPonto  ? `<a class="btn btn-cyan"    href="pages/ponto.html"      onclick="">🗓️ Ponto Diário</a>`        : ''}
     ${pApt    ? `<a class="btn btn-purple"  href="pages/aptidoes.html"   onclick="">🎯 Aptidões</a>`            : ''}
     ${pReport ? `<a class="btn btn-green"   href="pages/report.html"     onclick="">📄 Relatório</a>`            : ''}
@@ -610,10 +633,14 @@ async function renderDashboard() {
   if (filialFiltro) emps = emps.filter(e => e.filial === filialFiltro);
   if (turnoFiltro)  emps = emps.filter(e => e.turno  === turnoFiltro);
 
+  computeMetrics(emps);
+
   await renderKPIs(emps);
   renderCharts(emps);
   renderTop5(emps);
 }
+
+const debouncedRender = debounce(renderDashboard, 200);
 
 async function getPendentesCount() {
   const filialFiltro = document.getElementById('dash-filter-filial')?.value || '';
@@ -637,10 +664,10 @@ async function getPendentesCount() {
 async function renderKPIs(emps) {
   const total    = emps.length;
   const avgPerf  = total ? Math.round(emps.reduce((s,e)=>s+e.perf,0)/total) : 0;
-  const avgAssid = total ? Math.round(emps.reduce((s,e)=>s+calcAssid(e),0)/total) : 0;
+  const avgAssid = total ? Math.round(emps.reduce((s,e)=>s+(_metricsCache[e.id]?.assid||0),0)/total) : 0;
   const totalAbs = emps.reduce((s,e)=>s+(e.absences||[]).reduce((a,b)=>a+b,0),0);
-  const avgApt   = total ? (emps.reduce((s,e)=>s+calcAptMedia(e),0)/total).toFixed(1) : '0.0';
-  const promos   = emps.filter(e=>calcScore(e)>=85).length;
+  const avgApt   = total ? (emps.reduce((s,e)=>s+parseFloat(_metricsCache[e.id]?.aptAvg||0),0)/total).toFixed(1) : '0.0';
+  const promos   = emps.filter(e=>(_metricsCache[e.id]?.score||0)>=85).length;
   const hoje = new Date(); hoje.setHours(0,0,0,0);
   const afas = emps.filter(e => {
     if (e.afastado) {
@@ -737,7 +764,7 @@ function renderCharts(emps) {
   });
 
   const sc = { promo:0, ok:0, watch:0, risk:0 };
-  emps.forEach(e => sc[getStatus(calcScore(e)).tag]++);
+  emps.forEach(e => sc[getStatus(_metricsCache[e.id]?.score||0).tag]++);
   destroyChart('chart-status');
   chartInstances['chart-status'] = new Chart(document.getElementById('chart-status'), {
     type:'doughnut',
@@ -756,7 +783,7 @@ function renderCharts(emps) {
 
 // ── Top 5 ─────────────────────────────────────────────
 function renderTop5(emps) {
-  const sorted = [...emps].sort((a,b)=>calcScore(b)-calcScore(a)).slice(0,5);
+  const sorted = [...emps].sort((a,b)=> (_metricsCache[b.id]?.score||0) - (_metricsCache[a.id]?.score||0)).slice(0,5);
   const medals = ['🥇','🥈','🥉','4°','5°'];
   const cores  = ['#fbbf24','#94a3b8','#c2855a','#64748b','#64748b'];
   if (!sorted.length) {
@@ -765,11 +792,12 @@ function renderTop5(emps) {
     return;
   }
   document.getElementById('top5-list').innerHTML = sorted.map((e,i) => {
-    const score  = calcScore(e);
-    const st     = getStatus(score);
-    const assid  = Math.round(calcAssid(e));
-    const aptAvg = calcAptMedia(e).toFixed(1);
-    const ini    = e.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+    const c     = _metricsCache[e.id] || {};
+    const score = c.score || 0;
+    const st    = getStatus(score);
+    const assid = c.assid || 0;
+    const aptAvg = c.aptAvg || '0.0';
+    const ini   = e.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
     return `
     <div class="top5-item">
       <div class="top5-medal" style="color:${cores[i]}">${medals[i]}</div>

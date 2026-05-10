@@ -5,6 +5,10 @@
 <script>!function(){try{var t=localStorage.getItem("rh_theme");if(t&&JSON.parse(t)==="light"){document.documentElement.classList.add("light-theme");document.documentElement.style.colorScheme="light";}}catch(e){}}();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Configurações · RH Nagumo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.gstatic.com">
+<link rel="dns-prefetch" href="https://firestore.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../sidebar.css">
 <link rel="stylesheet" href="../light-theme.css">
@@ -347,6 +351,7 @@ input[readonly] { opacity:.6; cursor:not-allowed; background:var(--surface3); }
 
 <!-- ══ SIDEBAR (preenchida pelo shared.js) ══ -->
 <nav id="app-sidebar"></nav>
+<script>!function(){try{var c=localStorage.getItem('rh_sb_cache_v2');if(c)document.getElementById('app-sidebar').innerHTML=c;}catch(e){}}();</script>
 
 <!-- ══ MAIN ══ -->
 <main class="main">

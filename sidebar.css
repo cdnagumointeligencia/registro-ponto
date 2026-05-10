@@ -24,7 +24,7 @@
   top: 0; left: 0; bottom: 0;
   width: var(--sb-w);
   background: var(--sb-bg);
-  border-right: 1px solid rgba(79,142,247,.15);
+  border-right: none;
   display: flex;
   flex-direction: column;
   z-index: 100;
@@ -36,69 +36,28 @@
 /* Oculta o sidebar vazio enquanto o JS ainda não o populou */
 #app-sidebar:empty { opacity: 0; pointer-events: none; }
 
-/* ── Logo ── */
-#app-sidebar .sb-logo {
+/* ── Brand Icon (substitui logo + user) ── */
+#app-sidebar .sb-brand-icon {
   flex-shrink: 0;
-  padding: 16px 20px 12px;
+  padding: 12px 0;
   border-bottom: 1px solid var(--sb-border);
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  overflow: hidden; /* contém só o logo */
-}
-
-#app-sidebar .sb-logo-box {
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #4f8ef7;
-  border-radius: 14px;
-  padding: 6px 16px;
-  box-shadow: 0 2px 10px rgba(79,142,247,.4);
-}
-
-#app-sidebar .sb-logo-box span {
-  font-family: var(--sb-font-head);
-  font-size: 13px;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: -0.5px;
-  white-space: nowrap;
-}
-
-#app-sidebar .sb-logo small {
-  font-size: 9px;
-  color: #8a9ab0;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  text-align: center;
-  line-height: 1.4;
-}
-
-/* ── Usuário ── */
-#app-sidebar .sb-user {
-  padding: 10px 18px 6px;
-  border-bottom: 1px solid var(--sb-border);
-  flex-shrink: 0;
   overflow: hidden;
+  cursor: pointer;
 }
 
-#app-sidebar .sb-user-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 10px;
-  font-weight: 700;
-  margin-bottom: 2px;
+#app-sidebar .sb-brand-icon img {
+  width: 44px;
+  height: auto;
+  display: block;
+  transition: transform .15s ease;
+  border-radius: 6px;
 }
 
-#app-sidebar .sb-user-role {
-  font-size: 10px;
-  color: #8a9ab0;
-  padding-left: 2px;
+#app-sidebar .sb-brand-icon img:hover {
+  transform: scale(1.08);
 }
 
 /* ── Nav — scrollbar oculta, overflow para permitir pseudo-elementos ── */
@@ -237,17 +196,12 @@
 
   #app-sidebar .sb-label,
   #app-sidebar .sb-brand,
-  #app-sidebar .sb-logo-box span,
-  #app-sidebar .sb-logo small,
-  #app-sidebar .sb-user-role,
-  #app-sidebar .sb-user-badge span:last-child,
   #app-sidebar .sb-logout span:last-child { display: none; }
 
   #app-sidebar .sb-item { justify-content: center; padding: 11px 0; }
   #app-sidebar .sb-icon { font-size: 18px; width: auto; }
-  #app-sidebar .sb-logo { padding: 12px 0; }
-  #app-sidebar .sb-user { padding: 8px 0; text-align: center; }
-  #app-sidebar .sb-user-badge { padding: 4px 6px; }
+  #app-sidebar .sb-brand-icon { padding: 10px 0; }
+  #app-sidebar .sb-brand-icon img { width: 34px; }
   #app-sidebar .sb-logout { justify-content: center; padding: 8px 0; }
   #app-sidebar .sb-footer { padding: 8px 0; }
 
@@ -282,16 +236,11 @@ body.from-dashboard main { margin-left: 0 !important; }
 body.sb-collapsed #app-sidebar { width: 56px; }
 body.sb-collapsed #app-sidebar .sb-label,
 body.sb-collapsed #app-sidebar .sb-brand,
-body.sb-collapsed #app-sidebar .sb-logo-box span,
-body.sb-collapsed #app-sidebar .sb-logo small,
-body.sb-collapsed #app-sidebar .sb-user-role,
-body.sb-collapsed #app-sidebar .sb-user-badge span:last-child,
 body.sb-collapsed #app-sidebar .sb-logout span:last-child { display: none; }
 body.sb-collapsed #app-sidebar .sb-item    { justify-content: center; padding: 11px 0; }
 body.sb-collapsed #app-sidebar .sb-icon   { font-size: 18px; width: auto; }
-body.sb-collapsed #app-sidebar .sb-logo   { padding: 12px 0; }
-body.sb-collapsed #app-sidebar .sb-user   { padding: 8px 0; text-align: center; }
-body.sb-collapsed #app-sidebar .sb-user-badge { padding: 4px 6px; }
+body.sb-collapsed #app-sidebar .sb-brand-icon { padding: 10px 0; }
+body.sb-collapsed #app-sidebar .sb-brand-icon img { width: 34px; }
 body.sb-collapsed #app-sidebar .sb-logout { justify-content: center; padding: 8px 0; }
 body.sb-collapsed #app-sidebar .sb-footer { padding: 8px 0; }
 body.sb-collapsed .main { margin-left: 56px !important; }
@@ -304,13 +253,7 @@ body.sb-collapsed #app-sidebar .sb-item.active::after {
   display: none;
 }
 
-/* ══ TEMA CLARO — variáveis do efeito aba ══════════════ */
-html.light-theme {
-  --page-bg: #F0F4F8;
-  --sb-bg: #023665;
-  --sb-border: rgba(255,255,255,.15);
-}
-
+/* ══ TEMA CLARO — variáveis do efeito aba (definidas no light-theme.css) ══ */
 html.light-theme #app-sidebar .sb-item.active {
   color: #D40138;
   background: #F0F4F8;

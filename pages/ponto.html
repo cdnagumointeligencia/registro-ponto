@@ -5,6 +5,10 @@
 <script>!function(){try{var t=localStorage.getItem("rh_theme");if(t&&JSON.parse(t)==="light"){document.documentElement.classList.add("light-theme");document.documentElement.style.colorScheme="light";}}catch(e){}}();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ponto Diário · RH Nagumo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.gstatic.com">
+<link rel="dns-prefetch" href="https://firestore.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../sidebar.css">
 <link rel="stylesheet" href="../light-theme.css">
@@ -464,6 +468,7 @@ body.light-theme .reset-btn-cancel:hover { background:#EBF1F7; }
 
 <div class="toast-container" id="toast-container"></div>
 <nav id="app-sidebar"></nav>
+<script>!function(){try{var c=localStorage.getItem('rh_sb_cache_v2');if(c)document.getElementById('app-sidebar').innerHTML=c;}catch(e){}}();</script>
 
 <!-- Context menu -->
 <div class="ctx-menu" id="ctx-menu"></div>
@@ -560,11 +565,6 @@ body.light-theme .reset-btn-cancel:hover { background:#EBF1F7; }
       <button class="status-btn" style="background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.4)" onclick="lancamentoRapido('falta')">✕ Falta</button>
       <button class="status-btn" style="background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.35)"   onclick="lancamentoRapido('atestado')">🏥 Atestado</button>
       <button class="status-btn" style="background:rgba(34,211,238,.15);color:#22d3ee;border-color:rgba(34,211,238,.4)"   onclick="lancamentoRapido('folga')">🌙 Folga</button>
-      <span style="width:1px;background:var(--border);height:22px;flex-shrink:0"></span>
-      <span style="font-size:10px;color:var(--muted);white-space:nowrap">Automáticos:</span>
-      <span class="status-btn" style="background:rgba(251,191,36,.08);color:#fbbf2488;border-color:rgba(251,191,36,.2);cursor:default;opacity:.6" title="Configurado na ficha do funcionário">🎉 Feriado</span>
-      <span class="status-btn" style="background:rgba(251,146,60,.08);color:#fb923c88;border-color:rgba(251,146,60,.2);cursor:default;opacity:.6" title="Configurado na ficha do funcionário">🏖️ Férias</span>
-      <span class="status-btn" style="background:rgba(244,114,182,.08);color:#f472b688;border-color:rgba(244,114,182,.2);cursor:default;opacity:.6" title="Configurado na ficha do funcionário">🚫 Afastado</span>
     </div>
 
     <!-- Legenda -->
@@ -862,21 +862,20 @@ async function setPontoEmp(empId, diaMap) {
 }
 
 async function setStatus(empId, dia, status) {
-  // Carrega allPonto uma única vez — evita 3 leituras separadas (getPontoEmp + setPontoEmp interno)
-  const allPonto = await LS.get(PONTO_KEY, {});
+  // Usa cache local se disponível — evita leitura Firestore
+  const allPonto = _pontoCacheLoaded ? _pontoCache : await LS.get(PONTO_KEY, {});
+  if (!_pontoCacheLoaded) { _pontoCacheLoaded = true; _pontoCache = allPonto; }
+
   const key      = pontoKey(empId);
   const m        = allPonto[key] || {};
   const anterior = m[dia] || 'vazio';
 
-  // Sem mudança real — não salva nem loga
   if (anterior === status) return;
   if (status === 'vazio') delete m[dia];
   else m[dia] = status;
   allPonto[key] = m;
 
   await LS.set(PONTO_KEY, allPonto);
-
-  // Atualiza _pontoCache com dado fresco — syncAbsencesToStore e renderGrade usam sem nova leitura
   _pontoCache = allPonto;
 
   await syncAbsencesToStore(empId);
@@ -889,7 +888,7 @@ async function syncAbsencesToStore(empId) {
   if (idx < 0) return;
 
   const ano      = anoAtivo;
-  const allPonto = await LS.get(PONTO_KEY, {});
+  const allPonto = _pontoCacheLoaded ? _pontoCache : await LS.get(PONTO_KEY, {});
   const absences = Array.from({length:12}, (_, m) => {
     const key  = `${empId}_${ano}_${String(m+1).padStart(2,'0')}`;
     const dias = allPonto[key] || {};
@@ -906,6 +905,31 @@ async function syncAbsencesToStore(empId) {
 
   store.employees[idx].absences = absences;
   await saveStore(store);
+}
+
+// Sync de absences para múltiplos funcionários em uma única escrita ao Firestore
+async function syncAbsencesEmBatch(empIds, allPonto) {
+  const store = await getStore();
+  const ano   = anoAtivo;
+  let mudou   = false;
+  for (const empId of empIds) {
+    const idx = (store.employees||[]).findIndex(e=>String(e.id)===String(empId));
+    if (idx < 0) continue;
+    const absences = Array.from({length:12}, (_, m) => {
+      const key  = `${empId}_${ano}_${String(m+1).padStart(2,'0')}`;
+      const dias = allPonto[key] || {};
+      let faltas = 0;
+      Object.entries(dias).forEach(([diaStr, s]) => {
+        const dow = new Date(ano, m, parseInt(diaStr)).getDay();
+        if (dow === 0) return;
+        if (s === 'falta') faltas += 1;
+      });
+      return faltas;
+    });
+    store.employees[idx].absences = absences;
+    mudou = true;
+  }
+  if (mudou) await saveStore(store);
 }
 
 // ════════════════════════════════════════════════════════
@@ -954,8 +978,19 @@ function getNomeFeriado(dia, mes) {
 // 3. Dias fora de qualquer período → null (editável normalmente)
 // ════════════════════════════════════════════════════════
 
-// Cache do allPonto usado dentro do render — atualizado em renderGrade()
+// Cache do allPonto — evita leituras repetidas ao Firestore
 let _pontoCache = {};
+let _pontoCacheLoaded = false;
+
+// Elemento DOM da célula clicada — usado para atualização otimista
+let ctxDotEl = null;
+
+// Debounce do re-render completo após marcações rápidas
+let _renderTimer = null;
+function _scheduleRender() {
+  clearTimeout(_renderTimer);
+  _renderTimer = setTimeout(() => renderGrade(), 1200);
+}
 
 // Verifica se um dia deve ser bloqueado e qual o status a exibir
 // Usa TANTO as flags do cadastro (período ativo) QUANTO o histórico do rh_ponto
@@ -1111,13 +1146,18 @@ async function gravarHistoricoAfastamento(emps, allPonto) {
 async function renderGrade() {
   _store = await getStore();
 
-  // Pré-carrega todo o ponto e grava histórico de afastamentos/férias ativos
-  // antes de renderizar — garante que os dados estejam no rh_ponto
-  let _allPonto = await LS.get(PONTO_KEY, {});
+  // Usa cache local se disponível — evita leitura Firestore redundante
+  let _allPonto;
+  if (_pontoCacheLoaded) {
+    _allPonto = _pontoCache;
+  } else {
+    _allPonto = await LS.get(PONTO_KEY, {});
+    _pontoCacheLoaded = true;
+    _pontoCache = _allPonto;
+  }
+
   const empsParaHistorico = getEmpsDoDepto();
   _allPonto = await gravarHistoricoAfastamento(empsParaHistorico, _allPonto);
-
-  // Atualiza cache global usado por getStatusDiaBloqueado()
   _pontoCache = _allPonto;
 
   const emps    = empsParaHistorico;
@@ -1431,6 +1471,7 @@ function showCtxMenu(e, empId, dia, statusAtual) {
   e.preventDefault();
   e.stopPropagation();
   ctxEmpId = empId; ctxDia = dia; ctxAtual = statusAtual;
+  ctxDotEl = e.currentTarget || e.target;
 
   const menu   = document.getElementById('ctx-menu');
   const options = ['presente','falta','atestado','folga'];
@@ -1463,19 +1504,19 @@ function showCtxMenu(e, empId, dia, statusAtual) {
 
 async function setStatusCtx(status) {
   if (ctxEmpId === null) return;
-  const store    = await getStore();
-  const emp      = (store.employees||[]).find(e=>String(e.id)===String(ctxEmpId));
+  const store = await getStore();
+  const emp   = (store.employees||[]).find(e=>String(e.id)===String(ctxEmpId));
 
-  // Proteção extra: verifica se o dia está bloqueado (período ativo OU histórico)
-  // Recarrega _pontoCache caso esteja desatualizado
-  if (!Object.keys(_pontoCache).length) {
+  // Proteção: verifica bloqueio usando cache local
+  if (!_pontoCacheLoaded) {
     _pontoCache = await LS.get(PONTO_KEY, {});
+    _pontoCacheLoaded = true;
   }
   const bloqDia = getStatusDiaBloqueado(emp, anoAtivo, mesAtivo, ctxDia);
   if (bloqDia) {
     const periodoAtivo = (() => {
       if (bloqDia === 'afastado' && emp?.afastado) return true;
-    if (bloqDia === 'maternidade' && emp?.maternidade) return true;
+      if (bloqDia === 'maternidade' && emp?.maternidade) return true;
       if (bloqDia === 'ferias' && emp?.ferias) return true;
       return false;
     })();
@@ -1487,22 +1528,43 @@ async function setStatusCtx(status) {
     return;
   }
 
-  // Usa _pontoCache para checar anterior — sem leitura extra ao Firestore
   const anterior = (_pontoCache[pontoKey(ctxEmpId)] || {})[ctxDia] || 'vazio';
-
-  // Sem mudança — apenas fecha o menu
   if (anterior === status) { closeCtx(); return; }
 
   const sm = STATUS_META[status];
-  await setStatus(ctxEmpId, ctxDia, status); // aguarda write concluir; setStatus atualiza _pontoCache
-  await registrarLog('editou', 'Ponto', `<strong>${emp?.name||ctxEmpId}</strong> dia ${ctxDia} → ${sm?.emoji||''} ${sm?.label||status}`);
+
+  // ── Captura antes de closeCtx() zerar as variáveis ───────────────
+  const empId   = ctxEmpId;
+  const dia     = ctxDia;
+  const dotEl   = ctxDotEl;
+  const empName = emp?.name || String(empId);
+
+  // ── Atualização otimista: célula muda IMEDIATAMENTE ──────────────
+  if (dotEl) {
+    if (status === 'vazio') {
+      dotEl.className = 'status-dot vazio';
+      dotEl.removeAttribute('style');
+      dotEl.textContent = '';
+      dotEl.title = 'Clique para registrar';
+    } else if (sm) {
+      dotEl.className = `status-dot ${status}`;
+      dotEl.style.cssText = `background:${sm.bg};border-color:${sm.border};color:${sm.cor}`;
+      dotEl.textContent = sm.emoji;
+      dotEl.title = sm.label;
+    }
+  }
   closeCtx();
-  renderGrade();
+
+  // ── Grava no Firestore em background (não bloqueia UI) ───────────
+  setStatus(empId, dia, status).then(() => {
+    registrarLog('editou', 'Ponto', `<strong>${empName}</strong> dia ${dia} → ${sm?.emoji||''} ${sm?.label||status}`);
+    _scheduleRender();
+  });
 }
 
 function closeCtx() {
   document.getElementById('ctx-menu').classList.remove('open');
-  ctxEmpId = ctxDia = ctxAtual = null;
+  ctxEmpId = ctxDia = ctxAtual = null; ctxDotEl = null;
 }
 
 document.addEventListener('click', e=>{
@@ -1568,10 +1630,9 @@ async function lancamentoRapido(status) {
   const emps = getEmpsDoDepto();
   let marcados = 0;
 
-  // Faz um único get/set no localStorage para todos os funcionários
-  const allPonto = await LS.get(PONTO_KEY, {});
-  // Atualiza cache para que getStatusDiaBloqueado() leia dados corretos
-  _pontoCache = allPonto;
+  // Usa cache se disponível, senão busca no Firestore
+  const allPonto = _pontoCacheLoaded ? _pontoCache : await LS.get(PONTO_KEY, {});
+  if (!_pontoCacheLoaded) { _pontoCacheLoaded = true; _pontoCache = allPonto; }
   emps.forEach(emp => {
     // Bloqueia funcionários afastados ou em férias (verificação pelo status atual do cadastro)
     const { bloqueado: bloqGlobal } = isEmpBloqueado(emp);
@@ -1589,19 +1650,25 @@ async function lancamentoRapido(status) {
     marcados++;
   });
   await LS.set(PONTO_KEY, allPonto);
+  _pontoCache = allPonto;
 
-  // Sincroniza absences após salvar tudo
-  emps.forEach(emp => syncAbsencesToStore(emp.id));
+  const sm   = STATUS_META[status];
+  const dept = deptAtivo || 'todos';
 
-  const sm = STATUS_META[status];
-  const dept = document.getElementById('filter-dept')?.value || 'todos';
   if (marcados > 0) {
-    await registrarLog('editou', 'Ponto', `Lançamento rápido: <strong>${sm.emoji} ${sm.label}</strong> — dia ${dia} — ${marcados} func. (${dept})`);
     showToast(`✅ ${sm.emoji} ${sm.label} marcado para ${marcados} funcionário(s) no dia ${dia}.`);
+    // Sync de absences em batch (1 escrita para todos) + log em background
+    const empIds = emps.filter(emp => {
+      const { bloqueado } = isEmpBloqueado(emp);
+      return !bloqueado;
+    }).map(e => e.id);
+    syncAbsencesEmBatch(empIds, allPonto).then(() => {
+      registrarLog('editou', 'Ponto', `Lançamento rápido: <strong>${sm.emoji} ${sm.label}</strong> — dia ${dia} — ${marcados} func. (${dept})`);
+    });
+    renderGrade();
   } else {
     showToast(`ℹ️ Nenhum funcionário alterado.`, 'warn');
   }
-  renderGrade();
 }
 
 function atualizarGrade() {
