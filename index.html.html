@@ -436,6 +436,7 @@ const DEPT_COLORS = ['#4f8ef7','#34d399','#f472b6','#fb923c','#a78bfa','#22d3ee'
 // INIT
 // ════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', async () => {
+  await bootSync();
   await ensureAdmin();
 
   const id    = LS_LOCAL.get('rh_session');

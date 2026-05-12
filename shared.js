@@ -107,6 +107,17 @@ async function saveStore(store) {
   }
 }
 
+// ── bootSync: sincroniza dados entre localStorage e Firestore no boot ──
+var _bootSynced = false;
+async function bootSync() {
+  if (_bootSynced) return;
+  _bootSynced = true;
+  var keys = ['rh_ponto','rh_ocorrencias','rh_audit_log','rh_aptidoes','rh_quadro'];
+  for (var i = 0; i < keys.length; i++) {
+    try { await window.DB.sync(keys[i]); } catch(e) {}
+  }
+}
+
 async function ensureAdmin() {
   // ⚠️ CORREÇÃO CRÍTICA — leia o comentário completo:
   // Esta função é chamada em TODA navegação de página via requireSession().
@@ -155,6 +166,7 @@ function _redirectLogin() {
 
 async function requireSession() {
   try {
+    await bootSync();
     await ensureAdmin();
     const user = await getSession();
     if (!user) { _redirectLogin(); return null; }
