@@ -1,0 +1,581 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "douglas.nunes@nagumo.com.br": {
+      "setor": "Recebimento",
+      "id": "douglas.nunes@nagumo.com.br",
+      "perfil": {
+        "turno": "2o Turno",
+        "turnos": [
+          "2o Turno"
+        ],
+        "depts": [
+          "Recebimento",
+          "Sorter Jogada",
+          "Movimentacao",
+          "Separacao",
+          "Armazenagem",
+          "Expedicao",
+          "Sorter Rampas"
+        ],
+        "filial": "CD 2",
+        "funcao": "Encarregado De Logistica Pleno",
+        "filiais": [
+          "CD 2"
+        ]
+      },
+      "nivel": "encarregado",
+      "name": "Douglas Nunes Silva",
+      "pass": "melissa",
+      "avatar": null
+    }
+  },
+  "employees": [
+    {
+      "year": 2026,
+      "dept": "Sorter Jogada",
+      "matricula": "42211",
+      "historico_cargos": [
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "data": "2023-03-27",
+          "dept": "Sorter Jogada",
+          "tipo": "admissao",
+          "turno": "2o Turno"
+        },
+        {
+          "data": "2023-03-27",
+          "dept": "Sorter Jogada",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2023-03-27",
+          "dept": "Sorter Jogada",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 80,
+      "ferias": false,
+      "demitido": false,
+      "data_maternidade": null,
+      "owner_id": "douglas.nunes@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2023-03-27",
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Andiel Gomes Da Silva",
+      "id": 1780103619279,
+      "turno": "2o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "equip": 10,
+        "know": 9,
+        "org": 9,
+        "prod": 10,
+        "assid": 10,
+        "qual": 8,
+        "comm": 10,
+        "prio": 10,
+        "motv": 10,
+        "cria": 10
+      }
+    },
+    {
+      "competencies": {
+        "comm": 10,
+        "equip": 10,
+        "org": 10,
+        "know": 10,
+        "prod": 10,
+        "qual": 10,
+        "assid": 10,
+        "motv": 10,
+        "cria": 10,
+        "prio": 10
+      },
+      "role": "Lider De Logistica Pleno",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "name": "Wenderson Pereira Santos",
+      "turno": "2o Turno",
+      "id": 1780103866636,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "data_maternidade": null,
+      "owner_id": "douglas.nunes@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2021-10-28",
+      "matricula": "38757",
+      "dept": "Armazenagem",
+      "perf": 98,
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Lider De Logistica Pleno",
+          "data": "2021-10-28",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Armazenagem"
+        },
+        {
+          "data": "2021-10-28",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "cargo": "Lider De Logistica Pleno",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Lider De Logistica Pleno",
+          "data": "2021-10-28",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem"
+        }
+      ],
+      "motivo_demissao": "",
+      "year": 2026
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Lider De Logistica Pleno",
+      "competencies": {
+        "prio": 10,
+        "motv": 10,
+        "cria": 10,
+        "equip": 10,
+        "know": 10,
+        "org": 10,
+        "prod": 10,
+        "qual": 10,
+        "assid": 10,
+        "comm": 10
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Geraldo Oliveira De Souza",
+      "id": 1780103999612,
+      "turno": "2o Turno",
+      "data_ferias_inicio": null,
+      "data_admissao": "2020-11-18",
+      "owner_id": "douglas.nunes@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 100,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2020-11-18",
+          "filial": "CD 2",
+          "cargo": "Lider De Logistica Pleno"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Lider De Logistica Pleno",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Recebimento",
+          "data": "2020-11-18"
+        },
+        {
+          "cargo": "Lider De Logistica Pleno",
+          "filial": "CD 2",
+          "data": "2020-11-18",
+          "tipo": "admissao",
+          "dept": "Recebimento",
+          "turno": "2o Turno"
+        }
+      ],
+      "matricula": "36522",
+      "dept": "Recebimento"
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

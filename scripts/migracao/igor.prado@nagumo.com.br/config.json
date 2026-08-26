@@ -1,0 +1,1704 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "igor.prado@nagumo.com.br": {
+      "nivel": "lider",
+      "name": "Igor Lemes Do Prado",
+      "pass": "nagumo2026",
+      "id": "igor.prado@nagumo.com.br",
+      "perfil": {
+        "turno": "3o Turno",
+        "depts": [
+          "Sorter Rampas"
+        ],
+        "filial": "CD 2"
+      },
+      "setor": ""
+    }
+  },
+  "employees": [
+    {
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "3o Turno",
+      "id": 1778134909299,
+      "name": "Tamara Firmino Lillipuziano",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-04",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-04",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 50,
+      "dept": "Movimentacao",
+      "matricula": "59083",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prod": 6,
+        "qual": 7,
+        "assid": 9,
+        "equip": 7,
+        "org": 7,
+        "know": 7,
+        "comm": 7,
+        "prio": 6,
+        "cria": 6,
+        "motv": 9
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Milene Veloso Mota",
+      "id": 1778135197068,
+      "turno": "3o Turno",
+      "foto": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-05-04",
+      "demitido": false,
+      "ferias": false,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "afastado": false,
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao"
+        },
+        {
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "competencies_history": {
+        "2026-05": {
+          "cria": 6,
+          "motv": 9,
+          "prio": 6,
+          "comm": 7,
+          "prod": 6,
+          "assid": 9,
+          "qual": 7,
+          "equip": 7,
+          "know": 7,
+          "org": 7
+        }
+      },
+      "perf": 50,
+      "dept": "Movimentacao",
+      "matricula": "59147"
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1778138099530,
+      "turno": "3o Turno",
+      "name": "Ana Paula Dos Santos Inocencio",
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "competencies": {
+        "comm": 7,
+        "org": 7,
+        "know": 8,
+        "equip": 6,
+        "assid": 9,
+        "qual": 7,
+        "prod": 6,
+        "motv": 5,
+        "cria": 6,
+        "prio": 7
+      },
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2024-04-10",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "dept": "Sorter Rampas",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2024-04-10"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2024-04-10",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "3o Turno"
+        }
+      ],
+      "perf": 70,
+      "dept": "Sorter Rampas",
+      "matricula": "46013",
+      "data_admissao": "2024-04-10",
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "afastado": false
+    },
+    {
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Breno Silva De Almeida",
+      "id": 1778138373177,
+      "turno": "3o Turno",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prio": 6,
+        "cria": 5,
+        "motv": 5,
+        "prod": 8,
+        "qual": 6,
+        "assid": 3,
+        "equip": 5,
+        "org": 5,
+        "know": 9,
+        "comm": 6
+      },
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "historico_cargos": [
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2",
+          "dept": "Sorter Rampas",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2024-06-03"
+        },
+        {
+          "data": "2024-06-03",
+          "dept": "Sorter Rampas",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "data": "2024-06-03",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Sorter Rampas",
+      "matricula": "46717",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2024-06-03",
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_demissao": null
+    },
+    {
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1778138466699,
+      "turno": "3o Turno",
+      "name": "Fernanda Conceicao Da Silva",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "prio": 7,
+        "cria": 6,
+        "motv": 8,
+        "prod": 8,
+        "assid": 8,
+        "qual": 8,
+        "equip": 8,
+        "know": 7,
+        "org": 9,
+        "comm": 7
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "matricula": "57356",
+      "dept": "Sorter Rampas",
+      "perf": 80,
+      "competencies_history": {
+        "2026-05": {
+          "assid": 9
+        },
+        "2026-06": {
+          "assid": 8,
+          "comm": 7
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-07",
+          "dept": "Sorter Jogada",
+          "turno": "3o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Sorter Jogada",
+          "turno": "3o Turno",
+          "data": "2026-05-07",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "Sorter Jogada",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-07",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "year": 2026,
+      "afastado": false,
+      "data_demissao": null,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": "2026-02-16",
+      "data_ferias_inicio": null
+    },
+    {
+      "data_ferias_inicio": null,
+      "data_admissao": "2024-07-22",
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [],
+      "matricula": "47282",
+      "dept": "Sorter Rampas",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "comm": 7,
+        "prod": 7,
+        "assid": 5,
+        "qual": 7,
+        "equip": 7,
+        "know": 8,
+        "org": 5,
+        "cria": 5,
+        "motv": 7,
+        "prio": 6
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Emerson Luis Da Silva Rocha",
+      "turno": "3o Turno",
+      "id": 1778138586391
+    },
+    {
+      "year": 2026,
+      "dept": "Sorter Rampas",
+      "matricula": "47459",
+      "historico_cargos": [
+        {
+          "data": "2024-08-05",
+          "dept": "Sorter Rampas",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "dept": "Sorter Rampas",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2024-08-05"
+        },
+        {
+          "data": "2024-08-05",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 10,
+      "demitido": false,
+      "ferias": false,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2024-08-05",
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Richely Araujo Da Silva",
+      "id": 1778295014787,
+      "turno": "3o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 1,
+        "qual": 5,
+        "assid": 1,
+        "prod": 5,
+        "know": 7,
+        "org": 1,
+        "equip": 5,
+        "comm": 5
+      }
+    },
+    {
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 6,
+        "cria": 7,
+        "motv": 9,
+        "prod": 8,
+        "qual": 7,
+        "assid": 8,
+        "equip": 7,
+        "org": 7,
+        "know": 6,
+        "comm": 9
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Simone Souza Barbosa",
+      "id": 1778295127310,
+      "turno": "3o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false,
+      "year": 2026,
+      "dept": "Sorter Rampas",
+      "matricula": "57340",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-09",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Sorter Rampas"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Sorter Rampas",
+          "data": "2026-05-09",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-09",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "3o Turno"
+        }
+      ],
+      "perf": 70
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prio": 6,
+        "motv": 8,
+        "cria": 7,
+        "equip": 7,
+        "know": 8,
+        "org": 8,
+        "prod": 8,
+        "assid": 6,
+        "qual": 7,
+        "comm": 6
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "3o Turno",
+      "id": 1778295483470,
+      "name": "Sidelcino Perreira Da Silva Junior",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_maternidade": null,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-09",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Sorter Rampas"
+        },
+        {
+          "data": "2026-05-09",
+          "turno": "3o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "3o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "data": "2026-05-09"
+        }
+      ],
+      "matricula": "54481",
+      "dept": "Sorter Rampas"
+    },
+    {
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_maternidade": null,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "dept": "Sorter Rampas",
+      "matricula": "53394",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-09",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Sorter Rampas"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-09",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "3o Turno"
+        },
+        {
+          "data": "2026-05-09",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Sorter Rampas",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026,
+      "competencies": {
+        "equip": 5,
+        "know": 7,
+        "org": 6,
+        "prod": 7,
+        "qual": 5,
+        "assid": 5,
+        "comm": 7,
+        "prio": 6,
+        "motv": 8,
+        "cria": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "name": "Kemilly Jesus Santos",
+      "id": 1778295583935,
+      "turno": "3o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "cria": 4,
+        "motv": 8,
+        "prio": 7,
+        "comm": 6,
+        "prod": 8,
+        "assid": 5,
+        "qual": 7,
+        "equip": 8,
+        "org": 7,
+        "know": 6
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Marina Ribeiro Da Cruz",
+      "id": 1778295667115,
+      "turno": "3o Turno",
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-09",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-09",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "3o Turno"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-09",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "3o Turno"
+        }
+      ],
+      "matricula": "54480",
+      "dept": "Sorter Rampas"
+    },
+    {
+      "id": 1778296129518,
+      "turno": "3o Turno",
+      "name": "Ana Fernanda Baracho De Souza",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "prio": 7,
+        "cria": 5,
+        "motv": 8,
+        "qual": 7,
+        "assid": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 6,
+        "equip": 5,
+        "comm": 7
+      },
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "dept": "Sorter Rampas",
+      "matricula": "50994",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "turno": "3o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "data": "2026-05-09"
+        },
+        {
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "data": "2026-05-09",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "turno": "3o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "data": "2026-05-09",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026,
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_admissao": null,
+      "data_ferias_inicio": null
+    },
+    {
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1779850862073,
+      "turno": "3o Turno",
+      "name": "Rosalia Pereira Silva",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "org": 6,
+        "know": 5,
+        "equip": 7,
+        "qual": 8,
+        "assid": 7,
+        "prod": 7,
+        "comm": 5,
+        "prio": 6,
+        "motv": 8,
+        "cria": 6
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "historico_cargos": [
+        {
+          "data": "2026-05-27",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-27",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "Sorter Rampas",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-27",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Sorter Rampas",
+      "matricula": "54811",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_maternidade": null
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Washington Avelino Da Silva Souza",
+      "turno": "3o Turno",
+      "id": 1779851169412,
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5
+      },
+      "year": 2026,
+      "dept": "Sorter Rampas",
+      "matricula": "57708",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "3o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "data": "2026-03-02"
+        },
+        {
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-03-02",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-03-02",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "3o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-03-02",
+      "afastado": false
+    },
+    {
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "3o Turno",
+      "id": 1780120293087,
+      "name": "Paulo Sergio Do Prado Do Nascimento",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "turno": "3o Turno",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "data": "2025-10-16",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2025-10-16",
+          "turno": "3o Turno",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2025-10-16",
+          "turno": "3o Turno",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "matricula": "54922",
+      "dept": "Movimentacao",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2025-10-16",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "demitido": false,
+      "ferias": false
+    },
+    {
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-02-23",
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-02-23",
+          "tipo": "admissao",
+          "dept": "Movimentacao",
+          "turno": "3o Turno"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Movimentacao",
+          "data": "2026-02-23"
+        },
+        {
+          "data": "2026-02-23",
+          "tipo": "admissao",
+          "dept": "Movimentacao",
+          "turno": "3o Turno",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "matricula": "57501",
+      "dept": "Movimentacao",
+      "year": 2026,
+      "competencies": {
+        "prod": 6,
+        "assid": 8,
+        "qual": 7,
+        "equip": 8,
+        "org": 8,
+        "know": 6,
+        "comm": 7,
+        "prio": 8,
+        "cria": 5,
+        "motv": 8
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Lucineide Araujo Santos",
+      "id": 1780120773374,
+      "turno": "3o Turno",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null
+    },
+    {
+      "competencies": {
+        "motv": 7,
+        "cria": 6,
+        "prio": 6,
+        "comm": 7,
+        "know": 6,
+        "org": 7,
+        "equip": 8,
+        "qual": 6,
+        "assid": 8,
+        "prod": 7
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "name": "Renifher Silva Nunes",
+      "turno": "3o Turno",
+      "id": 1780121115179,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-07-03",
+      "matricula": "53123",
+      "dept": "Movimentacao",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2025-07-03",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Movimentacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": ""
+        },
+        {
+          "data": "2025-07-03",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Movimentacao",
+          "filial": "",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2025-07-03",
+          "dept": "Movimentacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": ""
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-02-23",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "3o Turno",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "matricula": "57589",
+      "dept": "Sorter Rampas",
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-02-23",
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "igor.prado@nagumo.com.br",
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Joice Pereira Cavalcanti",
+      "turno": "3o Turno",
+      "id": 1781061325932,
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "cria": 6,
+        "motv": 8,
+        "prio": 8,
+        "comm": 9,
+        "qual": 7,
+        "assid": 8,
+        "prod": 8,
+        "know": 8,
+        "org": 9,
+        "equip": 8
+      }
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

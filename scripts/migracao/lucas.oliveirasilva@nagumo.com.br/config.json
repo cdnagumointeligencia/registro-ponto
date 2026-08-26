@@ -1,0 +1,861 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "lucas.oliveirasilva@nagumo.com.br": {
+      "id": "lucas.oliveirasilva@nagumo.com.br",
+      "perfil": {
+        "filiais": [
+          "CD 1"
+        ],
+        "funcao": "",
+        "turno": "Administrativo",
+        "turnos": [
+          "Administrativo"
+        ],
+        "depts": [
+          "PCO",
+          "SAC"
+        ],
+        "filial": "CD 1"
+      },
+      "name": "Lucas Oliveira Silva Moscarelli",
+      "foto": null,
+      "nivel": "lider",
+      "pass": "nagumo2026",
+      "setor": ""
+    }
+  },
+  "employees": [
+    {
+      "afastado": false,
+      "data_admissao": "2025-07-03",
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "lucas.oliveirasilva@nagumo.com.br",
+      "maternidade": false,
+      "competencies_history": {
+        "2026-06": {
+          "prio": 8,
+          "motv": 8,
+          "cria": 7,
+          "equip": 9,
+          "know": 7,
+          "org": 8,
+          "prod": 8,
+          "qual": 8,
+          "assid": 10,
+          "comm": 8
+        },
+        "2026-05": {
+          "prio": 6,
+          "motv": 8,
+          "cria": 7,
+          "equip": 9,
+          "know": 7,
+          "org": 8,
+          "prod": 8,
+          "assid": 5,
+          "qual": 8,
+          "comm": 8
+        }
+      },
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar Administrativo",
+          "data": "2025-07-03",
+          "dept": "PCO",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        },
+        {
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 1",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "data": "2025-07-03"
+        },
+        {
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 1",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "turno": "1o Turno",
+          "data": "2025-07-03"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 78,
+      "dept": "PCO",
+      "matricula": "53106",
+      "year": 2026,
+      "competencies": {
+        "assid": 10,
+        "qual": 8,
+        "prod": 8,
+        "org": 8,
+        "know": 7,
+        "equip": 9,
+        "comm": 8,
+        "prio": 8,
+        "cria": 7,
+        "motv": 8
+      },
+      "data_maternidade_fim": null,
+      "role": "Auxiliar Administrativo",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "turno": "1o Turno",
+      "id": 1778591005322,
+      "name": "Paula Roberta Chuma De Araujo",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null
+    },
+    {
+      "year": 2026,
+      "matricula": "52645",
+      "dept": "PCO",
+      "perf": 91,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "data": "2025-07-02",
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 1"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "PCO",
+          "turno": "1o Turno",
+          "data": "2025-07-02",
+          "filial": "CD 1",
+          "cargo": "Auxiliar Administrativo"
+        },
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "data": "2025-07-02",
+          "filial": "CD 1",
+          "cargo": "Auxiliar Administrativo"
+        }
+      ],
+      "competencies_history": {
+        "2026-05": {
+          "prio": 9,
+          "motv": 10,
+          "cria": 8,
+          "know": 9,
+          "org": 9,
+          "equip": 10,
+          "qual": 9,
+          "assid": 8,
+          "prod": 9,
+          "comm": 10
+        },
+        "2026-06": {
+          "cria": 9,
+          "motv": 10,
+          "prio": 10,
+          "comm": 10,
+          "qual": 10,
+          "assid": 8,
+          "prod": 9,
+          "know": 9,
+          "org": 10,
+          "equip": 10
+        }
+      },
+      "owner_id": "lucas.oliveirasilva@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "ownerId": "lucas.oliveirasilva@nagumo.com.br",
+      "data_admissao": "2025-07-02",
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Gabriela Estefane Doll Leandro",
+      "id": 1778591339073,
+      "turno": "1o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "role": "Auxiliar Administrativo",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "motv": 10,
+        "cria": 9,
+        "prio": 10,
+        "comm": 10,
+        "org": 10,
+        "know": 9,
+        "equip": 10,
+        "qual": 10,
+        "assid": 8,
+        "prod": 9
+      }
+    },
+    {
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "1o Turno",
+      "id": 1778591435612,
+      "name": "Luan Patrique Silva Oliveira",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prio": 9,
+        "cria": 10,
+        "motv": 9,
+        "prod": 9,
+        "qual": 9,
+        "assid": 10,
+        "equip": 9,
+        "know": 8,
+        "org": 9,
+        "comm": 10
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "perf": 75,
+      "competencies_history": {
+        "2026-06": {
+          "equip": 9,
+          "org": 9,
+          "know": 8,
+          "prod": 9,
+          "assid": 10,
+          "qual": 9,
+          "comm": 10,
+          "prio": 9,
+          "motv": 9,
+          "cria": 10
+        },
+        "2026-05": {
+          "equip": 8,
+          "know": 8,
+          "org": 8,
+          "prod": 8,
+          "assid": 7,
+          "qual": 8,
+          "comm": 8,
+          "prio": 8,
+          "motv": 9,
+          "cria": 8
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-03-02",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "data": "2026-03-02",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "data": "2026-03-02",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Separacao"
+        }
+      ],
+      "matricula": "57645",
+      "dept": "Separacao",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2026-03-02",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "owner_id": "lucas.oliveirasilva@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "ferias": false,
+      "demitido": false
+    },
+    {
+      "perf": 75,
+      "competencies_history": {
+        "2026-05": {
+          "motv": 7,
+          "cria": 5,
+          "prio": 7,
+          "comm": 8,
+          "know": 7,
+          "org": 7,
+          "equip": 7,
+          "assid": 5,
+          "qual": 7,
+          "prod": 7
+        },
+        "2026-06": {
+          "prio": 4,
+          "motv": 4,
+          "cria": 5,
+          "know": 5,
+          "org": 5,
+          "equip": 6,
+          "qual": 4,
+          "assid": 4,
+          "prod": 4,
+          "comm": 7
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar Administrativo",
+          "data": "2025-06-18",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "PCO"
+        },
+        {
+          "data": "2025-06-18",
+          "dept": "PCO",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "filial": "CD 1",
+          "cargo": "Auxiliar Administrativo"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar Administrativo",
+          "data": "2025-06-18",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "PCO"
+        }
+      ],
+      "matricula": "52853",
+      "dept": "PCO",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2025-06-18",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "owner_id": "lucas.oliveirasilva@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "ferias": false,
+      "demitido": false,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "2o Turno",
+      "id": 1778591875996,
+      "name": "Amanda Goncalves Lima Santos",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prio": 4,
+        "cria": 5,
+        "motv": 4,
+        "prod": 4,
+        "qual": 4,
+        "assid": 4,
+        "equip": 6,
+        "know": 5,
+        "org": 5,
+        "comm": 7
+      },
+      "data_maternidade_fim": null,
+      "role": "Auxiliar Administrativo"
+    },
+    {
+      "role": "Auxiliar Administrativo",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 9,
+        "assid": 8,
+        "qual": 10,
+        "prod": 10,
+        "org": 9,
+        "know": 10,
+        "equip": 10,
+        "cria": 10,
+        "motv": 10,
+        "prio": 9
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Lucas Adonias De Souza",
+      "id": 1778669190657,
+      "turno": "2o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "owner_id": "lucas.oliveirasilva@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-07-01",
+      "afastado": false,
+      "year": 2026,
+      "matricula": "53054",
+      "dept": "PCO",
+      "perf": 86,
+      "historico_cargos": [
+        {
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 1",
+          "turno": "2o Turno",
+          "dept": "PCO",
+          "tipo": "admissao",
+          "data": "2025-07-01"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar Administrativo",
+          "dept": "PCO",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2025-07-01"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "PCO",
+          "turno": "2o Turno",
+          "data": "2025-07-01",
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 1"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "assid": 7,
+          "qual": 9,
+          "prod": 9,
+          "know": 8,
+          "org": 9,
+          "equip": 10,
+          "comm": 9,
+          "prio": 9,
+          "cria": 9,
+          "motv": 9
+        },
+        "2026-06": {
+          "comm": 9,
+          "prod": 10,
+          "assid": 8,
+          "qual": 10,
+          "equip": 10,
+          "org": 9,
+          "know": 10,
+          "cria": 10,
+          "motv": 10,
+          "prio": 9
+        }
+      }
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

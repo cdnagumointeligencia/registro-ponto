@@ -1,0 +1,2969 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "gabriel.sakai@nagumo.com.br": {
+      "setor": "",
+      "id": "gabriel.sakai@nagumo.com.br",
+      "perfil": {
+        "turno": "3o Turno",
+        "depts": [
+          "Movimentacao"
+        ],
+        "filial": "CD 2"
+      },
+      "pass": "nagumo2026",
+      "nivel": "lider",
+      "name": "Gabriel Alves Sakai"
+    }
+  },
+  "employees": [
+    {
+      "year": 2026,
+      "matricula": "57568",
+      "dept": "Separacao",
+      "perf": 100,
+      "competencies_history": {
+        "2026-05": {
+          "cria": 5,
+          "prio": 5,
+          "comm": 5,
+          "prod": 6,
+          "assid": 7,
+          "qual": 8,
+          "equip": 6,
+          "know": 6,
+          "org": 6
+        }
+      },
+      "historico_cargos": [
+        {
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-02-23",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-02-23"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-02-23"
+        }
+      ],
+      "motivo_demissao": "",
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "ferias": false,
+      "demitido": false,
+      "data_admissao": "2026-02-23",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "id": 1778132364337,
+      "turno": "3o Turno",
+      "name": "Yara Cristina Bezerra Da Silva",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 5,
+        "qual": 8,
+        "assid": 7,
+        "prod": 6,
+        "org": 6,
+        "know": 6,
+        "equip": 6,
+        "cria": 5,
+        "motv": 6,
+        "prio": 5
+      }
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Wendell Pereira Dos Santos",
+      "id": 1778132448005,
+      "turno": "3o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "cria": 8,
+        "motv": 10,
+        "prio": 9,
+        "comm": 7,
+        "prod": 8,
+        "qual": 8,
+        "assid": 7,
+        "equip": 8,
+        "org": 7,
+        "know": 9
+      },
+      "year": 2026,
+      "dept": "Separacao",
+      "matricula": "54702",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-07"
+        },
+        {
+          "data": "2026-05-07",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "know": 9,
+          "org": 7,
+          "equip": 8,
+          "assid": 7,
+          "qual": 8,
+          "prod": 8,
+          "comm": 7,
+          "prio": 9,
+          "cria": 8
+        }
+      },
+      "perf": 100,
+      "demitido": false,
+      "ferias": false,
+      "maternidade": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-10-01",
+      "afastado": false
+    },
+    {
+      "perf": 80,
+      "historico_cargos": [
+        {
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-07",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-05-07",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-07",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 8,
+          "prod": 6,
+          "assid": 6,
+          "qual": 5,
+          "equip": 7,
+          "know": 7,
+          "org": 6,
+          "cria": 6,
+          "prio": 7
+        }
+      },
+      "matricula": "54683",
+      "dept": "Separacao",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-10-01",
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Renata De Oliveira Santos",
+      "id": 1778132610724,
+      "turno": "3o Turno",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "qual": 5,
+        "assid": 6,
+        "prod": 6,
+        "org": 6,
+        "know": 7,
+        "equip": 7,
+        "comm": 8,
+        "prio": 7,
+        "cria": 6,
+        "motv": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito"
+    },
+    {
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "cria": 4,
+        "motv": 7,
+        "prio": 7,
+        "comm": 10,
+        "qual": 7,
+        "assid": 5,
+        "prod": 9,
+        "know": 6,
+        "org": 5,
+        "equip": 8
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Paulo Victor De Lima Silva",
+      "id": 1778132890587,
+      "turno": "3o Turno",
+      "foto": "data:image/jpeg;base64,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",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "demitido": false,
+      "ferias": false,
+      "maternidade": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-10-09",
+      "afastado": false,
+      "year": 2026,
+      "dept": "Separacao",
+      "matricula": "54810",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-07",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-07"
+        },
+        {
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-07",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 10,
+          "know": 6,
+          "org": 5,
+          "equip": 8,
+          "assid": 5,
+          "qual": 7,
+          "prod": 9,
+          "motv": 7,
+          "cria": 4,
+          "prio": 7
+        }
+      },
+      "perf": 55
+    },
+    {
+      "dept": "Separacao",
+      "matricula": "54647",
+      "competencies_history": {
+        "2026-05": {
+          "cria": 6,
+          "motv": 7,
+          "prio": 7,
+          "comm": 7,
+          "qual": 7,
+          "assid": 6,
+          "prod": 8,
+          "org": 5,
+          "know": 8,
+          "equip": 6
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-07",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-07"
+        }
+      ],
+      "perf": 90,
+      "year": 2026,
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "maternidade": false,
+      "data_admissao": "2025-10-01",
+      "data_ferias_inicio": null,
+      "turno": "3o Turno",
+      "id": 1778133056808,
+      "name": "Maria Luiza Da Silva Goncalves",
+      "foto": "data:image/jpeg;base64,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",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "prio": 7,
+        "cria": 6,
+        "motv": 7,
+        "prod": 8,
+        "qual": 7,
+        "assid": 6,
+        "equip": 6,
+        "org": 5,
+        "know": 8,
+        "comm": 7
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null
+    },
+    {
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 10,
+        "prod": 9,
+        "assid": 9,
+        "qual": 9,
+        "equip": 10,
+        "know": 7,
+        "org": 9,
+        "cria": 6,
+        "motv": 9,
+        "prio": 10
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Jeovana Batista Santos",
+      "id": 1778133127876,
+      "turno": "3o Turno",
+      "foto": "data:image/jpeg;base64,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",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "ferias": false,
+      "demitido": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-10-10",
+      "afastado": false,
+      "year": 2026,
+      "dept": "Separacao",
+      "matricula": "54869",
+      "historico_cargos": [
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-05-07",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-05-07"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "prod": 9,
+          "qual": 9,
+          "assid": 9,
+          "equip": 10,
+          "org": 9,
+          "know": 7,
+          "comm": 10,
+          "prio": 10,
+          "cria": 6,
+          "motv": 9
+        }
+      },
+      "perf": 100
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "comm": 9,
+        "equip": 7,
+        "know": 8,
+        "org": 7,
+        "prod": 10,
+        "assid": 8,
+        "qual": 8,
+        "motv": 9,
+        "cria": 6,
+        "prio": 9
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Camila Batista Alves",
+      "id": 1778133321205,
+      "turno": "3o Turno",
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-02-23",
+      "maternidade": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-02-23",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-02-23",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-02-23",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 9,
+          "equip": 7,
+          "org": 7,
+          "know": 8,
+          "prod": 10,
+          "assid": 8,
+          "qual": 8,
+          "motv": 9,
+          "cria": 6,
+          "prio": 9
+        }
+      },
+      "matricula": "57596",
+      "dept": "Separacao"
+    },
+    {
+      "year": 2026,
+      "historico_cargos": [
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-05-07",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-07",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-07"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "prod": 8,
+          "qual": 9,
+          "assid": 9,
+          "equip": 6,
+          "know": 7,
+          "org": 8,
+          "comm": 4,
+          "prio": 8,
+          "cria": 6,
+          "motv": 8
+        }
+      },
+      "perf": 80,
+      "dept": "Separacao",
+      "matricula": "54807",
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-10-09",
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Genivalda Arcanjo Silva",
+      "id": 1778133397511,
+      "turno": "3o Turno",
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prio": 8,
+        "motv": 8,
+        "cria": 6,
+        "equip": 6,
+        "org": 8,
+        "know": 7,
+        "prod": 8,
+        "qual": 9,
+        "assid": 9,
+        "comm": 4
+      }
+    },
+    {
+      "year": 2026,
+      "historico_cargos": [
+        {
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-07",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-07",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "know": 6,
+          "org": 7,
+          "equip": 6,
+          "assid": 7,
+          "qual": 7,
+          "prod": 9,
+          "comm": 4,
+          "prio": 6,
+          "motv": 8,
+          "cria": 6
+        }
+      },
+      "perf": 85,
+      "dept": "Separacao",
+      "matricula": "54805",
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-10-09",
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Ana Paula Pereira Da Silva",
+      "id": 1778133554453,
+      "turno": "3o Turno",
+      "foto": "data:image/jpeg;base64,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",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "know": 6,
+        "org": 7,
+        "equip": 6,
+        "qual": 7,
+        "assid": 7,
+        "prod": 9,
+        "comm": 4,
+        "prio": 6,
+        "motv": 8,
+        "cria": 6
+      }
+    },
+    {
+      "perf": 95,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-03-09",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno"
+        },
+        {
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-03-09",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-03-09",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "competencies_history": {
+        "2026-05": {
+          "comm": 6,
+          "org": 6,
+          "know": 5,
+          "equip": 6,
+          "qual": 6,
+          "assid": 7,
+          "prod": 6,
+          "motv": 8,
+          "cria": 6,
+          "prio": 5
+        }
+      },
+      "matricula": "57772",
+      "dept": "Separacao",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-03-09",
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Aline Ester Da Silva",
+      "turno": "3o Turno",
+      "id": 1778133637657,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 6,
+        "motv": 8,
+        "qual": 6,
+        "assid": 7,
+        "prod": 6,
+        "know": 5,
+        "org": 6,
+        "equip": 6,
+        "comm": 6
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito"
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "motv": 6,
+        "cria": 4,
+        "prio": 5,
+        "comm": 4,
+        "know": 4,
+        "org": 5,
+        "equip": 6,
+        "assid": 6,
+        "qual": 5,
+        "prod": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "3o Turno",
+      "id": 1778133945003,
+      "name": "Jessica Dos Santos Rodrigues",
+      "data_admissao": "2026-03-16",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 80,
+      "competencies_history": {
+        "2026-05": {
+          "cria": 4,
+          "motv": 6,
+          "prio": 5,
+          "comm": 4,
+          "prod": 5,
+          "qual": 5,
+          "assid": 6,
+          "equip": 6,
+          "org": 5,
+          "know": 4
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-03-16",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-03-16",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "data": "2026-03-16"
+        }
+      ],
+      "matricula": "57718",
+      "dept": "Separacao"
+    },
+    {
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Miria Rosa",
+      "turno": "3o Turno",
+      "id": 1778134308642,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "comm": 7,
+        "org": 6,
+        "know": 6,
+        "equip": 7,
+        "assid": 8,
+        "qual": 6,
+        "prod": 8,
+        "motv": 9,
+        "cria": 9,
+        "prio": 6
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "perf": 60,
+      "historico_cargos": [
+        {
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-03-27",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "data": "2026-03-27"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-03-27"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "motv": 9,
+          "cria": 9,
+          "prio": 6,
+          "comm": 7,
+          "equip": 7,
+          "know": 6,
+          "org": 6,
+          "prod": 8,
+          "qual": 6,
+          "assid": 8
+        }
+      },
+      "matricula": "58930",
+      "dept": "Separacao",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-04-27",
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false
+    },
+    {
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "data_admissao": "2026-04-27",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "dept": "Separacao",
+      "matricula": "58928",
+      "competencies_history": {
+        "2026-05": {
+          "equip": 6,
+          "org": 6,
+          "know": 4,
+          "prod": 6,
+          "qual": 6,
+          "assid": 7,
+          "comm": 4,
+          "prio": 6,
+          "motv": 7,
+          "cria": 4
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-07",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-07",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "perf": 60,
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "cria": 4,
+        "motv": 7,
+        "prio": 6,
+        "comm": 4,
+        "prod": 6,
+        "assid": 7,
+        "qual": 6,
+        "equip": 6,
+        "org": 6,
+        "know": 4
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "id": 1778134334276,
+      "turno": "3o Turno",
+      "name": "Lucicleide Pereira Silva",
+      "foto": "data:image/jpeg;base64,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",
+      "filial": "CD 2",
+      "data_ferias_fim": null
+    },
+    {
+      "afastado": false,
+      "data_admissao": "2026-04-20",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "demitido": false,
+      "ferias": false,
+      "perf": 75,
+      "competencies_history": {
+        "2026-05": {
+          "prod": 7,
+          "assid": 9,
+          "qual": 6,
+          "equip": 7,
+          "know": 6,
+          "org": 7,
+          "comm": 8,
+          "prio": 8,
+          "cria": 7,
+          "motv": 6
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-04-20",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-04-20",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-04-20"
+        }
+      ],
+      "matricula": "58643",
+      "dept": "Separacao",
+      "year": 2026,
+      "competencies": {
+        "prio": 8,
+        "motv": 6,
+        "cria": 7,
+        "equip": 7,
+        "org": 7,
+        "know": 6,
+        "prod": 7,
+        "qual": 6,
+        "assid": 9,
+        "comm": 8
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": "data:image/jpeg;base64,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",
+      "turno": "3o Turno",
+      "id": 1778134522845,
+      "name": "Alessandra Marques Dos Santos",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null
+    },
+    {
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Alessandra Daniel Ferreira Marciano",
+      "id": 1778134592418,
+      "turno": "3o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "equip": 2,
+        "know": 2,
+        "org": 2,
+        "prod": 5,
+        "assid": 4,
+        "qual": 6,
+        "comm": 3,
+        "prio": 2,
+        "motv": 3,
+        "cria": 4
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "matricula": "54799",
+      "dept": "Separacao",
+      "perf": 20,
+      "historico_cargos": [
+        {
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-07"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "data": "2026-05-07"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 3,
+          "assid": 4,
+          "qual": 6,
+          "prod": 5,
+          "know": 2,
+          "org": 2,
+          "equip": 2,
+          "cria": 4,
+          "motv": 3,
+          "prio": 2
+        }
+      },
+      "year": 2026,
+      "afastado": false,
+      "maternidade": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-10-09"
+    },
+    {
+      "turno": "3o Turno",
+      "id": 1778134959475,
+      "name": "Sueli Aparecida Do Prado Pinheiros",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "comm": 5,
+        "know": 6,
+        "org": 7,
+        "equip": 7,
+        "assid": 7,
+        "qual": 6,
+        "prod": 6,
+        "motv": 5,
+        "cria": 6,
+        "prio": 6
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "dept": "Separacao",
+      "matricula": "59192",
+      "competencies_history": {
+        "2026-05": {
+          "cria": 6,
+          "equip": 7,
+          "prio": 6,
+          "org": 7,
+          "know": 6,
+          "prod": 6,
+          "qual": 6,
+          "assid": 7
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-04",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 50,
+      "year": 2026,
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "comm": 7,
+        "assid": 6,
+        "qual": 4,
+        "prod": 6,
+        "org": 6,
+        "know": 6,
+        "equip": 6,
+        "cria": 6,
+        "motv": 5,
+        "prio": 4
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Rebeka Melissa Palma Silva",
+      "turno": "3o Turno",
+      "id": 1778135001051,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-05-04",
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 50,
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-04"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "data": "2026-05-04",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "prio": 4,
+          "cria": 6,
+          "prod": 6,
+          "assid": 6,
+          "qual": 4,
+          "equip": 6,
+          "know": 6,
+          "org": 6,
+          "comm": 7
+        }
+      },
+      "matricula": "59190",
+      "dept": "Separacao"
+    },
+    {
+      "competencies_history": {
+        "2026-05": {
+          "prio": 6,
+          "cria": 7,
+          "motv": 6,
+          "prod": 4,
+          "qual": 6,
+          "assid": 6,
+          "equip": 6,
+          "know": 4,
+          "org": 6,
+          "comm": 4
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-04"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "data": "2026-05-04",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 50,
+      "dept": "Separacao",
+      "matricula": "59203",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "3o Turno",
+      "id": 1778135023058,
+      "name": "Priscila Aparecida De Souza",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "cria": 7,
+        "motv": 6,
+        "prio": 6,
+        "comm": 4,
+        "prod": 4,
+        "assid": 6,
+        "qual": 6,
+        "equip": 6,
+        "know": 4,
+        "org": 6
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito"
+    },
+    {
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-04"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "data": "2026-05-04"
+        },
+        {
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "prio": 4,
+          "cria": 4,
+          "motv": 6,
+          "prod": 6,
+          "assid": 7,
+          "qual": 6,
+          "equip": 6,
+          "know": 6,
+          "org": 6,
+          "comm": 7
+        }
+      },
+      "perf": 50,
+      "dept": "Separacao",
+      "matricula": "59206",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-05-04",
+      "ferias": false,
+      "demitido": false,
+      "data_maternidade": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Nicolly Viana De Araujo",
+      "id": 1778135057557,
+      "turno": "3o Turno",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "cria": 4,
+        "motv": 6,
+        "prio": 4,
+        "comm": 7,
+        "prod": 6,
+        "qual": 6,
+        "assid": 7,
+        "equip": 6,
+        "org": 6,
+        "know": 6
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito"
+    },
+    {
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1778135281088,
+      "turno": "3o Turno",
+      "name": "Erica Batista De Souza",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "cria": 6,
+        "motv": 6,
+        "prio": 6,
+        "comm": 4,
+        "prod": 6,
+        "assid": 7,
+        "qual": 6,
+        "equip": 4,
+        "know": 6,
+        "org": 6
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "perf": 50,
+      "competencies_history": {
+        "2026-05": {
+          "equip": 4,
+          "org": 6,
+          "know": 6,
+          "prod": 6,
+          "qual": 6,
+          "assid": 7,
+          "comm": 4,
+          "prio": 6,
+          "motv": 6,
+          "cria": 6
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-04",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "matricula": "59181",
+      "dept": "Separacao",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false
+    },
+    {
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "maternidade": false,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "dept": "Separacao",
+      "matricula": "59202",
+      "competencies_history": {
+        "2026-05": {
+          "motv": 7,
+          "cria": 7,
+          "prio": 8,
+          "comm": 6,
+          "equip": 7,
+          "org": 7,
+          "know": 8,
+          "prod": 8,
+          "qual": 8,
+          "assid": 8
+        }
+      },
+      "historico_cargos": [
+        {
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-04",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao"
+        },
+        {
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 50,
+      "year": 2026,
+      "competencies": {
+        "assid": 8,
+        "qual": 8,
+        "prod": 8,
+        "org": 7,
+        "know": 8,
+        "equip": 7,
+        "comm": 6,
+        "prio": 8,
+        "cria": 7,
+        "motv": 7
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "id": 1778135312831,
+      "turno": "3o Turno",
+      "name": "Daiane Cristina Silva Souza",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "perf": 80,
+      "competencies_history": {
+        "2026-05": {
+          "prio": 8,
+          "motv": 9,
+          "cria": 5,
+          "org": 7,
+          "know": 7,
+          "equip": 7,
+          "assid": 8,
+          "qual": 8,
+          "prod": 5,
+          "comm": 4
+        }
+      },
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-05-07",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-07",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "54809",
+      "dept": "Separacao",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2025-10-09",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "ferias": false,
+      "demitido": false,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "3o Turno",
+      "id": 1778135508493,
+      "name": "Kailane Siqueira Franca",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "equip": 7,
+        "org": 7,
+        "know": 7,
+        "prod": 5,
+        "assid": 8,
+        "qual": 8,
+        "comm": 4,
+        "prio": 8,
+        "motv": 9,
+        "cria": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito"
+    },
+    {
+      "dept": "Separacao",
+      "matricula": "59128",
+      "competencies_history": {
+        "2026-05": {
+          "qual": 6,
+          "assid": 8,
+          "prod": 7,
+          "org": 6,
+          "know": 6,
+          "equip": 6,
+          "comm": 6,
+          "prio": 6,
+          "cria": 6,
+          "motv": 9
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-04",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-04"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-04",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao"
+        }
+      ],
+      "perf": 50,
+      "year": 2026,
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "turno": "3o Turno",
+      "id": 1778135878224,
+      "name": "Carliana Da Silva",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "prio": 6,
+        "cria": 6,
+        "motv": 9,
+        "assid": 8,
+        "qual": 6,
+        "prod": 7,
+        "org": 6,
+        "know": 6,
+        "equip": 6,
+        "comm": 6
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "3o Turno",
+      "id": 1778216303198,
+      "name": "Estefany Santos Bezerra De Menezes",
+      "foto": "data:image/jpeg;base64,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",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "cria": 6,
+        "motv": 6,
+        "prio": 4,
+        "comm": 6,
+        "assid": 1,
+        "qual": 3,
+        "prod": 3,
+        "org": 4,
+        "know": 4,
+        "equip": 3
+      },
+      "year": 2026,
+      "competencies_history": {
+        "2026-05": {
+          "comm": 6,
+          "equip": 3,
+          "know": 4,
+          "org": 4,
+          "prod": 3,
+          "assid": 1,
+          "qual": 3,
+          "motv": 6,
+          "cria": 6,
+          "prio": 4
+        }
+      },
+      "historico_cargos": [
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-05-08",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-08",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno"
+        },
+        {
+          "data": "2026-05-08",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 40,
+      "dept": "Separacao",
+      "matricula": "50934",
+      "data_admissao": "2025-02-24",
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "afastado": false
+    },
+    {
+      "competencies": {
+        "equip": 3,
+        "know": 3,
+        "org": 2,
+        "prod": 2,
+        "assid": 0,
+        "qual": 2,
+        "comm": 3,
+        "prio": 3,
+        "motv": 0,
+        "cria": 2
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "3o Turno",
+      "id": 1778216351606,
+      "name": "Vitoria Vieira Santos",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_admissao": "2024-12-01",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "demitido": false,
+      "ferias": false,
+      "perf": 40,
+      "competencies_history": {
+        "2026-05": {
+          "comm": 3,
+          "qual": 2,
+          "assid": 0,
+          "prod": 2,
+          "org": 2,
+          "know": 3,
+          "equip": 3,
+          "cria": 2,
+          "motv": 0,
+          "prio": 3
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-08",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-08",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-08"
+        }
+      ],
+      "matricula": "49716",
+      "dept": "Separacao",
+      "year": 2026
+    },
+    {
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "dept": "Separacao",
+      "matricula": "59204",
+      "competencies_history": {
+        "2026-05": {
+          "qual": 6,
+          "assid": 6,
+          "prod": 4,
+          "org": 4,
+          "know": 4,
+          "equip": 4,
+          "comm": 4,
+          "prio": 4,
+          "cria": 4,
+          "motv": 4
+        }
+      },
+      "historico_cargos": [
+        {
+          "data": "2026-05-08",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-08"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "data": "2026-05-08"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 50,
+      "year": 2026,
+      "competencies": {
+        "cria": 4,
+        "motv": 4,
+        "prio": 4,
+        "comm": 4,
+        "prod": 4,
+        "qual": 6,
+        "assid": 6,
+        "equip": 4,
+        "know": 4,
+        "org": 4
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "turno": "3o Turno",
+      "id": 1778216561244,
+      "name": "Poliana Da Silva Santos",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "competencies": {
+        "motv": 9,
+        "cria": 7,
+        "prio": 6,
+        "comm": 6,
+        "know": 6,
+        "org": 6,
+        "equip": 7,
+        "qual": 6,
+        "assid": 7,
+        "prod": 7
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "name": "Bernardete Camisa Santana Bandeira",
+      "id": 1778558517925,
+      "turno": "3o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-05-12",
+      "dept": "Separacao",
+      "matricula": "59390",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-12",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-05-12",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-12",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 6,
+          "equip": 7,
+          "know": 6,
+          "org": 6,
+          "prod": 7,
+          "qual": 6,
+          "assid": 7,
+          "motv": 9,
+          "cria": 7,
+          "prio": 6
+        }
+      },
+      "perf": 50,
+      "year": 2026
+    },
+    {
+      "afastado": false,
+      "data_admissao": "2026-05-18",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "ferias": false,
+      "demitido": false,
+      "perf": 50,
+      "competencies_history": {
+        "2026-05": {
+          "comm": 6,
+          "know": 6,
+          "org": 6,
+          "equip": 6,
+          "qual": 6,
+          "assid": 6,
+          "prod": 6,
+          "motv": 6,
+          "cria": 6,
+          "prio": 6
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-18"
+        },
+        {
+          "data": "2026-05-18",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-18",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao"
+        }
+      ],
+      "matricula": "59484",
+      "dept": "Separacao",
+      "year": 2026,
+      "competencies": {
+        "motv": 6,
+        "cria": 6,
+        "prio": 6,
+        "comm": 6,
+        "know": 6,
+        "org": 6,
+        "equip": 6,
+        "qual": 6,
+        "assid": 6,
+        "prod": 6
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "3o Turno",
+      "id": 1780032432205,
+      "name": "Yasmin Da Silva Coelho",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null
+    },
+    {
+      "dept": "Separacao",
+      "matricula": "46453",
+      "competencies_history": {
+        "2026-05": {
+          "equip": 6,
+          "know": 4,
+          "org": 10,
+          "prod": 4,
+          "qual": 6,
+          "assid": 3,
+          "comm": 4,
+          "prio": 4,
+          "motv": 4,
+          "cria": 4
+        }
+      },
+      "historico_cargos": [
+        {
+          "data": "2026-05-29",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-29",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-29"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 50,
+      "year": 2026,
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "gabriel.sakai@nagumo.com.br",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "id": 1780032459633,
+      "turno": "3o Turno",
+      "name": "Daniel Correia Santos",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "prio": 4,
+        "cria": 4,
+        "motv": 4,
+        "prod": 4,
+        "qual": 6,
+        "assid": 3,
+        "equip": 6,
+        "know": 4,
+        "org": 10,
+        "comm": 4
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

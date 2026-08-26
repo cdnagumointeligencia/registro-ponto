@@ -1,0 +1,1128 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "geilton.silva@nagumo.com.br": {
+      "setor": "",
+      "id": "geilton.silva@nagumo.com.br",
+      "perfil": {
+        "filiais": [
+          "CD 1"
+        ],
+        "funcao": "",
+        "turno": "2o Turno",
+        "turnos": [
+          "2o Turno"
+        ],
+        "depts": [
+          "FLV"
+        ],
+        "filial": "CD 1"
+      },
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Geilton De Moura Silva",
+      "pass": "537360",
+      "nivel": "lider"
+    }
+  },
+  "employees": [
+    {
+      "competencies": {
+        "comm": 10,
+        "prod": 10,
+        "assid": 5,
+        "qual": 10,
+        "equip": 10,
+        "org": 6,
+        "know": 8,
+        "cria": 6,
+        "motv": 8,
+        "prio": 7
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1778336248008,
+      "turno": "2o Turno",
+      "name": "Alex Velozo De Oliveira",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "geilton.silva@nagumo.com.br",
+      "ferias": false,
+      "demitido": false,
+      "perf": 70,
+      "competencies_history": {
+        "2026-05": {
+          "know": 8,
+          "org": 6,
+          "equip": 10,
+          "qual": 10,
+          "prod": 10,
+          "comm": 10,
+          "prio": 7,
+          "motv": 8,
+          "cria": 6
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "FLV",
+          "data": "2026-05-09"
+        },
+        {
+          "data": "2026-05-09",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "FLV",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "dept": "FLV",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-05-09",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        }
+      ],
+      "matricula": "54077",
+      "dept": "FLV",
+      "year": 2026
+    },
+    {
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 8,
+        "comm": 8,
+        "qual": 8,
+        "assid": 5,
+        "prod": 8,
+        "org": 5,
+        "know": 7,
+        "equip": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "turno": "2o Turno",
+      "id": 1778336283347,
+      "name": "Andres Da Silva Andrade",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "geilton.silva@nagumo.com.br",
+      "maternidade": false,
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "matricula": "52836",
+      "dept": "FLV",
+      "perf": 70,
+      "competencies_history": {
+        "2026-05": {
+          "comm": 8,
+          "prod": 8,
+          "qual": 8,
+          "prio": 8,
+          "know": 7
+        }
+      },
+      "historico_cargos": [
+        {
+          "data": "2026-05-09",
+          "dept": "FLV",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Conferente",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "FLV",
+          "data": "2026-05-09"
+        },
+        {
+          "data": "2026-05-09",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "FLV",
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Conferente"
+        }
+      ],
+      "motivo_demissao": ""
+    },
+    {
+      "matricula": "34833",
+      "dept": "FLV",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "cargo": "Conferente",
+          "filial": "CD 1",
+          "dept": "FLV",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-05-09"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Conferente",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "FLV",
+          "data": "2026-05-09"
+        },
+        {
+          "data": "2026-05-09",
+          "dept": "FLV",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "cargo": "Conferente",
+          "filial": "CD 1"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "prio": 8,
+          "equip": 10,
+          "org": 7,
+          "know": 8,
+          "prod": 10,
+          "qual": 10,
+          "cria": 7,
+          "comm": 10
+        }
+      },
+      "year": 2026,
+      "afastado": false,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "geilton.silva@nagumo.com.br",
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "foto": null,
+      "name": "Douglas Rodrigues Da Silva",
+      "turno": "2o Turno",
+      "id": 1778336376039,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "motv": 5,
+        "cria": 7,
+        "prio": 8,
+        "comm": 10,
+        "equip": 10,
+        "know": 8,
+        "org": 7,
+        "prod": 10,
+        "qual": 10,
+        "assid": 5
+      },
+      "role": "Conferente",
+      "data_maternidade_fim": null
+    },
+    {
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 7,
+        "prod": 8,
+        "assid": 5,
+        "qual": 8,
+        "equip": 9,
+        "know": 8,
+        "org": 6,
+        "cria": 6,
+        "motv": 7,
+        "prio": 8
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Fabio Rafael De Oliveira Pires",
+      "turno": "2o Turno",
+      "id": 1778336411539,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "maternidade": false,
+      "owner_id": "geilton.silva@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false,
+      "year": 2026,
+      "matricula": "57570",
+      "dept": "FLV",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "FLV",
+          "turno": "2o Turno",
+          "data": "2026-05-09",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "FLV",
+          "data": "2026-05-09"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "data": "2026-05-09",
+          "dept": "FLV",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 7,
+          "prod": 8,
+          "qual": 8,
+          "equip": 9,
+          "know": 8,
+          "org": 6,
+          "cria": 6,
+          "motv": 7,
+          "prio": 8
+        }
+      }
+    },
+    {
+      "competencies": {
+        "prio": 10,
+        "motv": 9,
+        "cria": 6,
+        "equip": 10,
+        "know": 7,
+        "org": 7,
+        "prod": 10,
+        "qual": 8,
+        "assid": 5,
+        "comm": 7
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1778336446517,
+      "turno": "2o Turno",
+      "name": "Francisco Coelho Da Silva",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "geilton.silva@nagumo.com.br",
+      "demitido": false,
+      "ferias": false,
+      "perf": 70,
+      "competencies_history": {
+        "2026-05": {
+          "qual": 8,
+          "prod": 10,
+          "know": 7,
+          "org": 7,
+          "equip": 10,
+          "comm": 7,
+          "prio": 10,
+          "cria": 6,
+          "motv": 9
+        }
+      },
+      "historico_cargos": [
+        {
+          "data": "2026-05-09",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "FLV",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "turno": "2o Turno",
+          "dept": "FLV",
+          "tipo": "admissao",
+          "data": "2026-05-09",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "dept": "FLV",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-05-09"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "57644",
+      "dept": "FLV",
+      "year": 2026
+    },
+    {
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "geilton.silva@nagumo.com.br",
+      "afastado": false,
+      "year": 2026,
+      "competencies_history": {
+        "2026-05": {
+          "prod": 8,
+          "qual": 8,
+          "prio": 8,
+          "org": 7,
+          "know": 7,
+          "comm": 7,
+          "cria": 6
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "data": "2026-05-09",
+          "dept": "FLV",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "FLV",
+          "data": "2026-05-09"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "dept": "FLV",
+          "turno": "2o Turno",
+          "data": "2026-05-09"
+        }
+      ],
+      "perf": 70,
+      "dept": "FLV",
+      "matricula": "55313",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prio": 8,
+        "cria": 6,
+        "motv": 5,
+        "prod": 8,
+        "assid": 5,
+        "qual": 8,
+        "equip": 5,
+        "org": 7,
+        "know": 7,
+        "comm": 7
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "id": 1778336475043,
+      "turno": "2o Turno",
+      "name": "Flavia Costa Dos Santos",
+      "foto": null
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "2o Turno",
+      "id": 1778336556581,
+      "name": "Gustavo Estavao Da Silva",
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "competencies": {
+        "prio": 8,
+        "motv": 9,
+        "cria": 6,
+        "know": 8,
+        "org": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 10,
+        "prod": 8,
+        "comm": 5
+      },
+      "year": 2026,
+      "perf": 70,
+      "competencies_history": {
+        "2026-05": {
+          "know": 8,
+          "prio": 8,
+          "qual": 10,
+          "prod": 8,
+          "motv": 9,
+          "cria": 6
+        }
+      },
+      "historico_cargos": [
+        {
+          "filial": "",
+          "cargo": "Auxiliar De Conferente",
+          "dept": "FLV",
+          "turno": "",
+          "tipo": "admissao",
+          "data": "2026-05-09"
+        },
+        {
+          "data": "2026-05-09",
+          "tipo": "admissao",
+          "turno": "",
+          "dept": "FLV",
+          "filial": "",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "data": "2026-05-09",
+          "tipo": "admissao",
+          "turno": "",
+          "dept": "FLV",
+          "cargo": "Auxiliar De Conferente",
+          "filial": ""
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "46192",
+      "dept": "FLV",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "owner_id": "geilton.silva@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false
+    },
+    {
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "geilton.silva@nagumo.com.br",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "dept": "FLV",
+      "matricula": "53156",
+      "competencies_history": {
+        "2026-05": {
+          "prod": 8,
+          "qual": 4,
+          "prio": 7,
+          "know": 7,
+          "org": 4,
+          "comm": 4
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-09",
+          "dept": "FLV",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-09",
+          "dept": "FLV",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "dept": "FLV",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-09",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "perf": 70,
+      "year": 2026,
+      "competencies": {
+        "org": 4,
+        "know": 7,
+        "equip": 5,
+        "qual": 4,
+        "assid": 5,
+        "prod": 8,
+        "comm": 4,
+        "prio": 7,
+        "motv": 5,
+        "cria": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "id": 1778336696010,
+      "turno": "2o Turno",
+      "name": "Antony Josafa Pontes Neri",
+      "foto": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "dept": "FLV",
+      "matricula": "59483",
+      "historico_cargos": [
+        {
+          "dept": "FLV",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-05-18",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-18",
+          "tipo": "admissao",
+          "dept": "FLV",
+          "turno": "2o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "turno": "2o Turno",
+          "dept": "FLV",
+          "tipo": "admissao",
+          "data": "2026-05-18",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026,
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "geilton.silva@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_admissao": "2026-05-18",
+      "data_ferias_inicio": null,
+      "id": 1779213309481,
+      "turno": "2o Turno",
+      "name": "Luan Oliveira Barbosa",
+      "foto": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

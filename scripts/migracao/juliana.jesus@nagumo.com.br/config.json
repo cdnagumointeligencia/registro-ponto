@@ -1,0 +1,1632 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "juliana.jesus@nagumo.com.br": {
+      "setor": "",
+      "id": "juliana.jesus@nagumo.com.br",
+      "perfil": {
+        "funcao": "Lider de Logistica Pleno",
+        "filiais": [
+          "CD 2"
+        ],
+        "depts": [
+          "Separacao"
+        ],
+        "filial": "CD 2",
+        "turnos": [
+          "1o Turno"
+        ],
+        "turno": "1o Turno"
+      },
+      "name": "Juliana Ferreira De Jesus",
+      "nivel": "lider",
+      "pass": "nagumo2026",
+      "foto": null
+    }
+  },
+  "employees": [
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Asheley Gabrielly Miguel De Oliveira",
+      "turno": "1o Turno",
+      "id": 1778613956373,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-12",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        },
+        {
+          "data": "2026-05-12",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-12",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "matricula": "52835",
+      "dept": "Separacao"
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Rodrigo De Oliveira Silva",
+      "id": 1778614148305,
+      "turno": "1o Turno",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "comm": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      },
+      "year": 2026,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "data": "2026-05-12",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-12"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-12"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "48886",
+      "dept": "Separacao",
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false
+    },
+    {
+      "demitido": true,
+      "ferias": false,
+      "data_demissao": "2026-06-06",
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "data_admissao": "2026-03-09",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "dept": "Separacao",
+      "matricula": "57906",
+      "motivo_demissao": "Final da experiencia",
+      "historico_cargos": [
+        {
+          "data": "2026-03-09",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-03-09"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-03-09",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao"
+        },
+        {
+          "tipo": "desligamento",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "data": "2026-06-06",
+          "motivo": "Final da experiencia",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "perf": 70,
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "id": 1778614449442,
+      "turno": "1o Turno",
+      "name": "Patricia Pereira Dos Santos",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null
+    },
+    {
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1778614634428,
+      "turno": "1o Turno",
+      "name": "Brenda Da Silva Martins",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "comm": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "matricula": "57877",
+      "dept": "Separacao",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "data": "2026-03-09",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-03-09"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-03-09"
+        },
+        {
+          "data": "2026-06-06",
+          "tipo": "desligamento",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "motivo": "Final da experiencia"
+        }
+      ],
+      "motivo_demissao": "Final da experiencia",
+      "year": 2026,
+      "afastado": false,
+      "data_demissao": "2026-06-06",
+      "data_maternidade": null,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "maternidade": false,
+      "demitido": true,
+      "ferias": false,
+      "data_admissao": "2026-03-09",
+      "data_ferias_inicio": null
+    },
+    {
+      "data_maternidade": null,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false,
+      "year": 2026,
+      "matricula": "55314",
+      "dept": "Separacao",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-12",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-12",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-12",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Thiago Ramos Reis",
+      "turno": "1o Turno",
+      "id": 1778614837321,
+      "data_ferias_fim": null,
+      "filial": "CD 2"
+    },
+    {
+      "dept": "Separacao",
+      "matricula": "56671",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Movimentacao",
+          "data": "2026-05-12",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "1o Turno",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "data": "2026-05-12"
+        },
+        {
+          "data": "2026-05-12",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026,
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "id": 1778615161487,
+      "turno": "1o Turno",
+      "name": "Ingrid Lorrany Damasceno Jesus",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null
+    },
+    {
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1778615232637,
+      "turno": "1o Turno",
+      "name": "Juliana Alves De Melo",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "comm": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "1o Turno",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "data": "2026-05-12"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-12",
+          "turno": "1o Turno",
+          "dept": "Movimentacao",
+          "tipo": "admissao"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Movimentacao",
+          "data": "2026-05-12",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "matricula": "56403",
+      "dept": "Separacao",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "demitido": false,
+      "ferias": false
+    },
+    {
+      "competencies": {
+        "comm": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Ana Beatriz De Souza",
+      "id": 1778615454759,
+      "turno": "1o Turno",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "ferias": false,
+      "demitido": false,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-12",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-12"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-12",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Separacao",
+      "matricula": "56435",
+      "year": 2026
+    },
+    {
+      "afastado": false,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "matricula": "49066",
+      "dept": "Separacao",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-12"
+        },
+        {
+          "data": "2026-05-12",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-12",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "year": 2026,
+      "competencies": {
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "name": "Maria Elizabete Santana",
+      "turno": "1o Turno",
+      "id": 1778615546271,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "1o Turno",
+      "id": 1778615696881,
+      "name": "Nataniele Francisca Da Silva",
+      "foto": "data:image/jpeg;base64,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",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "comm": 5
+      },
+      "year": 2026,
+      "dept": "Separacao",
+      "matricula": "59191",
+      "historico_cargos": [
+        {
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-04",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-04"
+        },
+        {
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-26",
+          "tipo": "desligamento",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "motivo": "Colaboradora pediu demissao",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "Colaboradora pediu demissao",
+      "perf": 70,
+      "ferias": false,
+      "demitido": true,
+      "data_demissao": "2026-05-26",
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "afastado": false
+    },
+    {
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "turno": "1o Turno",
+      "id": 1778615768031,
+      "name": "Jaciara De Jesus Santos",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_demissao": null,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "matricula": "59195",
+      "dept": "Separacao",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "data": "2026-05-04",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-04"
+        }
+      ]
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Fabiana Silva Brito",
+      "turno": "1o Turno",
+      "id": 1778615835402,
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "comm": 5
+      },
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "1o Turno"
+        },
+        {
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-04"
+        }
+      ],
+      "matricula": "59199",
+      "dept": "Separacao",
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-05-04",
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false
+    },
+    {
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "id": 1778615961808,
+      "turno": "1o Turno",
+      "name": "Liege Regina Dourado Antonio",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "maternidade": false,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "dept": "Separacao",
+      "matricula": "59086",
+      "historico_cargos": [
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-04",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70
+    },
+    {
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "maternidade": false,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-04",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-04",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "59131",
+      "dept": "Separacao",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1778616260547,
+      "turno": "1o Turno",
+      "name": "Luiza Dos Santos Moraes Neta"
+    },
+    {
+      "turno": "1o Turno",
+      "id": 1781178297522,
+      "name": "Miriam Moreira Pomilho",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "dept": "Separacao",
+      "matricula": "59293",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-06-11",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026,
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "data_admissao": null,
+      "data_ferias_inicio": null
+    },
+    {
+      "id": 1781178402691,
+      "turno": "1o Turno",
+      "name": "Rafaela Medeiros De Souza",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "comm": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "dept": "Separacao",
+      "matricula": "59389",
+      "historico_cargos": [
+        {
+          "data": "2026-06-11",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026,
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "data_admissao": null,
+      "data_ferias_inicio": null
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Maria Evanice Araujo Dos Reis",
+      "turno": "1o Turno",
+      "id": 1781178440978,
+      "foto": null,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "demitido": false,
+      "ferias": false,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "juliana.jesus@nagumo.com.br",
+      "data_demissao": null,
+      "afastado": false,
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "data": "2026-06-11",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 70,
+      "dept": "Separacao",
+      "matricula": ""
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

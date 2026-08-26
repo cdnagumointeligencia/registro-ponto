@@ -1,0 +1,721 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "ruan.sousa@nagumo.com.br": {
+      "perfil": {
+        "depts": [
+          "Manutencao"
+        ],
+        "filial": "CD 2",
+        "turno": "Administrativo"
+      },
+      "id": "ruan.sousa@nagumo.com.br",
+      "name": "Ruan De Andrade Pereira De Sousa",
+      "nivel": "lider",
+      "pass": "ruan4522",
+      "setor": ""
+    }
+  },
+  "employees": [
+    {
+      "foto": null,
+      "id": 1777978687377,
+      "turno": "Administrativo",
+      "name": "Jhony Santana Dos Santos",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "cria": 7,
+        "motv": 8,
+        "prio": 9,
+        "comm": 7,
+        "prod": 9,
+        "qual": 8,
+        "assid": 9,
+        "equip": 9,
+        "org": 9,
+        "know": 8
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "matricula": "57505",
+      "dept": "Manutencao",
+      "perf": 80,
+      "historico_cargos": [
+        {
+          "data": "2026-02-23",
+          "tipo": "admissao",
+          "dept": "Manutencao",
+          "turno": "Administrativo",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-02-23",
+          "turno": "Administrativo",
+          "tipo": "admissao",
+          "dept": "Manutencao"
+        },
+        {
+          "dept": "Manutencao",
+          "turno": "Administrativo",
+          "tipo": "admissao",
+          "data": "2026-02-23",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "year": 2026,
+      "afastado": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "ruan.sousa@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": "2026-02-23",
+      "data_ferias_inicio": null
+    },
+    {
+      "role": "Auxiliar De Manutencao",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 9,
+        "cria": 9,
+        "motv": 9,
+        "prod": 9,
+        "assid": 6,
+        "qual": 9,
+        "equip": 8,
+        "org": 9,
+        "know": 9,
+        "comm": 9
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "Administrativo",
+      "id": 1777978833585,
+      "name": "Enio Dos Santos Da Silva",
+      "foto": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "ruan.sousa@nagumo.com.br",
+      "data_maternidade": null,
+      "data_admissao": "2024-04-19",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "dept": "Manutencao",
+      "matricula": "46182",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "Administrativo",
+          "dept": "Manutencao",
+          "data": "2024-04-19",
+          "cargo": "Auxiliar De Manutencao",
+          "filial": "CD 1"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Manutencao",
+          "data": "2024-04-19",
+          "tipo": "admissao",
+          "turno": "Administrativo",
+          "dept": "Manutencao"
+        },
+        {
+          "data": "2024-04-19",
+          "dept": "Manutencao",
+          "tipo": "admissao",
+          "turno": "Administrativo",
+          "cargo": "Auxiliar De Manutencao",
+          "filial": "CD 1"
+        }
+      ],
+      "perf": 85
+    },
+    {
+      "year": 2026,
+      "dept": "Manutencao",
+      "matricula": "51157",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Manutencao",
+          "data": "2025-03-06",
+          "turno": "Administrativo",
+          "dept": "Manutencao",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Manutencao",
+          "data": "2025-03-06",
+          "dept": "Manutencao",
+          "tipo": "admissao",
+          "turno": "Administrativo"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "Administrativo",
+          "dept": "Manutencao",
+          "data": "2025-03-06",
+          "cargo": "Auxiliar De Manutencao",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 85,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "ruan.sousa@nagumo.com.br",
+      "data_admissao": "2025-03-06",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "Administrativo",
+      "id": 1777978946130,
+      "name": "Joanderson Santana De Sena",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Auxiliar De Manutencao",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 8,
+        "prod": 9,
+        "qual": 9,
+        "assid": 8,
+        "equip": 8,
+        "org": 8,
+        "know": 9,
+        "cria": 9,
+        "motv": 8,
+        "prio": 9
+      }
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Jose Orlando Dos Santos",
+      "id": 1777979044968,
+      "turno": "Administrativo",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "",
+      "role": "Auxiliar De Manutencao",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "org": 7,
+        "know": 7,
+        "equip": 7,
+        "qual": 8,
+        "assid": 8,
+        "prod": 7,
+        "comm": 7,
+        "prio": 7,
+        "motv": 7,
+        "cria": 7
+      },
+      "year": 2026,
+      "dept": "Manutencao",
+      "matricula": "33920",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "",
+          "cargo": "Auxiliar De Manutencao",
+          "dept": "Manutencao",
+          "turno": "Administrativo",
+          "tipo": "admissao",
+          "data": "2019-11-07"
+        },
+        {
+          "dept": "Manutencao",
+          "turno": "Administrativo",
+          "tipo": "admissao",
+          "data": "2019-11-07",
+          "filial": "",
+          "cargo": "Auxiliar De Manutencao"
+        },
+        {
+          "turno": "Administrativo",
+          "dept": "Manutencao",
+          "tipo": "admissao",
+          "data": "2019-11-07",
+          "filial": "",
+          "cargo": "Auxiliar De Manutencao"
+        }
+      ],
+      "perf": 75,
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "ruan.sousa@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2019-11-07",
+      "afastado": false
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": "2026-05-11",
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Ricardo Dos Santos Martins",
+      "turno": "Administrativo",
+      "id": 1777979171877,
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Manutencao",
+      "competencies": {
+        "motv": 8,
+        "cria": 9,
+        "prio": 9,
+        "comm": 8,
+        "equip": 9,
+        "org": 9,
+        "know": 9,
+        "prod": 9,
+        "assid": 8,
+        "qual": 9
+      },
+      "year": 2026,
+      "perf": 85,
+      "historico_cargos": [
+        {
+          "data": "2024-02-28",
+          "tipo": "admissao",
+          "turno": "Administrativo",
+          "dept": "Manutencao",
+          "cargo": "Auxiliar De Manutencao",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "Manutencao",
+          "tipo": "admissao",
+          "turno": "Administrativo",
+          "data": "2024-02-28",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Manutencao"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Manutencao",
+          "turno": "Administrativo",
+          "data": "2024-02-28",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Manutencao"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "45356",
+      "dept": "Manutencao",
+      "data_ferias_inicio": "2026-04-15",
+      "data_admissao": "2024-02-28",
+      "maternidade": false,
+      "owner_id": "ruan.sousa@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "ferias": true,
+      "demitido": false,
+      "afastado": false
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

@@ -1,0 +1,549 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "matheus.vieira@nagumo.com.br": {
+      "name": "Matheus Alessandro Sousa Vieira",
+      "foto": null,
+      "nivel": "encarregado",
+      "pass": "Matheus@nagumo1999",
+      "perfil": {
+        "turno": "1o Turno",
+        "depts": [
+          "Inteligencia"
+        ],
+        "turnos": [
+          "1o Turno",
+          "2o Turno",
+          "3o Turno",
+          "Administrativo"
+        ],
+        "filial": "CD 1",
+        "funcao": "Analista De Logistica Senior",
+        "filiais": [
+          "CD 1",
+          "CD 2"
+        ]
+      },
+      "id": "matheus.vieira@nagumo.com.br",
+      "setor": "Inteligencia"
+    }
+  },
+  "employees": [
+    {
+      "afastado": false,
+      "data_admissao": "2023-12-14",
+      "ownerId": "matheus.vieira@nagumo.com.br",
+      "data_ferias_inicio": "2026-06-15",
+      "demitido": false,
+      "ferias": true,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "matheus.vieira@nagumo.com.br",
+      "competencies_history": {},
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Inteligencia",
+          "data": "2023-12-14",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2023-12-14",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Inteligencia",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        },
+        {
+          "turno": "1o Turno",
+          "dept": "Inteligencia",
+          "tipo": "admissao",
+          "data": "2023-12-14",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 80,
+      "dept": "Inteligencia",
+      "matricula": "44178",
+      "year": 2026,
+      "competencies": {
+        "qual": 7,
+        "prio": 5,
+        "know": 5,
+        "comm": 5,
+        "prod": 5,
+        "assid": 5,
+        "org": 5,
+        "equip": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Conferente",
+      "filial": "CD 2",
+      "data_ferias_fim": "2026-07-20",
+      "turno": "1o Turno",
+      "id": 1777938630218,
+      "name": "Marcos Antonio Marques Da Silva",
+      "foto": "data:image/jpeg;base64,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",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null
+    },
+    {
+      "year": 2026,
+      "historico_cargos": [
+        {
+          "turno": "Administrativo",
+          "tipo": "admissao",
+          "dept": "Inteligencia",
+          "data": "2024-11-25",
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Inteligencia",
+      "matricula": "49700",
+      "data_admissao": "2024-11-25",
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "owner_id": "matheus.vieira@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "Administrativo",
+      "id": 1780663095489,
+      "name": "Leticia Da Silva Rios",
+      "foto": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAsICAoIBwsKCQoNDAsNERwSEQ8PESIZGhQcKSQrKigkJyctMkA3LTA9MCcnOEw5PUNFSElIKzZPVU5GVEBHSEX/2wBDAQwNDREPESESEiFFLicuRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUX/wAARCABQAFADASIAAhEBAxEB/8QAGgAAAwEBAQEAAAAAAAAAAAAABQYHBAMCAf/EAEUQAAECBAMCCAgJDQAAAAAAAAECAwAEBREGEiExQRMiNlFhc4GxBxQycZGy0vAVFiN0kqGiwcMXNUJFUlNldYKDlNHh/8QAGQEBAQEBAQEAAAAAAAAAAAAAAwIEAAEF/8QAHxEAAwEAAwEBAAMAAAAAAAAAAAECEQMSITEyBEFh/9oADAMBAAIRAxEAPwCZV3lBUvnTvrmOVOps1VZpMvJtFxZ28yRzk7hGupSypzFk3LIISp6eW2CdgJcIis0ehStEkky8sjXatw+U4ecxF31QvHx93/gv0fAEjJoS5UFeNv7bbG0nzb+30QenHWaLT1LbbQhtAshtCcoJOwWHTBHgyNRshUr0+H65LSZNm2RnXzZrfdGbXT9NeTC8PtPpSZp5UzPHhX3Dc32DotBw0eXcRlLKSPNAuVrMo04EKQ6m5sFlOkMjT7QaCyoBHOYOu2+jx1zEKdZwjLPsKU2yhCwLggQiCgPTBcTKHM6i/wAkdqrbbc56IsNQWkyq1oUFDLtBvE7lXSxOeMpGqXs317IXiusZn5+OG0xLWhTa1IWkpUk2IIsQYYcAcuaP147jDNjXD8tMUx2rtDgphuylWGjqbgDt339ws4A5c0frx3GNEUqWmO4cPDmRfH1v4p+LFoyEbNkRc8vj/M/xYtAVz3g+X+huD4zm8tDLK3V6JQkqJ6BE3lWX6lUZybQOOCQL7Ln3+uGLF9bS238HtKBWrjOnmA1tA6gTSJanJWU3Kio9t4P2Z0aUrtJnFuUnZhaGVoQLHQgG4g/W1OMUxphCbjQE2jMmfmmZoPcCC2RuF4IGcbmwoPy60AaHMnQjng6b1M0TE40mJiphmXTeXdcS5bUG4PojzLJzSBWdubU9sGa5TZSXYU8hNyRob7IE0/jNhnespMMqTWozXDmsYz4rVfB04DoeDT6whBwBy5o/XjuMUDF6QMIz1tyB6wif4A5c0frx3GL4fyD/ACP0jkq/x9Ntvwn+LFUqFRWy2pKDwZAJUojyQNpiVOOJax2pxaglKKmVFR2AB3bDbX8QNzy1S8i2rgl6KeULFfmirnSeKsTFycfXMOuOqJzOqvqb2EMNHSl2joSDY6jTaDcwuqSFKJ3bvMIIUucEo6G3D8mo380Ta2fBON5Xoy0tLaGgH5h9Lg0OUAg+kiOs7OupIYbAmArQ2Fin0xpYMo8hKuLcjbGWoTjMr+knzRl3X8PovFP0A1p97gQ0o3CQMxj7QEJddltLqK0j7Q/3A2pT3jRsnySq9+fpjdQHVNutKAvkWDD5kmHt2sacZtZMJz5H7CfWETvAHLmj9eO4xSMaX+KNQIOmRPrCJvgHlzR+vHcYvh+A8/6MVTUEYrnFKTmCZ5ZKb2vxzpBEPKW8lazpfQXJsOi8DKtynnvnjnrmNhMIw5O6rpCkkWKTG+m096orJaQVFIAKRvMZGkLdKCEXUrQD74o+E6WinNtuTCdt9QN+8+/NEv3xCLz1ip4vMMJKElQA3HdAedbcceCXHFEbVeaLLV5OUmkB0toUSNqdvbExrrcu1MLbl27AeUb3ierlld1aF1YzKuNBBWkqCVo2aE3gcvigWjdJBSGsyU3ym5v0R1eo6PGOWL1BWDZ1STxVNJP2hE6wDy5o/XjuMOVVnhN4BngDctpCCf6hb6rQm4B5c0frx3GPeL4RzfQbW1FGIqiobRNuEfTMEKbkqDraUnUnjJGpAikz3gXYnZ+ZmjWXEF91TmXxcG1yTbyumPMp4GRIzLcxLYgdbdbN0qEsPa1hAk8MKKOlhhDmQIUgBQSOjn998OC1Wl2baaXjYrCinZdCH57O4BZa0s5QrsvpGt2gBxIAmCmwt5H/AGKWIt1osVqpolZJa72VayekxNpuc4RxWXUq3xVan4P/AISy56otITu4EHX0wLT4I2kn87r2fuB7UHSdPSlSSxE0XoOmCVHdCllKhcXuRfstDyvwRtK/W6x/YHtR5PgjyoUlmuON5tCRLi9vpR3VnndJk5rVY8SYnKUwUuJdIC1bkgG/p7o4YB5c0frx3GH/APIcwTc1x3/GHtQQoPgjZodblKkmruPGWXnDZYAzduaKSwiqdM//2Q==",
+      "data_maternidade_fim": null,
+      "role": "Assistente Administrativo",
+      "competencies": {
+        "comm": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      }
+    },
+    {
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo",
+          "data": "2024-06-03",
+          "tipo": "admissao",
+          "dept": "Inteligencia",
+          "turno": "Administrativo"
+        }
+      ],
+      "matricula": "46749",
+      "dept": "Inteligencia",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2024-06-03",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "matheus.vieira@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1780663159689,
+      "turno": "Administrativo",
+      "name": "Jose Adriano Pereira Gomes Da Silva",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Assistente Administrativo"
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

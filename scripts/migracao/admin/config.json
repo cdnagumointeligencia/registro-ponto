@@ -1,0 +1,500 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "admin": {
+      "setor": "",
+      "name": "Administrador",
+      "pass": "admin123",
+      "nivel": "admin_master",
+      "id": "admin",
+      "perfil": {
+        "filial": "",
+        "depts": [],
+        "turno": ""
+      },
+      "avatar": null
+    }
+  },
+  "employees": [
+    {
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "comm": 5
+      },
+      "role": "Auxiliar Administrativo",
+      "data_maternidade_fim": null,
+      "name": "Tainara Cardoso Da Silva",
+      "turno": "2o Turno",
+      "id": 1777937258206,
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "data_maternidade": null,
+      "owner_id": "admin",
+      "maternidade": false,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-10-01",
+      "dept": "PCO",
+      "matricula": "54650",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "data": "2025-10-01",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        },
+        {
+          "data": "2025-10-01",
+          "dept": "PCO",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        },
+        {
+          "dept": "PCO",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2025-10-01",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        }
+      ],
+      "competencies_history": {
+        "2026-05": {
+          "prio": 5,
+          "qual": 5
+        }
+      },
+      "perf": 70,
+      "year": 2026
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Auxiliar Administrativo",
+      "competencies": {
+        "comm": 5,
+        "assid": 5,
+        "qual": 7,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 6
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "1o Turno",
+      "id": 1778329468984,
+      "name": "Leticia De Souza Silva",
+      "foto": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAsICAoIBwsKCQoNDAsNERwSEQ8PESIZGhQcKSQrKigkJyctMkA3LTA9MCcnOEw5PUNFSElIKzZPVU5GVEBHSEX/2wBDAQwNDREPESESEiFFLicuRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUX/wAARCABQAFADASIAAhEBAxEB/8QAHAAAAgMBAQEBAAAAAAAAAAAAAAUCBgcEAwEI/8QAMxAAAgEDAgMFCAIBBQAAAAAAAQIDAAQRBSEGEjEHEyJBURQyYXGBkaHBI5JScrHR4fD/xAAYAQEAAwEAAAAAAAAAAAAAAAAAAQIDBP/EABsRAQACAwEBAAAAAAAAAAAAAAABEQIhMRIT/9oADAMBAAIRAxEAPwDXKKKKApbres2ug6XNf3jYijGyjq7Hoo+JpjWQdqOoS6vxLZaBbN4YAGkG/vsM7/Jcf2NCC697TOIdSuGFlKtnDzeFYowxA+JOf1U7LtI4h0bUeXU3F5DnDxOoU49VYD/kVY9I0qw0ez7sQqXI3Y9TXBrGkWerRMhVVfycdRWfvbb5aaPomt2XEGmpe6fJzRscMrbMjeakeRpnWM9l97LpPFtzo9wWC3KEBfLnTxA/15vuK2atGIooooCiiig8LidLa3lnlPLHEhdj6ADJrAtLu7rXeLdQ1FFZrl1kmRc7rkgAAn0BxWudoU72/BGpNGSGZFTI9CwB/Gaxbg/Ul0zXlkf3ZEZD+D+qrlxbHsH2mWWtXWqgTrcRxZ8bysSB96hq2kapHqX8cMk0GcB1yfuB0pxf8SzszyW80Sd2BhZD72TuR8a5bTiGZ5A0jozMMAL1+tZXPXTWqJdWkuNC1rSdVCFZkIYoSRkoR1PXBBxW+W1xHd20VxAweKZA6MPNSMg1gPHN6bi6som95EZyPmf+q2Xgl5H4N0ky+97OoHyGw/GK2jjmy6f0UUVKooopDxNxXYcMWfe3T887g9zbqfFIf0PjQL+0twnBN6M4Lsij+w/WawFC0cqshwynI+dWniHjDU+J51W7ZYbdd0to/dHxPqf/AG1ViRGWXAByenxoLfpOpRzxsskrW0pA8arkg0xghiA8Uxl3yMrgk0u0vQWv9Kt7m2ZXmOQY+YBxgn7j411R2F9bZK2kzuDjYE7/AD+tYzFS6YyuOqtxALmXUpbmYfxySPHEQdsIcY/2+9foPhePueFtJj/xtIht/pFUuw0cW/D7297DHO7t3zq4BXmJyetW/RrnudPgiXleGNQiFfIDYCt605buZPKKgjq4ypqdQkVh3ahP7ZxUHTdI4ljRs+8ASSR8MkjPqDW0XirJZzI+eVkIPKxU7j1G4rGOLOH5rdZr1RiLrySPh85OcYztj456k0FJiYrLn7mvSQCUZGzL0+lc7ylmJG2eoFfY28QJO+d/lUjYezr2a54eQrGolTKSEDc75H4xT+50GOYMZZW5DtyLsMelVTsyt5V0m4kOQkj8sfocdT+fxV/BZRyu3MfM1AURaHF7O8ayTIjkYUSHCgeQFd9tZx2cfdx55CcnPrXSNmAqEuyscfGpQnFOYZVB6dDTMHIyKrTzMrgE7hiMnzzv+jT6zk7yAeq7UkQ1B+WEKOrGqRxdbNe6TcBcgxrzD9/jNWniC7FnHDIyllyQcfSkt3PHPp800Th15SdjVZSz3Tezi9uojcXEkeDjkjQ+8P1tTq27Novabh5YQsbD+JOckKfnV8imXkUrjlI2xUjcr61I5tP09bHT47aFViKDAx0G9dKhk2aTnPrjFeftKnzqPfr64oOoygRlmB8Iz4QSfsOtLDqa2l5J7XNJ3cjYjDwuN99vdx8Pt9esTqOpqXfqfP8ANTBdQT6hcIurrGpYZKDcYz73T7irHpcviZPUVUtXmU67bcxwEi5ifqasGmXcT3kaRyh+bfY58qtStv/Z",
+      "data_admissao": "2024-09-16",
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "admin",
+      "maternidade": false,
+      "data_maternidade": null,
+      "afastado": false,
+      "year": 2026,
+      "competencies_history": {
+        "2026-05": {
+          "prio": 6
+        }
+      },
+      "historico_cargos": [
+        {
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2",
+          "data": "2024-09-16",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Inteligencia"
+        },
+        {
+          "data": "2024-09-16",
+          "dept": "Inteligencia",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Inteligencia",
+          "data": "2024-09-16",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Inteligencia",
+      "matricula": "48255"
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

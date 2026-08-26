@@ -1,0 +1,1746 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "wenderson.santos@nagumo.com.br": {
+      "name": "Wenderson Pereira Santos",
+      "pass": "280810",
+      "nivel": "lider",
+      "foto": null,
+      "perfil": {
+        "depts": [
+          "Armazenagem"
+        ],
+        "filial": "CD 2",
+        "turno": "2o Turno"
+      },
+      "id": "wenderson.santos@nagumo.com.br",
+      "setor": "Armazenagem",
+      "avatar": null
+    }
+  },
+  "employees": [
+    {
+      "data_ferias_inicio": null,
+      "data_admissao": "2024-12-02",
+      "demitido": false,
+      "ferias": false,
+      "maternidade": false,
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "afastado": false,
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "data": "2024-12-02",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2024-12-02",
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2024-12-02",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Armazenagem"
+        }
+      ],
+      "competencies_history": {
+        "2026-06": {
+          "motv": 10,
+          "cria": 9
+        },
+        "2026-05": {
+          "comm": 10,
+          "assid": 10,
+          "qual": 10,
+          "prod": 10,
+          "org": 10,
+          "know": 10,
+          "equip": 10,
+          "cria": 8,
+          "motv": 8,
+          "prio": 10
+        }
+      },
+      "perf": 98,
+      "dept": "Armazenagem",
+      "matricula": "49715",
+      "data_maternidade_fim": null,
+      "role": "Operador De Empilhadeira",
+      "competencies": {
+        "comm": 10,
+        "qual": 10,
+        "assid": 10,
+        "prod": 10,
+        "know": 10,
+        "org": 10,
+        "equip": 10,
+        "cria": 9,
+        "motv": 10,
+        "prio": 10
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Joyce Bispo Santos",
+      "turno": "2o Turno",
+      "id": 1777942272935,
+      "foto": null
+    },
+    {
+      "year": 2026,
+      "competencies_history": {
+        "2026-06": {
+          "prod": 9,
+          "qual": 10,
+          "assid": 10,
+          "prio": 10,
+          "comm": 9,
+          "cria": 9,
+          "motv": 9
+        },
+        "2026-05": {
+          "comm": 10,
+          "prod": 8,
+          "assid": 8,
+          "qual": 8,
+          "equip": 10,
+          "know": 10,
+          "org": 10,
+          "cria": 8,
+          "motv": 8,
+          "prio": 8
+        }
+      },
+      "historico_cargos": [
+        {
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2024-12-02",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2024-12-02",
+          "turno": "2o Turno",
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2024-12-02"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 97,
+      "dept": "Armazenagem",
+      "matricula": "49706",
+      "data_admissao": "2024-12-02",
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1777942346902,
+      "turno": "2o Turno",
+      "name": "Tatiane Da Silva",
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Operador De Empilhadeira",
+      "competencies": {
+        "prio": 10,
+        "motv": 9,
+        "cria": 9,
+        "know": 10,
+        "org": 10,
+        "equip": 10,
+        "assid": 10,
+        "qual": 10,
+        "prod": 9,
+        "comm": 9
+      }
+    },
+    {
+      "data_admissao": "2025-05-22",
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "afastado": false,
+      "year": 2026,
+      "competencies_history": {
+        "2026-06": {
+          "prod": 10,
+          "know": 10,
+          "motv": 10,
+          "prio": 10
+        },
+        "2026-05": {
+          "motv": 9,
+          "cria": 9,
+          "prio": 9,
+          "comm": 10,
+          "equip": 10,
+          "know": 9,
+          "org": 10,
+          "prod": 9,
+          "qual": 10,
+          "assid": 10
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2025-05-22",
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2",
+          "data": "2025-05-22",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Armazenagem"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2025-05-22",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        }
+      ],
+      "perf": 98,
+      "dept": "Armazenagem",
+      "matricula": "52469",
+      "data_maternidade_fim": null,
+      "role": "Operador De Empilhadeira",
+      "competencies": {
+        "comm": 10,
+        "equip": 10,
+        "org": 10,
+        "know": 10,
+        "prod": 10,
+        "assid": 10,
+        "qual": 10,
+        "motv": 10,
+        "cria": 9,
+        "prio": 10
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1777942426457,
+      "turno": "2o Turno",
+      "name": "Cleiton De Oliveira",
+      "foto": null
+    },
+    {
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "maternidade": false,
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-10-27",
+      "dept": "Armazenagem",
+      "matricula": "55183",
+      "historico_cargos": [
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2",
+          "data": "2025-10-27",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2",
+          "turno": "2o Turno",
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "data": "2025-10-27"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2",
+          "data": "2025-10-27",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-06": {
+          "equip": 10,
+          "org": 10
+        },
+        "2026-05": {
+          "cria": 9,
+          "motv": 9,
+          "prio": 10,
+          "comm": 9,
+          "assid": 10,
+          "qual": 10,
+          "prod": 10,
+          "org": 8,
+          "know": 10,
+          "equip": 9
+        }
+      },
+      "perf": 98,
+      "year": 2026,
+      "competencies": {
+        "motv": 9,
+        "cria": 9,
+        "prio": 10,
+        "comm": 9,
+        "org": 10,
+        "know": 10,
+        "equip": 10,
+        "assid": 10,
+        "qual": 10,
+        "prod": 10
+      },
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "name": "Jose Junior Da Silva",
+      "turno": "2o Turno",
+      "id": 1777942501726,
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "afastado": false,
+      "data_ferias_inicio": "2026-04-15",
+      "data_admissao": "2024-10-28",
+      "ferias": true,
+      "demitido": false,
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-05-05",
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira"
+        },
+        {
+          "data": "2026-05-05",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-05",
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira"
+        }
+      ],
+      "competencies_history": {
+        "2026-06": {
+          "comm": 8,
+          "assid": 10,
+          "qual": 10,
+          "prod": 10,
+          "org": 9,
+          "know": 10,
+          "equip": 9,
+          "cria": 8,
+          "motv": 8,
+          "prio": 9
+        }
+      },
+      "perf": 70,
+      "dept": "Armazenagem",
+      "matricula": "49135",
+      "year": 2026,
+      "competencies": {
+        "prod": 10,
+        "assid": 10,
+        "qual": 10,
+        "equip": 9,
+        "know": 10,
+        "org": 9,
+        "comm": 8,
+        "prio": 9,
+        "cria": 8,
+        "motv": 8
+      },
+      "data_maternidade_fim": null,
+      "role": "Operador De Empilhadeira",
+      "data_ferias_fim": "2026-05-18",
+      "filial": "CD 2",
+      "name": "Sonisvaldo Da Silva Araujo",
+      "turno": "2o Turno",
+      "id": 1777942634256,
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null
+    },
+    {
+      "turno": "2o Turno",
+      "id": 1777942725242,
+      "name": "Aline Carvalho Rocha De Oliveira",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "prio": 9,
+        "cria": 10,
+        "motv": 10,
+        "prod": 10,
+        "assid": 10,
+        "qual": 10,
+        "equip": 10,
+        "org": 10,
+        "know": 10,
+        "comm": 10
+      },
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "dept": "Armazenagem",
+      "matricula": "49690",
+      "competencies_history": {
+        "2026-05": {
+          "assid": 10,
+          "qual": 10,
+          "prod": 9,
+          "know": 10,
+          "org": 10,
+          "equip": 10,
+          "comm": 10,
+          "prio": 9,
+          "cria": 10,
+          "motv": 8
+        },
+        "2026-06": {
+          "motv": 10,
+          "prod": 10
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2024-11-25",
+          "turno": "2o Turno",
+          "dept": "Armazenagem",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "data": "2024-11-25"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2",
+          "data": "2024-11-25",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "2o Turno"
+        }
+      ],
+      "perf": 98,
+      "year": 2026,
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_admissao": "2024-11-25",
+      "data_ferias_inicio": null
+    },
+    {
+      "year": 2026,
+      "dept": "Armazenagem",
+      "matricula": "55153",
+      "competencies_history": {
+        "2026-05": {
+          "cria": 9,
+          "motv": 9,
+          "prio": 10,
+          "comm": 10,
+          "assid": 10,
+          "qual": 10,
+          "prod": 10,
+          "org": 10,
+          "know": 10,
+          "equip": 10
+        }
+      },
+      "historico_cargos": [
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2025-10-23"
+        },
+        {
+          "data": "2026-05-12",
+          "dept": "Armazenagem",
+          "tipo": "desligamento",
+          "turno": "2o Turno",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2",
+          "motivo": "A mesma pediu para fazer acordo"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2025-10-23",
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "turno": "2o Turno"
+        },
+        {
+          "motivo": "A mesma pediu para fazer acordo",
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2026-05-12",
+          "tipo": "desligamento",
+          "dept": "Armazenagem",
+          "turno": "2o Turno"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "data": "2025-10-23"
+        },
+        {
+          "data": "2026-05-12",
+          "turno": "2o Turno",
+          "dept": "Armazenagem",
+          "tipo": "desligamento",
+          "filial": "CD 2",
+          "motivo": "A mesma pediu para fazer acordo",
+          "cargo": "Operador De Empilhadeira"
+        }
+      ],
+      "motivo_demissao": "A mesma pediu para fazer acordo",
+      "perf": 96,
+      "demitido": true,
+      "ferias": false,
+      "data_demissao": "2026-05-12",
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_admissao": "2025-10-23",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "2o Turno",
+      "id": 1777942796795,
+      "name": "Suellen Cristina Rocha De Carvalho",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "cria": 9,
+        "motv": 9,
+        "prio": 10,
+        "comm": 10,
+        "prod": 10,
+        "qual": 10,
+        "assid": 10,
+        "equip": 10,
+        "know": 10,
+        "org": 10
+      }
+    },
+    {
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-07-03",
+      "data_maternidade": null,
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 97,
+      "historico_cargos": [
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2",
+          "turno": "2o Turno",
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "data": "2025-07-03"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2025-07-03",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2025-07-03"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-06": {
+          "prod": 9,
+          "assid": 10,
+          "prio": 10,
+          "know": 9,
+          "cria": 9,
+          "comm": 10,
+          "motv": 9
+        },
+        "2026-05": {
+          "prio": 7,
+          "motv": 8,
+          "cria": 8,
+          "know": 10,
+          "org": 10,
+          "equip": 10,
+          "qual": 10,
+          "assid": 9,
+          "prod": 8,
+          "comm": 8
+        }
+      },
+      "matricula": "53102",
+      "dept": "Armazenagem",
+      "data_maternidade_fim": null,
+      "role": "Operador De Empilhadeira",
+      "competencies": {
+        "comm": 10,
+        "assid": 10,
+        "qual": 10,
+        "prod": 9,
+        "know": 9,
+        "org": 10,
+        "equip": 10,
+        "cria": 9,
+        "motv": 9,
+        "prio": 10
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Irinalda Marques Da Silva",
+      "id": 1777942893147,
+      "turno": "2o Turno"
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "comm": 9,
+        "equip": 10,
+        "know": 10,
+        "org": 10,
+        "prod": 10,
+        "qual": 10,
+        "assid": 9,
+        "motv": 9,
+        "cria": 9,
+        "prio": 10
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1777942963412,
+      "turno": "2o Turno",
+      "name": "Karen Janaina Dos Santos Melo",
+      "foto": null,
+      "data_admissao": "2025-06-20",
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "data_maternidade": null,
+      "afastado": false,
+      "year": 2026,
+      "competencies_history": {
+        "2026-05": {
+          "prod": 9,
+          "assid": 8,
+          "qual": 10,
+          "equip": 10,
+          "org": 10,
+          "know": 10,
+          "comm": 9,
+          "prio": 9,
+          "cria": 8,
+          "motv": 8
+        },
+        "2026-06": {
+          "motv": 9,
+          "cria": 9,
+          "prio": 10,
+          "assid": 9,
+          "prod": 10
+        }
+      },
+      "historico_cargos": [
+        {
+          "data": "2025-06-20",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "data": "2025-06-20"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2025-06-20",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "2o Turno"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 96,
+      "dept": "Armazenagem",
+      "matricula": "52940"
+    },
+    {
+      "dept": "Armazenagem",
+      "matricula": "53569",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 8,
+          "prod": 8,
+          "assid": 7,
+          "qual": 9,
+          "equip": 8,
+          "org": 10,
+          "know": 8,
+          "cria": 8,
+          "motv": 8,
+          "prio": 9
+        },
+        "2026-06": {
+          "cria": 9,
+          "comm": 9,
+          "motv": 9,
+          "prod": 10,
+          "assid": 9,
+          "qual": 10,
+          "equip": 10,
+          "know": 9
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2025-08-04"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "data": "2025-08-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2025-08-04",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        }
+      ],
+      "perf": 90,
+      "year": 2026,
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_admissao": "2025-08-04",
+      "data_ferias_inicio": null,
+      "turno": "2o Turno",
+      "id": 1777943030965,
+      "name": "Bruna Da Silva Nunes Machado",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "motv": 9,
+        "cria": 9,
+        "prio": 9,
+        "comm": 9,
+        "equip": 10,
+        "org": 10,
+        "know": 9,
+        "prod": 10,
+        "qual": 10,
+        "assid": 9
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null
+    },
+    {
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1777943117503,
+      "turno": "2o Turno",
+      "name": "Maria Sheylanne",
+      "absences": [
+        0,
+        1,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prio": 9,
+        "cria": 9,
+        "motv": 9,
+        "prod": 9,
+        "assid": 9,
+        "qual": 10,
+        "equip": 9,
+        "org": 10,
+        "know": 10,
+        "comm": 10
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "perf": 90,
+      "competencies_history": {
+        "2026-06": {
+          "prio": 9,
+          "cria": 9,
+          "motv": 9,
+          "qual": 10,
+          "assid": 9,
+          "prod": 9,
+          "know": 10,
+          "equip": 9,
+          "comm": 10
+        },
+        "2026-05": {
+          "prio": 8,
+          "motv": 8,
+          "cria": 8,
+          "org": 10,
+          "know": 8,
+          "equip": 8,
+          "qual": 9,
+          "assid": 7,
+          "prod": 8,
+          "comm": 8
+        }
+      },
+      "historico_cargos": [
+        {
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2025-07-21",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2025-07-21",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Armazenagem",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2025-07-21",
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "turno": "2o Turno"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "33385",
+      "dept": "Armazenagem",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2025-07-21",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false
+    },
+    {
+      "dept": "Armazenagem",
+      "matricula": "54793",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 8,
+          "org": 10,
+          "know": 8,
+          "equip": 8,
+          "assid": 9,
+          "qual": 9,
+          "prod": 8,
+          "motv": 8,
+          "cria": 8,
+          "prio": 9
+        },
+        "2026-06": {
+          "assid": 10,
+          "qual": 10,
+          "prod": 9,
+          "know": 9,
+          "equip": 10,
+          "cria": 9,
+          "comm": 10,
+          "motv": 9
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "data": "2025-10-09",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2025-10-09",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "data": "2025-10-09"
+        }
+      ],
+      "perf": 95,
+      "year": 2026,
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "data_admissao": "2025-10-09",
+      "data_ferias_inicio": null,
+      "turno": "2o Turno",
+      "id": 1777943187133,
+      "name": "Izabelli Ribeiro",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "cria": 9,
+        "motv": 9,
+        "prio": 9,
+        "comm": 10,
+        "prod": 9,
+        "assid": 10,
+        "qual": 10,
+        "equip": 10,
+        "org": 10,
+        "know": 9
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null
+    },
+    {
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1780078755218,
+      "turno": "2o Turno",
+      "name": "Beatriz Vitoria Aquino Dias",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prio": 8,
+        "cria": 8,
+        "motv": 8,
+        "assid": 8,
+        "qual": 8,
+        "prod": 8,
+        "know": 8,
+        "org": 8,
+        "equip": 8,
+        "comm": 8
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "data": "2026-05-04"
+        },
+        {
+          "data": "2026-05-04",
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "2o Turno"
+        }
+      ],
+      "perf": 98,
+      "dept": "Armazenagem",
+      "matricula": "59164",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "wenderson.santos@nagumo.com.br"
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Vitoria Aparecida Brito Sales",
+      "id": 1780078820593,
+      "turno": "2o Turno",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "motv": 8,
+        "cria": 8,
+        "prio": 8,
+        "comm": 8,
+        "org": 8,
+        "know": 8,
+        "equip": 8,
+        "assid": 8,
+        "qual": 8,
+        "prod": 8
+      },
+      "year": 2026,
+      "perf": 98,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "data": "2026-04-27"
+        },
+        {
+          "data": "2026-04-27",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-04-27",
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "matricula": "58941",
+      "dept": "Armazenagem",
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-04-27",
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false
+    },
+    {
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Armazenagem",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2025-11-03"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "55318",
+      "dept": "Armazenagem",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-11-03",
+      "data_maternidade": null,
+      "owner_id": "wenderson.santos@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Ana Paula Maria Da Silva",
+      "turno": "2o Turno",
+      "id": 1780420750659,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito"
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

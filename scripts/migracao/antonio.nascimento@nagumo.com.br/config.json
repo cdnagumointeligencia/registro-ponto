@@ -1,0 +1,1430 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "antonio.nascimento@nagumo.com.br": {
+      "foto": null,
+      "nivel": "lider",
+      "name": "Antonio Moises Do Nascimento",
+      "pass": "nagumo2026",
+      "perfil": {
+        "funcao": "",
+        "filiais": [
+          "CD 1"
+        ],
+        "turno": "1o Turno",
+        "filial": "CD 1",
+        "turnos": [
+          "1o Turno"
+        ],
+        "depts": [
+          "Pereciveis"
+        ]
+      },
+      "id": "antonio.nascimento@nagumo.com.br",
+      "setor": ""
+    }
+  },
+  "employees": [
+    {
+      "afastado": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "matricula": "46813",
+      "dept": "Pereciveis",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "data": "2026-05-19",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "data": "2026-05-19",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "turno": "1o Turno",
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Conferente"
+        }
+      ],
+      "motivo_demissao": "",
+      "year": 2026,
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5
+      },
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "name": "Victor Barbosa Antunes",
+      "id": 1779204891333,
+      "turno": "1o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "year": 2026,
+      "dept": "Pereciveis",
+      "matricula": "51938",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 1",
+          "dept": "Pereciveis",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-19"
+        },
+        {
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-19",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 1"
+        },
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 1",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "turno": "1o Turno",
+          "data": "2026-05-19"
+        }
+      ],
+      "perf": 70,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "data_maternidade": null,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "1o Turno",
+      "id": 1779204943796,
+      "name": "Sergio Alves Da Silva Filho",
+      "foto": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      }
+    },
+    {
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "comm": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "id": 1779205001046,
+      "turno": "1o Turno",
+      "name": "Elder Tulio Da Silva",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "data_maternidade": null,
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Conferente",
+          "turno": "1o Turno",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "data": "2026-05-19"
+        },
+        {
+          "data": "2026-05-19",
+          "turno": "1o Turno",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 1"
+        },
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "data": "2026-05-19",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 1"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Pereciveis",
+      "matricula": "54871",
+      "year": 2026
+    },
+    {
+      "year": 2026,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-19",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "turno": "1o Turno",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "58033",
+      "dept": "Pereciveis",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "ferias": false,
+      "demitido": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "1o Turno",
+      "id": 1779205083314,
+      "name": "Adriano Olimpio De Souza",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "comm": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      }
+    },
+    {
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "turno": "1o Turno",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "data": "2026-05-19",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "data": "2026-05-19",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "turno": "1o Turno",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "matricula": "46026",
+      "dept": "Pereciveis",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "data_maternidade": null,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "1o Turno",
+      "id": 1779205157007,
+      "name": "Audemir Dos Santos",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      }
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1779205254705,
+      "turno": "1o Turno",
+      "name": "Jeferson Allyson Da Silva Nascimento",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5
+      },
+      "year": 2026,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "data": "2026-05-19",
+          "turno": "1o Turno",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Pereciveis",
+          "data": "2026-05-19"
+        },
+        {
+          "data": "2026-05-19",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Pereciveis",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "48233",
+      "dept": "Pereciveis",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "demitido": false,
+      "ferias": false,
+      "afastado": false
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "name": "Alissandra Monte De Oliveira Da Silva",
+      "turno": "1o Turno",
+      "id": 1779212773102,
+      "foto": null,
+      "data_ferias_inicio": null,
+      "ownerId": "antonio.nascimento@nagumo.com.br",
+      "data_admissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_maternidade": null,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "afastado": false,
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-19",
+          "dept": "Pereciveis",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Pereciveis",
+          "data": "2026-05-19",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-19",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Pereciveis"
+        }
+      ],
+      "perf": 70,
+      "dept": "Pereciveis",
+      "matricula": "59363"
+    },
+    {
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-19",
+          "dept": "Pereciveis",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-05-19",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "turno": "1o Turno",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "perf": 70,
+      "dept": "Pereciveis",
+      "matricula": "59566",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "ownerId": "antonio.nascimento@nagumo.com.br",
+      "data_admissao": null,
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "name": "Jaqueline Paulino Ribeiro",
+      "id": 1779212849362,
+      "turno": "1o Turno",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito"
+    },
+    {
+      "afastado": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "ownerId": "antonio.nascimento@nagumo.com.br",
+      "matricula": "58940",
+      "dept": "Pereciveis",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "turno": "1o Turno",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "year": 2026,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "comm": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "id": 1779212903013,
+      "turno": "1o Turno",
+      "name": "Gabriel Francisco Da Silva",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "data": "2026-05-19",
+          "turno": "1o Turno",
+          "dept": "Pereciveis",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-05-19",
+          "turno": "1o Turno",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        }
+      ],
+      "perf": 70,
+      "dept": "Pereciveis",
+      "matricula": "59097",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "ownerId": "antonio.nascimento@nagumo.com.br",
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "maternidade": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "id": 1779213159437,
+      "turno": "1o Turno",
+      "name": "Felipe Franscisco Santos Manente",
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "comm": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      }
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "turno": "1o Turno",
+      "id": 1779213253873,
+      "name": "Bruno Batista Alves",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "comm": 5
+      },
+      "year": 2026,
+      "matricula": "59090",
+      "dept": "Pereciveis",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Pereciveis",
+          "data": "2026-05-19"
+        },
+        {
+          "data": "2026-05-19",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-19"
+        }
+      ],
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "ownerId": "antonio.nascimento@nagumo.com.br",
+      "afastado": false
+    },
+    {
+      "competencies": {
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Operador De Empilhadeira",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "1o Turno",
+      "id": 1779213362493,
+      "name": "Glaudieldo Do Nascimento",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "ownerId": "antonio.nascimento@nagumo.com.br",
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "maternidade": false,
+      "demitido": false,
+      "ferias": false,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "turno": "1o Turno",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Operador De Empilhadeira"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1",
+          "data": "2026-05-19",
+          "dept": "Movimentacao",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-05-19",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Movimentacao",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "40223",
+      "dept": "Movimentacao",
+      "year": 2026
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Denis Herrera Da Costa",
+      "turno": "1o Turno",
+      "id": 1779213438214,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5
+      },
+      "year": 2026,
+      "matricula": "59480",
+      "dept": "Movimentacao",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "Movimentacao",
+          "turno": "1o Turno",
+          "data": "2026-05-19",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-19"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1",
+          "data": "2026-05-19",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Movimentacao"
+        }
+      ],
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "ownerId": "antonio.nascimento@nagumo.com.br",
+      "data_admissao": null,
+      "afastado": false
+    },
+    {
+      "competencies": {
+        "comm": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "name": "Wellington Vicente Silva De Souza",
+      "id": 1779213542129,
+      "turno": "1o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "owner_id": "antonio.nascimento@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "ownerId": "antonio.nascimento@nagumo.com.br",
+      "data_admissao": null,
+      "dept": "Movimentacao",
+      "matricula": "59481",
+      "historico_cargos": [
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1",
+          "data": "2026-05-19",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Movimentacao"
+        },
+        {
+          "dept": "Movimentacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-19",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2026-05-19",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Movimentacao"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

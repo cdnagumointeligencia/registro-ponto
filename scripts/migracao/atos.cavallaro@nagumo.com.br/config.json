@@ -1,0 +1,498 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "atos.cavallaro@nagumo.com.br": {
+      "setor": "",
+      "name": "Atos Allan Cavalaro",
+      "foto": "data:image/jpeg;base64,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",
+      "pass": "nagumo2026",
+      "nivel": "lider",
+      "perfil": {
+        "depts": [
+          "Pereciveis"
+        ],
+        "turnos": [
+          "2o Turno"
+        ],
+        "filial": "CD 1",
+        "turno": "2o Turno",
+        "filiais": [
+          "CD 1"
+        ],
+        "funcao": ""
+      },
+      "id": "atos.cavallaro@nagumo.com.br"
+    }
+  },
+  "employees": [
+    {
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "foto": null,
+      "name": "Maycon Lima De Sousa",
+      "turno": "2o Turno",
+      "id": 1779211358149,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "comm": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Operador De Empilhadeira",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1",
+          "data": "2026-05-19",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Movimentacao"
+        },
+        {
+          "data": "2026-05-19",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Movimentacao",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Operador De Empilhadeira"
+        }
+      ],
+      "matricula": "51218",
+      "dept": "Movimentacao",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "maternidade": false,
+      "owner_id": "atos.cavallaro@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false
+    },
+    {
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "atos.cavallaro@nagumo.com.br",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "dept": "Movimentacao",
+      "matricula": "57694",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "turno": "2o Turno",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Operador De Empilhadeira"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Movimentacao",
+          "data": "2026-05-19"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2026-05-19",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Movimentacao"
+        }
+      ],
+      "perf": 70,
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "2o Turno",
+      "id": 1779211429190,
+      "name": "Jorge Henrique De Andrade Neves",
+      "foto": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

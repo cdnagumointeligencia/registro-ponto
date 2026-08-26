@@ -1,0 +1,902 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "janderson.santos@nagumo.com.br": {
+      "id": "janderson.santos@nagumo.com.br",
+      "perfil": {
+        "funcao": "Lider de Logistica Senior",
+        "filiais": [
+          "CD 2"
+        ],
+        "turnos": [
+          "2o Turno"
+        ],
+        "depts": [
+          "PCO"
+        ],
+        "filial": "CD 2",
+        "turno": "2o Turno"
+      },
+      "pass": "nagumo@2026",
+      "foto": null,
+      "nivel": "lider",
+      "name": "Janderson Alves Dos Santos",
+      "setor": ""
+    }
+  },
+  "employees": [
+    {
+      "year": 2026,
+      "matricula": "53047",
+      "dept": "PCO",
+      "perf": 70,
+      "competencies_history": {
+        "2026-06": {
+          "prio": 9,
+          "equip": 9,
+          "cria": 9,
+          "comm": 9
+        },
+        "2026-05": {
+          "assid": 10,
+          "qual": 9,
+          "prod": 10,
+          "know": 10,
+          "org": 9,
+          "equip": 8,
+          "comm": 7,
+          "prio": 8,
+          "cria": 8,
+          "motv": 9
+        }
+      },
+      "historico_cargos": [
+        {
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2",
+          "data": "2025-06-01",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "turno": "2o Turno"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo",
+          "data": "2025-06-01",
+          "turno": "2o Turno",
+          "dept": "PCO",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo",
+          "data": "2025-06-01",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "PCO"
+        }
+      ],
+      "motivo_demissao": "",
+      "data_demissao": null,
+      "owner_id": "janderson.santos@nagumo.com.br",
+      "ferias": false,
+      "demitido": false,
+      "data_admissao": "2025-06-01",
+      "ownerId": "janderson.santos@nagumo.com.br",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "id": 1777935619987,
+      "turno": "2o Turno",
+      "name": "Andreina Dos Santos Gomes",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Auxiliar Administrativo",
+      "competencies": {
+        "motv": 9,
+        "cria": 9,
+        "prio": 9,
+        "comm": 9,
+        "equip": 9,
+        "know": 10,
+        "org": 9,
+        "prod": 10,
+        "assid": 10,
+        "qual": 9
+      }
+    },
+    {
+      "perf": 70,
+      "competencies_history": {
+        "2026-05": {
+          "equip": 9,
+          "know": 9,
+          "org": 10,
+          "prod": 9,
+          "assid": 9,
+          "qual": 8,
+          "comm": 8,
+          "prio": 8,
+          "motv": 7,
+          "cria": 8
+        },
+        "2026-06": {
+          "motv": 8
+        }
+      },
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "PCO",
+          "data": "2024-10-01",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        },
+        {
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2",
+          "data": "2024-10-01",
+          "turno": "2o Turno",
+          "dept": "PCO",
+          "tipo": "admissao"
+        },
+        {
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "PCO",
+          "data": "2024-10-01"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "47080",
+      "dept": "PCO",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2024-10-01",
+      "data_ferias_inicio": null,
+      "ownerId": "janderson.santos@nagumo.com.br",
+      "data_demissao": null,
+      "owner_id": "janderson.santos@nagumo.com.br",
+      "demitido": false,
+      "ferias": false,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1777935984781,
+      "turno": "2o Turno",
+      "name": "Kaynan Victor Barros Da Silva",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prio": 8,
+        "cria": 8,
+        "motv": 8,
+        "prod": 9,
+        "qual": 8,
+        "assid": 9,
+        "equip": 9,
+        "know": 9,
+        "org": 10,
+        "comm": 8
+      },
+      "role": "Auxiliar Administrativo"
+    },
+    {
+      "dept": "PCO",
+      "matricula": "52640",
+      "competencies_history": {
+        "2026-06": {
+          "cria": 8
+        },
+        "2026-05": {
+          "motv": 9,
+          "cria": 7,
+          "prio": 8,
+          "comm": 8,
+          "know": 9,
+          "org": 9,
+          "equip": 8,
+          "qual": 10,
+          "assid": 10,
+          "prod": 9
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2025-09-17",
+          "turno": "2o Turno",
+          "dept": "PCO",
+          "tipo": "admissao",
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2025-09-17",
+          "dept": "PCO",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo",
+          "data": "2025-09-17",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "PCO"
+        }
+      ],
+      "perf": 70,
+      "year": 2026,
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "owner_id": "janderson.santos@nagumo.com.br",
+      "data_admissao": "2025-09-17",
+      "ownerId": "janderson.santos@nagumo.com.br",
+      "data_ferias_inicio": null,
+      "turno": "2o Turno",
+      "id": 1777936452917,
+      "name": "Rosangela Felix Do Nascimento",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "motv": 9,
+        "cria": 8,
+        "prio": 8,
+        "comm": 8,
+        "know": 9,
+        "org": 9,
+        "equip": 8,
+        "qual": 10,
+        "assid": 10,
+        "prod": 9
+      },
+      "role": "Auxiliar Administrativo"
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Jonathan Barbosa Marques De Lima",
+      "id": 1777936759096,
+      "turno": "2o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Auxiliar Administrativo",
+      "competencies": {
+        "cria": 8,
+        "motv": 8,
+        "prio": 10,
+        "comm": 9,
+        "qual": 9,
+        "assid": 8,
+        "prod": 8,
+        "know": 8,
+        "org": 9,
+        "equip": 9
+      },
+      "year": 2026,
+      "dept": "PCO",
+      "matricula": "41345",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo",
+          "data": "2022-11-11",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "PCO"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo",
+          "turno": "2o Turno",
+          "dept": "PCO",
+          "tipo": "admissao",
+          "data": "2022-11-11"
+        },
+        {
+          "dept": "PCO",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2022-11-11",
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-06": {
+          "cria": 8,
+          "equip": 9,
+          "prio": 10,
+          "org": 9,
+          "qual": 9,
+          "assid": 8
+        },
+        "2026-05": {
+          "cria": 7,
+          "motv": 8,
+          "prio": 7,
+          "comm": 9,
+          "prod": 8,
+          "qual": 7,
+          "assid": 6,
+          "equip": 8,
+          "org": 7,
+          "know": 8
+        }
+      },
+      "perf": 70,
+      "demitido": false,
+      "ferias": false,
+      "owner_id": "janderson.santos@nagumo.com.br",
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "ownerId": "janderson.santos@nagumo.com.br",
+      "data_admissao": "2022-11-11",
+      "afastado": false
+    },
+    {
+      "competencies_history": {
+        "2026-06": {
+          "comm": 8,
+          "know": 7,
+          "org": 8,
+          "equip": 8,
+          "qual": 8,
+          "assid": 9,
+          "prod": 8,
+          "motv": 9,
+          "cria": 8,
+          "prio": 10
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "data": "2025-10-22",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "dept": "PCO",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2025-10-22",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "turno": "2o Turno",
+          "data": "2025-10-22"
+        }
+      ],
+      "perf": 70,
+      "dept": "PCO",
+      "matricula": "55012",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2025-10-22",
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "janderson.santos@nagumo.com.br",
+      "data_maternidade": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "2o Turno",
+      "id": 1779817396259,
+      "name": "Natalia Martinez Martins",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "equip": 8,
+        "org": 8,
+        "know": 7,
+        "prod": 8,
+        "qual": 8,
+        "assid": 9,
+        "comm": 8,
+        "prio": 10,
+        "motv": 9,
+        "cria": 8
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito"
+    },
+    {
+      "matricula": "57362",
+      "dept": "PCO",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "data": "2026-02-16",
+          "turno": "2o Turno",
+          "dept": "PCO",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "PCO",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-02-16"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "PCO",
+          "data": "2026-02-16",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-06": {
+          "cria": 8,
+          "motv": 7,
+          "prio": 8,
+          "comm": 8,
+          "prod": 9,
+          "qual": 7,
+          "assid": 8,
+          "equip": 7,
+          "know": 7,
+          "org": 8
+        }
+      },
+      "year": 2026,
+      "afastado": false,
+      "data_maternidade": null,
+      "owner_id": "janderson.santos@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-02-16",
+      "foto": null,
+      "name": "Jamily Vitoria Bispo Santos",
+      "id": 1779817726162,
+      "turno": "2o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "cria": 8,
+        "motv": 7,
+        "prio": 8,
+        "comm": 8,
+        "qual": 7,
+        "assid": 8,
+        "prod": 9,
+        "know": 7,
+        "org": 8,
+        "equip": 7
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

@@ -1,0 +1,1485 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "diogo.silva@nagumo.com.br": {
+      "perfil": {
+        "depts": [
+          "Sorter Rampas"
+        ],
+        "filial": "CD 2",
+        "turnos": [
+          "2o Turno"
+        ],
+        "turno": "2o Turno",
+        "filiais": [
+          "CD 2"
+        ],
+        "funcao": "Lider de Conferente"
+      },
+      "id": "diogo.silva@nagumo.com.br",
+      "foto": null,
+      "name": "Diogo Da Silva",
+      "pass": "nagumo2026",
+      "nivel": "lider",
+      "setor": ""
+    }
+  },
+  "employees": [
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Isabell Santos Cunha Da Silva",
+      "id": 1777943981152,
+      "turno": "2o Turno",
+      "data_maternidade_fim": null,
+      "role": "",
+      "competencies": {
+        "cria": 7,
+        "motv": 5,
+        "prio": 7,
+        "comm": 7,
+        "assid": 5,
+        "qual": 7,
+        "prod": 5,
+        "know": 6,
+        "org": 7,
+        "equip": 7
+      },
+      "year": 2026,
+      "perf": 50,
+      "historico_cargos": [],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 7,
+          "cria": 7,
+          "qual": 7,
+          "know": 6,
+          "org": 7,
+          "equip": 7,
+          "prio": 7
+        }
+      },
+      "matricula": "55151",
+      "dept": "",
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-10-21",
+      "data_maternidade": null,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false
+    },
+    {
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 6,
+        "motv": 6,
+        "cria": 6,
+        "equip": 6,
+        "org": 6,
+        "know": 6,
+        "prod": 6,
+        "assid": 6,
+        "qual": 6,
+        "comm": 6
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "2o Turno",
+      "id": 1777944329518,
+      "name": "Sirlene Da Silva Cruz",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_admissao": "2026-02-09",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "dept": "Sorter Rampas",
+      "matricula": "57299",
+      "historico_cargos": [
+        {
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "data": "2026-02-09",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno",
+          "data": "2026-02-09",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "data": "2026-02-09"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 67
+    },
+    {
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-03-09",
+      "dept": "Sorter Rampas",
+      "matricula": "57808",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "data": "2026-03-09",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-03-09",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "data": "2026-03-09",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "perf": 70,
+      "year": 2026,
+      "competencies": {
+        "cria": 7,
+        "motv": 7,
+        "prio": 8,
+        "comm": 8,
+        "prod": 7,
+        "assid": 7,
+        "qual": 7,
+        "equip": 7,
+        "know": 7,
+        "org": 7
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "name": "Thayna Pereira Dos Santos",
+      "id": 1777944415970,
+      "turno": "2o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "year": 2026,
+      "perf": 80,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno",
+          "data": "2024-10-28",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "data": "2024-10-28",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2024-10-28",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        }
+      ],
+      "matricula": "49109",
+      "dept": "Sorter Rampas",
+      "data_admissao": "2024-10-28",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1777944495666,
+      "turno": "2o Turno",
+      "name": "Janaina De Franca Oliveira",
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "competencies": {
+        "prod": 8,
+        "qual": 8,
+        "assid": 9,
+        "equip": 8,
+        "know": 8,
+        "org": 9,
+        "comm": 8,
+        "prio": 8,
+        "cria": 10,
+        "motv": 10
+      }
+    },
+    {
+      "competencies": {
+        "comm": 8,
+        "equip": 10,
+        "know": 8,
+        "org": 8,
+        "prod": 8,
+        "qual": 8,
+        "assid": 8,
+        "motv": 10,
+        "cria": 8,
+        "prio": 8
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "id": 1777944604475,
+      "turno": "2o Turno",
+      "name": "Laize Simao De Lima",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": "2024-10-28",
+      "data_ferias_inicio": null,
+      "matricula": "49112",
+      "dept": "Sorter Rampas",
+      "perf": 80,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2024-10-28"
+        },
+        {
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2024-10-28",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno",
+          "data": "2024-10-28",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "afastado": false,
+      "data_admissao": "2024-12-02",
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "maternidade": false,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "data": "2024-12-02",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "data": "2024-12-02",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "data": "2024-12-02",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        }
+      ],
+      "perf": 80,
+      "dept": "Sorter Rampas",
+      "matricula": "49704",
+      "year": 2026,
+      "competencies": {
+        "cria": 9,
+        "motv": 10,
+        "prio": 8,
+        "comm": 8,
+        "prod": 8,
+        "assid": 8,
+        "qual": 8,
+        "equip": 10,
+        "org": 8,
+        "know": 8
+      },
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1777944671334,
+      "turno": "2o Turno",
+      "name": "Vanessa Rodrigues Vieira Gomes",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Maria Thais Silva Souza",
+      "turno": "2o Turno",
+      "id": 1777944742900,
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 8,
+        "assid": 8,
+        "qual": 8,
+        "prod": 8,
+        "know": 8,
+        "org": 8,
+        "equip": 9,
+        "cria": 8,
+        "motv": 10,
+        "prio": 8
+      },
+      "year": 2026,
+      "dept": "Sorter Rampas",
+      "matricula": "57919",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "data": "2026-03-09"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-03-09",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-03-09",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 80,
+      "ferias": false,
+      "demitido": false,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-03-09",
+      "afastado": false
+    },
+    {
+      "data_admissao": "2026-03-02",
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "afastado": false,
+      "year": 2026,
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-03-02",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-03-02",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-03-02",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Sorter Rampas",
+      "matricula": "57703",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "comm": 8,
+        "prod": 8,
+        "assid": 8,
+        "qual": 7,
+        "equip": 7,
+        "know": 7,
+        "org": 6,
+        "cria": 7,
+        "motv": 8,
+        "prio": 7
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "2o Turno",
+      "id": 1777944835763,
+      "name": "Joselma Jordao Barbosa",
+      "foto": null
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "motv": 8,
+        "cria": 8,
+        "prio": 8,
+        "comm": 8,
+        "equip": 8,
+        "org": 8,
+        "know": 8,
+        "prod": 8,
+        "qual": 8,
+        "assid": 8
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "2o Turno",
+      "id": 1777944906923,
+      "name": "Maria Eduarda Santos Oliveira",
+      "data_admissao": "2026-02-23",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 80,
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-02-23",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-02-23",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-02-23",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "57512",
+      "dept": "Sorter Rampas"
+    },
+    {
+      "competencies": {
+        "motv": 8,
+        "cria": 7,
+        "prio": 8,
+        "comm": 7,
+        "org": 8,
+        "know": 8,
+        "equip": 8,
+        "assid": 8,
+        "qual": 7,
+        "prod": 8
+      },
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Ana Paula Silva Vieira",
+      "turno": "2o Turno",
+      "id": 1777944986390,
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-08-04",
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "historico_cargos": [
+        {
+          "data": "2025-08-04",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2",
+          "data": "2025-08-04",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno"
+        },
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "data": "2025-08-04"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Sorter Rampas",
+      "matricula": "53567",
+      "year": 2026
+    },
+    {
+      "perf": 80,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno",
+          "data": "2026-03-02",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-03-02",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-03-02",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "2o Turno"
+        }
+      ],
+      "matricula": "57653",
+      "dept": "Sorter Rampas",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2026-03-02",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "ferias": false,
+      "demitido": false,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1777945139069,
+      "turno": "2o Turno",
+      "name": "Natalia Dos Reis Leao Do Nascimento",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "assid": 8,
+        "qual": 8,
+        "prod": 7,
+        "org": 8,
+        "know": 8,
+        "equip": 8,
+        "comm": 7,
+        "prio": 7,
+        "cria": 9,
+        "motv": 8
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito"
+    },
+    {
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "2o Turno",
+      "id": 1777945207448,
+      "name": "Maria Uelma Matias De Lima",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "motv": 10,
+        "cria": 9,
+        "prio": 8,
+        "comm": 8,
+        "org": 8,
+        "know": 8,
+        "equip": 9,
+        "qual": 8,
+        "assid": 8,
+        "prod": 8
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-04-13",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno"
+        },
+        {
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-04-13",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-04-13",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 80,
+      "dept": "Sorter Rampas",
+      "matricula": "58650",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2026-04-13",
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "data_maternidade": null
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "2o Turno",
+      "id": 1777945280787,
+      "name": "Beatriz Magalahes Do Nascimento",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prod": 6,
+        "assid": 6,
+        "qual": 7,
+        "equip": 7,
+        "org": 8,
+        "know": 8,
+        "comm": 10,
+        "prio": 7,
+        "cria": 8,
+        "motv": 8
+      },
+      "year": 2026,
+      "dept": "Sorter Rampas",
+      "matricula": "53286",
+      "historico_cargos": [
+        {
+          "data": "2025-07-16",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "filial": "",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "filial": "",
+          "cargo": "Auxiliar De Conferente",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno",
+          "data": "2025-07-16"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno",
+          "data": "2025-07-16",
+          "filial": "",
+          "cargo": "Auxiliar De Conferente"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 73,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "data_maternidade": null,
+      "data_admissao": "2025-07-16",
+      "data_ferias_inicio": null,
+      "afastado": false
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "competencies": {
+        "cria": 8,
+        "motv": 8,
+        "prio": 7,
+        "comm": 10,
+        "assid": 7,
+        "qual": 7,
+        "prod": 8,
+        "know": 9,
+        "org": 7,
+        "equip": 8
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Ysolda Mercia Correia Da Rocha",
+      "id": 1777945408250,
+      "turno": "2o Turno",
+      "foto": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-07-21",
+      "demitido": false,
+      "ferias": false,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "data_demissao": null,
+      "afastado": false,
+      "year": 2026,
+      "historico_cargos": [
+        {
+          "data": "2025-07-21",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "data": "2025-07-21",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2",
+          "dept": "Sorter Rampas",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2025-07-21"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Sorter Rampas",
+      "matricula": "53392"
+    },
+    {
+      "data_maternidade": null,
+      "owner_id": "diogo.silva@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false,
+      "year": 2026,
+      "matricula": "46180",
+      "dept": "Sorter Rampas",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2",
+          "data": "2026-05-08",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "2o Turno"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Sorter Rampas",
+          "data": "2026-05-08"
+        },
+        {
+          "data": "2026-05-08",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        }
+      ],
+      "motivo_demissao": "",
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "comm": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Mayara Rosa Da Silva",
+      "turno": "2o Turno",
+      "id": 1778277962148,
+      "data_ferias_fim": null,
+      "filial": "CD 2"
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

@@ -1,0 +1,1110 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "manoela.irineu@nagumo.com.br": {
+      "id": "manoela.irineu@nagumo.com.br",
+      "perfil": {
+        "funcao": "Lider de Logistica Pleno",
+        "filiais": [
+          "CD 2"
+        ],
+        "filial": "CD 2",
+        "turnos": [
+          "1o Turno"
+        ],
+        "depts": [
+          "PCO"
+        ],
+        "turno": "1o Turno"
+      },
+      "name": "Manoela Facanha Irineu",
+      "nivel": "lider",
+      "pass": "nagumo2026",
+      "foto": null,
+      "setor": ""
+    }
+  },
+  "employees": [
+    {
+      "data_admissao": "2026-04-27",
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "owner_id": "manoela.irineu@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "afastado": false,
+      "year": 2026,
+      "competencies_history": {
+        "2026-05": {
+          "prod": 10,
+          "assid": 9,
+          "qual": 6,
+          "equip": 8,
+          "know": 7,
+          "org": 7,
+          "comm": 6,
+          "prio": 6,
+          "cria": 8
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-03-27",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-03-27",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-03-27"
+        }
+      ],
+      "perf": 60,
+      "dept": "PCO",
+      "matricula": "58927",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prio": 6,
+        "cria": 8,
+        "motv": 5,
+        "qual": 6,
+        "assid": 9,
+        "prod": 10,
+        "org": 7,
+        "know": 7,
+        "equip": 8,
+        "comm": 6
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1778134274588,
+      "turno": "1o Turno",
+      "name": "Sabrina Caetano De Sa",
+      "foto": null
+    },
+    {
+      "competencies": {
+        "comm": 10,
+        "prod": 10,
+        "qual": 10,
+        "assid": 10,
+        "equip": 10,
+        "org": 10,
+        "know": 8,
+        "cria": 10,
+        "motv": 10,
+        "prio": 10
+      },
+      "role": "Auxiliar Administrativo",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "name": "Marina Oliveira Da Silva",
+      "id": 1778245426778,
+      "turno": "1o Turno",
+      "data_ferias_fim": "2026-06-12",
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "maternidade": false,
+      "owner_id": "manoela.irineu@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": true,
+      "data_ferias_inicio": "2026-05-14",
+      "data_admissao": "2024-10-23",
+      "matricula": "49057",
+      "dept": "PCO",
+      "perf": 90,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2024-10-23",
+          "dept": "PCO",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        },
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "data": "2024-10-23",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        },
+        {
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "PCO",
+          "data": "2024-10-23"
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Lider De Conferente",
+      "competencies": {
+        "qual": 5,
+        "prio": 5,
+        "know": 5,
+        "comm": 5,
+        "prod": 5,
+        "assid": 5,
+        "org": 5,
+        "equip": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": "2026-07-15",
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Klautton De Oliveira Messias Da Silva",
+      "turno": "2o Turno",
+      "id": 1778245498809,
+      "data_ferias_inicio": "2026-06-15",
+      "data_admissao": "2024-03-20",
+      "data_maternidade": null,
+      "owner_id": "manoela.irineu@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": true,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2024-03-20",
+          "dept": "PCO",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        },
+        {
+          "dept": "PCO",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2024-03-20",
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2024-03-20",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "turno": "1o Turno",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        },
+        {
+          "cargo": "Lider De Conferente",
+          "dept": "Sorter Rampas",
+          "filial": "CD 2",
+          "turno": "2o Turno",
+          "data": "2026-06-12",
+          "tipo": "promocao"
+        }
+      ],
+      "matricula": "45633",
+      "dept": "Sorter Rampas"
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "turno": "1o Turno",
+      "id": 1778245654751,
+      "name": "Kauane Alcantara Nascimento",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Auxiliar Administrativo",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "year": 2026,
+      "matricula": "56740",
+      "dept": "PCO",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "data": "2026-12-13",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "PCO",
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2",
+          "data": "2026-12-13",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "PCO"
+        },
+        {
+          "data": "2026-12-13",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "PCO",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        }
+      ],
+      "motivo_demissao": "",
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "manoela.irineu@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": "2026-12-13",
+      "data_ferias_inicio": null,
+      "afastado": false
+    },
+    {
+      "data_admissao": "2024-10-23",
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "manoela.irineu@nagumo.com.br",
+      "afastado": false,
+      "year": 2026,
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo",
+          "data": "2024-10-23",
+          "turno": "1o Turno",
+          "dept": "PCO",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "data": "2024-10-23"
+        },
+        {
+          "data": "2024-10-23",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 75,
+      "dept": "PCO",
+      "matricula": "49068",
+      "data_maternidade_fim": null,
+      "role": "Auxiliar Administrativo",
+      "competencies": {
+        "prio": 8,
+        "cria": 5,
+        "motv": 7,
+        "prod": 10,
+        "qual": 8,
+        "assid": 10,
+        "equip": 5,
+        "org": 9,
+        "know": 7,
+        "comm": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1778245721073,
+      "turno": "1o Turno",
+      "name": "Kauany Silva Nascimento",
+      "foto": "data:image/jpeg;base64,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"
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Auxiliar Administrativo",
+      "competencies": {
+        "comm": 5,
+        "equip": 7,
+        "org": 9,
+        "know": 7,
+        "prod": 8,
+        "assid": 9,
+        "qual": 8,
+        "motv": 7,
+        "cria": 7,
+        "prio": 7
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Alexandre Duarte Lima",
+      "turno": "1o Turno",
+      "id": 1778324860097,
+      "data_ferias_inicio": null,
+      "data_admissao": "2024-10-14",
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "manoela.irineu@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo",
+          "tipo": "admissao",
+          "dept": "PCO",
+          "turno": "1o Turno",
+          "data": "2024-10-14"
+        },
+        {
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2",
+          "dept": "PCO",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2024-10-14"
+        },
+        {
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2",
+          "data": "2024-10-14",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "PCO"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "48888",
+      "dept": "PCO"
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Karoline Alves Dos Santos",
+      "turno": "1o Turno",
+      "id": 1778325032710,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "year": 2026,
+      "matricula": "50937",
+      "dept": "PCO",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [],
+      "owner_id": "manoela.irineu@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-02-24",
+      "afastado": false
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "1o Turno",
+      "id": 1778325173569,
+      "name": "Catiele Campos Reis Santos",
+      "foto": null,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "manoela.irineu@nagumo.com.br",
+      "data_maternidade": null,
+      "afastado": false,
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "SAC",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-09"
+        },
+        {
+          "dept": "SAC",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-09",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-09",
+          "turno": "1o Turno",
+          "dept": "SAC",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 70,
+      "dept": "SAC",
+      "matricula": "48889"
+    },
+    {
+      "year": 2026,
+      "matricula": "",
+      "dept": "SAC",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-03-16",
+          "turno": "",
+          "dept": "SAC",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "",
+          "dept": "SAC",
+          "data": "2026-03-16",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-03-16",
+          "dept": "SAC",
+          "tipo": "admissao",
+          "turno": "",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "manoela.irineu@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-03-16",
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Luis Gustavo Goncalves Da Cunha",
+      "id": 1778330612857,
+      "turno": "1o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "comm": 5
+      }
+    },
+    {
+      "matricula": "45357",
+      "dept": "SAC",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2024-02-28",
+          "dept": "SAC",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo"
+        },
+        {
+          "data": "2024-02-28",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "SAC",
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "SAC",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2024-02-28",
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2"
+        }
+      ],
+      "year": 2026,
+      "afastado": false,
+      "data_maternidade": null,
+      "owner_id": "manoela.irineu@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": true,
+      "data_ferias_inicio": "2026-04-15",
+      "data_admissao": "2024-02-28",
+      "foto": null,
+      "name": "Daniel Florentino De Oliveira",
+      "id": 1778330729557,
+      "turno": "1o Turno",
+      "data_ferias_fim": "2026-05-15",
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "comm": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      },
+      "role": "Auxiliar Administrativo",
+      "data_maternidade_fim": null
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

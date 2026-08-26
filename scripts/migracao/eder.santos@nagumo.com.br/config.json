@@ -1,0 +1,1068 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "eder.santos@nagumo.com.br": {
+      "foto": null,
+      "name": "Eder Sousa Dos Santos",
+      "nivel": "lider",
+      "pass": "Ana1953",
+      "id": "eder.santos@nagumo.com.br",
+      "perfil": {
+        "depts": [
+          "Recebimento"
+        ],
+        "turnos": [
+          "1o Turno",
+          "Administrativo"
+        ],
+        "filial": "CD 2",
+        "turno": "1o Turno",
+        "filiais": [
+          "CD 2"
+        ],
+        "funcao": "Lider de Conferente"
+      },
+      "setor": ""
+    }
+  },
+  "employees": [
+    {
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prod": 9,
+        "qual": 8,
+        "assid": 9,
+        "equip": 9,
+        "org": 6,
+        "know": 9,
+        "comm": 9,
+        "prio": 9,
+        "cria": 9,
+        "motv": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "1o Turno",
+      "id": 1777970408363,
+      "name": "Alexsandro Silva De Melo",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": "2026-06-18",
+      "demitido": false,
+      "ferias": true,
+      "data_demissao": null,
+      "owner_id": "eder.santos@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_admissao": "2017-09-05",
+      "data_ferias_inicio": "2026-05-12",
+      "afastado": false,
+      "year": 2026,
+      "dept": "Recebimento",
+      "matricula": "28528",
+      "competencies_history": {
+        "2026-05": {
+          "prod": 9,
+          "qual": 8,
+          "assid": 9,
+          "equip": 9,
+          "org": 6,
+          "know": 9,
+          "comm": 9,
+          "prio": 9,
+          "cria": 9
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Conferente",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2017-09-05"
+        },
+        {
+          "data": "2017-09-05",
+          "turno": "1o Turno",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2017-09-05",
+          "turno": "1o Turno",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        }
+      ],
+      "perf": 70
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Rogeria Bispo Dos Santos",
+      "turno": "1o Turno",
+      "id": 1777970616148,
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "assid": 9,
+        "qual": 9,
+        "prod": 9,
+        "know": 9,
+        "org": 9,
+        "equip": 9,
+        "comm": 9,
+        "prio": 9,
+        "cria": 9,
+        "motv": 9
+      },
+      "year": 2026,
+      "dept": "Recebimento",
+      "matricula": "46171",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "data": "2024-04-18",
+          "turno": "1o Turno",
+          "dept": "Recebimento",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2024-04-18",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Recebimento",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2024-04-18",
+          "tipo": "admissao",
+          "dept": "Recebimento",
+          "turno": "1o Turno",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        }
+      ],
+      "competencies_history": {
+        "2026-05": {
+          "equip": 9,
+          "know": 9,
+          "org": 9,
+          "prod": 9,
+          "qual": 9,
+          "assid": 9,
+          "comm": 9,
+          "prio": 9,
+          "motv": 9,
+          "cria": 9
+        }
+      },
+      "perf": 70,
+      "demitido": false,
+      "ferias": false,
+      "owner_id": "eder.santos@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2024-04-18",
+      "afastado": false
+    },
+    {
+      "year": 2026,
+      "matricula": "46189",
+      "dept": "Recebimento",
+      "perf": 70,
+      "competencies_history": {
+        "2026-05": {
+          "comm": 8,
+          "prod": 8,
+          "qual": 8,
+          "assid": 8,
+          "equip": 8,
+          "know": 8,
+          "org": 8,
+          "cria": 8,
+          "motv": 8,
+          "prio": 9
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Recebimento",
+          "data": "2024-04-18",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Recebimento",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2024-04-18"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2024-04-18",
+          "tipo": "admissao",
+          "dept": "Recebimento",
+          "turno": "1o Turno"
+        }
+      ],
+      "data_demissao": null,
+      "owner_id": "eder.santos@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": "2024-04-18",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "id": 1777971965488,
+      "turno": "1o Turno",
+      "name": "Gilmar Vitor Da Silva",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 9,
+        "cria": 8,
+        "motv": 8,
+        "prod": 8,
+        "assid": 8,
+        "qual": 8,
+        "equip": 8,
+        "know": 8,
+        "org": 8,
+        "comm": 8
+      }
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "1o Turno",
+      "id": 1777972100251,
+      "name": "Brayhan Yaverth Silva Rivero",
+      "data_maternidade_fim": null,
+      "role": "Conferente",
+      "competencies": {
+        "comm": 9,
+        "equip": 9,
+        "org": 9,
+        "know": 9,
+        "prod": 9,
+        "assid": 9,
+        "qual": 9,
+        "motv": 9,
+        "cria": 9,
+        "prio": 9
+      },
+      "year": 2026,
+      "perf": 70,
+      "competencies_history": {
+        "2026-05": {
+          "cria": 9,
+          "motv": 9,
+          "prio": 9,
+          "comm": 9,
+          "prod": 9,
+          "assid": 9,
+          "qual": 9,
+          "equip": 9,
+          "org": 9,
+          "know": 9
+        }
+      },
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Conferente",
+          "dept": "Recebimento",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2022-10-24"
+        },
+        {
+          "data": "2022-10-24",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Recebimento",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Conferente",
+          "data": "2022-10-24",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Recebimento"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "41109",
+      "dept": "Recebimento",
+      "data_admissao": "2022-10-24",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "eder.santos@nagumo.com.br",
+      "ferias": false,
+      "demitido": false,
+      "afastado": false
+    },
+    {
+      "year": 2026,
+      "dept": "Recebimento",
+      "matricula": "29630",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "",
+          "data": "2018-09-05",
+          "dept": "Recebimento",
+          "turno": "",
+          "tipo": "admissao"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "turno": "",
+          "data": "2018-09-05"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "turno": "",
+          "data": "2018-09-05"
+        }
+      ],
+      "competencies_history": {
+        "2026-05": {
+          "comm": 10,
+          "equip": 9,
+          "org": 9,
+          "know": 9,
+          "prod": 10,
+          "assid": 9,
+          "qual": 9,
+          "motv": 9,
+          "cria": 9,
+          "prio": 9
+        }
+      },
+      "perf": 70,
+      "demitido": false,
+      "ferias": false,
+      "data_maternidade": null,
+      "owner_id": "eder.santos@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2018-09-05",
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Marcelo Jereonimo Ferreira",
+      "id": 1777972357781,
+      "turno": "1o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 9,
+        "motv": 9,
+        "cria": 9,
+        "org": 9,
+        "know": 9,
+        "equip": 9,
+        "assid": 9,
+        "qual": 9,
+        "prod": 10,
+        "comm": 10
+      }
+    },
+    {
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 8,
+        "motv": 5,
+        "cria": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 8,
+        "prod": 8,
+        "assid": 8,
+        "qual": 9,
+        "comm": 8
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Vanderson Souza Alexandre Da Silva",
+      "turno": "1o Turno",
+      "id": 1777972665323,
+      "foto": "data:image/jpeg;base64,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",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "eder.santos@nagumo.com.br",
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2024-04-11",
+      "afastado": false,
+      "year": 2026,
+      "dept": "Recebimento",
+      "matricula": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2024-04-11",
+          "dept": "Recebimento",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Recebimento",
+          "data": "2024-04-11",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Recebimento",
+          "data": "2024-04-11"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 8,
+          "prio": 8,
+          "know": 8,
+          "prod": 8,
+          "qual": 9,
+          "assid": 8
+        }
+      },
+      "perf": 70
+    },
+    {
+      "afastado": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "eder.santos@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-11-12",
+      "matricula": "55757",
+      "dept": "Recebimento",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2025-11-12",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Recebimento",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "1o Turno",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "data": "2025-11-12"
+        },
+        {
+          "data": "2025-11-12",
+          "turno": "1o Turno",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "competencies_history": {
+        "2026-05": {
+          "comm": 8,
+          "org": 9,
+          "know": 8,
+          "equip": 9,
+          "qual": 8,
+          "assid": 8,
+          "prod": 8,
+          "motv": 8,
+          "cria": 8,
+          "prio": 8
+        }
+      },
+      "year": 2026,
+      "competencies": {
+        "org": 9,
+        "know": 8,
+        "equip": 9,
+        "assid": 8,
+        "qual": 8,
+        "prod": 8,
+        "comm": 8,
+        "prio": 8,
+        "motv": 8,
+        "cria": 8
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "name": "Alexandre Santos Silva",
+      "id": 1777973363451,
+      "turno": "1o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "demitido": false,
+      "ferias": true,
+      "owner_id": "eder.santos@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": "2026-04-13",
+      "data_admissao": "2019-04-22",
+      "afastado": false,
+      "year": 2026,
+      "dept": "Recebimento",
+      "matricula": "32773",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Conferente",
+          "data": "2019-04-22",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        },
+        {
+          "data": "2019-04-22",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Recebimento",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        },
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Recebimento",
+          "data": "2019-04-22"
+        }
+      ],
+      "competencies_history": {
+        "2026-05": {
+          "prio": 9,
+          "motv": 9,
+          "cria": 9,
+          "org": 9,
+          "know": 9,
+          "equip": 9,
+          "qual": 9,
+          "assid": 9,
+          "prod": 9,
+          "comm": 9
+        }
+      },
+      "perf": 70,
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 9,
+        "equip": 9,
+        "know": 9,
+        "org": 9,
+        "prod": 9,
+        "qual": 9,
+        "assid": 9,
+        "motv": 9,
+        "cria": 9,
+        "prio": 9
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Laercio Mariano De Souza Paixao",
+      "id": 1778332783442,
+      "turno": "1o Turno",
+      "foto": null,
+      "data_ferias_fim": "2026-05-18",
+      "filial": "CD 2"
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

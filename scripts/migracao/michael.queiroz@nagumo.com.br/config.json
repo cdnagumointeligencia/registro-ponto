@@ -1,0 +1,2414 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "michael.queiroz@nagumo.com.br": {
+      "setor": "Expedicao",
+      "foto": null,
+      "pass": "nagumo2026",
+      "nivel": "lider",
+      "name": "Michael Dos Anjos De Queiroz",
+      "perfil": {
+        "filiais": [
+          "CD 2"
+        ],
+        "funcao": "Lider de Logistica Pleno",
+        "filial": "CD 2",
+        "depts": [
+          "Expedicao"
+        ],
+        "turnos": [],
+        "turno": "1o Turno"
+      },
+      "id": "michael.queiroz@nagumo.com.br",
+      "avatar": null
+    }
+  },
+  "employees": [
+    {
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "comm": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1778104180698,
+      "turno": "1o Turno",
+      "name": "Viviane Marques Da Silva",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "data_demissao": null,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "ferias": false,
+      "demitido": false,
+      "data_admissao": "2025-07-03",
+      "data_ferias_inicio": null,
+      "matricula": "53096",
+      "dept": "Expedicao",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-06",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-06"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-06"
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "name": "Melanie Holanda Oliveira",
+      "id": 1778106288519,
+      "turno": "1o Turno",
+      "foto": "data:image/jpeg;base64,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",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-05-04",
+      "dept": "Expedicao",
+      "matricula": "59134",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-04",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Separacao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-04"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026
+    },
+    {
+      "afastado": false,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-04",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-04",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "perf": 70,
+      "dept": "Expedicao",
+      "matricula": "59159",
+      "year": 2026,
+      "competencies": {
+        "comm": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1778106569232,
+      "turno": "1o Turno",
+      "name": "Milena De Jesus Bispo",
+      "foto": "data:image/jpeg;base64,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",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null
+    },
+    {
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAsICAoIBwsKCQoNDAsNERwSEQ8PESIZGhQcKSQrKigkJyctMkA3LTA9MCcnOEw5PUNFSElIKzZPVU5GVEBHSEX/2wBDAQwNDREPESESEiFFLicuRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUX/wAARCABQAFADASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAABAYDBQcCAQD/xAA2EAACAQMCAwUGBAYDAAAAAAABAgMABBEFIQYSMRNBUWFxFCIygZGhByNCwRUlUrHR8DNy4f/EABkBAAIDAQAAAAAAAAAAAAAAAAIDAAEEBf/EACERAAMBAQABBAMBAAAAAAAAAAABAhEDEhMhMUEiUXHh/9oADAMBAAIRAxEAPwB11K6Fjplxck4EUZbfxxtWK802oXoy7NK7ZJPdWoceXHY8LyoCAZXVPvn9qzfh4D26STrykDeh3FoUrXg98P6aumIjgczndvGnKK+iZBgADHTwpMgv223z5YouO7Lydmx7MeNBNj65nfEGmWmohwkYJx3dxrNpYZdJvjDMSEzjP71rcE+nwRASSqCR1J3NKvFWn2N/ameBxzL96vcegtasLLg7VxLAdOnlDyxDKEZ3Xw3pkce8fOse0jUJNM1OKO5LJLAfcfxU93pWiHiNSIWK8qE++cd3lRCcLd8eFRH413qQuHRWHRgCM1DzYk3x3VChf/EiX+R26jvmB+in/NIvC7B7iaLodjTp+Irc2kW6+EuftWfaI3ZavGpJAkUg+mM1PmWHLykPx1CysocdorP5DJrlLxbleZCTjyqgvb26MrJbQCONcYYru3pRmkm4aVO1J7NsDDePfSmsWmlVtYC3s83bkHmmYbhCcKMeNc2M9/qtzFbpyASty/CdvMb1f6pw/wCy3LSyIGgbcMan0hLSynW4QBuUHBzV+Sz3B8W3qFzi3RntolmG7255Xx/Se/5H+9MPDlrbatodu8kfvL7rnPxYPShuJb1buwuiFx+U39q5/Dy5PsE8XUB8/Yf+0UvZF9JyhxKouOVVGB3AVGD7/qwr13qBWwyknq2fvUFivxfqAukNui8zK+ydWPypbvtNk0qbS714+UFEMgxuD3/atTIjeQFkUuO/G9U3Exsl06aW8YL7vuDYMWHTA69atP6LBFgguEVwFYEZBG4IrxHS3u4yFUqu5B6Uo8Pa88DCzuHHZdI3b9PkT4UwTdsCXQq/NSaly8Nc2qWoYLviIeyCNYo5M9FJyPWleW5MQymzZ6KNt/Gp7X2OVS13cSK4H/Eqd/hmvLiSO6lSG1h7K2jPNg7knxJq8/ZP4C6rLy6TO7NnmjI+u1E/hvMoe8hkXMeFdt+ijOT9+tU/EMubcWydc8zYr7gnURp+uLztyxzI0TZ8DRqdgRdfmacfZ7suNPLuYxuGHxDGcj/FA9oFdeZgNx1oK1uit9FbaczG6SOTtskYyQMDfvxmj78CG9PZ/CWXI8yAfpvtUT1B9+Sivx+Bf1DiOdi0emIvKOtxJ8PyHfS3dx+0TGa9uWuZjsSc4HoK1vTtINvaHtAYF69mXyqD6YG1J+uTWv8AEA8OpwuTlSosiy+WWByflTufK7WpGbp0iKzdEmWzWf8AKhiYBjuxHKBVtaTSWiiF5MqNgW3GPA0Xd2z2q9pcNEA8gRSisBuM4IbcdP8Ad649nEiedItNezNHPH7olWWJ2/OjH/brUjXMcacsS5PcBQItHj2UkDwHSp44SMHO4pY5MCa17V5GlGS3WgU01jdIYmKnxxnBpgdMjOPWuI4MuCOvcaJU0LcJl5o9klzatczXccUsLc8qjIL8pO3mfDFWF3Ik7u6OHQ8hB8DgYH02pdkcixvMxn2iKSN0dThkDbE+e6r9T41It7Nd3ayzF1bOSNsE5wRju6U1qvBV+xLtu3D+jTpY4L2F4ZQHjOzIcj6ikPiWaCw1EWOi2iRXGwaZBl+Y/pXPTqNxvvTmxBAeFy2wZQNmUHw8sDpiq2ysLWDU5ryS2eS4mcssjHZc9wH6T6/I1r49lDfmZe3B9Enz/wBM/v8ARp4eJYNKvc9jJbrkg5yQh39Qxb/TRqadJFpVrdcpBMS9qp6qcdfn+9PGq6NYXTm8uC1tMsTRCXm6A+udxv8AU1ky8Q3cNpcWzzvKsyYVnY5QeXrUfL1l7fRU9fSr3LogmvOU0HpWoLdp2bn8xR1/qHjVqI81z7lw8Z04tWtREEJFdQJyzIT0zRUcOBvUiQjnFAEznVLCBmjuGiSTA5SrdCMg/tVnq1nbRabYy2sCIjMvLv73KRn54865miEtmysSCBkH0ru8gkv9G0+Szw3ZlFkUncDHvYz6imx5NYvgT0ceK35R/9k=",
+      "turno": "1o Turno",
+      "id": 1778616095787,
+      "name": "Camila Fernanda Alves Furquim",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-04",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "data": "2026-05-04"
+        },
+        {
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-04",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "59103",
+      "dept": "Movimentacao",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2026-05-04",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_maternidade": null,
+      "ferias": false,
+      "demitido": false
+    },
+    {
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "maternidade": false,
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "matricula": "53214",
+      "dept": "Expedicao",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Conferente",
+          "filial": "CD 1",
+          "data": "2026-05-18",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "data": "2026-05-18",
+          "cargo": "Conferente",
+          "filial": "CD 1"
+        },
+        {
+          "cargo": "Conferente",
+          "filial": "CD 1",
+          "data": "2026-05-18",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        }
+      ],
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1779127717862,
+      "turno": "1o Turno",
+      "name": "Andressa Rodrigues Dos Santos",
+      "filial": "CD 2",
+      "data_ferias_fim": null
+    },
+    {
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "comm": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "1o Turno",
+      "id": 1779127776675,
+      "name": "Cleber Dos Santos Oliveira",
+      "foto": "data:image/jpeg;base64,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",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "maternidade": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "dept": "Expedicao",
+      "matricula": "46672",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-18"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-18"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-18",
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "turno": "1o Turno"
+        }
+      ],
+      "perf": 70
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Cleonice Virginio Candido",
+      "turno": "1o Turno",
+      "id": 1779127825776,
+      "foto": "data:image/jpeg;base64,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",
+      "data_maternidade_fim": null,
+      "role": "Conferente",
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "comm": 5
+      },
+      "year": 2026,
+      "historico_cargos": [
+        {
+          "data": "2026-05-18",
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "filial": "CD 1",
+          "cargo": "Conferente"
+        },
+        {
+          "data": "2026-05-18",
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "cargo": "Conferente",
+          "filial": "CD 1"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "data": "2026-05-18",
+          "filial": "CD 1",
+          "cargo": "Conferente"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Expedicao",
+      "matricula": "34862",
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "demitido": false,
+      "ferias": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "afastado": false
+    },
+    {
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "dept": "Expedicao",
+      "matricula": "41925",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "data": "2026-05-18",
+          "cargo": "Conferente",
+          "filial": "CD 1"
+        },
+        {
+          "data": "2026-05-18",
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "filial": "CD 1",
+          "cargo": "Conferente"
+        },
+        {
+          "data": "2026-05-18",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "filial": "CD 1",
+          "cargo": "Conferente"
+        }
+      ],
+      "perf": 70,
+      "year": 2026,
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5
+      },
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "turno": "1o Turno",
+      "id": 1779127870213,
+      "name": "Elandiluedison Da Silva Barros",
+      "foto": "data:image/jpeg;base64,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",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "foto": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAsICAoIBwsKCQoNDAsNERwSEQ8PESIZGhQcKSQrKigkJyctMkA3LTA9MCcnOEw5PUNFSElIKzZPVU5GVEBHSEX/2wBDAQwNDREPESESEiFFLicuRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUX/wAARCABQAFADASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAABAUCAwYHAQD/xAAxEAACAQMDAgQFAwQDAAAAAAABAgMABBEFEiExQRMiUWEGFHGxwTKB8FKRodEjYpL/xAAYAQADAQEAAAAAAAAAAAAAAAABAgMEAP/EAB4RAQADAAMBAQEBAAAAAAAAAAEAAhEDITESQSJh/9oADAMBAAIRAxEAPwDXfFTv40YQSlUAL4/TjnHv1I/x6UkDg2aGcIkcSnaWOTu5JHQ8n0PA4p58R26eG98sjmcf8ZCjCheSM/bPSsxpeoWAt3+ct2dlIjGwgBQe5754NUHOpJN7hehbLtL2IsUM/hoCeTnxAftRi/ENu0UcElvL5Idu4PlnOQVPP0JA96EtjDHc2slsqmNbqAyuOw55PpjIGT3zig7fxHCh41kCnGTtYjp3z7evepN/mOU2XLcW5d4LWJ4C3mMzTYIIAGCBjPQ8/wDb2pTbsWuVyxDryHGeSOcn+f7o66W3SUeNEyKzACTaVGMDPt7Z9T3qFlbWoS4a6J3RkKMDr19SP560tuXPYTjjvTRY37qkl5KtyzBn8RRyQOu484zj+ci/VpgoYNeKZDuIZT5WXLcEdzyAMdPbHCeytIIr6MzFSpyfJnIOOBzzTLVLSF9SiVYBDBKm4mMgeH254H9Pv3+tMcgmwfCOSvTNUuLVDFDMFIO4hsAEcU0TV7tt8g2rKqEnLYXGew7mkOnQKb4K0kaqQducgHjg9jTJnhjjuXkjikWMZUKSFGSBk4zx34pRXyFM9ia91aWe+uLZrlniErqU3ZwAxpOlx4NySiLv4GQeuMdfXpUI7grKi4XzsvmPU54JoOC4WXU1hxyZMMTRVYwGTRi5CWXgLHHhiGJK8nA4zn6morubqTQ8pVOXYL9TREciMhKMDwPvS6s01AjC0Z2wpwyd1YZBoi60UJDJc2kQYkDenUgc5Iqu0AIGDn3FPrCQISsoyhGCD3oIJjA/5EVvwQ8jxIrsdztggDuMnv71XduF1Y4mEhEYwiZIPPH3yKx97dvY391aIxKwzMgbnnBx+KI0/Umku8ug3iNiD24BP4pK8KHsl99xzbxmCQicblU7cbcN+cHij44ma0mMyPIioMjeQAMgc4681n7XVIQ7eNAcMc+U9/p6UW+vMtvNFGSPFwDuXPAIOOvqKoVTZNsRVpVlDc3cZuWzsYkDdtxx/n6V9a2Sw6q+DkRMWz646VbA62M8zQzKVQqrl04RiRnoT0yR+9GRgm9eUxkCWMlSVIyMj1pMuX38la5mRHqkTzTl/l92TwxftTHS4Lh7B1C4IGQBREwRSM4yTgZpvpEtvHG5Z1y2MHPBp92WKhMnpss8F4u2OYsG52N+K6HZ3TzxAlGGRzuGDSaAJPcuwCrIrlTt6HB607jmX5cxqp3DqR1NcuwZjOea3ZPDqk7zLtM0jSqM54JPpVNspRi5BA2kA/Xj8011i28a9kcgDzc7R3wM17Zu8LFLgeJCwClTggY6HFBuh1IWO4sA3kY4A9KtWMsAw6HgH1ou5V7afwAUPqBjn0qcFok3VhG/Xb2x3ofZmyfrHXkPIVf7V5O5aDBP6entQ6S8+Xj2pJ8QfEBtHSC2OXUhpTjgj+n/AHUeMW3UYt+y26kRSfEP7YzU7Ke2X9YJUjup4PrVYZZwJE53CrrWKVXBByM9K0+TUdkYwSR+KsluwKk84pmblUidiwGenPekwCwyM/Clh09TSn4lv3ihs1QjBk3sO+B0+5oB9ORbOE0cxS4JLohJ6nbjPvmqGtIiOY1P7kUv+F7j5i6NrNOXQkqmTyp5xz3FbE6Gn9cn/kHFJal6uTP6TO3EEc6EGIgkDkN0NVx6fGqqS8ivjBOAQK0EmiYXCzEHtlOP8Zqo6LPtGJIyfTJ/IpcsdZFRgptYYiTgyN78D+1cx1dXXVLkSZLeIfvXVmTJwPqaz2r/AAxFqC+M0pjuBnMgGQw9x/PtW8461P5kS3czWn3xjLpnhjvX96aR30q/p28+tItZs5NLnijAiChQw8OQk54ByCeOfYD8DxXV9cbYrdHYucKFUksfSpWor1NVeQDuaGXUFhzJcS7j2Ud6Rz30l7eeNLyo4VCeAKbxfCWqXUKJMkMc3YliSevBxkA8ijrH4NEEjfPSiR14EcfC5PAyetUpxJ2yXJzCYQb4Y0q51LUAthEQwHmcnyoPUmupWaSLaqpmaVoyUZ243EUHpclvbrBLbQrBBiWNFC48gyRn9yf71bpkiJN8xKSFH6R65qlqbJV5H2HHepww+oNR69V+nFMfBW7iZyArnpz0+tAPFNGOVJHc44rPmSw7P//Z",
+      "turno": "1o Turno",
+      "id": 1779127931402,
+      "name": "Leilson Santos Fernandes Da Silva",
+      "filial": "CD 2",
+      "data_ferias_fim": "2026-06-15",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "matricula": "38064",
+      "dept": "Expedicao",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Conferente",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-18"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "data": "2026-05-18",
+          "filial": "CD 1",
+          "cargo": "Conferente"
+        },
+        {
+          "cargo": "Conferente",
+          "filial": "CD 1",
+          "data": "2026-05-18",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        }
+      ],
+      "year": 2026,
+      "afastado": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "ferias": true,
+      "demitido": false,
+      "data_admissao": null,
+      "data_ferias_inicio": "2026-05-13"
+    },
+    {
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_maternidade": null,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "dept": "Expedicao",
+      "matricula": "49077",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-18",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        },
+        {
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-18",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-18",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 70,
+      "year": 2026,
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5
+      },
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "name": "Lidiane Santos Da Gama",
+      "id": 1779127989752,
+      "turno": "1o Turno",
+      "foto": "data:image/jpeg;base64,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",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Thiago Dos Santos Sales",
+      "id": 1779128474726,
+      "turno": "1o Turno",
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "data": "2026-05-18",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "data": "2026-05-18",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-18",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "matricula": "55643",
+      "dept": "Expedicao"
+    },
+    {
+      "year": 2026,
+      "perf": 72,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "data": "2026-05-18"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "data": "2026-05-18",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-18"
+        }
+      ],
+      "matricula": "47436",
+      "dept": "Expedicao",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1779128523636,
+      "turno": "1o Turno",
+      "name": "Luiz Henrique Nascimento Calgaro",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      }
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Antonio Leandro Da Silva Marinho",
+      "id": 1780335699115,
+      "turno": "1o Turno",
+      "foto": "data:image/jpeg;base64,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",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5
+      },
+      "year": 2026,
+      "dept": "Expedicao",
+      "matricula": "52657",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Conferente",
+          "data": "2026-06-01",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Conferente",
+          "data": "2026-06-01",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao"
+        },
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "data": "2026-06-01",
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "turno": "1o Turno"
+        }
+      ],
+      "perf": 70,
+      "demitido": false,
+      "ferias": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false
+    },
+    {
+      "year": 2026,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "data": "2026-06-01",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-06-01"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "data": "2026-06-01",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "35077",
+      "dept": "Expedicao",
+      "data_ferias_inicio": "2026-05-14",
+      "data_admissao": null,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "ferias": true,
+      "demitido": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": "2026-06-15",
+      "filial": "CD 2",
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Daniel Santos Lima",
+      "turno": "1o Turno",
+      "id": 1780335811983,
+      "data_maternidade_fim": null,
+      "role": "Conferente",
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5
+      }
+    },
+    {
+      "competencies": {
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "name": "Ana Paula Evangelista Almeida Da Costa",
+      "turno": "1o Turno",
+      "id": 1780335940169,
+      "foto": "data:image/jpeg;base64,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",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "dept": "Expedicao",
+      "matricula": "34820",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-06-01"
+        },
+        {
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "data": "2026-06-01",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        },
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "data": "2026-06-01"
+        }
+      ],
+      "perf": 70,
+      "year": 2026
+    },
+    {
+      "foto": null,
+      "name": "Joao Victor Coelho Da Silva",
+      "turno": "1o Turno",
+      "id": 1780336015241,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "matricula": "47283",
+      "dept": "Expedicao",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "data": "2026-06-01",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "data": "2026-06-01",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        },
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "data": "2026-06-01"
+        }
+      ],
+      "year": 2026,
+      "afastado": false,
+      "maternidade": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Bruno Cortez Da Silva",
+      "turno": "1o Turno",
+      "id": 1780336131875,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "year": 2026,
+      "matricula": "52114",
+      "dept": "Expedicao",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-06-01",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-06-01"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-06-01",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        }
+      ],
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false
+    },
+    {
+      "matricula": "57337",
+      "dept": "Expedicao",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-06-01"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-06-01",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Expedicao"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "data": "2026-06-01",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "year": 2026,
+      "afastado": false,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Gulherme  Souza Da Silva",
+      "turno": "1o Turno",
+      "id": 1780336174449,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "comm": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null
+    },
+    {
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "data": "2026-06-01",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-06-01",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-06-01",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "perf": 70,
+      "dept": "Expedicao",
+      "matricula": "48900",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "1o Turno",
+      "id": 1780336218544,
+      "name": "Priscila Neves Rodrigues Da Silva",
+      "foto": "data:image/jpeg;base64,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",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito"
+    },
+    {
+      "dept": "Expedicao",
+      "matricula": "54121",
+      "historico_cargos": [
+        {
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-06-01",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-06-01",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-06-01",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026,
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "name": "Catiane Loredo Pereira Dos Reis",
+      "turno": "1o Turno",
+      "id": 1780336987485,
+      "foto": "data:image/jpeg;base64,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",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5
+      },
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null
+    },
+    {
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Ederson Goncalves Souto",
+      "id": 1780337107703,
+      "turno": "1o Turno",
+      "foto": "data:image/jpeg;base64,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",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Conferente",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "data": "2026-06-01",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "data": "2026-06-01",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-06-01",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 70,
+      "dept": "Expedicao",
+      "matricula": "41996",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_demissao": null
+    },
+    {
+      "year": 2026,
+      "dept": "Expedicao",
+      "matricula": "46108",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Conferente",
+          "data": "2026-06-01",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "tipo": "admissao"
+        },
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "data": "2026-06-01",
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "turno": "1o Turno"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Conferente",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "data": "2026-06-01"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "id": 1780337201726,
+      "turno": "1o Turno",
+      "name": "Helena Cristini Goncalves Pereira",
+      "foto": "data:image/jpeg;base64,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",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5
+      }
+    },
+    {
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-06-01",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        },
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "data": "2026-06-01",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-06-01",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 70,
+      "dept": "Expedicao",
+      "matricula": "46096",
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_demissao": null,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Thiago Lima Fernandes Sales",
+      "id": 1780337269897,
+      "turno": "1o Turno",
+      "foto": "data:image/jpeg;base64,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",
+      "data_maternidade_fim": null,
+      "role": "Conferente",
+      "competencies": {
+        "comm": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      }
+    },
+    {
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "data": "2026-06-01",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Expedicao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Conferente",
+          "data": "2026-06-01",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-06-01",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "41928",
+      "dept": "Expedicao",
+      "data_maternidade_fim": null,
+      "role": "Conferente",
+      "competencies": {
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Wesley Felipe Da Silva Leitao",
+      "turno": "1o Turno",
+      "id": 1780337357094
+    },
+    {
+      "year": 2026,
+      "historico_cargos": [
+        {
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-06-01",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        },
+        {
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-06-01",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Conferente",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-06-01"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Aprendiz",
+          "turno": "1o Turno",
+          "tipo": "promocao",
+          "dept": "Expedicao",
+          "data": "2026-06-08"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Expedicao",
+      "matricula": "",
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_demissao": null,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Matheus Moises Tavares",
+      "turno": "1o Turno",
+      "id": 1780337524409,
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Aprendiz",
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "comm": 5
+      }
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Thiago Salomao Martins",
+      "turno": "1o Turno",
+      "id": 1780338101114,
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Aprendiz",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      },
+      "year": 2026,
+      "dept": "Expedicao",
+      "matricula": "",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Aprendiz",
+          "filial": "CD 2",
+          "data": "2026-06-01",
+          "tipo": "admissao",
+          "dept": "Expedicao",
+          "turno": "1o Turno"
+        },
+        {
+          "data": "2026-06-01",
+          "dept": "Expedicao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Aprendiz"
+        },
+        {
+          "cargo": "Aprendiz",
+          "filial": "CD 2",
+          "turno": "1o Turno",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "data": "2026-06-01"
+        }
+      ],
+      "perf": 70,
+      "ferias": false,
+      "demitido": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false
+    },
+    {
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": "data:image/jpeg;base64,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",
+      "turno": "1o Turno",
+      "id": 1780961623397,
+      "name": "Kamily Vitoria De Oliveira",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Conferente",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "data": "2026-06-08",
+          "dept": "Expedicao",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "53112",
+      "dept": "Expedicao",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "michael.queiroz@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

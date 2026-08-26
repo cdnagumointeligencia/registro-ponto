@@ -1,0 +1,1181 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "pablo.sarto@nagumo.com.br": {
+      "setor": "",
+      "perfil": {
+        "funcao": "Lider de Logistica Pleno",
+        "filiais": [
+          "CD 2"
+        ],
+        "turnos": [
+          "3o Turno"
+        ],
+        "depts": [
+          "Separacao"
+        ],
+        "filial": "CD 2",
+        "turno": "3o Turno"
+      },
+      "id": "pablo.sarto@nagumo.com.br",
+      "foto": null,
+      "name": "Pablo Willian Sarto",
+      "pass": "carecapablo1",
+      "nivel": "lider"
+    }
+  },
+  "employees": [
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "assid": 5,
+        "qual": 5,
+        "prod": 6,
+        "know": 5,
+        "org": 4,
+        "equip": 6,
+        "comm": 3,
+        "prio": 6,
+        "cria": 4,
+        "motv": 4
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Rodrigo Davi Pedrozo De Souza",
+      "id": 1778132559145,
+      "turno": "3o Turno",
+      "foto": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-03-09",
+      "demitido": true,
+      "ferias": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "pablo.sarto@nagumo.com.br",
+      "data_demissao": "2026-06-05",
+      "afastado": false,
+      "year": 2026,
+      "motivo_demissao": "Colaborador com baixo desempenho em suas atividades. So trabalhava quando estava em cima da maquina. Diversas vezes foi passado FeedBacks para melhoria, mas sem sucesso.",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-03-09",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-03-09",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao"
+        },
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-03-09",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "tipo": "desligamento",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "data": "2026-06-05",
+          "filial": "CD 2",
+          "motivo": "Colaborador com baixo desempenho em suas atividades. So trabalhava quando estava em cima da maquina. Diversas vezes foi passado FeedBacks para melhoria, mas sem sucesso.",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "competencies_history": {
+        "2026-05": {
+          "prio": 6,
+          "cria": 4,
+          "assid": 5,
+          "qual": 5,
+          "prod": 6,
+          "know": 5,
+          "org": 4,
+          "equip": 6,
+          "comm": 3
+        }
+      },
+      "perf": 40,
+      "dept": "Separacao",
+      "matricula": "57773"
+    },
+    {
+      "foto": null,
+      "id": 1778132704349,
+      "turno": "3o Turno",
+      "name": "Rejane Maria Da Conceicao",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        19,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "prio": 2,
+        "cria": 2,
+        "motv": 2,
+        "prod": 2,
+        "qual": 2,
+        "assid": 5,
+        "equip": 3,
+        "org": 3,
+        "know": 3,
+        "comm": 2
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "matricula": "57918",
+      "dept": "Separacao",
+      "perf": 70,
+      "motivo_demissao": "Abandono.",
+      "historico_cargos": [
+        {
+          "data": "2026-03-09",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "motivo": "Abandono.",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "desligamento",
+          "data": "2026-05-14"
+        },
+        {
+          "data": "2026-03-09",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-14",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "desligamento",
+          "motivo": "Abandono.",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-03-09"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "motivo": "Abandono.",
+          "data": "2026-05-14",
+          "dept": "Separacao",
+          "tipo": "desligamento",
+          "turno": "3o Turno"
+        }
+      ],
+      "year": 2026,
+      "afastado": false,
+      "data_demissao": "2026-05-14",
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "pablo.sarto@nagumo.com.br",
+      "ferias": false,
+      "demitido": true,
+      "data_admissao": "2026-03-09",
+      "data_ferias_inicio": null
+    },
+    {
+      "afastado": false,
+      "data_admissao": "2024-05-14",
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": true,
+      "data_demissao": "2026-05-28",
+      "owner_id": "pablo.sarto@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "historico_cargos": [
+        {
+          "data": "2026-05-07",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-28",
+          "turno": "3o Turno",
+          "tipo": "desligamento",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "motivo": "Muito baixa a produtividade e muitas ausencias da empresa.",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-07",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-28",
+          "turno": "3o Turno",
+          "tipo": "desligamento",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "motivo": "Muito baixa a produtividade e muitas ausencias da empresa."
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-05-28",
+          "dept": "Separacao",
+          "tipo": "desligamento",
+          "turno": "3o Turno",
+          "filial": "CD 2",
+          "motivo": "Muito baixa a produtividade e muitas ausencias da empresa.",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "Muito baixa a produtividade e muitas ausencias da empresa.",
+      "perf": 10,
+      "dept": "Separacao",
+      "matricula": "46476",
+      "year": 2026,
+      "competencies": {
+        "comm": 2,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 1,
+        "org": 5,
+        "know": 1,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1778132987957,
+      "turno": "3o Turno",
+      "name": "Nicoly Rillery Souza Santos",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null
+    },
+    {
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 4,
+        "prod": 6,
+        "assid": 2,
+        "qual": 5,
+        "equip": 6,
+        "org": 6,
+        "know": 3,
+        "comm": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1778133236837,
+      "turno": "3o Turno",
+      "name": "Jennifer Reis Santos",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_demissao": "2026-05-22",
+      "owner_id": "pablo.sarto@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "ferias": false,
+      "demitido": true,
+      "data_admissao": "2026-02-23",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "matricula": "57598",
+      "dept": "Separacao",
+      "perf": 50,
+      "historico_cargos": [
+        {
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-02-23",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "motivo": "Pouca produtividade alem de suas ausencias constantes da empresa.",
+          "filial": "CD 2",
+          "tipo": "desligamento",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-22"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-02-23"
+        },
+        {
+          "filial": "CD 2",
+          "motivo": "Pouca produtividade alem de suas ausencias constantes da empresa.",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-22",
+          "tipo": "desligamento",
+          "turno": "3o Turno",
+          "dept": "Separacao"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-02-23"
+        },
+        {
+          "dept": "Separacao",
+          "tipo": "desligamento",
+          "turno": "3o Turno",
+          "data": "2026-05-22",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "motivo": "Pouca produtividade alem de suas ausencias constantes da empresa."
+        }
+      ],
+      "motivo_demissao": "Pouca produtividade alem de suas ausencias constantes da empresa."
+    },
+    {
+      "afastado": false,
+      "data_demissao": "2026-05-29",
+      "owner_id": "pablo.sarto@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "demitido": true,
+      "ferias": false,
+      "data_admissao": "2026-03-02",
+      "data_ferias_inicio": null,
+      "matricula": "57637",
+      "dept": "Separacao",
+      "perf": 35,
+      "motivo_demissao": "Colaborador com pouca produtividade e diversas ausencias.",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-03-02"
+        },
+        {
+          "motivo": "Colaborador com pouca produtividade e diversas ausencias.",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "desligamento",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-29"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-03-02",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno"
+        },
+        {
+          "data": "2026-05-29",
+          "turno": "3o Turno",
+          "tipo": "desligamento",
+          "dept": "Separacao",
+          "motivo": "Colaborador com pouca produtividade e diversas ausencias.",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-03-02"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "motivo": "Colaborador com pouca produtividade e diversas ausencias.",
+          "filial": "CD 2",
+          "data": "2026-05-29",
+          "turno": "3o Turno",
+          "tipo": "desligamento",
+          "dept": "Separacao"
+        }
+      ],
+      "year": 2026,
+      "competencies": {
+        "prio": 4,
+        "cria": 3,
+        "motv": 4,
+        "assid": 4,
+        "qual": 3,
+        "prod": 1,
+        "know": 4,
+        "org": 8,
+        "equip": 4,
+        "comm": 3
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1778133860483,
+      "turno": "3o Turno",
+      "name": "Nicolas Lourenco Nunes",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1778134000704,
+      "turno": "3o Turno",
+      "name": "Igor Batista Vieira",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "motv": 4,
+        "cria": 4,
+        "prio": 3,
+        "comm": 4,
+        "org": 4,
+        "know": 4,
+        "equip": 3,
+        "qual": 5,
+        "assid": 6,
+        "prod": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "perf": 50,
+      "competencies_history": {
+        "2026-05": {
+          "prio": 3,
+          "motv": 4,
+          "cria": 4,
+          "org": 4,
+          "know": 4,
+          "equip": 3,
+          "qual": 0,
+          "assid": 6,
+          "prod": 5,
+          "comm": 4
+        }
+      },
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-02-23"
+        },
+        {
+          "motivo": "Colaborador muito disperso nas atividades, conversava muito e deixava de realizar as atividades. So trabalhava bem quando ficava em cima da transpaleteira eletrica.",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-22",
+          "dept": "Separacao",
+          "tipo": "desligamento",
+          "turno": "3o Turno"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "data": "2026-02-23",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "motivo": "Colaborador muito disperso nas atividades, conversava muito e deixava de realizar as atividades. So trabalhava bem quando ficava em cima da transpaleteira eletrica.",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "3o Turno",
+          "tipo": "desligamento",
+          "dept": "Separacao",
+          "data": "2026-05-22"
+        },
+        {
+          "data": "2026-02-23",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-22",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "desligamento",
+          "filial": "CD 2",
+          "motivo": "Colaborador muito disperso nas atividades, conversava muito e deixava de realizar as atividades. So trabalhava bem quando ficava em cima da transpaleteira eletrica.",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "Colaborador muito disperso nas atividades, conversava muito e deixava de realizar as atividades. So trabalhava bem quando ficava em cima da transpaleteira eletrica.",
+      "matricula": "57613",
+      "dept": "Separacao",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2026-02-23",
+      "data_ferias_inicio": null,
+      "data_demissao": "2026-05-22",
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "pablo.sarto@nagumo.com.br",
+      "demitido": true,
+      "ferias": false
+    },
+    {
+      "data_demissao": "2026-05-29",
+      "maternidade": false,
+      "owner_id": "pablo.sarto@nagumo.com.br",
+      "data_maternidade": null,
+      "ferias": false,
+      "demitido": true,
+      "data_admissao": "2026-03-02",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "matricula": "57638",
+      "dept": "Separacao",
+      "perf": 30,
+      "motivo_demissao": "A produtividade da colaboradora era boa. Porem, foi desligada da empresa pelo motivo de suas ausencias sem apresentar nenhuma justificativa legal.",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-03-02",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "motivo": "A produtividade da colaboradora era boa. Porem, foi desligada da empresa pelo motivo de suas ausencias sem apresentar nenhuma justificativa legal.",
+          "filial": "CD 2",
+          "tipo": "desligamento",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-29"
+        },
+        {
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-03-02",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "motivo": "A produtividade da colaboradora era boa. Porem, foi desligada da empresa pelo motivo de suas ausencias sem apresentar nenhuma justificativa legal.",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-29",
+          "turno": "3o Turno",
+          "tipo": "desligamento",
+          "dept": "Separacao"
+        },
+        {
+          "data": "2026-03-02",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "motivo": "A produtividade da colaboradora era boa. Porem, foi desligada da empresa pelo motivo de suas ausencias sem apresentar nenhuma justificativa legal.",
+          "filial": "CD 2",
+          "tipo": "desligamento",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-29"
+        }
+      ],
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 8,
+        "cria": 3,
+        "motv": 1,
+        "prod": 8,
+        "assid": 5,
+        "qual": 3,
+        "equip": 3,
+        "org": 5,
+        "know": 3,
+        "comm": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        12,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": "data:image/jpeg;base64,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",
+      "turno": "3o Turno",
+      "id": 1778135692936,
+      "name": "Ariany Aparecida Silva Cardoso",
+      "filial": "CD 2",
+      "data_ferias_fim": null
+    },
+    {
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        19,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Camila Correia Carvalho De Souza",
+      "id": 1778135916018,
+      "turno": "3o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "owner_id": "pablo.sarto@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": "2026-06-04",
+      "ferias": false,
+      "demitido": true,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-05-04",
+      "afastado": false,
+      "year": 2026,
+      "matricula": "59163",
+      "dept": "Separacao",
+      "perf": 50,
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao"
+        },
+        {
+          "data": "2026-05-04",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "motivo": "Abandono!",
+          "filial": "CD 2",
+          "tipo": "desligamento",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "data": "2026-06-04"
+        }
+      ],
+      "motivo_demissao": "Abandono!",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 0,
+          "prod": 0,
+          "assid": 0,
+          "qual": 0,
+          "equip": 0,
+          "org": 0,
+          "know": 0,
+          "cria": 0,
+          "motv": 0,
+          "prio": 0
+        }
+      }
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

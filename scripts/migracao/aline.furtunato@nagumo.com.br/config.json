@@ -1,0 +1,1438 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "aline.furtunato@nagumo.com.br": {
+      "nivel": "lider",
+      "pass": "nagumo2026",
+      "name": "Aline Alves Furtunato",
+      "foto": null,
+      "perfil": {
+        "filiais": [
+          "CD 2"
+        ],
+        "funcao": "Lider de Logistica Pleno",
+        "turno": "3o Turno",
+        "depts": [
+          "Separacao"
+        ],
+        "filial": "CD 2",
+        "turnos": [
+          "3o Turno"
+        ]
+      },
+      "id": "aline.furtunato@nagumo.com.br",
+      "setor": ""
+    }
+  },
+  "employees": [
+    {
+      "year": 2026,
+      "dept": "Armazenagem",
+      "matricula": "46110",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Armazenagem",
+          "data": "2026-05-07"
+        },
+        {
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Armazenagem",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-07",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "prio": 9,
+          "cria": 8,
+          "motv": 8,
+          "prod": 8,
+          "qual": 9,
+          "assid": 8,
+          "equip": 8,
+          "org": 8,
+          "know": 9,
+          "comm": 8
+        }
+      },
+      "perf": 70,
+      "ferias": true,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "aline.furtunato@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": "2026-04-15",
+      "data_admissao": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Junior Silva Assis",
+      "turno": "3o Turno",
+      "id": 1778132274728,
+      "foto": null,
+      "data_ferias_fim": "2026-05-14",
+      "filial": "CD 2",
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 8,
+        "qual": 9,
+        "assid": 8,
+        "prod": 8,
+        "org": 8,
+        "know": 9,
+        "equip": 8,
+        "cria": 8,
+        "motv": 8,
+        "prio": 9
+      }
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "3o Turno",
+      "id": 1778132521921,
+      "name": "Celio Pereira Rodrigues",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 9,
+        "motv": 8,
+        "cria": 9,
+        "org": 9,
+        "know": 9,
+        "equip": 9,
+        "qual": 9,
+        "assid": 10,
+        "prod": 10,
+        "comm": 10
+      },
+      "year": 2026,
+      "dept": "Armazenagem",
+      "matricula": "47431",
+      "competencies_history": {
+        "2026-05": {
+          "assid": 10,
+          "qual": 9,
+          "prod": 10,
+          "know": 9,
+          "org": 9,
+          "equip": 9,
+          "comm": 10,
+          "prio": 9,
+          "cria": 9,
+          "motv": 8
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Armazenagem",
+          "data": "2026-05-07"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Armazenagem"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2026-05-07",
+          "dept": "Armazenagem",
+          "turno": "3o Turno",
+          "tipo": "admissao"
+        }
+      ],
+      "perf": 70,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "aline.furtunato@nagumo.com.br",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "afastado": false
+    },
+    {
+      "owner_id": "aline.furtunato@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false,
+      "year": 2026,
+      "matricula": "53155",
+      "dept": "Armazenagem",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "3o Turno",
+          "data": "2026-05-07"
+        },
+        {
+          "filial": "",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "3o Turno"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "",
+          "dept": "Armazenagem",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-07"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 9,
+          "prod": 9,
+          "qual": 9,
+          "assid": 9,
+          "equip": 9,
+          "know": 9,
+          "org": 9,
+          "cria": 9,
+          "motv": 9,
+          "prio": 9
+        }
+      },
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 9,
+        "cria": 9,
+        "motv": 9,
+        "prod": 9,
+        "assid": 9,
+        "qual": 9,
+        "equip": 9,
+        "org": 9,
+        "know": 9,
+        "comm": 9
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Winny Amanda Martins",
+      "turno": "3o Turno",
+      "id": 1778132646021,
+      "data_ferias_fim": null,
+      "filial": "CD 2"
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Marcio Pereira Da Silva",
+      "turno": "3o Turno",
+      "id": 1778132849604,
+      "data_maternidade_fim": null,
+      "role": "Operador De Empilhadeira",
+      "competencies": {
+        "prio": 9,
+        "cria": 9,
+        "motv": 9,
+        "prod": 9,
+        "qual": 9,
+        "assid": 7,
+        "equip": 9,
+        "know": 9,
+        "org": 8,
+        "comm": 8
+      },
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "data": "2026-05-07"
+        },
+        {
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "3o Turno",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "data": "2026-05-07"
+        }
+      ],
+      "competencies_history": {
+        "2026-05": {
+          "comm": 8,
+          "org": 8,
+          "know": 9,
+          "equip": 9,
+          "assid": 7,
+          "qual": 9,
+          "prod": 9,
+          "motv": 9,
+          "cria": 9,
+          "prio": 9
+        }
+      },
+      "matricula": "55155",
+      "dept": "Armazenagem",
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "aline.furtunato@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false
+    },
+    {
+      "year": 2026,
+      "perf": 70,
+      "competencies_history": {
+        "2026-05": {
+          "prio": 7,
+          "motv": 6,
+          "cria": 7,
+          "equip": 7,
+          "org": 6,
+          "know": 9,
+          "prod": 9,
+          "qual": 7,
+          "assid": 7,
+          "comm": 6
+        }
+      },
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2026-05-07",
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "turno": "3o Turno"
+        },
+        {
+          "data": "2026-05-07",
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "turno": "3o Turno"
+        }
+      ],
+      "matricula": "49134",
+      "dept": "Armazenagem",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "aline.furtunato@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1778132993958,
+      "turno": "3o Turno",
+      "name": "Leonardo Magalhaes Luciano",
+      "data_maternidade_fim": null,
+      "role": "Operador De Empilhadeira",
+      "competencies": {
+        "prio": 7,
+        "motv": 6,
+        "cria": 7,
+        "equip": 7,
+        "know": 9,
+        "org": 6,
+        "prod": 9,
+        "assid": 7,
+        "qual": 7,
+        "comm": 6
+      }
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Cleber Amaro Dos Santos",
+      "turno": "3o Turno",
+      "id": 1778133095381,
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "comm": 7,
+        "org": 7,
+        "know": 8,
+        "equip": 7,
+        "assid": 7,
+        "qual": 8,
+        "prod": 10,
+        "motv": 6,
+        "cria": 7,
+        "prio": 8
+      },
+      "year": 2026,
+      "dept": "Armazenagem",
+      "matricula": "46672",
+      "historico_cargos": [
+        {
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-05-07",
+          "cargo": "Operador De Empilhadeira",
+          "filial": ""
+        },
+        {
+          "filial": "",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2026-05-07",
+          "dept": "Armazenagem",
+          "turno": "3o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2026-05-07",
+          "turno": "3o Turno",
+          "dept": "Armazenagem",
+          "tipo": "admissao"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "prio": 8,
+          "motv": 6,
+          "cria": 7,
+          "know": 8,
+          "org": 7,
+          "equip": 7,
+          "qual": 8,
+          "assid": 7,
+          "prod": 10,
+          "comm": 7
+        }
+      },
+      "perf": 70,
+      "ferias": false,
+      "demitido": false,
+      "owner_id": "aline.furtunato@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2023-02-22",
+      "afastado": false
+    },
+    {
+      "competencies_history": {
+        "2026-05": {
+          "prio": 10,
+          "cria": 9,
+          "motv": 9,
+          "prod": 10,
+          "assid": 9,
+          "qual": 9,
+          "equip": 9,
+          "know": 9,
+          "org": 9,
+          "comm": 9
+        }
+      },
+      "historico_cargos": [
+        {
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "data": "2026-02-16",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "3o Turno",
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "data": "2026-02-16"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-02-16",
+          "dept": "Armazenagem",
+          "turno": "3o Turno",
+          "tipo": "admissao"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Armazenagem",
+      "matricula": "57346",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": "2026-02-16",
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "aline.furtunato@nagumo.com.br",
+      "data_maternidade": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "3o Turno",
+      "id": 1778133224749,
+      "name": "Karine De Souza Antunes Da Silva",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "comm": 9,
+        "prod": 10,
+        "assid": 9,
+        "qual": 9,
+        "equip": 9,
+        "know": 9,
+        "org": 9,
+        "cria": 9,
+        "motv": 9,
+        "prio": 10
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito"
+    },
+    {
+      "afastado": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "aline.furtunato@nagumo.com.br",
+      "maternidade": false,
+      "ferias": false,
+      "demitido": false,
+      "data_admissao": "2026-01-12",
+      "data_ferias_inicio": null,
+      "matricula": "56743",
+      "dept": "Armazenagem",
+      "perf": 70,
+      "competencies_history": {
+        "2026-05": {
+          "cria": 9,
+          "motv": 10,
+          "prio": 10,
+          "comm": 9,
+          "assid": 10,
+          "qual": 9,
+          "prod": 10,
+          "org": 10,
+          "know": 9,
+          "equip": 9
+        }
+      },
+      "historico_cargos": [
+        {
+          "data": "2026-01-12",
+          "dept": "Armazenagem",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "filial": "",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-01-12",
+          "turno": "3o Turno",
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "filial": "",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Armazenagem",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-01-12"
+        }
+      ],
+      "motivo_demissao": "",
+      "year": 2026,
+      "competencies": {
+        "prio": 10,
+        "motv": 10,
+        "cria": 9,
+        "know": 9,
+        "org": 10,
+        "equip": 9,
+        "qual": 9,
+        "assid": 10,
+        "prod": 10,
+        "comm": 9
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "id": 1778133475258,
+      "turno": "3o Turno",
+      "name": "Elaine Juliao Borges",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "owner_id": "aline.furtunato@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-03-02",
+      "dept": "Armazenagem",
+      "matricula": "57639",
+      "historico_cargos": [
+        {
+          "data": "2026-03-02",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "Armazenagem",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-03-02",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-03-02",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Armazenagem",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "prio": 9,
+          "cria": 9,
+          "motv": 10,
+          "prod": 10,
+          "assid": 10,
+          "qual": 10,
+          "equip": 9,
+          "org": 9,
+          "know": 9,
+          "comm": 9
+        },
+        "2026-06": {
+          "qual": 8
+        }
+      },
+      "perf": 70,
+      "year": 2026,
+      "competencies": {
+        "comm": 9,
+        "assid": 10,
+        "qual": 8,
+        "prod": 10,
+        "org": 9,
+        "know": 9,
+        "equip": 9,
+        "cria": 9,
+        "motv": 10,
+        "prio": 9
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "name": "Alexssandra Aparecida Ribeiro Santana",
+      "id": 1778133604320,
+      "turno": "3o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "year": 2026,
+      "perf": 50,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "dept": "Separacao"
+        },
+        {
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-04",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-04"
+        }
+      ],
+      "competencies_history": {
+        "2026-05": {
+          "equip": 9,
+          "org": 9,
+          "know": 9,
+          "prod": 9,
+          "assid": 9,
+          "qual": 9,
+          "comm": 9,
+          "prio": 9,
+          "cria": 9
+        }
+      },
+      "matricula": "59077",
+      "dept": "Armazenagem",
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-05-04",
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "aline.furtunato@nagumo.com.br",
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Juciene Pereira De Oliveira",
+      "id": 1778135221353,
+      "turno": "3o Turno",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prio": 9,
+        "motv": 5,
+        "cria": 9,
+        "equip": 9,
+        "know": 9,
+        "org": 9,
+        "prod": 9,
+        "assid": 9,
+        "qual": 9,
+        "comm": 9
+      }
+    },
+    {
+      "year": 2026,
+      "perf": 50,
+      "historico_cargos": [
+        {
+          "data": "2026-05-04",
+          "turno": "3o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "3o Turno",
+          "data": "2026-05-04",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-04",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "comm": 9,
+          "qual": 9,
+          "assid": 9,
+          "prod": 9,
+          "org": 9,
+          "know": 9,
+          "equip": 9,
+          "cria": 9,
+          "motv": 9,
+          "prio": 9
+        }
+      },
+      "matricula": "59194",
+      "dept": "Armazenagem",
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-05-04",
+      "owner_id": "aline.furtunato@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Jennifer Alves Rocha",
+      "turno": "3o Turno",
+      "id": 1778135244378,
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "motv": 9,
+        "cria": 9,
+        "prio": 9,
+        "comm": 9,
+        "org": 9,
+        "know": 9,
+        "equip": 9,
+        "qual": 9,
+        "assid": 9,
+        "prod": 9
+      }
+    },
+    {
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "qual": 9,
+        "assid": 9,
+        "prod": 9,
+        "org": 9,
+        "know": 9,
+        "equip": 9,
+        "comm": 9,
+        "prio": 9,
+        "cria": 9,
+        "motv": 9
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Emilly Caroliny Da Rocha Almeida",
+      "turno": "3o Turno",
+      "id": 1778216627127,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "aline.furtunato@nagumo.com.br",
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-05-04",
+      "afastado": false,
+      "year": 2026,
+      "matricula": "59292",
+      "dept": "Armazenagem",
+      "perf": 60,
+      "historico_cargos": [
+        {
+          "data": "2026-05-08",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "3o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-08"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-08",
+          "turno": "3o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao"
+        }
+      ],
+      "motivo_demissao": "",
+      "competencies_history": {
+        "2026-05": {
+          "prio": 9,
+          "cria": 9,
+          "motv": 9,
+          "prod": 9,
+          "qual": 9,
+          "assid": 9,
+          "equip": 9,
+          "know": 9,
+          "org": 9,
+          "comm": 9
+        }
+      }
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

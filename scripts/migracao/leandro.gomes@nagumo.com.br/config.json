@@ -1,0 +1,2360 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "leandro.gomes@nagumo.com.br": {
+      "setor": "",
+      "id": "leandro.gomes@nagumo.com.br",
+      "perfil": {
+        "turnos": [
+          "1o Turno"
+        ],
+        "depts": [
+          "Sorter Rampas"
+        ],
+        "filial": "CD 2",
+        "turno": "1o Turno",
+        "filiais": [
+          "CD 2"
+        ],
+        "funcao": "Lider de Logistica Pleno"
+      },
+      "foto": null,
+      "name": "Leandro Gomes Dos Santos",
+      "pass": "21252650",
+      "nivel": "lider"
+    }
+  },
+  "employees": [
+    {
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "competencies": {
+        "prio": 9,
+        "cria": 7,
+        "motv": 5,
+        "qual": 7,
+        "assid": 10,
+        "prod": 9,
+        "know": 8,
+        "org": 7,
+        "equip": 6,
+        "comm": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Jackson William Dos Santos Silva",
+      "id": 1778088092411,
+      "turno": "1o Turno",
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "dept": "Sorter Jogada",
+          "turno": "1o Turno",
+          "data": "2026-05-06"
+        },
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Jogada",
+          "data": "2026-05-06",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-06",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Sorter Jogada"
+        }
+      ],
+      "competencies_history": {
+        "2026-05": {
+          "know": 8,
+          "org": 7,
+          "equip": 6,
+          "assid": 10,
+          "qual": 7,
+          "prod": 9,
+          "comm": 5,
+          "prio": 9,
+          "motv": 5,
+          "cria": 7
+        }
+      },
+      "matricula": "43784",
+      "dept": "Sorter Rampas"
+    },
+    {
+      "year": 2026,
+      "matricula": "56176",
+      "dept": "Movimentacao",
+      "perf": 100,
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2025-12-01"
+        },
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2025-12-01",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2025-12-01",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-12-01",
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Larrisa Da Silva Melo",
+      "id": 1778105368451,
+      "turno": "1o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "comm": 5
+      }
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Tais De Lima Silva",
+      "turno": "1o Turno",
+      "id": 1778105551649,
+      "foto": "data:image/jpeg;base64,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",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "comm": 5
+      },
+      "year": 2026,
+      "dept": "Movimentacao",
+      "matricula": "57630",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "data": "2026-03-02",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-03-02",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "1o Turno"
+        },
+        {
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-03-02",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 90,
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-03-02",
+      "afastado": false
+    },
+    {
+      "dept": "Movimentacao",
+      "matricula": "56264",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2025-12-01",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2025-12-01",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2025-12-01",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 85,
+      "year": 2026,
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-12-01",
+      "name": "Talia Vitoria Romero Dos Santos",
+      "id": 1778105626937,
+      "turno": "1o Turno",
+      "foto": "data:image/jpeg;base64,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",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Ana Caroline Da Silva Borges",
+      "id": 1778106779938,
+      "turno": "1o Turno",
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-05-04",
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-04"
+        },
+        {
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-04",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-04",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "matricula": "59167",
+      "dept": "Movimentacao"
+    },
+    {
+      "year": 2026,
+      "dept": "Movimentacao",
+      "matricula": "54808",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-12",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-12"
+        },
+        {
+          "data": "2026-05-12",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 70,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "1o Turno",
+      "id": 1778614074729,
+      "name": "Maria Luzinete De Almeida",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      }
+    },
+    {
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-02-16",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-02-16",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao"
+        },
+        {
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-02-16",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "matricula": "57335",
+      "dept": "Movimentacao",
+      "data_admissao": "2026-02-16",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1778614297321,
+      "turno": "1o Turno",
+      "name": "Denise Gomes Da Silva",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "comm": 5
+      }
+    },
+    {
+      "competencies": {
+        "comm": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": "data:image/jpeg;base64,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",
+      "turno": "1o Turno",
+      "id": 1778615077247,
+      "name": "Larissa Amanda Nonato Dos Santos",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "data": "2026-05-12"
+        },
+        {
+          "data": "2026-05-12",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-12",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "matricula": "57507",
+      "dept": "Movimentacao",
+      "year": 2026
+    },
+    {
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-12"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Movimentacao",
+          "data": "2026-05-12",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-05-12",
+          "dept": "Movimentacao",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        }
+      ],
+      "matricula": "47367",
+      "dept": "Movimentacao",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Lucinalva Silva Santos",
+      "turno": "1o Turno",
+      "id": 1778615315224
+    },
+    {
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-05-04",
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "year": 2026,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-04"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-04",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Separacao"
+        },
+        {
+          "data": "2026-05-04",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "59093",
+      "dept": "Movimentacao",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Daiane Greice Marinho Sa Silva",
+      "turno": "1o Turno",
+      "id": 1778616016401
+    },
+    {
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1778616155677,
+      "turno": "1o Turno",
+      "name": "Juliana Marques Garcez",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "matricula": "59105",
+      "dept": "Movimentacao",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-14",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "data": "2026-05-14",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-14",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "year": 2026,
+      "afastado": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "maternidade": false,
+      "ferias": false,
+      "demitido": false,
+      "data_admissao": "2026-05-14",
+      "data_ferias_inicio": null
+    },
+    {
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1779186052494,
+      "turno": "1o Turno",
+      "name": "Dina Lourenco Costa",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5
+      },
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "matricula": "57875",
+      "dept": "Sorter Rampas",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-03-09",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-03-09",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-03-09"
+        }
+      ],
+      "year": 2026,
+      "afastado": false,
+      "data_demissao": null,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": "2026-03-09",
+      "data_ferias_inicio": null
+    },
+    {
+      "competencies": {
+        "comm": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Romilda Ruas",
+      "id": 1779186094964,
+      "turno": "1o Turno",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2024-04-11",
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2024-04-11",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2024-04-11",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2024-04-11",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "46113",
+      "dept": "Sorter Rampas",
+      "year": 2026
+    },
+    {
+      "afastado": false,
+      "demitido": false,
+      "ferias": true,
+      "data_maternidade": null,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "data_ferias_inicio": "2026-05-15",
+      "data_admissao": "2024-11-21",
+      "dept": "Sorter Rampas",
+      "matricula": "49673",
+      "historico_cargos": [
+        {
+          "data": "2024-11-21",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2024-11-21",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Sorter Rampas",
+          "data": "2024-11-21"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026,
+      "competencies": {
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "name": "Gilvonete De Jesus Santos",
+      "id": 1779186184978,
+      "turno": "1o Turno",
+      "foto": null,
+      "data_ferias_fim": "2026-06-14",
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Joyce De Oliveira Vitor Luiz",
+      "turno": "1o Turno",
+      "id": 1779186233885,
+      "foto": "data:image/jpeg;base64,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",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "dept": "Sorter Rampas",
+      "matricula": "47280",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "data": "2024-07-22"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "data": "2024-07-22"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2024-07-22"
+        }
+      ],
+      "perf": 70,
+      "year": 2026,
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2024-07-22"
+    },
+    {
+      "foto": null,
+      "name": "Cleide Castro Gonzaga",
+      "id": 1779186269530,
+      "turno": "1o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5
+      },
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "matricula": "53117",
+      "dept": "Sorter Rampas",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2025-07-03",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        },
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2",
+          "data": "2025-07-03",
+          "turno": "1o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2025-07-03",
+          "turno": "1o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao"
+        }
+      ],
+      "motivo_demissao": "",
+      "year": 2026,
+      "afastado": false,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-07-03"
+    },
+    {
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Juan Sousa Diniz",
+      "turno": "1o Turno",
+      "id": 1779186306009,
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "comm": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "data": "2025-07-01"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2025-07-01",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Sorter Rampas"
+        },
+        {
+          "turno": "1o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "data": "2025-07-01",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        }
+      ],
+      "perf": 70,
+      "dept": "Sorter Rampas",
+      "matricula": "53061",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-07-01",
+      "demitido": false,
+      "ferias": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_demissao": null
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "competencies": {
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1779186352362,
+      "turno": "1o Turno",
+      "name": "Luciene Maria De Souza Silva",
+      "foto": null,
+      "data_admissao": "2024-04-11",
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "afastado": false,
+      "year": 2026,
+      "historico_cargos": [
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2",
+          "data": "2024-04-11",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2024-04-11",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "data": "2024-04-11",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Sorter Rampas",
+      "matricula": "46117"
+    },
+    {
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5
+      },
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "turno": "1o Turno",
+      "id": 1779186384305,
+      "name": "Safira Souza De Almeida",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "data_admissao": "2025-07-01",
+      "data_ferias_inicio": null,
+      "dept": "Sorter Rampas",
+      "matricula": "53199",
+      "historico_cargos": [
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2",
+          "data": "2025-07-01",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas"
+        },
+        {
+          "data": "2025-07-01",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2025-07-01",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026
+    },
+    {
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2025-07-03",
+      "dept": "Sorter Rampas",
+      "matricula": "53178",
+      "historico_cargos": [
+        {
+          "data": "2025-07-03",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2025-07-03",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2025-07-03",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026,
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5
+      },
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "name": "Bruno Da Silva Manso",
+      "turno": "1o Turno",
+      "id": 1779186420504,
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "data_demissao": null,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": "2025-12-01",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "matricula": "56178",
+      "dept": "Sorter Rampas",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2",
+          "data": "2025-12-01",
+          "turno": "1o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2025-12-01"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2025-12-01",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Sorter Rampas"
+        }
+      ],
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "id": 1779186457730,
+      "turno": "1o Turno",
+      "name": "Rodrigo Pereira Da Silva",
+      "filial": "CD 2",
+      "data_ferias_fim": null
+    },
+    {
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "maternidade": false,
+      "data_admissao": "2025-12-15",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "dept": "Sorter Rampas",
+      "matricula": "56442",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2025-12-15",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2025-12-15",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2025-12-15",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 70,
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "id": 1779186491405,
+      "turno": "1o Turno",
+      "name": "Maria Carmilene Gomes Da Silva",
+      "foto": "data:image/jpeg;base64,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",
+      "filial": "CD 2",
+      "data_ferias_fim": null
+    },
+    {
+      "year": 2026,
+      "dept": "Sorter Rampas",
+      "matricula": "49659",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 2",
+          "data": "2026-05-19",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2026-05-19",
+          "turno": "1o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-05-19",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        }
+      ],
+      "perf": 70,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_maternidade": null,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "turno": "1o Turno",
+      "id": 1779186527426,
+      "name": "Lais Maria Dos Santos",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "comm": 5
+      }
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1779186558667,
+      "turno": "1o Turno",
+      "name": "Kimberly Judith Lopes Da Silva",
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "comm": 5
+      },
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Sorter Rampas",
+          "data": "2025-10-23",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "data": "2025-10-23",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2025-10-23",
+          "filial": "CD 2",
+          "cargo": "Auxiliar De Conferente"
+        }
+      ],
+      "matricula": "55156",
+      "dept": "Sorter Rampas",
+      "data_admissao": "2025-10-23",
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "demitido": false,
+      "ferias": false,
+      "afastado": false
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Priscila Alessandra Romildo",
+      "id": 1779186592770,
+      "turno": "1o Turno",
+      "foto": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAsICAoIBwsKCQoNDAsNERwSEQ8PESIZGhQcKSQrKigkJyctMkA3LTA9MCcnOEw5PUNFSElIKzZPVU5GVEBHSEX/2wBDAQwNDREPESESEiFFLicuRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUX/wAARCABQAFADASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAABAYDBQcCAf/EADMQAAECBQIEAwYHAQEAAAAAAAECAwAEBREhEjEGIkFRE2GRMnGBocHwBxQVI0Kx0eHx/8QAGwEAAgIDAQAAAAAAAAAAAAAAAwQCBQABBgf/xAAjEQADAAICAgICAwAAAAAAAAAAAQIDEQQhEjETQQUyYXGx/9oADAMBAAIRAxEAPwDRxHQiNJjsQPYVSSI3ip4lr6KDJJUEeJMunS033Pc+W0W7YzGb1181H8Qw2pQMvJWBN8A2v/ZPpGbNuQSepPEFeUXqjNFtByGr8o+AxALtKrlIlFJkJ14AnUQ24U7Q9OPBZulVxEJR4gN9oE8jQWcSa7M5kq1M1CdWzUFFcwo+2rckdD5x1UE/uae0D8VMiSroca5VYVjvBk0pMy8XUgaV2It26QVPa2XXDyPJj+Kvr/C14apjD7LjrwTqBIFyRYAXJv2/2L51lqVl7htKLi6kpNsW3At5ececPsIZpg5+fSVkXuU3wBgG2M/ePKw4Uyqs6UJbCQldlZIvj55jIQLJu8jn6HNMTIQVbREmJ2my4bDaIlT6Ry6+3KMPPuqs20krUfIC5jIpIVBcvOVgMsuCddK/3M/yN/mY1Otywco1QZuTdhW25FsgecIvDM8hPDdPaI1K1KSQE3Ptnb4RqukZPb6CaU5Mfpf5iba8PUCUNp3tA0hVWpmcUyFutLOQlXMkwwvKQ+grwABbT2gOVpjC0lzQLbwBtDCT0Z9xmrXW0gi2lGYlkwFsS+91ITb0gDiyaRMV6YDXsNkNg97bxacPJD7EsFWthPMbDeGJ6lD/AOOpfJX9D3KyZEmhlKiF3Q0QUHcgHI7Z8sDyip4icw4rUCCsnfYdAPS32YvWEhRbK216rqdNtOoEdSQbdBt9IWOIXElLaErJSB1N/nE49EsCdZNmiog6UzqgFMGyftKHlA59lNf6nkwdL1/KMq4WDb8k4yFFLsk+vCDY2OR9RDfxfxMaU86wwB4iUAlZzYkYA8/9EZHRK45RaqZmxW0u6XUg7jv7xE6h6IRkX0aa2twhXgJUo3z4gAA+PX0jioz6aZRX5l7ksMJHU9BAB4tp6ZYONhalq/iRa3vhG4n4hfrDiG7lEujIQNie5heYdMZvIpWylddU86txRuVEkmHXgtCHGW/E9lIWTi+QD9/CEZO0Pn4fpC5eb1ZSmySkEXyRnPYA5hi+kE4WTxqv5THBx0sNTBQCClpLZUQc36/fpClVXtayNITbFrQyTiizKWAQUOOHKLhPKLC3ln5Qnzi7k/UxufRc8edQ2a8DBsooAkk2FjcmAVcpsYqOJaqZKmBhu2uYJBPZItf6fOB4l5UkjmctahsTON59EzVpp1kFZXgEbISBpv8AG14zx0ErAAJN9h1hkqswHLs6ipxR5zfAT0HkYEbQGJlA8JR8RNtak20k9t4dqE3pCUW1O2cMIcW2EKSErIyL7e+B3pNxxWlCCSTtF3TpQPP+GLKWr42HeGIyLLCeRIBOLwZYp1pAr5D3tmeu0x9lKSU3J3HaL7gqeEtUHJdaQQ6LgEC+pN8Z2BBPoINclw4+UWuBfMQT9FUhKX2OV1BBCkmx9YHlwLXQ1xuT42vIY6hMnwm0FQ5Ukgdr5x8v+Qsvr/cCgBg7HMWT00p2USVN5IuFKPMB2indUfvrCiO1a8Y0bPMrAcVbvGccW1YOTig0oFSeRIPQdTbbeLBzi6YccIRLpybC9/8AkIzry5x12YWSdayRftfA9Ihx6W20cbnlpJMkkJb8zNDVlIOtZV198XS0WZS2lsB11WkWAwP/ACIZBoS8oCQnWRqOMk9P7gpZDDK5hwkeCg6fNRGYtInxkrMl+VBkiywgrEukajyrWf5Wj2YmR4hSSE6Rc7/fSKmlvrXLNhC9JuVKMDP66xOFhgqbl04eXjmI6CCLoHrb7D5Rv9RqZYZSFNNnSt3fPlDEKY22g3SnUQQTbPuvHlKYYk5dtqXbCQAMRaLaKULUUiwt7o1SI+ffQizqtALVrFBIyDiKpw4i1rRKZ13O5v7un0gGVa8a47/SK61qmkeicWqz4Yb96R//2Q==",
+      "data_ferias_inicio": null,
+      "data_admissao": "2024-10-14",
+      "demitido": false,
+      "ferias": false,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_demissao": null,
+      "afastado": false,
+      "year": 2026,
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2024-10-14",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "turno": "1o Turno"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2024-10-14"
+        },
+        {
+          "data": "2024-10-14",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "Sorter Rampas",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Movimentacao",
+      "matricula": "48897"
+    },
+    {
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-19",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "turno": "1o Turno",
+          "dept": "Sorter Rampas",
+          "tipo": "admissao",
+          "data": "2026-05-19",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Sorter Rampas",
+          "data": "2026-05-19",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 70,
+      "dept": "Movimentacao",
+      "matricula": "55744",
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "leandro.gomes@nagumo.com.br",
+      "data_demissao": null,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Jessica Dos Santos Conceicao",
+      "id": 1779186639934,
+      "turno": "1o Turno",
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5
+      }
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

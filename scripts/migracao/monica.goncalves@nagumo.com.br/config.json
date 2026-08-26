@@ -1,0 +1,1810 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "monica.goncalves@nagumo.com.br": {
+      "setor": "CPD",
+      "id": "monica.goncalves@nagumo.com.br",
+      "perfil": {
+        "funcao": "Coordenador Administrativo",
+        "filiais": [
+          "CD 1",
+          "CD 2"
+        ],
+        "turnos": [
+          "1o Turno",
+          "2o Turno",
+          "3o Turno",
+          "Administrativo"
+        ],
+        "depts": [
+          "CPD"
+        ],
+        "filial": "CD 1",
+        "turno": "1o Turno"
+      },
+      "nivel": "coordenacao",
+      "pass": "nagumo2026",
+      "name": "Monica Alves Goncalves"
+    }
+  },
+  "employees": [
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1778174210367,
+      "turno": "Administrativo",
+      "name": "Bianca Farias Furukawa",
+      "data_maternidade_fim": null,
+      "role": "Assistente Administrativo Senior",
+      "competencies": {
+        "comm": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      },
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "Administrativo",
+          "dept": "CPD",
+          "data": "2026-05-07",
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo Senior"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo Senior",
+          "turno": "Administrativo",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "data": "2026-05-07"
+        },
+        {
+          "data": "2026-05-07",
+          "dept": "CPD",
+          "turno": "Administrativo",
+          "tipo": "admissao",
+          "cargo": "Assistente Administrativo Senior",
+          "filial": "CD 2"
+        }
+      ],
+      "matricula": "25424",
+      "dept": "CPD",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "demitido": false,
+      "ferias": false,
+      "afastado": false
+    },
+    {
+      "afastado": false,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "matricula": "49251",
+      "dept": "CPD",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "CPD",
+          "turno": "Administrativo",
+          "data": "2026-05-07",
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "turno": "Administrativo",
+          "tipo": "admissao",
+          "dept": "CPD"
+        },
+        {
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "turno": "Administrativo"
+        }
+      ],
+      "year": 2026,
+      "competencies": {
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "role": "Assistente Administrativo",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "name": "Bianca Pereira",
+      "id": 1778174295644,
+      "turno": "Administrativo",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "year": 2026,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-07",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo"
+        },
+        {
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "dept": "CPD",
+          "turno": "2o Turno",
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-05-07"
+        }
+      ],
+      "matricula": "46186",
+      "dept": "CPD",
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Denis Torquato",
+      "id": 1778174331038,
+      "turno": "2o Turno",
+      "data_maternidade_fim": null,
+      "role": "Assistente Administrativo",
+      "competencies": {
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      }
+    },
+    {
+      "competencies": {
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Assistente Administrativo",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Diogo Bezerra",
+      "turno": "1o Turno",
+      "id": 1778174367362,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "maternidade": false,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "dept": "CPD",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-07",
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "CPD",
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "dept": "CPD",
+          "turno": "1o Turno"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "42442",
+      "dept": "CPD",
+      "year": 2026
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Gabriel Torrigo",
+      "turno": "2o Turno",
+      "id": 1778174399201,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "role": "Assistente Administrativo",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "year": 2026,
+      "matricula": "47950",
+      "dept": "CPD",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "CPD",
+          "turno": "2o Turno",
+          "data": "2026-05-07",
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 1"
+        },
+        {
+          "turno": "2o Turno",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "data": "2026-05-07",
+          "filial": "CD 1",
+          "cargo": "Assistente Administrativo"
+        },
+        {
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 1",
+          "tipo": "admissao",
+          "dept": "CPD",
+          "turno": "2o Turno",
+          "data": "2026-05-07"
+        }
+      ],
+      "motivo_demissao": "",
+      "data_maternidade": null,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Girlene Lucas",
+      "id": 1778174430948,
+      "turno": "1o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "role": "Assistente Administrativo",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "comm": 5
+      },
+      "year": 2026,
+      "matricula": "33349",
+      "dept": "CPD",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-07",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "filial": "CD 1",
+          "cargo": "Assistente Administrativo"
+        },
+        {
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "CPD",
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 1"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Assistente Administrativo",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-07"
+        }
+      ],
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false
+    },
+    {
+      "data_maternidade_fim": null,
+      "role": "Assistente Administrativo",
+      "competencies": {
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Helder Alencar",
+      "id": 1778174673592,
+      "turno": "Administrativo",
+      "foto": null,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "afastado": false,
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo",
+          "data": "2026-05-07",
+          "turno": "Administrativo",
+          "dept": "CPD",
+          "tipo": "admissao"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "Administrativo",
+          "dept": "CPD",
+          "data": "2026-05-07",
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "turno": "Administrativo"
+        }
+      ],
+      "perf": 70,
+      "dept": "CPD",
+      "matricula": "47432"
+    },
+    {
+      "year": 2026,
+      "matricula": "",
+      "dept": "CPD",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "dept": "CPD",
+          "tipo": "admissao",
+          "turno": "Administrativo",
+          "data": "2026-05-07",
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo Pleno"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo Pleno",
+          "turno": "Administrativo",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "data": "2026-05-07"
+        },
+        {
+          "turno": "Administrativo",
+          "tipo": "admissao",
+          "dept": "CPD",
+          "data": "2026-05-07",
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo Pleno"
+        }
+      ],
+      "motivo_demissao": "",
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": false,
+      "ferias": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "turno": "Administrativo",
+      "id": 1778174702696,
+      "name": "Iasmin Hernandez",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "role": "Assistente Administrativo Pleno",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5
+      }
+    },
+    {
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo Pleno",
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "CPD"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo Pleno",
+          "data": "2026-05-07",
+          "dept": "CPD",
+          "turno": "1o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-05-07",
+          "dept": "CPD",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "cargo": "Assistente Administrativo Pleno",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 70,
+      "dept": "CPD",
+      "matricula": "18298",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "1o Turno",
+      "id": 1778174735809,
+      "name": "Jamille Santos",
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Assistente Administrativo Pleno",
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5
+      }
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "foto": "data:image/jpeg;base64,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",
+      "id": 1778175270669,
+      "turno": "1o Turno",
+      "name": "Leonardo Nagaishi",
+      "data_maternidade_fim": null,
+      "role": "Assistente Administrativo",
+      "competencies": {
+        "comm": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "year": 2026,
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Assistente Administrativo",
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "dept": "CPD",
+          "turno": "1o Turno"
+        },
+        {
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 1",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "CPD",
+          "data": "2026-05-07"
+        },
+        {
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 1",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "dept": "CPD",
+          "data": "2026-05-07"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "24331",
+      "dept": "CPD",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "maternidade": false,
+      "demitido": false,
+      "ferias": false,
+      "afastado": false
+    },
+    {
+      "maternidade": false,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false,
+      "year": 2026,
+      "matricula": "37761",
+      "dept": "CPD",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "dept": "CPD",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-05-07",
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo"
+        },
+        {
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "dept": "CPD",
+          "turno": "1o Turno",
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo"
+        },
+        {
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "dept": "CPD",
+          "turno": "1o Turno"
+        }
+      ],
+      "motivo_demissao": "",
+      "role": "Assistente Administrativo",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Pedro Batista",
+      "turno": "1o Turno",
+      "id": 1778175346924,
+      "data_ferias_fim": null,
+      "filial": "CD 2"
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "name": "Yara Bonaldi",
+      "id": 1778175372087,
+      "turno": "2o Turno",
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Assistente Administrativo",
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5
+      },
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Assistente Administrativo",
+          "turno": "2o Turno",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "data": "2026-05-07"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Assistente Administrativo",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-05-07"
+        },
+        {
+          "data": "2026-05-07",
+          "turno": "2o Turno",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "filial": "CD 1",
+          "cargo": "Assistente Administrativo"
+        }
+      ],
+      "perf": 70,
+      "dept": "CPD",
+      "matricula": "48275",
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "data_demissao": null,
+      "afastado": false
+    },
+    {
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "dept": "CPD",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2",
+          "data": "2026-05-07",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "CPD"
+        },
+        {
+          "dept": "CPD",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-07",
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "55154",
+      "dept": "CPD",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "foto": null,
+      "name": "Cibele Campos",
+      "id": 1778175408388,
+      "turno": "2o Turno",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Assistente Administrativo"
+    },
+    {
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Pamela Ferreira",
+      "id": 1778175442894,
+      "turno": "1o Turno",
+      "foto": "data:image/jpeg;base64,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",
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "role": "Assistente Administrativo",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5
+      },
+      "year": 2026,
+      "dept": "CPD",
+      "matricula": "55157",
+      "historico_cargos": [
+        {
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 1",
+          "data": "2026-05-07",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "turno": "1o Turno"
+        },
+        {
+          "data": "2026-05-07",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "CPD",
+          "filial": "CD 1",
+          "cargo": "Assistente Administrativo"
+        },
+        {
+          "data": "2026-05-07",
+          "tipo": "admissao",
+          "dept": "CPD",
+          "turno": "1o Turno",
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 1"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "ferias": false,
+      "demitido": false,
+      "maternidade": false,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false
+    },
+    {
+      "afastado": false,
+      "data_maternidade": null,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "maternidade": false,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "matricula": "55158",
+      "dept": "CPD",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2",
+          "tipo": "admissao",
+          "dept": "CPD",
+          "turno": "2o Turno",
+          "data": "2026-05-07"
+        },
+        {
+          "dept": "CPD",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-07",
+          "filial": "CD 2",
+          "cargo": "Assistente Administrativo"
+        },
+        {
+          "dept": "CPD",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-07",
+          "cargo": "Assistente Administrativo",
+          "filial": "CD 2"
+        }
+      ],
+      "year": 2026,
+      "competencies": {
+        "comm": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      },
+      "role": "Assistente Administrativo",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "name": "Giovanna Patricio",
+      "turno": "2o Turno",
+      "id": 1778175496552,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "foto": null,
+      "turno": "2o Turno",
+      "id": 1778175574400,
+      "name": "Maryana De Oliveira",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Auxiliar Administrativo",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar Administrativo",
+          "data": "2026-05-07",
+          "dept": "CPD",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar Administrativo",
+          "data": "2026-05-07",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "turno": "2o Turno"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar Administrativo",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "CPD",
+          "data": "2026-05-07"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "58717",
+      "dept": "CPD",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "data_maternidade": null,
+      "maternidade": false,
+      "ferias": false,
+      "demitido": false
+    },
+    {
+      "competencies": {
+        "comm": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "role": "Auxiliar Administrativo",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "name": "Josilaine Dos Santos",
+      "id": 1778175613166,
+      "turno": "Administrativo",
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "maternidade": false,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "matricula": "57881",
+      "dept": "CPD",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-07",
+          "turno": "Administrativo",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2",
+          "turno": "Administrativo",
+          "tipo": "admissao",
+          "dept": "CPD",
+          "data": "2026-05-07"
+        },
+        {
+          "dept": "CPD",
+          "tipo": "admissao",
+          "turno": "Administrativo",
+          "data": "2026-05-07",
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2"
+        }
+      ],
+      "year": 2026
+    },
+    {
+      "historico_cargos": [
+        {
+          "filial": "CD 2",
+          "cargo": "Auxiliar Administrativo",
+          "data": "2026-05-07",
+          "dept": "CPD",
+          "turno": "Administrativo",
+          "tipo": "admissao"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "Administrativo",
+          "dept": "CPD",
+          "data": "2026-05-07",
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-05-07",
+          "turno": "Administrativo",
+          "dept": "CPD",
+          "tipo": "admissao",
+          "cargo": "Auxiliar Administrativo",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "CPD",
+      "matricula": "57716",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "data_demissao": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Rodrigo Orsi Da Silva",
+      "turno": "Administrativo",
+      "id": 1778175647936,
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "comm": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Auxiliar Administrativo"
+    },
+    {
+      "maternidade": false,
+      "owner_id": "monica.goncalves@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-04-20",
+      "afastado": false,
+      "year": 2026,
+      "matricula": "58780",
+      "dept": "CPD",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "dept": "Separacao",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "data": "2026-04-20",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "1o Turno",
+          "data": "2026-04-20",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-04-20",
+          "turno": "1o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "role": "Auxiliar Administrativo",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "comm": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Moises Freitas Mello",
+      "turno": "1o Turno",
+      "id": 1778614712500,
+      "data_ferias_fim": null,
+      "filial": "CD 2"
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

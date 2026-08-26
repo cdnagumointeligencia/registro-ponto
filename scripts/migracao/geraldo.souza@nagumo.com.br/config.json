@@ -1,0 +1,1002 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "geraldo.souza@nagumo.com.br": {
+      "setor": "",
+      "name": "Geraldo Oliveira De Souza",
+      "pass": "davimatheus",
+      "nivel": "lider",
+      "foto": null,
+      "id": "geraldo.souza@nagumo.com.br",
+      "perfil": {
+        "funcao": "Lider de Logistica Pleno",
+        "filiais": [
+          "CD 2"
+        ],
+        "turno": "2o Turno",
+        "turnos": [
+          "2o Turno"
+        ],
+        "depts": [
+          "Recebimento"
+        ],
+        "filial": "CD 2"
+      }
+    }
+  },
+  "employees": [
+    {
+      "name": "Lucas Salustino Da Silva",
+      "id": 1777943556908,
+      "turno": "2o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "comm": 5
+      },
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "dept": "Recebimento",
+      "matricula": "44178",
+      "historico_cargos": [
+        {
+          "turno": "2o Turno",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "data": "2023-10-23",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Recebimento",
+          "data": "2023-10-23",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2023-10-23",
+          "dept": "Recebimento",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026,
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "owner_id": "geraldo.souza@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2023-10-23"
+    },
+    {
+      "id": 1777943731808,
+      "turno": "2o Turno",
+      "name": "Janaina Gabriela Barbosa",
+      "foto": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "comm": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "dept": "Recebimento",
+      "matricula": "49648",
+      "historico_cargos": [
+        {
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2024-11-21",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "cargo": "Conferente",
+          "filial": "CD 2",
+          "data": "2024-11-21",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "turno": "2o Turno"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Conferente",
+          "turno": "2o Turno",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "data": "2024-11-21"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026,
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "geraldo.souza@nagumo.com.br",
+      "data_admissao": "2024-11-21",
+      "data_ferias_inicio": null
+    },
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1777943867421,
+      "turno": "2o Turno",
+      "name": "Vinicios Moreira Santana",
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Conferente",
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "comm": 5
+      },
+      "year": 2026,
+      "competencies_history": {},
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Recebimento",
+          "data": "2025-06-12",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Conferente",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Recebimento",
+          "data": "2025-06-12"
+        },
+        {
+          "data": "2025-06-12",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "cargo": "Conferente",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 70,
+      "dept": "Recebimento",
+      "matricula": "52814",
+      "data_admissao": "2025-06-12",
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "owner_id": "geraldo.souza@nagumo.com.br",
+      "maternidade": false,
+      "data_maternidade": null,
+      "afastado": false
+    },
+    {
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "org": 8,
+        "know": 6,
+        "equip": 7,
+        "qual": 6,
+        "assid": 3,
+        "prod": 6,
+        "comm": 4,
+        "prio": 4,
+        "motv": 4,
+        "cria": 6
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "id": 1777944015341,
+      "turno": "2o Turno",
+      "name": "Alexandre Nogueira Da Silva",
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "data_demissao": "2026-05-23",
+      "maternidade": false,
+      "owner_id": "geraldo.souza@nagumo.com.br",
+      "data_maternidade": null,
+      "demitido": true,
+      "ferias": false,
+      "data_admissao": "2026-02-23",
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "year": 2026,
+      "matricula": "57576",
+      "dept": "Recebimento",
+      "perf": 70,
+      "competencies_history": {
+        "2026-05": {
+          "qual": 6,
+          "assid": 3,
+          "prod": 6,
+          "org": 8,
+          "know": 6,
+          "equip": 7,
+          "comm": 4,
+          "prio": 4,
+          "cria": 6,
+          "motv": 4
+        }
+      },
+      "motivo_demissao": "Terminio de contrato",
+      "historico_cargos": [
+        {
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Recebimento",
+          "data": "2026-02-23",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "motivo": "Terminio de contrato",
+          "cargo": "Ajudante De Deposito",
+          "dept": "Recebimento",
+          "tipo": "desligamento",
+          "turno": "2o Turno",
+          "data": "2026-05-23"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-02-23",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "turno": "2o Turno"
+        },
+        {
+          "filial": "CD 2",
+          "motivo": "Terminio de contrato",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-23",
+          "dept": "Recebimento",
+          "tipo": "desligamento",
+          "turno": "2o Turno"
+        },
+        {
+          "dept": "Recebimento",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2026-02-23",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-23",
+          "tipo": "desligamento",
+          "turno": "2o Turno",
+          "dept": "Recebimento",
+          "motivo": "Terminio de contrato",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ]
+    },
+    {
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Kaic Geraldo Dos Santos Silva",
+      "turno": "2o Turno",
+      "id": 1777944356828,
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "ferias": false,
+      "demitido": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "geraldo.souza@nagumo.com.br",
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": "2023-09-18",
+      "afastado": false,
+      "year": 2026,
+      "dept": "Recebimento",
+      "matricula": "43796",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Recebimento",
+          "data": "2023-09-18",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        },
+        {
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Recebimento",
+          "data": "2023-09-18",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        },
+        {
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Recebimento",
+          "data": "2023-09-18",
+          "filial": "CD 2",
+          "cargo": "Conferente"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70
+    },
+    {
+      "data_admissao": "2026-02-23",
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "geraldo.souza@nagumo.com.br",
+      "afastado": false,
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Recebimento",
+          "data": "2026-02-23"
+        },
+        {
+          "turno": "2o Turno",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "data": "2026-02-23",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        },
+        {
+          "data": "2026-02-23",
+          "dept": "Recebimento",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "perf": 70,
+      "dept": "Recebimento",
+      "matricula": "57580",
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      },
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "id": 1778870370125,
+      "turno": "2o Turno",
+      "name": "Alberto Gomes Nunes Machado",
+      "foto": null
+    },
+    {
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-03-02",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 2",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-03-02",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Recebimento"
+        },
+        {
+          "data": "2026-03-02",
+          "turno": "2o Turno",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2"
+        }
+      ],
+      "perf": 70,
+      "dept": "Recebimento",
+      "matricula": "57641",
+      "data_ferias_inicio": null,
+      "data_admissao": "2026-03-02",
+      "demitido": false,
+      "ferias": false,
+      "maternidade": false,
+      "owner_id": "geraldo.souza@nagumo.com.br",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 2",
+      "name": "Mayra Rodrigues Loffreda",
+      "id": 1780082761909,
+      "turno": "2o Turno",
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "comm": 5,
+        "prio": 5,
+        "cria": 5,
+        "motv": 5
+      }
+    },
+    {
+      "year": 2026,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Recebimento",
+          "data": "2026-03-23"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "turno": "2o Turno",
+          "dept": "Recebimento",
+          "tipo": "admissao",
+          "data": "2026-03-23"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 2",
+          "data": "2026-03-23",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Recebimento"
+        }
+      ],
+      "perf": 70,
+      "dept": "Recebimento",
+      "matricula": "57610",
+      "data_admissao": "2026-03-23",
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "geraldo.souza@nagumo.com.br",
+      "data_maternidade": null,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 2",
+      "data_ferias_fim": null,
+      "turno": "2o Turno",
+      "id": 1780082853923,
+      "name": "Thiago Gomes Da Silva",
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "assid": 5,
+        "qual": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      }
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}

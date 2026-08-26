@@ -1,0 +1,1779 @@
+{
+  "users": {
+    "admin@nagumo.com.br": {
+      "id": "admin@nagumo.com.br",
+      "name": "Administrador",
+      "pass": "",
+      "avatar": null,
+      "nivel": "admin_master",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    },
+    "11945623271": {
+      "id": "11945623271",
+      "name": "11945623271",
+      "pass": "",
+      "avatar": null,
+      "nivel": "lider",
+      "setor": "",
+      "perfil": {
+        "filial": "",
+        "turno": "",
+        "depts": []
+      }
+    }
+  },
+  "employees": [
+    {
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "id": 1779205949354,
+      "turno": "2o Turno",
+      "name": "Christian De Oliveira",
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Conferente",
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "comm": 5
+      },
+      "year": 2026,
+      "historico_cargos": [
+        {
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-05-19",
+          "cargo": "Conferente",
+          "filial": "CD 1"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Conferente",
+          "data": "2026-05-19",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Pereciveis"
+        },
+        {
+          "data": "2026-05-19",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "filial": "CD 1",
+          "cargo": "Conferente"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Pereciveis",
+      "matricula": "37613",
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "data_maternidade": null,
+      "afastado": false
+    },
+    {
+      "foto": "data:image/jpeg;base64,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",
+      "name": "Valdemi Alison Dos Santos",
+      "id": 1779206009553,
+      "turno": "2o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "comm": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      },
+      "role": "Conferente",
+      "data_maternidade_fim": null,
+      "matricula": "47307",
+      "dept": "Pereciveis",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Pereciveis",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Conferente"
+        },
+        {
+          "cargo": "Conferente",
+          "filial": "CD 1",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "data": "2026-05-19"
+        },
+        {
+          "data": "2026-05-19",
+          "turno": "2o Turno",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "filial": "CD 1",
+          "cargo": "Conferente"
+        }
+      ],
+      "motivo_demissao": "",
+      "year": 2026,
+      "afastado": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null
+    },
+    {
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Auxiliar De Conferente",
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "name": "Higor Basiote Dos Santos",
+      "turno": "2o Turno",
+      "id": 1779206058854,
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "demitido": false,
+      "ferias": false,
+      "owner_id": "11945623271",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2026-05-19",
+          "turno": "2o Turno",
+          "dept": "Pereciveis",
+          "tipo": "admissao"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Conferente",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "data": "2026-05-19"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2026-05-19",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "2o Turno"
+        }
+      ],
+      "perf": 70,
+      "dept": "Pereciveis",
+      "matricula": "52701",
+      "year": 2026
+    },
+    {
+      "year": 2026,
+      "matricula": "48890",
+      "dept": "Pereciveis",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Auxiliar De Conferente",
+          "filial": "CD 1",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Pereciveis",
+          "data": "2026-05-19"
+        },
+        {
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Conferente"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Auxiliar De Conferente",
+          "data": "2026-05-19",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "turno": "2o Turno"
+        }
+      ],
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "ferias": false,
+      "demitido": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "turno": "2o Turno",
+      "id": 1779206125768,
+      "name": "Alexandre Kioto Ferreira Hashimoto",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "role": "Auxiliar De Conferente",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5
+      }
+    },
+    {
+      "competencies": {
+        "prio": 5,
+        "motv": 5,
+        "cria": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "foto": null,
+      "name": "Jefferson Oseas Da Silva",
+      "turno": "2o Turno",
+      "id": 1779210678385,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-19",
+          "dept": "Pereciveis",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-05-19",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Pereciveis",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "data": "2026-05-19",
+          "dept": "Pereciveis",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        }
+      ],
+      "matricula": "59127",
+      "dept": "Pereciveis",
+      "year": 2026
+    },
+    {
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "foto": null,
+      "name": "Wilder Rodrigues Costa",
+      "id": 1779210734507,
+      "turno": "2o Turno",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "equip": 5,
+        "know": 5,
+        "org": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "data": "2026-05-19"
+        },
+        {
+          "data": "2026-05-19",
+          "dept": "Pereciveis",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "data": "2026-05-19",
+          "dept": "Pereciveis",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        }
+      ],
+      "motivo_demissao": "",
+      "matricula": "46170",
+      "dept": "Pereciveis",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false
+    },
+    {
+      "year": 2026,
+      "dept": "Pereciveis",
+      "matricula": "59100",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-19",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Separacao",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-19",
+          "dept": "Separacao",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "perf": 70,
+      "ferias": false,
+      "demitido": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Edmilson Luiz Da Silva",
+      "id": 1779210856882,
+      "turno": "2o Turno",
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "comm": 5,
+        "prio": 5,
+        "motv": 5,
+        "cria": 5
+      }
+    },
+    {
+      "afastado": false,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "ferias": false,
+      "demitido": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "matricula": "57701",
+      "dept": "Pereciveis",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "turno": "2o Turno",
+          "data": "2026-05-19",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "data": "2026-05-19",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "dept": "Separacao",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-19"
+        }
+      ],
+      "year": 2026,
+      "competencies": {
+        "comm": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "name": "Rodrigo Willians De Sales",
+      "turno": "2o Turno",
+      "id": 1779210934041,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "data": "2026-05-19",
+          "dept": "Separacao",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "data": "2026-05-19",
+          "dept": "Separacao",
+          "turno": "2o Turno",
+          "tipo": "admissao"
+        },
+        {
+          "data": "2026-05-19",
+          "turno": "2o Turno",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        }
+      ],
+      "matricula": "54796",
+      "dept": "Pereciveis",
+      "year": 2026,
+      "afastado": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "foto": null,
+      "name": "Gustavo Porto Dos Santos",
+      "id": 1779210982187,
+      "turno": "2o Turno",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "comm": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito"
+    },
+    {
+      "competencies": {
+        "comm": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "motv": 5,
+        "cria": 5,
+        "prio": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "id": 1779211051653,
+      "turno": "2o Turno",
+      "name": "Dario Santos Novais",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "11945623271",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-05-19",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "data": "2026-05-19",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-19"
+        }
+      ],
+      "perf": 70,
+      "dept": "Pereciveis",
+      "matricula": "57198",
+      "year": 2026
+    },
+    {
+      "turno": "2o Turno",
+      "id": 1779211117647,
+      "name": "Luciana Da Silva Guedes",
+      "foto": null,
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "dept": "Pereciveis",
+      "matricula": "59366",
+      "historico_cargos": [
+        {
+          "data": "2026-05-19",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-05-19"
+        },
+        {
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-19",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "year": 2026,
+      "afastado": false,
+      "ferias": false,
+      "demitido": false,
+      "data_demissao": null,
+      "owner_id": "11945623271",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_admissao": null,
+      "data_ferias_inicio": null
+    },
+    {
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "id": 1779211173724,
+      "turno": "2o Turno",
+      "name": "Henrique De Almeida Lima",
+      "foto": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "comm": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "historico_cargos": [
+        {
+          "dept": "Separacao",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "data": "2026-05-19",
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1"
+        },
+        {
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-19"
+        },
+        {
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Pereciveis",
+      "matricula": "59402",
+      "year": 2026,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "demitido": false,
+      "ferias": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "data_maternidade": null,
+      "owner_id": "11945623271"
+    },
+    {
+      "foto": null,
+      "turno": "2o Turno",
+      "id": 1779211255453,
+      "name": "Alisson Eduardo Batista Bernardo",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5
+      },
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "matricula": "49692",
+      "dept": "Movimentacao",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1",
+          "turno": "2o Turno",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "data": "2026-05-19"
+        },
+        {
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1",
+          "data": "2026-05-19",
+          "dept": "Movimentacao",
+          "tipo": "admissao",
+          "turno": "2o Turno"
+        },
+        {
+          "data": "2026-05-19",
+          "dept": "Movimentacao",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1"
+        }
+      ],
+      "year": 2026,
+      "afastado": false,
+      "data_demissao": null,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "ferias": false,
+      "demitido": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null
+    },
+    {
+      "year": 2026,
+      "matricula": "59380",
+      "dept": "Pereciveis",
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "dept": "Separacao",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        },
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "data": "2026-05-19",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Separacao"
+        },
+        {
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Separacao",
+          "data": "2026-05-19",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "data_demissao": null,
+      "owner_id": "11945623271",
+      "maternidade": false,
+      "data_maternidade": null,
+      "ferias": false,
+      "demitido": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "id": 1779211568672,
+      "turno": "2o Turno",
+      "name": "Carlos Daniel Ferreira Do Nascimento",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "assid": 5,
+        "qual": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "comm": 5
+      }
+    },
+    {
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5,
+        "equip": 5,
+        "know": 5,
+        "org": 5
+      },
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "name": "Maycom Lima De Souza",
+      "turno": "2o Turno",
+      "id": 1780698376077,
+      "foto": null,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "afastado": false,
+      "demitido": false,
+      "ferias": false,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "dept": "Pereciveis",
+      "matricula": "",
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "data": "2026-06-05",
+          "turno": "2o Turno",
+          "tipo": "admissao",
+          "dept": "Pereciveis",
+          "cargo": "Operador De Empilhadeira",
+          "filial": "CD 1"
+        }
+      ],
+      "perf": 70,
+      "year": 2026
+    },
+    {
+      "year": 2026,
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "data": "2026-06-05"
+        }
+      ],
+      "motivo_demissao": "",
+      "perf": 70,
+      "dept": "Pereciveis",
+      "matricula": "",
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_maternidade": null,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "data_demissao": null,
+      "afastado": false,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "name": "Odete Vieira Belo",
+      "id": 1780698785038,
+      "turno": "2o Turno",
+      "foto": null,
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "know": 5,
+        "org": 5,
+        "equip": 5,
+        "comm": 5
+      }
+    },
+    {
+      "matricula": "",
+      "dept": "Pereciveis",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "tipo": "admissao",
+          "turno": "2o Turno",
+          "dept": "Pereciveis",
+          "data": "2026-06-05",
+          "filial": "CD 1",
+          "cargo": "Ajudante De Deposito"
+        }
+      ],
+      "motivo_demissao": "",
+      "year": 2026,
+      "afastado": false,
+      "data_demissao": null,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "data_maternidade": null,
+      "ferias": false,
+      "demitido": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "foto": null,
+      "turno": "2o Turno",
+      "id": 1780699306107,
+      "name": "Regiane Oliveira Da Silva",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "competencies": {
+        "prio": 5,
+        "cria": 5,
+        "motv": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "comm": 5
+      },
+      "role": "Ajudante De Deposito",
+      "data_maternidade_fim": null
+    },
+    {
+      "competencies": {
+        "comm": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5,
+        "cria": 5,
+        "motv": 5,
+        "prio": 5
+      },
+      "data_maternidade_fim": null,
+      "role": "Ajudante De Deposito",
+      "filial": "CD 1",
+      "data_ferias_fim": null,
+      "foto": null,
+      "id": 1780699336195,
+      "turno": "2o Turno",
+      "name": "Ricardo Freitas De Oliveira",
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_afastamento": null,
+      "afastado": false,
+      "data_admissao": null,
+      "data_ferias_inicio": null,
+      "data_demissao": null,
+      "owner_id": "11945623271",
+      "data_maternidade": null,
+      "maternidade": false,
+      "ferias": false,
+      "demitido": false,
+      "perf": 70,
+      "motivo_demissao": "",
+      "historico_cargos": [
+        {
+          "cargo": "Ajudante De Deposito",
+          "filial": "CD 1",
+          "turno": "2o Turno",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "data": "2026-06-05"
+        }
+      ],
+      "matricula": "",
+      "dept": "Pereciveis",
+      "year": 2026
+    },
+    {
+      "year": 2026,
+      "matricula": "",
+      "dept": "Pereciveis",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Lider De Logistica Pleno",
+          "data": "2019-02-18",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "2o Turno"
+        }
+      ],
+      "motivo_demissao": "",
+      "owner_id": "11945623271",
+      "maternidade": false,
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": "2019-02-18",
+      "afastado": false,
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "foto": null,
+      "name": "Atos Alan Cavallaro",
+      "turno": "2o Turno",
+      "id": 1780698122459,
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "role": "Lider De Logistica Pleno",
+      "data_maternidade_fim": null,
+      "competencies": {
+        "motv": 5,
+        "cria": 5,
+        "prio": 5,
+        "comm": 5,
+        "equip": 5,
+        "org": 5,
+        "know": 5,
+        "prod": 5,
+        "qual": 5,
+        "assid": 5
+      }
+    },
+    {
+      "afastado": false,
+      "maternidade": false,
+      "owner_id": "11945623271",
+      "data_maternidade": null,
+      "data_demissao": null,
+      "demitido": false,
+      "ferias": false,
+      "data_ferias_inicio": null,
+      "data_admissao": null,
+      "matricula": "",
+      "dept": "Pereciveis",
+      "perf": 70,
+      "historico_cargos": [
+        {
+          "filial": "CD 1",
+          "cargo": "Operador De Empilhadeira",
+          "data": "2026-06-05",
+          "dept": "Pereciveis",
+          "tipo": "admissao",
+          "turno": "2o Turno"
+        }
+      ],
+      "motivo_demissao": "",
+      "year": 2026,
+      "competencies": {
+        "cria": 5,
+        "motv": 5,
+        "prio": 5,
+        "comm": 5,
+        "qual": 5,
+        "assid": 5,
+        "prod": 5,
+        "org": 5,
+        "know": 5,
+        "equip": 5
+      },
+      "role": "Operador De Empilhadeira",
+      "data_maternidade_fim": null,
+      "foto": null,
+      "name": "Allison Eduardo Batista Bernardo",
+      "id": 1780698338404,
+      "turno": "2o Turno",
+      "data_ferias_fim": null,
+      "filial": "CD 1",
+      "data_afastamento": null,
+      "absences": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "config": {
+    "perfWeight": 34,
+    "aptWeight": 34,
+    "feriadosCustom": [
+      {
+        "nome": "Corpus Christi",
+        "chave": "06-04"
+      },
+      {
+        "chave": "12-08",
+        "nome": "Aniversario de Guarulhos"
+      }
+    ],
+    "maxAbs": 36
+  },
+  "filiais": [
+    {
+      "nome": "CD 1",
+      "id": "modicckvjchs"
+    },
+    {
+      "nome": "CD 2",
+      "id": "modicfy0nm8r"
+    }
+  ],
+  "turnos": [
+    {
+      "nome": "1o Turno",
+      "id": "modicpo705js"
+    },
+    {
+      "id": "modicx7rr184",
+      "nome": "2o Turno"
+    },
+    {
+      "nome": "3o Turno",
+      "id": "modid5d7x5uo"
+    },
+    {
+      "id": "modidbif100i",
+      "nome": "Administrativo"
+    }
+  ],
+  "depts": [
+    {
+      "nome": "Inteligencia",
+      "id": "modidvhr3iic"
+    },
+    {
+      "id": "modie3ef1zfb",
+      "nome": "Recebimento"
+    },
+    {
+      "nome": "Sorter Jogada",
+      "id": "mogave2453nk"
+    },
+    {
+      "id": "mogavlyl9z6l",
+      "nome": "Movimentacao"
+    },
+    {
+      "nome": "Separacao",
+      "id": "mogavtdwc83h"
+    },
+    {
+      "id": "mogaw0icbgwa",
+      "nome": "Armazenagem"
+    },
+    {
+      "nome": "Gestao De Riscos",
+      "id": "mogaw850th1u"
+    },
+    {
+      "id": "mogawe1wili2",
+      "nome": "Expedicao"
+    },
+    {
+      "id": "mogawljg5bef",
+      "nome": "PCO"
+    },
+    {
+      "nome": "Auditoria",
+      "id": "mogawryscgsh"
+    },
+    {
+      "id": "mogawzokb0ya",
+      "nome": "Manutencao"
+    },
+    {
+      "nome": "SAC",
+      "id": "mogax41gooct"
+    },
+    {
+      "id": "mogaxfskf3vl",
+      "nome": "Pereciveis"
+    },
+    {
+      "id": "mogaxx4rjy4b",
+      "nome": "Facility"
+    },
+    {
+      "nome": "Cesta Basica",
+      "id": "mogay5m3wspp"
+    },
+    {
+      "id": "molieqjpnmu8",
+      "nome": "FLV"
+    },
+    {
+      "id": "molif05ef6ab",
+      "nome": "CPD"
+    },
+    {
+      "nome": "Transporte",
+      "id": "molifc21pdmx"
+    },
+    {
+      "nome": "Sorter Rampas",
+      "id": "molih4gs98qz"
+    }
+  ],
+  "funcoes": [
+    {
+      "id": "modieaxsteec",
+      "nome": "Conferente"
+    },
+    {
+      "id": "modieesf1z47",
+      "nome": "Aprendiz"
+    },
+    {
+      "id": "mogd4pq5pbmh",
+      "nome": "Ajudante De Deposito"
+    },
+    {
+      "id": "mogd88nvwk95",
+      "nome": "Operador De Empilhadeira"
+    },
+    {
+      "id": "mogd8pwcktdd",
+      "nome": "Auxiliar De Conferente"
+    },
+    {
+      "nome": "Auxiliar De Perdas",
+      "id": "mogd9ekznj9d"
+    },
+    {
+      "id": "mogdc4oylrjc",
+      "nome": "Auxiliar De Limpeza"
+    },
+    {
+      "nome": "Auxiliar Administrativo",
+      "id": "mogdcmv6j0yi"
+    },
+    {
+      "id": "mogdd8wqz6i5",
+      "nome": "Auxiliar De Manutencao"
+    },
+    {
+      "nome": "Assistente Administrativo",
+      "id": "mogddtf6p70k"
+    },
+    {
+      "id": "moli7bz1y89o",
+      "nome": "Encarregado De Logistica Junior"
+    },
+    {
+      "nome": "Encarregado De Logistica Pleno",
+      "id": "moli85y5a4pz"
+    },
+    {
+      "id": "moli8lkis44m",
+      "nome": "Encarregado De Logistica Senior"
+    },
+    {
+      "id": "molij3b7haqq",
+      "nome": "Assistente Administrativo Pleno"
+    },
+    {
+      "nome": "Assistente Administrativo Senior",
+      "id": "molijb7bqds5"
+    },
+    {
+      "nome": "Coordenador De Logistica",
+      "id": "molijmhs46g0"
+    },
+    {
+      "id": "molijwxccjnb",
+      "nome": "Gerente de Logistica"
+    },
+    {
+      "id": "molik8jk8q3m",
+      "nome": "Lider De Logistica Pleno"
+    },
+    {
+      "nome": "Lider De Logistica Senior",
+      "id": "molikctbr4rv"
+    },
+    {
+      "nome": "Lider De Logistica Junior",
+      "id": "molikhfuiljv"
+    },
+    {
+      "id": "molil98gywkf",
+      "nome": "Auxiliar De Rastreamento Junior"
+    },
+    {
+      "id": "molipsfw02xr",
+      "nome": "Auxiliar De Rastreamento Pleno"
+    },
+    {
+      "id": "molipvr1azhh",
+      "nome": "Auxiliar De Rastreamento Senior"
+    },
+    {
+      "id": "moliq3rqcf0j",
+      "nome": "Coordenador De Transporte"
+    },
+    {
+      "id": "moliqayylanh",
+      "nome": "Coordenador Administrativo"
+    },
+    {
+      "id": "moliqt80gcfk",
+      "nome": "Motorista"
+    },
+    {
+      "id": "moliqxh8oyzm",
+      "nome": "Motorista Carreteiro"
+    },
+    {
+      "id": "molirl7bjol5",
+      "nome": "Manobrista"
+    },
+    {
+      "id": "molisdfif64a",
+      "nome": "Analista De Logistica"
+    },
+    {
+      "id": "molisfyfl4yu",
+      "nome": "Analista De Logistica Pleno"
+    },
+    {
+      "nome": "Analista De Logistica Senior",
+      "id": "molisj3rdkdr"
+    },
+    {
+      "nome": "Ajudante Geral",
+      "id": "molitl6lfqv1"
+    },
+    {
+      "id": "moliw1ftlevn",
+      "nome": "Assistente De Rastreamento Junior"
+    },
+    {
+      "nome": "Assistente De Rastreamento Pleno",
+      "id": "moliw471t24l"
+    },
+    {
+      "id": "moliw8sgx190",
+      "nome": "Assistente De Rastreamento Senior"
+    },
+    {
+      "id": "molizpsa1qa1",
+      "nome": "Analista Administrativo"
+    },
+    {
+      "id": "molizsrk1irh",
+      "nome": "Analista Administrativo Pleno"
+    },
+    {
+      "nome": "Analista Administrativo Senior",
+      "id": "molizv6rjmmu"
+    },
+    {
+      "id": "molzfbkw2w3l",
+      "nome": "Lider De Conferente"
+    }
+  ],
+  "authCode": "NAGUMO-97LA2Q",
+  "permissions": {},
+  "permOverrides": {
+    "employees": {
+      "transfer": "lider",
+      "demitir": "lider",
+      "view_demitidos": "lider"
+    },
+    "leaders": {
+      "create": "lider",
+      "edit": "lider",
+      "delete": "lider",
+      "transfer": "lider",
+      "ocorrencia": "lider"
+    },
+    "ocorrencias": {
+      "edit": "lider",
+      "delete": "lider",
+      "approve": "lider"
+    },
+    "config": {
+      "manage_structures": "lider"
+    }
+  }
+}
