@@ -107,6 +107,12 @@
   // ════════════════════════════════════════════════════════════
 
   async function loadData(type, yearMonth) {
+    // Garante que _leaderDir está inicializado
+    if (!_leaderDir) {
+      const ok = await initLeaderDir();
+      if (!ok) return null;
+    }
+
     const key = getCacheKey(type, yearMonth);
     const cached = getFromCache(key);
     if (cached !== null) return cached;

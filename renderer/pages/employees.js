@@ -1333,8 +1333,8 @@ document.addEventListener('keydown', e => {
 function processarFoto(input) {
   const file = input.files[0];
   if (!file) return;
-  if (file.size > 2 * 1024 * 1024) {
-    showToast('⚠️ A foto deve ter no máximo 2 MB.','warn');
+  if (file.size > 5 * 1024 * 1024) {
+    showToast('⚠️ A foto deve ter no máximo 5 MB.','warn');
     input.value = '';
     return;
   }
@@ -1343,15 +1343,21 @@ function processarFoto(input) {
     const img = new Image();
     img.onload = function() {
       const canvas = document.createElement('canvas');
-      canvas.width  = 80;
-      canvas.height = 80;
+      const max = 300;
+      let w = img.width, h = img.height;
+      if (w > max || h > max) {
+        if (w > h) { h = Math.round(h * max / w); w = max; }
+        else { w = Math.round(w * max / h); h = max; }
+      }
+      canvas.width = w;
+      canvas.height = h;
       const ctx = canvas.getContext('2d');
       // Crop centralizado
       const size = Math.min(img.width, img.height);
       const sx = (img.width  - size) / 2;
       const sy = (img.height - size) / 2;
-      ctx.drawImage(img, sx, sy, size, size, 0, 0, 80, 80);
-      const base64 = canvas.toDataURL('image/jpeg', 0.65);
+      ctx.drawImage(img, sx, sy, size, size, 0, 0, w, h);
+      const base64 = canvas.toDataURL('image/jpeg', 0.85);
       document.getElementById('f-foto').value = base64;
       document.getElementById('foto-preview-modal').innerHTML =
         `<img src="${base64}" alt="foto">`;
