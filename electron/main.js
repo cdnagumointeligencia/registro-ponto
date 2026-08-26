@@ -416,22 +416,6 @@ app.whenReady().then(() => {
   createWindow();
 });
 
-app.on('before-quit', () => {
-  // Limpa sessão ao fechar — força login na próxima abertura
-  const wins = BrowserWindow.getAllWindows();
-  wins.forEach(win => {
-    try {
-      win.webContents.executeJavaScript(`
-        try {
-          localStorage.removeItem('rh_session');
-          localStorage.removeItem('rh_last_activity');
-          localStorage.removeItem('rh_login_blocked');
-        } catch(e) {}
-      `);
-    } catch(e) {}
-  });
-});
-
 app.on('window-all-closed', () => {
   if (db) {
     db.close();
