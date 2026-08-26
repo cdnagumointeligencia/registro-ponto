@@ -11,6 +11,7 @@ if (!gotSingleLock) {
 
 let mainWindow = null;
 let currentZoomLevel = 0;
+let isFirstLoad = true; // Flag: limpa sessão apenas no primeiro load do startup
 const ZOOM_MIN = -4;
 const ZOOM_MAX = 6;
 
@@ -212,6 +213,14 @@ ipcMain.handle('fs:mkdir', async (_event, dirPath) => {
 // ══════════════════════════════════════════════════════════════
 // IPC — Pasta Compartilhada
 // ══════════════════════════════════════════════════════════════
+
+ipcMain.handle('app:isFirstLoad', () => {
+  if (isFirstLoad) {
+    isFirstLoad = false;
+    return true;
+  }
+  return false;
+});
 
 ipcMain.handle('app:getSharedFolder', () => {
   return getSharedFolder();

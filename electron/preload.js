@@ -1,16 +1,15 @@
-const { contextBridge, ipcRenderer, webFrame } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 
-// Limpa sessão no startup — força login a cada abertura do app
-// Roda antes de qualquer script da página
-try {
-  webFrame.executeJavaScript(`
+// Limpa sessão apenas no primeiro load do startup (não em navegações internas)
+ipcRenderer.invoke('app:isFirstLoad').then(isFirst => {
+  if (isFirst) {
     try {
       localStorage.removeItem('rh_session');
       localStorage.removeItem('rh_last_activity');
       localStorage.removeItem('rh_login_blocked');
     } catch(e) {}
-  `);
-} catch(e) {}
+  }
+}).catch(() => {});
 
 contextBridge.exposeInMainWorld('electronAPI', {
   fs: {
