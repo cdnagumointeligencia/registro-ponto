@@ -439,7 +439,4 @@ function imprimirRelatorio() {
   window.print();
 }
 
-window.addEventListener('page-refresh', async function () {
-  console.log('[Relatório] Dados atualizados via sync, recarregando...');
-  window.location.reload();
-});
+// page-refresh não aplicável — relatório é gerado manualmente
