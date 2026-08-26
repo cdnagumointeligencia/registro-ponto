@@ -1,0 +1,46 @@
+═══════════════════════════════════════════════════════════════════
+SESSÃO: 2026-05-26 — Funcionalidades Extras Implementadas
+═══════════════════════════════════════════════════════════════════
+
+FUNCIONALIDADES IMPLEMENTADAS:
+──────────────────────────────
+
+1. TRANSFERÊNCIA PORTÁTIL DE FUNCIONÁRIOS
+   - employees.js: Botão 📦 no card do funcionário
+   - employees.js: Funções openExportTransferModal(), closeExportTransferModal(), confirmarExportTransfer()
+   - employees.js: JSON portátil com todos os dados (ponto, ocorrências, aptidões, histórico)
+   - employees.html: Modal de confirmação da exportação
+   - employees.css: Estilo para botão .emp-btn.export
+   - config.js: Função importarTransferencia() para importar JSON portátil
+   - config.html: Seção "Importar Funcionário (Transferência)"
+
+2. EXPORTAR/IMPORTAR MENSAL
+   - config.js: Função exportarMes() — exporta mês específico (ponto, ocorrências, aptidões)
+   - config.js: Função importarMes() — importa mês específico
+   - config.html: Seção "Exportar / Importar Mês Específico" com seletor de mês
+
+3. MIGRAÇÃO DO SQLITE
+   - db-local.js: Função DB.migrateFromSQLite() — lê banco antigo e converte para JSON
+   - main.js: Handlers IPC para db:query, db:run, db:exec (já existentes)
+   - config.js: Função migrarDoSQLite() — aciona a migração
+   - config.html: Seção "Migrar do Banco Antigo (SQLite)"
+
+ESTRUTURA DE ARQUIVOS MODIFICADOS:
+──────────────────────────────────
+- renderer/pages/employees.js — Adicionado botão export e funções
+- renderer/pages/employees.html — Adicionado modal export transfer
+- renderer/pages/employees.css — Adicionado estilo .emp-btn.export
+- renderer/pages/config.js — Adicionadas funções de import/export mensal e migração
+- renderer/pages/config.html — Adicionadas seções de transferência, mensal e migração
+- renderer/db-local.js — Adicionada função migrateFromSQLite()
+
+PRÓXIMOS PASSOS:
+────────────────
+1. Testar login e funcionamento básico (npm install && npm start)
+2. Push para GitHub
+
+NOTA:
+─────
+- better-sqlite3 é necessário apenas para migração (main.js)
+- O app funciona normalmente sem better-sqlite3 depois da migração
+- O migrateFromSQLite() só pode ser chamado pelo Admin Master
