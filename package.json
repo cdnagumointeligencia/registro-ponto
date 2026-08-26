@@ -5,15 +5,38 @@
   "main": "electron/main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "electron . --dev"
+    "dev": "electron . --dev",
+    "build": "electron-builder --win portable",
+    "build:dir": "electron-builder --win dir"
   },
   "author": "Departamento de Inteligência",
   "license": "MIT",
+  "build": {
+    "appId": "com.nagumo.rh",
+    "productName": "RH Nagumo",
+    "win": {
+      "target": "portable",
+      "icon": "assets/icon.ico"
+    },
+    "portable": {
+      "artifactName": "RH-Nagumo-${version}-portable.exe"
+    },
+    "files": [
+      "electron/**/*",
+      "renderer/**/*",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "extraResources": [],
+    "directories": {
+      "output": "dist"
+    }
+  },
   "devDependencies": {
-    "electron": "^31.0.0"
+    "electron": "^31.0.0",
+    "electron-builder": "^25.0.0"
   },
   "dependencies": {
-    "bcryptjs": "^3.0.3",
-    "better-sqlite3": "^11.0.0"
+    "bcryptjs": "^3.0.3"
   }
 }

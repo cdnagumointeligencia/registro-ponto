@@ -355,11 +355,21 @@ ipcMain.handle('zoom:setLevel', (_event, level) => {
 // ══════════════════════════════════════════════════════════════
 
 let db = null;
+let Database = null;
+
+// Tenta carregar better-sqlite3 (opcional — usado apenas para migração)
+try {
+  Database = require('better-sqlite3');
+} catch (e) {
+  console.warn('[Main] better-sqlite3 not available. SQLite migration disabled.');
+}
 
 ipcMain.handle('db:query', async (_event, { sql, params }) => {
   try {
+    if (!Database) {
+      return { success: false, error: 'better-sqlite3 not installed' };
+    }
     if (!db) {
-      const Database = require('better-sqlite3');
       const dbPath = path.join(getUserDataPath(), 'rh_nagumo.db');
       if (fs.existsSync(dbPath)) {
         db = new Database(dbPath);
