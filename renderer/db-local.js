@@ -40,18 +40,50 @@
   }
 
   // ════════════════════════════════════════════════════════════
-  // PASTA DO LÍDER
+  // PASTA DO LÍDER — Detecção Inteligente
   // ════════════════════════════════════════════════════════════
 
   async function initLeaderDir(userEmail) {
-    _sharedFolder = await API.app.getSharedFolder();
-    if (!_sharedFolder) {
-      console.warn('[db-local] No shared folder configured');
-      return false;
+    // Verifica status da pasta configurada
+    const check = await API.app.checkSharedFolder();
+    
+    // Pasta configurada e existe — OK
+    if (check.exists) {
+      _sharedFolder = check.path;
+      _leaderDir = _sharedFolder;
+      await API.fs.mkdir(_leaderDir);
+      console.log('[db-local] Shared folder found:', _leaderDir);
+      return true;
     }
-    _leaderDir = _sharedFolder;
-    await API.fs.mkdir(_leaderDir);
-    return true;
+    
+    // Pasta não configurada ou não existe — precisa resolver
+    console.warn('[db-local] Shared folder not found or not configured');
+    
+    // Emite evento para a UI mostrar modal
+    window.dispatchEvent(new CustomEvent('shared-folder:resolve', {
+      detail: {
+        configured: check.configured,
+        path: check.path,
+        message: check.configured 
+          ? `A pasta "${check.path}" não foi encontrada. Ela foi movida ou renomeada?`
+          : 'Nenhuma pasta de dados configurada. Selecione onde salvar os dados.'
+      }
+    }));
+    
+    return false;
+  }
+
+  async function resolveSharedFolder() {
+    const result = await API.app.resolveSharedFolder();
+    if (result.success) {
+      _sharedFolder = result.folder;
+      _leaderDir = _sharedFolder;
+      await API.fs.mkdir(_leaderDir);
+      invalidateCache();
+      console.log('[db-local] Shared folder resolved:', _leaderDir);
+      return { success: true, hasData: result.hasData };
+    }
+    return { success: false };
   }
 
   function getLeaderDir() {
@@ -190,6 +222,7 @@
     },
 
     initLeaderDir,
+    resolveSharedFolder,
     getLeaderDir,
     loadData,
     saveData,

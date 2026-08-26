@@ -19,6 +19,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getDeviceId: () => ipcRenderer.invoke('app:getDeviceId'),
     getSharedFolder: () => ipcRenderer.invoke('app:getSharedFolder'),
     setSharedFolder: () => ipcRenderer.invoke('app:setSharedFolder'),
+    checkSharedFolder: () => ipcRenderer.invoke('app:checkSharedFolder'),
+    resolveSharedFolder: () => ipcRenderer.invoke('app:resolveSharedFolder'),
   },
   db: {
     query: (sql, params) => ipcRenderer.invoke('db:query', { sql, params }),

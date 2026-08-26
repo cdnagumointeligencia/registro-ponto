@@ -233,6 +233,59 @@ ipcMain.handle('app:setSharedFolder', async () => {
 });
 
 // ══════════════════════════════════════════════════════════════
+// IPC — Detecção Inteligente de Pasta
+// ══════════════════════════════════════════════════════════════
+
+ipcMain.handle('app:checkSharedFolder', async () => {
+  const folder = getSharedFolder();
+  if (!folder) {
+    return { exists: false, hasData: false, configured: false };
+  }
+  
+  const exists = fs.existsSync(folder);
+  if (!exists) {
+    return { exists: false, hasData: false, configured: true, path: folder };
+  }
+  
+  // Verifica se tem dados (config.json ou arquivo .nagumo-marker)
+  const hasConfig = fs.existsSync(path.join(folder, 'config.json'));
+  const hasMarker = fs.existsSync(path.join(folder, '.nagumo-marker'));
+  const hasData = hasConfig || hasMarker;
+  
+  return { exists: true, hasData, configured: true, path: folder };
+});
+
+ipcMain.handle('app:resolveSharedFolder', async () => {
+  const result = await dialog.showOpenDialog(mainWindow, {
+    properties: ['openDirectory'],
+    title: 'Selecionar ou Criar Pasta de Dados',
+    message: 'Selecione a pasta onde os dados estão (ou onde deseja criá-los)',
+  });
+  
+  if (!result.canceled && result.filePaths.length > 0) {
+    const folder = result.filePaths[0];
+    const exists = fs.existsSync(folder);
+    const hasConfig = exists && fs.existsSync(path.join(folder, 'config.json'));
+    const hasMarker = exists && fs.existsSync(path.join(folder, '.nagumo-marker'));
+    const hasData = hasConfig || hasMarker;
+    
+    // Salva a nova pasta
+    const config = loadAppConfig();
+    config.sharedFolder = folder;
+    saveAppConfig(config);
+    
+    // Se pasta não existe, cria
+    if (!exists) {
+      fs.mkdirSync(folder, { recursive: true });
+    }
+    
+    return { success: true, folder, hasData, exists: true };
+  }
+  
+  return { success: false };
+});
+
+// ══════════════════════════════════════════════════════════════
 // IPC — bcrypt
 // ══════════════════════════════════════════════════════════════
 

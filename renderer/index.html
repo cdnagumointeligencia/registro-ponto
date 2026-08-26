@@ -7,6 +7,7 @@
 <title>Dashboard · RH Nagumo</title>
 <link rel="stylesheet" href="sidebar.css">
 <link rel="stylesheet" href="light-theme.css">
+<link rel="stylesheet" href="base.css">
 <link rel="stylesheet" href="dashboard.css">
 <link rel="stylesheet" href="responsive.css">
 <script src="lib/chart.umd.min.js" defer></script>
@@ -83,6 +84,89 @@
     </div>
   </div>
 </main>
+
+<!-- MODAL RESOLVER PASTA COMPARTILHADA -->
+<div class="overlay" id="modal-folder-resolve" role="dialog" aria-modal="true" aria-label="Configurar Pasta" style="z-index:999999">
+  <div class="login-box" style="max-width:480px">
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:48px;margin-bottom:12px">📂</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text);font-family:var(--font-head)">
+        Pasta de Dados Não Encontrada
+      </div>
+    </div>
+    
+    <p id="folder-resolve-msg" style="font-size:13px;color:var(--muted);text-align:center;margin-bottom:16px;line-height:1.5"></p>
+    <p id="folder-resolve-path" style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:20px;font-family:monospace"></p>
+    
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button onclick="resolveFolder()" style="
+        background:var(--accent); color:white; border:none; padding:12px 20px;
+        border-radius:10px; font-size:14px; font-weight:600; cursor:pointer;
+        transition: all 0.2s;
+      ">
+        📂 Selecionar ou Criar Pasta
+      </button>
+      <button onclick="closeFolderResolveModal()" style="
+        background:transparent; color:var(--muted); border:1px solid var(--border);
+        padding:10px 20px; border-radius:10px; font-size:13px; cursor:pointer;
+        transition: all 0.2s;
+      ">
+        Voltar ao Login
+      </button>
+    </div>
+    
+    <p id="folder-resolve-status" style="font-size:11px;color:var(--muted);text-align:center;margin-top:12px"></p>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// DETECÇÃO INTELIGENTE DE PASTA COMPARTILHADA
+// ══════════════════════════════════════════════════════════════
+
+window.addEventListener('shared-folder:resolve', async (e) => {
+  const { configured, path, message } = e.detail;
+  
+  const modal = document.getElementById('modal-folder-resolve');
+  const msgEl = document.getElementById('folder-resolve-msg');
+  const pathEl = document.getElementById('folder-resolve-path');
+  
+  if (msgEl) msgEl.textContent = message;
+  if (pathEl) pathEl.textContent = configured ? `Caminho atual: ${path}` : 'Nenhuma pasta configurada.';
+  
+  modal?.classList.add('open');
+});
+
+async function resolveFolder() {
+  const modal = document.getElementById('modal-folder-resolve');
+  const statusEl = document.getElementById('folder-resolve-status');
+  
+  if (statusEl) statusEl.textContent = '⏳ Abrindo seletor de pasta...';
+  
+  const result = await window.DB.resolveSharedFolder();
+  
+  if (result.success) {
+    modal?.classList.remove('open');
+    if (statusEl) statusEl.textContent = '';
+    
+    if (result.hasData) {
+      showToast('✅ Pasta encontrada! Dados antigos restaurados.');
+    } else {
+      showToast('✅ Nova pasta criada!');
+    }
+    
+    // Recarrega a página para usar a nova pasta
+    setTimeout(() => window.location.reload(), 500);
+  } else {
+    // Usuário cancelou — volta para o login
+    window.location.href = 'login.html';
+  }
+}
+
+function closeFolderResolveModal() {
+  window.location.href = 'login.html';
+}
+</script>
 
 <script src="dashboard.js"></script>
 </body>
